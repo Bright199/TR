@@ -66,14 +66,14 @@
                         <!-- Authentication Links -->
                         @guest
                             {{-- {{ route('login') }} --}}
-                            @if (Route::has('login'))
+                            @if (Route::has('studentlogin'))
                                 <div class="dropdown ListItem" id="LoginDropDown">
                                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                         Login
                                     </a>
                                     <ul class="dropdown-menu">
                                             <li>
-                                                <a class="dropdown-item" href="{{route('student.login')}}">Student</a>
+                                                <a class="dropdown-item" href="{{url('studentlogin')}}">Student</a>
                                             </li>
                                             <li><hr class="dropdown-divider"></li>
                                             <li>
@@ -84,7 +84,7 @@
 
                             @endif
 
-                            @if (Route::has('register'))
+                            @if (Route::has('studentregister'))
                                 {{-- <li class="nav-item ListItem">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li> --}}
@@ -94,7 +94,7 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                             <li>
-                                                <a class="dropdown-item" href="{{route('student.register')}}">Student</a>
+                                                <a class="dropdown-item" href="{{url('studentregister')}}">Student</a>
                                             </li>
                                             <li><hr class="dropdown-divider"></li>
                                             <li>
