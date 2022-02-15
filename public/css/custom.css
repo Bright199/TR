@@ -11,10 +11,11 @@
 
 .LinkItem:hover {
     /* font-size: 25px; */
-    background-color: #fdfcf9;
+    /* background-color: #fed907; */
     color: #151419;
-    padding: 4px 20px;
-    border-radius: 5px;
+    /* border-radius: 5px; */
+    /* padding: 2px 10px; */
+
 }
 .LinkItem {
     text-decoration: none;

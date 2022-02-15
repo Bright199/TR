@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\StudentRegistration;
+use App\Http\Controllers\TeachersRegistration;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +18,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/teacher/home', function () {
+    return view('teacher.home');
+});
+Route::get('/student/home', function () {
+    return view('student.home');
+});
 
-
+// Student registration system
 Route::prefix('student')->name('student.')->group(function(){
     Route::middleware(['guest:student'])->group(function(){
         Route::view('/login', 'student.login')->name('login');
@@ -31,25 +38,23 @@ Route::prefix('student')->name('student.')->group(function(){
         Route::post('/logout',[StudentRegistration::class,'logout'])->name('logout');
     });
 });
-// Loginstudent
-// Route::get('/loginstudent', [StudentRegistration::class,'index'])->name('loginstudent');
-
-// // StudentDashboard
-// Route::get('/studentdashboard',[StudentRegistration::class,'studentdashboard'])->middleware('auth');
-
-// // Register studentregister
-// Route::get('/registerstudent',[StudentRegistration::class,'create'])->name('registerstudent');
 
 
-
-Route::get('/teacherlogin', function () {
-    return view('teacher.teacherlogin');
+// Teachers registration system
+Route::prefix('teacher')->name('teacher.')->group(function(){
+    Route::middleware(['guest:teacher'])->group(function(){
+        Route::view('/login', 'teacher.login')->name('login');
+        Route::post('/login', [TeachersRegistration::class,'login'])->name('login');
+        Route::view('/register', 'teacher.register')->name('register');
+        Route::post('/register',[TeachersRegistration::class,'store'])->name('register');
+    }); 
+    Route::middleware(['auth:teacher'])->group(function(){
+        Route::view('/dashboard','teacher.dashboard')->name('dashboard');
+        Route::post('/logout',[TeachersRegistration::class,'logout'])->name('logout');
+    });
 });
-Route::get('/teacherregister', function () {
-    return view('teacher.teacherregister');
-});
-// 
+
+
 
 Auth::routes();
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

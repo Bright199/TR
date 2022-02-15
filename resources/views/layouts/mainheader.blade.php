@@ -65,57 +65,41 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest('student')
-                        {{-- {{ route('login') }} --}}
-                        {{-- @if (Route::has('student.login')) --}}
-                        @if (route('student.login'))
-                        <div class="dropdown ListItem" id="LoginDropDown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                Login
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="{{route('student.login')}}">Student</a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{route('teacher.login')}}">Teacher</a>
-                                </li>
-                            </ul>
-                        </div>
+                            <li class="nav-item ListItem">
+                                <a href="student/home" class="nav-link LinkItem">I'm a student</a>
+                            </li>
+                       @else
 
-                        @endif
-
-                        {{-- @if (Route::has('register')) --}}
-                        @if (route('student.register'))
-                        {{-- <li class="nav-item ListItem">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li> --}}
-                        <div class="dropdown ListItem" id="LoginDropDown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                Register
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="{{route('student.register')}}">Student</a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{route('teacher.register')}}">Teacher</a>
-                                </li>
-                            </ul>
-                        </div>
-                        @endif
-
-
-                        @else
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::guard('student')->user()->name }}
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                   document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                        @endguest
+                        {{-- Teacher link --}}
+                        @guest('teacher')
+                            <li class="nav-item ListItem">
+                                <a href="teacher/home" class="nav-link LinkItem">I'm a teacher</a>
+                            </li>
+                       @else
+
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::guard('teacher')->user()->name }}
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

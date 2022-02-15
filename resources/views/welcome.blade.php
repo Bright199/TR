@@ -30,7 +30,7 @@
 
 <body>
 
-    @extends('layouts.app')
+    @extends('layouts.mainheader')
     @section('content')
 
         <div class="container">
@@ -38,7 +38,11 @@
                 <div class="col-md-6 mb-3 p-0">
                     <div class="">
                         <div class="card-body">
-                            <h2>Start learning with <span class="PriceTag">ONLY 90TL</span> per lesson (1 hour)</h2>
+                            {{-- @php
+                                if (condition) {
+                                }
+                            @endphp --}}
+                            <h2>Start learning with <span class="PriceTag">ONLY 90TL</span> </h2>
 
                         </div>
                     </div>
@@ -77,9 +81,9 @@
 
             </div>
             <div class="row">
-                <div class="col-lg-6 col-md-6 border p-2 WorkersContainer">
-                    <h3>Our International profesional teachers</h3>
-                    <p>We have the best team of international teachers from all over the world who are
+                <div class="col-lg-8 col-md-8 mr-2 p-2 WorkersContainer">
+                    <h3>Our profesional Tutors</h3>
+                    <p>We have the best team of international Tutors from all over the world who are
                         ready to give you an amazing push into the new language of your choice.</p>
                     <div class="owl-carousel">
                         <div class="border">
@@ -103,10 +107,8 @@
 
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-2 ">
-                    <!-- AVailable positions -->
-                    
-                </div>
+                {{-- <div class="col-lg-2 col-md-2 ">
+                </div> --}}
                 <div class="col-lg-4 col-md-4 border p-2">
                     <div id="vueapp">
 

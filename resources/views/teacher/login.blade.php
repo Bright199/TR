@@ -8,7 +8,7 @@
                 <h4 class="">{{ __('Teacher login') }}</h4>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('teacher.login') }}">
                         @csrf
 
                         <div class="row mb-3">

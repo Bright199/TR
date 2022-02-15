@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>Prices</h2>
+        <h2>Learning with us</h2>
         <ul>
             <li>90TL/hour</li>
             <li>350TL/4 lessons/week + 1 free lesson</li>

@@ -22,15 +22,13 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
-            if ($guard === "student" && Auth::guard($guard)->check()) {
+            if ($guard == "student" && Auth::guard($guard)->check()) {
                 return redirect('/student/dashboard');
             }
-            // if ($guard == "blogger" && Auth::guard($guard)->check()) {
-            //     return redirect('/blogger');
-            // }
-            // if (Auth::guard($guard)->check()) {
-            //     return redirect('/home');
-            // }
+            if ($guard == "teacher" && Auth::guard($guard)->check()) {
+                return redirect('/teacher/dashboard');
+            }
+          
         }
         return $next($request);
         // foreach ($guards as $guard) {
