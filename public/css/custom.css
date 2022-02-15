@@ -61,3 +61,32 @@
 #LoginDropDown:hover{
     cursor: pointer;
 }
+
+.FacebookButton{
+    background-color: #4267B2;
+    color: white;
+    padding: 10px;
+    border-radius: 3px;
+    text-decoration: none;
+}
+.FacebookButton:hover{
+    background-color: #4e76c5;
+    color: white;
+    padding: 10px;
+    border-radius: 3px;
+    text-decoration: none;
+}
+.GoogleButton{
+    /* background-color: #4267B2; */
+    /* /* color: white; */
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 3px; 
+    text-decoration: none;
+}
+.GoogleButton:hover{
+    /* color: white;
+    padding: 10px;
+    border-radius: 3px; */
+    text-decoration: none;
+}

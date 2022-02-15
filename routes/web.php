@@ -3,6 +3,7 @@
 use App\Http\Controllers\StudentRegistration;
 use App\Http\Controllers\TeachersRegistration;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,28 @@ Route::prefix('teacher')->name('teacher.')->group(function(){
         Route::post('/logout',[TeachersRegistration::class,'logout'])->name('logout');
     });
 });
+
+// Socialite
+Route::get('facebook/auth/redirect', function () {
+    return Socialite::driver('facebook')->redirect();
+})->name('facebook.login');
+ 
+Route::get('facebook/auth/callback', function () {
+    $user = Socialite::driver('facebook')->user();
+    dd($user);
+    // $user->token
+});
+Route::get('google/auth/redirect', function () {
+    return Socialite::driver('google')->redirect();
+})->name('google.login');
+ 
+Route::get('google/auth/callback', function () {
+    $user = Socialite::driver('google')->user();
+    dd($user);
+    // $user->token
+});
+
+
 
 
 

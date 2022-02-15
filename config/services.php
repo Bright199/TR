@@ -19,6 +19,17 @@ return [
         'secret' => env('MAILGUN_SECRET'),
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
     ],
+    
+    'facebook' => [    
+        'client_id' => env('FACEBOOK_CLIENT_ID'),  
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),  
+        'redirect' => 'http://localhost:8000/facebook/auth/callback'
+      ],
+    'google' => [    
+        'client_id' => env('GOOGLE_CLIENT_ID'),  
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),  
+        'redirect' => 'http://localhost:8000/google/auth/callback'
+      ],
 
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
