@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\SocialiteLogin;
 use App\Http\Controllers\StudentRegistration;
+use App\Http\Controllers\TeacherSocialiteLogin;
 use App\Http\Controllers\TeachersRegistration;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -56,7 +57,7 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
     });
 });
 
-// Socialite
+// Socialite for students
 Route::get('facebook/auth/redirect', function () {
     return Socialite::driver('facebook')->redirect();
 })->name('student.facebook.login');
@@ -67,6 +68,18 @@ Route::get('google/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
 })->name('student.google.login');
 Route::get('google/auth/callback', [SocialiteLogin::class, 'google']);
+
+// // socialite for teachers
+// Route::get('facebook/auth/redirect', function () {
+//     return Socialite::driver('facebook')->redirect();
+// })->name('teacher.facebook.login');
+// Route::get('facebook/auth/callback', [TeacherSocialiteLogin::class, 'teacherFacebook']);
+
+
+// Route::get('google/auth/redirect', function () {
+//     return Socialite::driver('google')->redirect();
+// })->name('teacher.google.login');
+// Route::get('google/auth/callback', [TeacherSocialiteLogin::class, 'teacherGoogle']);
 
 
 

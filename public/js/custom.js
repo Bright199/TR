@@ -25,6 +25,7 @@ $(document).ready(function(){
 }
     });
 
+  
     // hover
     $('.ListItemLogin').mouseover(function(){
         $('.LoginRegisterLinks').removeClass('ToggleLinks2')

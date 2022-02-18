@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router';
 import Home from '../components/Home.vue';
 import Login from '../components/Auth/Login.vue';
+import NavBar from '../components/Students/NavBar.vue';
 
 const newLocal = 'Home';
 const routes = [
@@ -13,6 +14,11 @@ const routes = [
         path: '/login',
         name: "Login",
         component: Login
+    },
+    {
+        path: '/student/dashboard',
+        name: "studentDashboard",
+        component: NavBar
     }
 ]
 
