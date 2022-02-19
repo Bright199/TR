@@ -38,7 +38,7 @@ Route::prefix('student')->name('student.')->group(function () {
     });
     Route::middleware(['auth:student'])->group(function () {
         Route::view('/dashboard', 'student.dashboard')->name('dashboard');
-        Route::post('/logout', [StudentRegistration::class, 'logout'])->name('logout');
+        Route::get('/logout', [StudentRegistration::class, 'logout'])->name('logout');
     });
 });
 
@@ -53,7 +53,7 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
     });
     Route::middleware(['auth:teacher'])->group(function () {
         Route::view('/dashboard', 'teacher.dashboard')->name('dashboard');
-        Route::post('/logout', [TeachersRegistration::class, 'logout'])->name('logout');
+        Route::get('/logout', [TeachersRegistration::class, 'logout'])->name('logout');
     });
 });
 

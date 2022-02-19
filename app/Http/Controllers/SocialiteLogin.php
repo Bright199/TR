@@ -35,7 +35,7 @@ class SocialiteLogin extends Controller
                 Auth::guard('student')->login($user);
                 return redirect('/student/dashboard/');
             } catch (\Throwable $th) {
-                return redirect('/student/login')->with('oath', 'We encountered a problem. Try again or manually login',);
+                return redirect('/student/login')->with('oath', 'We encountered a problem. Try again or manually login');
             }
         } else if ($url === 'http://localhost:8000/google/auth/redirect?student=teacherGoogle') {
             try {
@@ -62,7 +62,7 @@ class SocialiteLogin extends Controller
             }
         } else {
 
-            return redirect('/student/login')->with('oath', 'We encountered a problem. Try again or manually login',);
+            return redirect('/student/login')->with('oath', 'We encountered a problem. Try again or manually login');
         }
     }
     public function facebook(Request $request)
@@ -89,7 +89,7 @@ class SocialiteLogin extends Controller
                 Auth::guard('student')->login($user);
                 return redirect('/student/dashboard/');
             } catch (\Throwable $th) {
-                return redirect('/student/login')->with('oath', 'We encountered a problem. Try again or manually login',);
+                return redirect('/student/login')->with('oath', 'We encountered a problem. Try again or manually login');
             }
         }else if($url === 'http://localhost:8000/facebook/auth/redirect?student=teacherFacebook'){
             try {
@@ -110,7 +110,7 @@ class SocialiteLogin extends Controller
                 Auth::guard('teacher')->login($user);
                 return redirect('/teacher/dashboard/');
             } catch (\Throwable $th) {
-                return redirect('/student/login')->with('oath', 'We encountered a problem. Try again or manually login',);
+                return redirect('/student/login')->with('oath', 'We encountered a problem. Try again or manually login');
             }
         }else{
             return redirect('/student/login')->with('oath', 'We encountered a problem. Try again or manually login');

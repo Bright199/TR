@@ -112,8 +112,6 @@
                 <div class="col-lg-4 col-md-4 border p-2">
                     <div id="vueapp">
                         <vue-app></vue-app>
-                        {{-- <h1>Money</h1> --}}
-                        <nav-bar></nav-bar>
                     </div>
                 </div>
             </div>

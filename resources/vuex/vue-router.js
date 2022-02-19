@@ -17,7 +17,12 @@ const routes = [
     },
     {
         path: '/student/dashboard',
-        name: "studentDashboard",
+        name: "NavBar",
+        component: NavBar
+    },
+    {
+        path: '/student/home',
+        name: "NavBar",
         component: NavBar
     }
 ]

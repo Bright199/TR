@@ -27,13 +27,12 @@ $(document).ready(function(){
 
   
     // hover
-    $('.ListItemLogin').mouseover(function(){
-        $('.LoginRegisterLinks').removeClass('ToggleLinks2')
-        $('.LoginRegisterLinks').addClass('ToggleLinks1')
+    $('.Logout').mouseover(function(){
+       alert('working')
     });
 
-    $('.ListItemLogin').mouseout(function(){
-        $('.LoginRegisterLinks').removeClass('ToggleLinks1')
-        $('.LoginRegisterLinks').addClass('ToggleLinks2')
-    })
+    // $('.ListItemLogin').mouseout(function(){
+    //     $('.LoginRegisterLinks').removeClass('ToggleLinks1')
+    //     $('.LoginRegisterLinks').addClass('ToggleLinks2')
+    // })
 });

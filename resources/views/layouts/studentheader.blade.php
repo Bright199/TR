@@ -19,6 +19,8 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    {{-- font awesome --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
@@ -111,6 +113,11 @@
                                         @csrf
                                     </form>
                                 </div>
+                            </li>
+                            <li class="nav-item ListItem">
+                                <a href="{{route('student.dashboard')}}" class="nav-link">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </a>
                             </li>
                         @endguest
                     </ul>
