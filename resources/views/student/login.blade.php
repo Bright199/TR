@@ -6,13 +6,14 @@
         <div class="col-md-8">
             <div class="container">
                 <h4 class="mb-4">{{ __('Student login') }}</h4>
-                <a href="{{route('student.facebook.login',['student'=>'studentFacebook'])}}" class="FacebookButton">
-                    <img src="https://img.icons8.com/color/30/000000/facebook-new.png" />
-                    Login with facebook</a>
-                <a href="{{route('student.google.login',['student'=>'studentGoogle'])}}" class="GoogleButton">
-                    <img src="https://img.icons8.com/color/30/000000/google-logo.png" />
-                    Login with google</a>
-                    <br>
+                <div class="container">
+                    <a href="{{route('student.facebook.login',['student'=>'studentFacebook'])}}" class="FacebookButton">
+                        <img src="https://img.icons8.com/color/30/000000/facebook-new.png" />
+                        Login with facebook</a>
+                    <a href="{{route('student.google.login',['student'=>'studentGoogle'])}}" class="GoogleButton">
+                        <img src="https://img.icons8.com/color/30/000000/google-logo.png" />
+                        Login with google</a>
+                </div>
                 @if (session('oath'))
                 <div class="alert alert-danger">
                     {{ session('oath') }}

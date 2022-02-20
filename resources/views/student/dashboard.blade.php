@@ -10,7 +10,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -24,7 +24,7 @@
 
     {{-- JQuery --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     {{-- font awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -38,15 +38,18 @@
         @else
         <nav-bar :user="false"></nav-bar>
         @endif
-        {{-- Navifation --}}
-        <div class="container-jumbotron">
-            <div class="row">
-                <div class="col-md-3 LeftBarStudent">
-                    <left-bar></left-bar>
+        <div class="container">
+            {{-- Navifation --}}
+            <div class="container-jumbotron">
+                <div class="row">
+                    <div class="col-md-3 LeftBarStudent">
+                        <left-bar></left-bar>
+                    </div>
+                    <div class="col-md-9 ml-5">
+                        <right-bar></right-bar>
+                    </div>
                 </div>
-                <div class="col-md-8">
-                    <right-bar></right-bar>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -62,8 +65,8 @@
     })
 </script>
 <style>
-    .LeftBarStudent{
+    .LeftBarStudent {
         /* padding: 0; */
-        
+
     }
 </style>

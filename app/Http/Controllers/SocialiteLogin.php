@@ -13,8 +13,8 @@ class SocialiteLogin extends Controller
 {
     public function google(Request $request)
     {
-        $urlData[] = $request->session()->all();
-        $url = $urlData[0]['_previous']['url'];
+        $urlData = $request->session()->all();
+        $url = $urlData['_previous']['url'];
        if ($url) {
         if ($url === 'http://localhost:8000/google/auth/redirect?student=studentGoogle' || $url === 'http://127.0.0.1:8000/google/auth/redirect?student=studentGoogle') {
 
@@ -73,8 +73,8 @@ class SocialiteLogin extends Controller
     public function facebook(Request $request)
     {
 
-        $urlData[] = $request->session()->all();
-        $url = $urlData[0]['_previous']['url'];
+        $urlData = $request->session()->all();
+        $url = $urlData['_previous']['url'];
        if ($url) {
         if ($url === 'http://localhost:8000/facebook/auth/redirect?student=studentFacebook' || $url === 'http://127.0.0.1:8000/facebook/auth/redirect?student=studentFacebook') {
             try {

@@ -1,18 +1,26 @@
 <template>
     <div>
-        <div class="LeftBar">
+        <div class="LeftBar m-0">
             <div class="container mt-3">
                 <p class="TopHeading p-1">Available teachers</p>
             </div>
             <hr class="Horizontal" />
-                <div class="container">
-                    <h4>Hire Our teachers</h4>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                <a href="/student/ourteachers/list"><h4>Hire Our teachers</h4></a>
+
+                    </div>
+                    <div class="col-md-4">
+                <a href="/student/ourteachers/list"><h4>Hire Other teachers</h4></a>
+
+                    </div>
                 </div>
+            </div>
             <!-- Ours Teachers -->
-            <div class="container OurTeachers">
+            <div class="">
                 <!--  -->
-                <TeachersDetails/>
-                <br>
+                <TeachersDetails />
                 <TeachersDetails />
                 <!--  -->
             </div>
@@ -20,17 +28,16 @@
     </div>
 </template>
 <script>
-import TeachersDetails from "./TeacherDetail/TeacherDetails.vue";
+import TeachersDetails from "./OurTeacherDetail/TeacherDetails.vue";
 export default {
     name: "RightBar",
-    components:{
+    components: {
         TeachersDetails,
         // NavBar
-    }
+    },
 };
 </script>
 <style scoped>
-
 .MainFluencyLevel {
     color: #029e02;
     background-color: rgb(2, 158, 2, 0.1);
@@ -47,8 +54,6 @@ export default {
     box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
     -webkit-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
-    /* padding: 10px; */
-    /* height: 500px; */
 }
 .Horizontal {
     border: 0;
@@ -60,8 +65,8 @@ export default {
     font-size: 22px;
 }
 .OurTeachers {
-    height: 300px;
-    overflow-y: scroll;
+    /* height: 300px;
+    overflow-y: scroll; */
 }
 
 ::-webkit-scrollbar {
