@@ -12,7 +12,7 @@
                 <a href="{{route('student.google.login',['student'=>'studentGoogle'])}}" class="GoogleButton">
                     <img src="https://img.icons8.com/color/30/000000/google-logo.png" />
                     Login with google</a>
-
+                    <br>
                 @if (session('oath'))
                 <div class="alert alert-danger">
                     {{ session('oath') }}

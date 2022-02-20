@@ -15,7 +15,8 @@ class SocialiteLogin extends Controller
     {
         $urlData[] = $request->session()->all();
         $url = $urlData[0]['_previous']['url'];
-        if ($url === 'http://localhost:8000/google/auth/redirect?student=studentGoogle') {
+       if ($url) {
+        if ($url === 'http://localhost:8000/google/auth/redirect?student=studentGoogle' || $url === 'http://127.0.0.1:8000/google/auth/redirect?student=studentGoogle') {
 
             try {
                 $googleUser = Socialite::driver('google')->stateless()->user();
@@ -37,7 +38,7 @@ class SocialiteLogin extends Controller
             } catch (\Throwable $th) {
                 return redirect('/student/login')->with('oath', 'We encountered a problem. Try again or manually login');
             }
-        } else if ($url === 'http://localhost:8000/google/auth/redirect?student=teacherGoogle') {
+        } else if ($url === 'http://localhost:8000/google/auth/redirect?student=teacherGoogle' || $url === 'http://127.0.0.1:8000/google/auth/redirect?student=teacherGoogle') {
             try {
                 $googleUser = Socialite::driver('google')->stateless()->user();
                 $user = Teacher::where('google_id', $googleUser->getId())->first();
@@ -64,17 +65,22 @@ class SocialiteLogin extends Controller
 
             return redirect('/student/login')->with('oath', 'We encountered a problem. Try again or manually login');
         }
+       } else {
+          return back();
+       }
+       
     }
     public function facebook(Request $request)
     {
 
         $urlData[] = $request->session()->all();
         $url = $urlData[0]['_previous']['url'];
-        if ($url === 'http://localhost:8000/facebook/auth/redirect?student=studentFacebook'){
+       if ($url) {
+        if ($url === 'http://localhost:8000/facebook/auth/redirect?student=studentFacebook' || $url === 'http://127.0.0.1:8000/facebook/auth/redirect?student=studentFacebook') {
             try {
                 $googleUser = Socialite::driver('facebook')->stateless()->user();
                 $user = Student::where('facebook_id', $googleUser->getId())->first();
-    
+
                 if ($user) {
                     Auth::guard('student')->login($user);
                     return redirect('/student/dashboard/');
@@ -91,11 +97,11 @@ class SocialiteLogin extends Controller
             } catch (\Throwable $th) {
                 return redirect('/student/login')->with('oath', 'We encountered a problem. Try again or manually login');
             }
-        }else if($url === 'http://localhost:8000/facebook/auth/redirect?student=teacherFacebook'){
+        } else if ($url === 'http://localhost:8000/facebook/auth/redirect?student=teacherFacebook' || $url === 'http://127.0.0.1:8000/facebook/auth/redirect?student=teacherFacebook') {
             try {
                 $googleUser = Socialite::driver('facebook')->stateless()->user();
                 $user = Teacher::where('facebook_id', $googleUser->getId())->first();
-    
+
                 if ($user) {
                     Auth::guard('teacher')->login($user);
                     return redirect('/teacher/dashboard/');
@@ -112,10 +118,12 @@ class SocialiteLogin extends Controller
             } catch (\Throwable $th) {
                 return redirect('/student/login')->with('oath', 'We encountered a problem. Try again or manually login');
             }
-        }else{
+        } else {
             return redirect('/student/login')->with('oath', 'We encountered a problem. Try again or manually login');
         }
-
-        
+       } else {
+           return back();
+       }
+       
     }
 }

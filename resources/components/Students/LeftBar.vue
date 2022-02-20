@@ -2,17 +2,16 @@
     <div>
         <div class="container LeftBar">
             <!-- post your first ad -->
-            <div class="my-ad">
-                <div class="d-flex justify-content-center">
-                    <a href=""> Post an ad</a>
+                <div class="d-flex justify-content-center mt-3">
+                    <a href="" class="mt-3"> <h6>Post an ad</h6></a>
                 </div>
-            </div>
+            <hr class="Horizontal">
             <!-- Languages -->
             <form>
                 <div>
                     <p>Filter by</p>
                     <h5>Language</h5>
-                    <select class="form-select mt-3">
+                    <select class="form-select form-select-sm mt-3">
                         <option>English</option>
                         <option>French</option>
                         <option>Germany</option>
@@ -22,11 +21,11 @@
                 <br />
                 <div>
                     <h5>Country</h5>
-                    <select class="form-select mt-3">
-                        <option>English</option>
-                        <option>French</option>
-                        <option>Germany</option>
-                        <option>Turkish</option>
+                    <select class="form-select form-select-sm mt-3">
+                        <option>Turkey</option>
+                        <option>Mozambique</option>
+                        <option>Kenya</option>
+                        <option>Zimbabwe</option>
                     </select>
                 </div><br>
                 <div>
@@ -51,7 +50,7 @@ export default {
     height: 500px;
 }
 .my-ad {
-    background-color: #f6f2e9;
+    /* background-color: #f6f2e9; */
     padding: 5px;
 }
 
@@ -65,8 +64,16 @@ export default {
 }
 .FilterBtn {
     background-color: #029e02;
-    color: #f6f2e9;
+    color: white;
     font-size: 20px;
-    padding: 5px;
+}
+.FilterBtn:hover {
+    background-color: #038b03;
+}
+.Horizontal{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 2px solid rgba(0, 0, 0, 0.1);
 }
 </style>

@@ -45,7 +45,7 @@
                     <left-bar></left-bar>
                 </div>
                 <div class="col-md-8">
-                    
+                    <right-bar></right-bar>
                 </div>
             </div>
         </div>
@@ -63,6 +63,7 @@
 </script>
 <style>
     .LeftBarStudent{
+        /* padding: 0; */
         
     }
 </style>
