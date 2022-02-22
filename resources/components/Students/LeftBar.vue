@@ -2,10 +2,13 @@
     <div>
         <div class="container LeftBar">
             <!-- post your first ad -->
-                <div class="d-flex justify-content-center mt-3">
-                    <a href="" class="mt-3"> <h6>Post an ad</h6></a>
-                </div>
-            <hr class="Horizontal">
+            <div class="d-flex justify-content-center mt-3">
+                <router-link to="/student/create/ad" class="mt-3"
+                    ><h6>Post an ad</h6></router-link
+                >
+            </div>
+            <!-- <hr class="Horizontal"> -->
+            <br /><br />
             <!-- Languages -->
             <form>
                 <div>
@@ -27,12 +30,14 @@
                         <option>Kenya</option>
                         <option>Zimbabwe</option>
                     </select>
-                </div><br>
+                </div>
+                <br />
                 <div>
-                    <a href="" type="submit" class="btn d-block FilterBtn">Filter results</a>
+                    <a href="" type="submit" class="btn d-block FilterBtn"
+                        >Filter results</a
+                    >
                 </div>
             </form>
-            
         </div>
     </div>
 </template>
@@ -65,15 +70,14 @@ export default {
 .FilterBtn {
     background-color: #029e02;
     color: white;
-    font-size: 20px;
 }
 .FilterBtn:hover {
     background-color: #038b03;
 }
-.Horizontal{
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  border: 0;
-  border-top: 2px solid rgba(0, 0, 0, 0.1);
+.Horizontal {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
 }
 </style>

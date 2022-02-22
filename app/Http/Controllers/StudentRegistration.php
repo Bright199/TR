@@ -20,17 +20,19 @@ class StudentRegistration extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function index()
-    // {
-    //     return view('student.studentlogin');
-    // }
+    public function getAuthUser()
+    {
+        $authUser = Auth::guard('student')->user();
+        return response()->json($authUser);
+    }
 
+    public function EditStudentProfile()
+    {
+        return response()->json('Component');
+    }
     /**
      * Direct the student to the dashboard
      */
-    // public function studentdashboard(){
-
-    // }
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -38,7 +40,7 @@ class StudentRegistration extends Controller
             'password' => ['required'],
         ]);
 
-        if(Auth::guard('student')->attempt($credentials)){
+        if (Auth::guard('student')->attempt($credentials)) {
             $request->session()->regenerate();
             // Auth::guard('student')->logout();
             return redirect()->intended('/student/dashboard');

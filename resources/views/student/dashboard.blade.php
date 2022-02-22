@@ -33,25 +33,12 @@
 <body>
     <div id="vueapp">
         {{-- Navigation --}}
-        @if(Auth::guard('student')->user())
+        {{-- @if(Auth::guard('student')->user())
         <nav-bar :user="{{json_encode(Auth::guard('student')->user())}}"></nav-bar>
         @else
         <nav-bar :user="false"></nav-bar>
-        @endif
-        <div class="container">
-            {{-- Navifation --}}
-            <div class="container-jumbotron">
-                <div class="row">
-                    <div class="col-md-3 LeftBarStudent">
-                        <left-bar></left-bar>
-                    </div>
-                    <div class="col-md-9 ml-5">
-                        <right-bar></right-bar>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
+        @endif --}}
+        
     </div>
 </body>
 

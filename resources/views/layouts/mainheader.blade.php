@@ -89,6 +89,11 @@
                                 </form>
                             </div>
                         </li>
+                        <li class="nav-item ListItem">
+                            <a href="{{route('student.dashboard')}}" class="nav-link">
+                                Dashboard
+                            </a>
+                        </li>
                         @endguest
                         {{-- Teacher link --}}
                         @guest('teacher')
@@ -114,6 +119,11 @@
                                     @csrf
                                 </form>
                             </div>
+                        </li>
+                        <li class="nav-item ListItem">
+                            <a href="{{route('teacher.dashboard')}}" class="nav-link">
+                                Dashboard
+                            </a>
                         </li>
                         @endguest
                     </ul>

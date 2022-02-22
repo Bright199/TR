@@ -116,7 +116,7 @@
                             </li>
                             <li class="nav-item ListItem">
                                 <a href="{{route('student.dashboard')}}" class="nav-link">
-                                    <i class="fa-solid fa-arrow-right"></i>
+                                    Dashboard
                                 </a>
                             </li>
                         @endguest

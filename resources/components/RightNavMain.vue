@@ -1,8 +1,8 @@
 <template>
     <div class="rightNav">
         <!--  -->
-        <ul class="" v-if="CheckUrl=='/teacher/home'">
-            <li >
+        <ul class="" v-if="CheckUrl == '/teacher/home'">
+            <li>
                 <a href="/student/home">Hire a tutor</a>
             </li>
             <!-- <li >
@@ -13,11 +13,11 @@
             </li>
         </ul>
         <!--  -->
-        <ul class="" v-else-if="CheckUrl=='/student/home'">
+        <ul class="" v-else-if="CheckUrl == '/student/home'">
             <!-- <li >
                 <a href="/student/home">Hire a teacher</a>
             </li> -->
-            <li v-if="CheckUrl=='/student/home'">
+            <li v-if="CheckUrl == '/student/home'">
                 <a href="/teacher/home">Work from home</a>
             </li>
             <li>
@@ -26,10 +26,10 @@
         </ul>
         <!--  -->
         <ul class="" v-else>
-            <li >
+            <li>
                 <a href="/student/home">Hire a tutor</a>
             </li>
-            <li >
+            <li>
                 <a href="/teacher/home">Work from home</a>
             </li>
             <li>
@@ -62,14 +62,15 @@ export default {
     components: { OtherServices, LanguagesOffered, PricesOfLesson },
     data() {
         return {
-            CheckUrl:''
-        }
+            CheckUrl: "",
+        };
     },
     mounted() {
         var currentUrl = window.location.pathname;
-        this.CheckUrl = currentUrl
+        this.CheckUrl = currentUrl;
         // console.log(window.location.origin);
     },
+    methods: {},
 };
 </script>
 <style scoped>

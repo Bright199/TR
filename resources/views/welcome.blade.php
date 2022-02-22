@@ -111,7 +111,7 @@
                 </div> --}}
                 <div class="col-lg-4 col-md-4 border p-2">
                     <div id="vueapp">
-                        <vue-app></vue-app>
+                        {{-- <vue-app></vue-app> --}}
                     </div>
                 </div>
             </div>

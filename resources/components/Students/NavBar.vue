@@ -13,30 +13,67 @@
                 </div>
                 <div class="col">
                     <ul class="NavLinks2">
-                        <li>
-                            <a href=""
-                                ><i class="fa-solid fa-message"></i
-                                >&nbsp;Messages</a
-                            >
-                        </li>
-                        <li>
-                            <a href=""
-                                ><i class="fa-solid fa-bookmark"></i>&nbsp;My
-                                favorite</a
-                            >
-                        </li>
+                       
                         <li class="userdropdown">
                             <!-- <a href="" class="Logout "></a> -->
-                            <span class="UserName">{{ trimmedName }}</span>
+                            <span class="UserName"><i class="fa-solid fa-message"></i>&nbsp; Messages</span>
+                            <ul class="userdropdown-content">
+                                
+                                <li>
+                                    <router-link to="/student/messages"
+                                        >From: Teacher's name</router-link
+                                    >
+                                </li>
+                                <hr>
+                            </ul>
+                        </li>
+                       
+                        <li class="userdropdown">
+                            <!-- <a href="" class="Logout "></a> -->
+                            <span class="UserName"><i class="fa-solid fa-bookmark"></i>&nbsp; My favorites</span>
+                            <ul class="userdropdown-content">
+                                
+                                <li>
+                                    <router-link to="/student/favorite"
+                                        >Teacher's name</router-link
+                                    >
+                                </li>
+                                <hr>
+                            </ul>
+                        </li>
+                        <!-- {{ trimmedName }} -->
+                        <li class="userdropdown">
+                            <!-- <a href="" class="Logout "></a> -->
+                            <span class="UserName">{{ MyUser.name }}</span>
                             <ul class="userdropdown-content">
                                 <li>
-                                    <h3>Account</h3>
+                                    <p>
+                                        Account&nbsp;<i
+                                            class="fa-solid fa-gear"
+                                            style="
+                                                color: #151419;
+                                                font-size: 20px;
+                                            "
+                                        ></i>
+                                    </p>
+                                </li>
+                                <hr>
+                                <li>
+                                    <router-link to="/student/edit/profile"
+                                        >My Profile</router-link
+                                    >
                                 </li>
                                 <li>
-                                    <a href="">My profile</a>
-                                </li>
-                                <li>
-                                    <a href="/student/logout">Logout</a>
+                                    <a href="/student/logout"
+                                        >Logout
+                                        <i
+                                            class="fa-solid fa-right-from-bracket"
+                                            style="
+                                                color: #151419;
+                                                font-size: 20px;
+                                            "
+                                        ></i
+                                    ></a>
                                 </li>
                             </ul>
                         </li>
@@ -49,27 +86,29 @@
             {{ loggedUser }}
         </div> -->
     </div>
-    
 </template>
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
     name: "NavBar",
-    props: ["user"],
     data() {
         return {
-            trimmedName: "",
+            UserName: "",
         };
     },
-    mounted() {
-        this.$store.commit("userDetails", this.user);
-        this.trimmedName = this.user.name.split(" ", 1).join(" ");
+    // mounted() {
+    //     this.$store.commit("userDetails", this.user);
+    //     this.trimmedName = this.user.name.split(" ", 1).join(" ");
+    // },
+    computed: {
+        //    ...mapGetters({
+        //         UserFirstName
+        //    })
+        ...mapState({
+            MyUser: (state) => state.loggedUser,
+        }),
     },
-    computed: mapState({
-        count: (state) => state.count,
-        loggedUser: (state) => state.loggedUser,
-    }),
-    methods: {},
+    // methods: {},
 };
 </script>
 <style scoped>
@@ -144,9 +183,9 @@ export default {
 .userdropdown-content {
     display: none;
     position: absolute;
-    background-color: #f6f2e9;
+    background-color: #ffffff;
     min-width: 220px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
     padding: 12px 16px;
     z-index: 1;
     right: -10px;
@@ -165,7 +204,7 @@ export default {
 }
 
 .UserName {
-    color: #029e02;
+    color: #151419;
     text-transform: capitalize;
     font-weight: 600;
 }

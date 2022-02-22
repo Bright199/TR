@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                             <br><br>
-                            <a href="" class="btn d-block btn-success"
+                            <a href="" class="btn d-block FilterBtn"
                                 >Details</a
                             ><br />
                             <a href="" class="btn d-block btn-warning mb-3">Hire</a>
@@ -101,7 +101,7 @@
                                 </div>
                             </div>
                             <br><br>
-                            <a href="" class="btn d-block btn-success"
+                            <a href="" class="btn d-block FilterBtn"
                                 >Details</a
                             ><br />
                             <a href="" class="btn d-block btn-warning mb-3">Hire</a>
@@ -120,6 +120,11 @@ export default {
 };
 </script>
 <style scoped>
+.FilterBtn {
+    background-color: #029e02;
+    color: white;
+    /* font-size: 20px; */
+}
 .MainFluencyLevel {
     color: #029e02;
     background-color: rgb(2, 158, 2, 0.1);
@@ -142,10 +147,7 @@ export default {
     margin-top: 5px;
     font-size: 22px;
 }
-.OurTeachers {
-    /* height: 300px;
-    overflow-y: scroll; */
-}
+
 
 ::-webkit-scrollbar {
     width: 10px;

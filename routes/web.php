@@ -38,7 +38,13 @@ Route::prefix('student')->name('student.')->group(function () {
     });
     Route::middleware(['auth:student'])->group(function () {
         Route::view('/dashboard', 'student.dashboard')->name('dashboard');
+        Route::post('/logout', [StudentRegistration::class, 'logout'])->name('logout');
         Route::get('/logout', [StudentRegistration::class, 'logout'])->name('logout');
+        Route::get('/getAuthUser', [StudentRegistration::class, 'getAuthUser']);
+        Route::get('/edit/profile', [StudentRegistration::class, 'EditStudentProfile']);
+        Route::get('/create/ad', function(){
+            return response()->json('Component');
+        });
     });
 });
 
@@ -53,7 +59,10 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
     });
     Route::middleware(['auth:teacher'])->group(function () {
         Route::view('/dashboard', 'teacher.dashboard')->name('dashboard');
-        Route::get('/logout', [TeachersRegistration::class, 'logout'])->name('logout');
+        Route::post('/logout', [TeachersRegistration::class, 'logout'])->name('logout');
+        Route::get('/logout', function(){
+            return view('/dashboard');
+        });
     });
 });
 
