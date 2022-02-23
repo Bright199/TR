@@ -60,7 +60,7 @@
                                 <hr>
                                 <li>
                                     <router-link to="/student/edit/profile"
-                                        >My Profile</router-link
+                                        >View Profile</router-link
                                     >
                                 </li>
                                 <li>
@@ -125,11 +125,6 @@ export default {
  }
 } */
 .TopBar1 {
-    background: #f1edd8;
-    background: linear-gradient(90deg, #f1edd8 0%, #f6f2e9 80%);
-    background: -webkit-linear-gradient(90deg, #f1edd8 0%, #f6f2e9 80%);
-    background: -moz-linear-gradient(90deg, #f1edd8 0%, #f6f2e9 80%);
-
     box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -webkit-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -moz-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);

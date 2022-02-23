@@ -48,7 +48,7 @@
                             <a href="" class="btn d-block FilterBtn"
                                 >Details</a
                             ><br />
-                            <a href="" class="btn d-block btn-warning mb-3">Hire</a>
+                            <a href="" class="btn d-block btn-warning mb-3 RemoveOutline">Hire</a>
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                             <a href="" class="btn d-block FilterBtn"
                                 >Details</a
                             ><br />
-                            <a href="" class="btn d-block btn-warning mb-3">Hire</a>
+                            <a href="" class="btn d-block btn-warning mb-3 RemoveOutline">Hire</a>
                         </div>
                     </div>
                 </div>
@@ -124,6 +124,14 @@ export default {
     background-color: #029e02;
     color: white;
     /* font-size: 20px; */
+}
+.FilterBtn:focus {
+    outline: none;
+    box-shadow: none;
+}
+.RemoveOutline:focus {
+    outline: none;
+    box-shadow: none;
 }
 .MainFluencyLevel {
     color: #029e02;

@@ -1,21 +1,24 @@
 import { createStore } from "vuex";
 
 const store = createStore({
-    state () {
-      return {
-        loggedUser:''
-      }
-    },
-    mutations: {
-      userDetails (state, obtainedUser) {
-        state.loggedUser = obtainedUser
-      }
-    },
-    getters:{
-      UserFirstName(state){
-        return state.loggedUser
-      }
-    }
-  })
+  state() {
+    return {
+      loggedUser: '',
+      isAuthenticated: false
 
-  export default store;
+    }
+  },
+  mutations: {
+    userDetails(state, obtainedUser) {
+      state.loggedUser = obtainedUser
+      // state.isAuthenticated = true
+    }
+  },
+  getters: {
+    UserFirstName(state) {
+      return state.loggedUser
+    }
+  }
+})
+
+export default store;

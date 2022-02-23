@@ -16,10 +16,19 @@ class StudentRegistration extends Controller
     //         $this->middleware('guest:students');
     //     }
     /**
+     * 
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function loginForm(){
+        $authUser = Auth::guard('student')->user();
+        if(!$authUser){
+            return view('student.login');
+        }else{
+            return redirect()->route('student.dashboard');
+        }
+    }
     public function getAuthUser()
     {
         $authUser = Auth::guard('student')->user();
@@ -28,7 +37,19 @@ class StudentRegistration extends Controller
 
     public function EditStudentProfile()
     {
-        return response()->json('Component');
+        return view('student.editprofile');
+    }
+    public function EditProfile(Request $request)
+    {
+        $authUser = Student::find(Auth::guard('student')->id());
+        $authUser->name = $request->name;
+       $worked = $authUser->update();
+        if($worked){
+            return response()->json('worked');
+        }else{
+            return response()->json('failed');
+        }
+
     }
     /**
      * Direct the student to the dashboard

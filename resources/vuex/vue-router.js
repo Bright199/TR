@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import RightBar from '../components/Students/RightBar.vue';
 import EditStudentProfile from '../components/Students/EditStudentProfile.vue';
+import EditProfile from '../components/Students/EditProfile.vue';
 import RightNavMain from '../components/RightNavMain.vue';
 import StudentAd from '../components/Students/StudentAds/StudentAd.vue';
 import StudentDashboard from '../components/Students/StudentDashboard.vue';
+
 
 const newLocal = 'Home';
 const routes = [
@@ -18,9 +20,9 @@ const routes = [
         component: RightNavMain
     },
     // {
-    //     path: '/student/dashboard',
-    //     name:' NavBar',
-    //     component: NavBar,
+    //     path: '/student/edit',
+    //     name:' EditProfile',
+    //     component: EditProfile,
     // },
     {
         path: '/student/dashboard',

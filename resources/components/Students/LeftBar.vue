@@ -71,6 +71,10 @@ export default {
     background-color: #029e02;
     color: white;
 }
+.FilterBtn:focus {
+    outline: none;
+    box-shadow: none;
+}
 .FilterBtn:hover {
     background-color: #038b03;
 }

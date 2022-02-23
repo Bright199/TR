@@ -31,7 +31,8 @@ Route::get('/student/home', function () {
 // Student registration system
 Route::prefix('student')->name('student.')->group(function () {
     Route::middleware(['guest:student'])->group(function () {
-        Route::view('/login', 'student.login')->name('login');
+        // Route::view('/login', 'student.login')->name('login');
+        Route::get('/login',[StudentRegistration::class, 'loginForm'])->name('login');
         Route::post('/login', [StudentRegistration::class, 'login'])->name('login');
         Route::view('/register', 'student.register')->name('register');
         Route::post('/register', [StudentRegistration::class, 'store'])->name('register');
@@ -42,6 +43,7 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/logout', [StudentRegistration::class, 'logout'])->name('logout');
         Route::get('/getAuthUser', [StudentRegistration::class, 'getAuthUser']);
         Route::get('/edit/profile', [StudentRegistration::class, 'EditStudentProfile']);
+        Route::post('/edit', [StudentRegistration::class, 'EditProfile']);
         Route::get('/create/ad', function(){
             return response()->json('Component');
         });
