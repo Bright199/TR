@@ -40,9 +40,9 @@ const routes = [
         component: EditStudentProfile
     },
     // {
-    //     path: '/student/dashboard',
-    //     name: "NavBar",
-    //     component: NavBar
+    //     path: '/student/home',
+    //     name: "RightNavMain",
+    //     component: RightNavMain
     // },
     // {
     //     path: '/student/home',

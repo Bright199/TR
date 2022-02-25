@@ -22,7 +22,20 @@
                                     AuthUser.name
                                 }}</span>
                             </p>
-                            {{ AuthUser.email }}
+                            <p>
+                                Joined TREnglish on
+                                <span
+                                    style="font-weight: 700; color: #03b103"
+                                    >{{
+                                        new Date(DateJoined).getDate() +
+                                        "/" +
+                                        (new Date(DateJoined).getMonth() + 1) +
+                                        "/" +
+                                        new Date(DateJoined).getFullYear()
+                                    }}</span
+                                >
+                            </p>
+                            <p>{{ AuthUser.email }}</p>
                             <p>
                                 Logged in as
                                 <span style="font-weight: 700; color: #03b103"
@@ -32,12 +45,19 @@
                         </div>
                         <div class="col-sm-3 col-md-3 col-lg-3 p-2">
                             <button
-                                class="btn EditBtn"
+                                class="btn OutLineRemove"
                                 data-bs-toggle="modal"
                                 data-bs-target="#myModal"
                             >
-                                Edit Profile
-                            </button>
+                                Edit Profile</button
+                            ><br />
+                            <p
+                                class="DeleteUser"
+                                data-bs-toggle="modal"
+                                data-bs-target="#DeleteModal"
+                            >
+                                Delete my account
+                            </p>
                         </div>
                     </div>
                     <br />
@@ -53,13 +73,13 @@
                 Open modal
             </button> -->
 
-            <!-- The Modal -->
+            <!-- The Edit Modal -->
             <div class="modal fade" id="myModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">Editing Profile</h4>
+                            <h5 class="modal-title">Editing Profile</h5>
                             <button
                                 type="button"
                                 class="btn-close"
@@ -82,6 +102,32 @@
                                         v-model="AuthUserName"
                                     />
                                 </div>
+                                <div class="mt-3">
+                                    <select class="form-select">
+                                        <option
+                                            v-for="(
+                                                country, index
+                                            ) in countriesInfo"
+                                            :key="index"
+                                            :value="country.value"
+                                        >
+                                            {{ country.name }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <br>
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label"
+                                        >Set profile picture</label
+                                    >
+                                    <input
+                                        class="form-control"
+                                        type="file"
+                                        id="formFile"
+                                    />
+                                </div>
+
+                                <!-- {{countriesInfo}} -->
                                 <p class="text-danger" v-if="error !== ''">
                                     {{ error }}
                                 </p>
@@ -100,10 +146,48 @@
                             <button
                                 ref="DismisBtn"
                                 type="button"
-                                class="btn btn-danger "
+                                class="btn btn-danger"
                                 data-bs-dismiss="modal"
                             >
                                 Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- The Edit Modal -->
+            <div class="modal fade" id="DeleteModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                Are you sure you want to delete your account?
+                            </h5>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                            ></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <button
+                                ref="DismisBtn"
+                                type="button"
+                                class="btn EditBtn"
+                                data-bs-dismiss="modal"
+                            >
+                                Cancel
+                            </button>
+
+                            <button
+                                class="btn btn-danger"
+                                @click="DeletetUser"
+                                style="margin-left: 10px"
+                            >
+                                Delete account
                             </button>
                         </div>
                     </div>
@@ -123,6 +207,7 @@ export default {
         return {
             AuthUserName: "",
             error: "",
+            countriesInfo: [],
         };
     },
     mounted() {
@@ -136,11 +221,40 @@ export default {
             .catch(function (error) {
                 console.log(error);
             });
+
+        // Countries
+        axios
+            .get("https://countriesnow.space/api/v0.1/countries/flag/images")
+            .then(function (response) {
+                thisValue.countriesInfo = response.data.data;
+                console.log(response.data.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     },
     computed: mapState({
         AuthUser: (state) => state.loggedUser,
+        DateJoined: (state) => state.loggedUser.created_at,
     }),
     methods: {
+        DeletetUser() {
+            let thisValue = this;
+            const data = {
+                user_id: this.AuthUser.id,
+            };
+            axios
+                .post("/student/delete/account")
+                .then(function () {
+                    {
+                        alert("Account deleted successfully");
+                        thisValue.$router.push("/student/login");
+                    }
+                })
+                .catch(function (error) {
+                    alert("we failed to process your request. Try again later");
+                });
+        },
         EditUser() {
             if (this.AuthUserName === "") {
                 this.error = "Name can not be empty!";
@@ -152,13 +266,13 @@ export default {
             const userInfo = {
                 name: this.AuthUserName,
             };
-              let thisValue = this;
-              
+            let thisValue = this;
+
             axios
                 .post("/student/edit", userInfo)
                 .then(function (response) {
-                     thisValue.$refs.DismisBtn.click();
-                     thisValue.$router.push('/student/dashboard')
+                    thisValue.$refs.DismisBtn.click();
+                    thisValue.$router.push("/student/dashboard");
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -167,7 +281,10 @@ export default {
     },
 };
 </script>
-<style>
+<style scoped>
+.btn {
+    border-radius: 0;
+}
 .TopBar1 {
     box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -webkit-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
@@ -267,6 +384,16 @@ export default {
     outline: none;
     box-shadow: none;
 }
+.OutLineRemove:focus {
+    outline: none;
+    box-shadow: none;
+}
+.OutLineRemove {
+    background-color: #fec107;
+}
+.OutLineRemove:hover {
+    background-color: #ffcb2efb;
+}
 .EditBtn:hover {
     background-color: #03b103;
     color: white;
@@ -274,5 +401,9 @@ export default {
 .InputBox:focus {
     outline: none;
     box-shadow: none;
+}
+
+.DeleteUser:hover {
+    cursor: pointer;
 }
 </style>

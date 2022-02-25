@@ -120,6 +120,9 @@ export default {
 };
 </script>
 <style scoped>
+.btn{
+    border-radius: 0
+}
 .FilterBtn {
     background-color: #029e02;
     color: white;

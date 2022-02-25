@@ -44,8 +44,9 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/getAuthUser', [StudentRegistration::class, 'getAuthUser']);
         Route::get('/edit/profile', [StudentRegistration::class, 'EditStudentProfile']);
         Route::post('/edit', [StudentRegistration::class, 'EditProfile']);
+        Route::post('/delete/account', [StudentRegistration::class, 'DeleteProfile']);
         Route::get('/create/ad', function(){
-            return response()->json('Component');
+            return view('student.ad');
         });
     });
 });

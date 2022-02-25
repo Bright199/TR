@@ -64,6 +64,11 @@
                                     >
                                 </li>
                                 <li>
+                                    <router-link to="/student/ad/management"
+                                        >My ads</router-link
+                                    >
+                                </li>
+                                <li>
                                     <a href="/student/logout"
                                         >Logout
                                         <i
@@ -124,6 +129,9 @@ export default {
     background-color: #fec107
  }
 } */
+.btn{
+    border-radius: 0
+}
 .TopBar1 {
     box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -webkit-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);

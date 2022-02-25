@@ -51,6 +51,13 @@ class StudentRegistration extends Controller
         }
 
     }
+    // Delete ACcount
+    public function DeleteProfile(Request $request){
+        $authUser = Student::where('id', Auth::guard('student')->id());
+        if($authUser){
+            $authUser->delete();
+        }
+    }
     /**
      * Direct the student to the dashboard
      */

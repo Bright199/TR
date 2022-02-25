@@ -84,4 +84,7 @@ export default {
     border: 0;
     border-top: 2px solid rgba(0, 0, 0, 0.1);
 }
+.btn{
+    border-radius: 0
+}
 </style>

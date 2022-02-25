@@ -64,6 +64,9 @@ export default {
 };
 </script>
 <style scoped>
+.btn{
+    border-radius: 0
+}
 .OtherTeachersLink a {
     text-decoration: none;
     color: #151419;
