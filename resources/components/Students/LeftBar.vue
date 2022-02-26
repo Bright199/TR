@@ -25,10 +25,13 @@
                 <div>
                     <h5>Country</h5>
                     <select class="form-select form-select-sm mt-3">
-                        <option>Turkey</option>
-                        <option>Mozambique</option>
-                        <option>Kenya</option>
-                        <option>Zimbabwe</option>
+                        <option
+                            v-for="(country, index) in countriesInfo"
+                            :key="index"
+                            :value="country.value"
+                        >
+                            {{ country.name }}
+                        </option>
                     </select>
                 </div>
                 <br />
@@ -42,8 +45,25 @@
     </div>
 </template>
 <script>
+import axios from "axios";
 export default {
     name: "LeftBar",
+    data() {
+        return {
+            countriesInfo: [],
+        };
+    },
+    mounted() {
+        const thisValue = this;
+        axios
+            .get("https://countriesnow.space/api/v0.1/countries/flag/images")
+            .then(function (response) {
+                thisValue.countriesInfo = response.data.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
 };
 </script>
 <style scoped>
@@ -84,7 +104,7 @@ export default {
     border: 0;
     border-top: 2px solid rgba(0, 0, 0, 0.1);
 }
-.btn{
-    border-radius: 0
+.btn {
+    border-radius: 0;
 }
 </style>

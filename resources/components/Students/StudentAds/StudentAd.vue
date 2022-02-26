@@ -104,9 +104,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-2">
-                    
-                </div>
+                <div class="col-md-2"></div>
             </div>
         </div>
     </div>
@@ -114,26 +112,15 @@
 <script>
 import Header from "../Edits/Header.vue";
 import axios from "axios";
-// import { QuillEditor } from "@vueup/vue-quill";
-// import "@vueup/vue-quill/dist/vue-quill.snow.css";
-// import "@vueup/vue-quill/dist/vue-quill.bubble.css";
 export default {
     name: "StudentAd",
     components: { Header },
     // QuillEditor
     data() {
-        return {
-            // adBody:''
-        };
+        return {};
     },
-    methods: {
-        // submitAd(){
-        //     alert(this.adBody)
-        // }
-    },
-    mounted() {
-       
-    },
+    methods: {},
+    mounted() {},
 };
 </script>
 

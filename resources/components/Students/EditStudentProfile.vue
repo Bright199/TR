@@ -116,7 +116,7 @@
                                     </select>
                                 </div>
                                 <br>
-                                <div class="mb-3">
+                                <!-- <div class="mb-3">
                                     <label for="formFile" class="form-label"
                                         >Set profile picture</label
                                     >
@@ -125,25 +125,25 @@
                                         type="file"
                                         id="formFile"
                                     />
-                                </div>
-
+                                </div> -->
+                                    <div class="d-flex justify-content-center">
+                                        <ImageCrop/>
+                                    </div>
                                 <!-- {{countriesInfo}} -->
                                 <p class="text-danger" v-if="error !== ''">
                                     {{ error }}
                                 </p>
+
+                                <div class="modal-footer">
+                                    
                                 <button
                                     type="submit"
-                                    class="btn EditBtn"
+                                    class="btn btn-warning"
                                     @click="EditUser"
                                 >
                                     Save changes
                                 </button>
-                            </form>
-                        </div>
-
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button
+                                <button
                                 ref="DismisBtn"
                                 type="button"
                                 class="btn btn-danger"
@@ -151,7 +151,11 @@
                             >
                                 Cancel
                             </button>
+                                </div>
+                            </form>
                         </div>
+
+                        
                     </div>
                 </div>
             </div>
@@ -176,7 +180,7 @@
                             <button
                                 ref="DismisBtn"
                                 type="button"
-                                class="btn EditBtn"
+                                class="btn btn-warning"
                                 data-bs-dismiss="modal"
                             >
                                 Cancel
@@ -200,9 +204,10 @@
 import { mapState, mapMutations } from "vuex";
 import Header from "./Edits/Header.vue";
 import axios from "axios";
+import ImageCrop from './ImageCrop.vue'
 export default {
     name: "EditStudentProfile",
-    components: { Header },
+    components: { Header,ImageCrop },
     data() {
         return {
             AuthUserName: "",
@@ -227,7 +232,6 @@ export default {
             .get("https://countriesnow.space/api/v0.1/countries/flag/images")
             .then(function (response) {
                 thisValue.countriesInfo = response.data.data;
-                console.log(response.data.data);
             })
             .catch(function (error) {
                 console.log(error);
