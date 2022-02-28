@@ -1,25 +1,25 @@
 <template>
     <div>
-        <!-- <img :src="userImagPreview" alt="" width="150" > -->
-        <Cropper
+        <img :src="userImagPreview" alt="" width="150" >
+        <!-- <Cropper
             class="cropper"
             :src="img"
             :stencil-props="{
                 aspectRatio: 12 / 12,
             }"
             @change="change"
-        />
+        /> -->
         <label for="imageIcon" class="btn btn-light"><i class="fa-solid fa-upload"></i>&nbsp; Upload Image</label>
-        <input type="file" name="" id="imageIcon" @change="uploadUserImage" style="display:none" />
+        <input type="file" name="userprofile" id="imageIcon" @change="uploadUserImage" style="display:none" />
     </div>
 </template>
 <script>
-import { Cropper } from "vue-advanced-cropper";
-import "vue-advanced-cropper/dist/style.css";
+// import { Cropper } from "vue-advanced-cropper";
+// import "vue-advanced-cropper/dist/style.css";
 export default {
     name: "ImageCrop",
     components: {
-        Cropper,
+        // Cropper,
     },
     data() {
         return {
@@ -32,14 +32,14 @@ export default {
         change({ coordinates, canvas }) {
             // console.log(canvas);
             this.userImagPreview = canvas.toDataURL();
-            // console.log(canvas.toDataURL())
+            this.$store.commit('profileImage',canvas.toDataURL())
         },
         uploadUserImage(e) {
             this.userImag = e.target.files[0];
             const reader = new FileReader();
             reader.readAsDataURL(this.userImag);
             reader.onload = (e) => {
-                this.img = e.target.result;
+                this.userImagPreview = e.target.result;
             };
             // console.log(this.userImag)
         },

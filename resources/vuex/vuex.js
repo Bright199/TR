@@ -4,7 +4,7 @@ const store = createStore({
   state() {
     return {
       loggedUser: '',
-      isAuthenticated: false
+      profileImageUrl: ''
 
     }
   },
@@ -12,6 +12,10 @@ const store = createStore({
     userDetails(state, obtainedUser) {
       state.loggedUser = obtainedUser
       // state.isAuthenticated = true
+    },
+    profileImage(state,profileImage)
+    {
+      state.profileImageUrl = profileImage
     }
   },
   getters: {

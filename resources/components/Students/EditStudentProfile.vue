@@ -10,8 +10,13 @@
                 <div class="col-md-8 EditCard p-4">
                     <div class="row">
                         <div class="col-sm-3 col-md-3 col-lg-3 p-2 border">
-                            <img
+                            <img v-if="AuthUser.user_image === null"
                                 src="/images/Green2.png"
+                                alt=""
+                                style="width: 100%"
+                            />
+                            <img v-else-if="AuthUser.user_image !== null"
+                                :src="'/student/images/'+AuthUser.user_image"
                                 alt=""
                                 style="width: 100%"
                             />
@@ -89,7 +94,11 @@
 
                         <!-- Modal body -->
                         <div class="modal-body">
-                            <form @submit.prevent="EditUser">
+                            <form
+                                @submit.prevent="EditUser"
+                                enctype="multipart/form-data"
+                                method="post"
+                            >
                                 <div class="mb-3 mt-3">
                                     <label for="username" class="form-label"
                                         >Name:</label
@@ -103,59 +112,77 @@
                                     />
                                 </div>
                                 <div class="mt-3">
-                                    <select class="form-select">
+                                    <select
+                                        name="country"
+                                        v-model="CountryOfOrigin"
+                                        class="form-select"
+                                    >
                                         <option
                                             v-for="(
                                                 country, index
                                             ) in countriesInfo"
                                             :key="index"
-                                            :value="country.value"
                                         >
                                             {{ country.name }}
                                         </option>
                                     </select>
                                 </div>
-                                <br>
-                                <!-- <div class="mb-3">
-                                    <label for="formFile" class="form-label"
-                                        >Set profile picture</label
+                                <br />
+                                <!-- <div class="d-flex justify-content-center">
+                                    <ImageCrop />
+                                </div> -->
+                                <div>
+                                    <div
+                                        class="container d-flex justify-content-center"
+                                        v-if="userImagPreview"
+                                    >
+                                        <img
+                                            :src="userImagPreview"
+                                            alt=""
+                                            width="150"
+                                            height="150"
+                                        />
+                                    </div>
+
+                                    <label
+                                        for="imageProfile"
+                                        class="btn btn-light"
+                                        ><i class="fa-solid fa-upload"></i
+                                        >&nbsp; Upload Image</label
                                     >
                                     <input
-                                        class="form-control"
                                         type="file"
-                                        id="formFile"
+                                        name="imageProfile"
+                                        id="imageProfile"
+                                        @change="uploadUserImage"
+                                        style="display: none"
+                                        accept="image/*"
                                     />
-                                </div> -->
-                                    <div class="d-flex justify-content-center">
-                                        <ImageCrop/>
-                                    </div>
+                                </div>
                                 <!-- {{countriesInfo}} -->
                                 <p class="text-danger" v-if="error !== ''">
                                     {{ error }}
                                 </p>
 
                                 <div class="modal-footer">
-                                    
-                                <button
-                                    type="submit"
-                                    class="btn btn-warning"
-                                    @click="EditUser"
-                                >
-                                    Save changes
-                                </button>
-                                <button
-                                ref="DismisBtn"
-                                type="button"
-                                class="btn btn-danger"
-                                data-bs-dismiss="modal"
-                            >
-                                Cancel
-                            </button>
+                                    <button
+                                        type="submit"
+                                        class="btn btn-warning"
+                                        @click="EditUser"
+                                    >
+                                        Save changes
+                                    </button>
+                                    <button
+                                        ref="DismisBtn"
+                                        type="button"
+                                        class="btn btn-danger"
+                                        data-bs-dismiss="modal"
+                                    >
+                                        Cancel
+                                    </button>
                                 </div>
                             </form>
                         </div>
-
-                        
                     </div>
                 </div>
             </div>
@@ -188,7 +215,7 @@
 
                             <button
                                 class="btn btn-danger"
-                                @click="DeletetUser"
+                                @click="DeleteUser"
                                 style="margin-left: 10px"
                             >
                                 Delete account
@@ -204,15 +231,19 @@
 import { mapState, mapMutations } from "vuex";
 import Header from "./Edits/Header.vue";
 import axios from "axios";
-import ImageCrop from './ImageCrop.vue'
+import ImageCrop from "./ImageCrop.vue";
 export default {
     name: "EditStudentProfile",
-    components: { Header,ImageCrop },
+    components: { Header, ImageCrop },
     data() {
         return {
             AuthUserName: "",
             error: "",
             countriesInfo: [],
+            CountryOfOrigin: "Afghanistan",
+
+            userImag: "",
+            userImagPreview: "",
         };
     },
     mounted() {
@@ -242,7 +273,15 @@ export default {
         DateJoined: (state) => state.loggedUser.created_at,
     }),
     methods: {
-        DeletetUser() {
+        uploadUserImage(e) {
+            this.userImag = e.target.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(this.userImag);
+            reader.onload = (e) => {
+                this.userImagPreview = e.target.result;
+            };
+        },
+        DeleteUser() {
             let thisValue = this;
             const data = {
                 user_id: this.AuthUser.id,
@@ -267,20 +306,46 @@ export default {
                 }, 40000);
                 return;
             }
-            const userInfo = {
-                name: this.AuthUserName,
-            };
-            let thisValue = this;
+            if (this.userImag !== "") {
+                const userDetails = new FormData();
+                userDetails.append("imageProfile", this.userImag);
+                userDetails.append("country", this.CountryOfOrigin);
+                userDetails.append("username", this.AuthUserName);
 
-            axios
-                .post("/student/edit", userInfo)
-                .then(function (response) {
-                    thisValue.$refs.DismisBtn.click();
-                    thisValue.$router.push("/student/dashboard");
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+                const mypointer = this;
+                axios
+                    .post("/student/edit", userDetails, {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
+                    .then(function (response) {
+                        const elem = mypointer.$refs.DismisBtn
+                        elem.click();
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            } else {
+                const userDetails = new FormData();
+                userDetails.append("country", this.CountryOfOrigin);
+                userDetails.append("username", this.AuthUserName);
+
+                const mypointer = this;
+                axios
+                    .post("/student/edit", userDetails, {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
+                    .then(function (response) {
+                        const elem = mypointer.$refs.DismisBtn
+                        elem.click();
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
         },
     },
 };

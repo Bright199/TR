@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8 shadow p-4">
-                    <form @submit.prevent="submitAd">
+                    <form @submit.prevent="submitAd" autocomplete="off">
                         <div class="form-floating mb-3 mt-3">
                             <div class="mb-3 mt-3">
                                 <label for="adtitle" class="form-label"
@@ -29,21 +29,23 @@
                                     type="text"
                                     class="form-control"
                                     id="adtitle"
+                                    v-model="adtitle"
                                     placeholder="Enter ad title"
                                     name="adtitle"
                                 />
                             </div>
                         </div>
-                        <label for="comment">Ad description:</label>
+                        <label for="ad_description">Ad description:</label>
                         <textarea
                             class="form-control"
                             rows="5"
-                            id="comment"
-                            name="text"
+                            id="ad_description"
+                            v-model="description"
+                            name="ad_description"
                         ></textarea>
                         <!-- <QuillEditor theme="snow" toolbar="essential" v-model:content="adBody" contentType="html" .../> -->
                         <div class="mt-3">
-                            <select class="form-select">
+                            <select v-model="language" class="form-select">
                                 <option>Language Category</option>
                                 <option>French</option>
                                 <option>Spanish</option>
@@ -56,8 +58,9 @@
                             <div class="col">
                                 <div class="mb-3 mt-3">
                                     <input
-                                        type="text"
+                                        type="number"
                                         class="form-control"
+                                        v-model="minamount"
                                         name="minamount"
                                         placeholder="Minimum budget"
                                     />
@@ -67,9 +70,10 @@
                             <div class="col">
                                 <div class="mb-3 mt-3">
                                     <input
-                                        type="text"
+                                        type="number"
                                         class="form-control"
                                         name="maxamount"
+                                        v-model="maxamount"
                                         placeholder="Maximum budget"
                                     />
                                 </div>
@@ -77,7 +81,10 @@
 
                             <div class="col">
                                 <div class="mb-3 mt-3">
-                                    <select class="form-select">
+                                    <select
+                                        v-model="currency"
+                                        class="form-select"
+                                    >
                                         <option>USD</option>
                                         <option>EUR</option>
                                         <option>TL</option>
@@ -88,7 +95,7 @@
                         </div>
                         <div class="mb-3 mt-3">
                             <p>I'm a</p>
-                            <select class="form-select">
+                            <select v-model="gender" class="form-select">
                                 <option>Male</option>
                                 <option>Female</option>
                             </select>
@@ -117,10 +124,51 @@ export default {
     components: { Header },
     // QuillEditor
     data() {
-        return {};
+        return {
+            adtitle: "",
+            description: "",
+            language: "",
+            minamount: "",
+            maxamount: "",
+            currency: "USD",
+            gender: "Male",
+
+            AuthUserDetails: "",
+        };
     },
-    methods: {},
-    mounted() {},
+    methods: {
+        submitAd() {
+            if (
+                this.AuthUserDetails.user_image === null &&
+                this.AuthUserDetails.country === null
+            ) {
+                alert("Ad a profile image and country by editing your profile");
+                return;
+            } else {
+                const data = {
+                    title: this.adtitle,
+                    description: this.description,
+                    minamount: this.minamount,
+                    maxamount: this.maxamount,
+                    currency: this.currency,
+                    gender: this.gender,
+                };
+            }
+        },
+    },
+    mounted() {
+        let thisValue = this;
+        axios
+            .get("/student/getAuthUser")
+            .then(function (response) {
+                thisValue.$store.commit("userDetails", response.data);
+                thisValue.AuthUserDetails = response.data;
+                // console.log(response.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
 };
 </script>
 
@@ -255,5 +303,15 @@ textarea:focus,
 
 .DeleteUser:hover {
     cursor: pointer;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 </style>

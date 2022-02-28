@@ -21,13 +21,20 @@ class StudentRegistration extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function loginForm(){
+    public function loginForm()
+    {
         $authUser = Auth::guard('student')->user();
-        if(!$authUser){
+        if (!$authUser) {
             return view('student.login');
-        }else{
+        } else {
             return redirect()->route('student.dashboard');
         }
+    }
+
+    public function CheckProfileInfo()
+    {
+        $authUser = Student::find(Auth::guard('student')->id());
+        return response()->json($authUser);
     }
     public function getAuthUser()
     {
@@ -41,20 +48,41 @@ class StudentRegistration extends Controller
     }
     public function EditProfile(Request $request)
     {
-        $authUser = Student::find(Auth::guard('student')->id());
-        $authUser->name = $request->name;
-       $worked = $authUser->update();
-        if($worked){
-            return response()->json('worked');
-        }else{
-            return response()->json('failed');
-        }
+        if ($request->hasFile('imageProfile')) {
+            $authUser = Student::find(Auth::guard('student')->id());
 
+            $file = $request->file('imageProfile');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $path = 'student/images/';
+            $file->storeAs($path, $fileName, 'public');
+
+            $authUser->name = $request->username;
+            $authUser->user_image = $fileName;
+            $authUser->country = $request->country;
+            $worked = $authUser->update();
+            if ($worked) {
+                return response()->json('worked');
+            } else {
+                return response()->json('failed');
+            }
+        } else {
+            $authUser = Student::find(Auth::guard('student')->id());
+            $authUser->name = $request->username;
+            $authUser->country = $request->country;
+            $worked = $authUser->update();
+
+            if ($worked) {
+                return response()->json('worked');
+            } else {
+                return response()->json('failed');
+            }
+        }
     }
     // Delete ACcount
-    public function DeleteProfile(Request $request){
+    public function DeleteProfile(Request $request)
+    {
         $authUser = Student::where('id', Auth::guard('student')->id());
-        if($authUser){
+        if ($authUser) {
             $authUser->delete();
         }
     }
