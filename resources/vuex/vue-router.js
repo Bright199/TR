@@ -4,6 +4,7 @@ import EditStudentProfile from '../components/Students/EditStudentProfile.vue';
 import EditProfile from '../components/Students/EditProfile.vue';
 import RightNavMain from '../components/RightNavMain.vue';
 import StudentAd from '../components/Students/StudentAds/StudentAd.vue';
+import StudentAdManagement from '../components/Students/StudentAds/StudentAdManagement.vue';
 import StudentDashboard from '../components/Students/StudentDashboard.vue';
 
 
@@ -39,11 +40,11 @@ const routes = [
         name: "EditStudentProfile",
         component: EditStudentProfile
     },
-    // {
-    //     path: '/student/home',
-    //     name: "RightNavMain",
-    //     component: RightNavMain
-    // },
+    {
+        path: '/student/ad/management',
+        name: "StudentAdmanagement",
+        component: StudentAdManagement
+    },
     // {
     //     path: '/student/home',
     //     name: "NavBar",

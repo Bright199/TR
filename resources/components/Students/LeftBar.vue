@@ -56,7 +56,11 @@ export default {
     mounted() {
         const thisValue = this;
         axios
-            .get("https://countriesnow.space/api/v0.1/countries/flag/images")
+            .get("https://countriesnow.space/api/v0.1/countries/flag/images",{
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
             .then(function (response) {
                 thisValue.countriesInfo = response.data.data;
             })

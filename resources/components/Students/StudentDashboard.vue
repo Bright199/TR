@@ -32,7 +32,11 @@ export default {
     mounted() {
         let thisValue = this;
         axios
-            .get("/student/getAuthUser")
+            .get("/student/getAuthUser",{
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
             .then(function (response) {
                 thisValue.$store.commit("userDetails", response.data);
                 thisValue.trimmedName = response.data;

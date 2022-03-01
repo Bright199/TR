@@ -33,6 +33,11 @@
                                     placeholder="Enter ad title"
                                     name="adtitle"
                                 />
+                                <div v-if="errors.adtitle.length">
+                                    <p style="color: red; font-weight: 550">
+                                        {{ errors.adtitle }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         <label for="ad_description">Ad description:</label>
@@ -43,12 +48,17 @@
                             v-model="description"
                             name="ad_description"
                         ></textarea>
+                        <div v-if="errors.description.length">
+                            <p style="color: red; font-weight: 550">
+                                {{ errors.description }}
+                            </p>
+                        </div>
                         <!-- <QuillEditor theme="snow" toolbar="essential" v-model:content="adBody" contentType="html" .../> -->
                         <div class="mt-3">
                             <select v-model="language" class="form-select">
-                                <option>Language Category</option>
-                                <option>French</option>
+                                <option>English</option>
                                 <option>Spanish</option>
+                                <option>French</option>
                                 <option>Arabic</option>
                             </select>
                         </div>
@@ -64,6 +74,11 @@
                                         name="minamount"
                                         placeholder="Minimum budget"
                                     />
+                                    <div v-if="errors.minamount.length">
+                                        <p style="color: red; font-weight: 550">
+                                            {{ errors.minamount }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
@@ -76,6 +91,11 @@
                                         v-model="maxamount"
                                         placeholder="Maximum budget"
                                     />
+                                    <div v-if="errors.maxamount.length">
+                                        <p style="color: red; font-weight: 550">
+                                            {{ errors.maxamount }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
@@ -127,17 +147,24 @@ export default {
         return {
             adtitle: "",
             description: "",
-            language: "",
+            language: "English",
             minamount: "",
             maxamount: "",
             currency: "USD",
             gender: "Male",
 
             AuthUserDetails: "",
+            errors: {
+                adtitle: "",
+                description: "",
+                minamount: "",
+                maxamount: "",
+            },
         };
     },
     methods: {
-        submitAd() {
+        submitAd(e) {
+                 e.preventDefault();
             if (
                 this.AuthUserDetails.user_image === null &&
                 this.AuthUserDetails.country === null
@@ -145,14 +172,55 @@ export default {
                 alert("Ad a profile image and country by editing your profile");
                 return;
             } else {
-                const data = {
-                    title: this.adtitle,
-                    description: this.description,
-                    minamount: this.minamount,
-                    maxamount: this.maxamount,
-                    currency: this.currency,
-                    gender: this.gender,
-                };
+                if (this.adtitle === "") {
+                    this.errors.adtitle = "This field is required!";
+                    setInterval(() => {
+                        this.errors.adtitle = "";
+                    }, 5000);
+                } else if (this.description === "") {
+                    this.errors.description = "This field is required!";
+                    setInterval(() => {
+                        this.errors.description = "";
+                    }, 5000);
+                } else if (this.minamount === "") {
+                    this.errors.minamount = "This field is required!";
+                    setInterval(() => {
+                        this.errors.minamount = "";
+                    }, 5000);
+                } else if (this.maxamount === "") {
+                    this.errors.maxamount = "This field is required!";
+                    setInterval(() => {
+                        this.errors.maxamount = "";
+                    }, 5000);
+                } else {
+                    this.errors.maxamount = "";
+                    this.errors.minamount = "";
+                    this.errors.description = "";
+                    this.errors.adtitle = "";
+                    const data = {
+                        title: this.adtitle,
+                        description: this.description,
+                        minamount: this.minamount,
+                        maxamount: this.maxamount,
+                        currency: this.currency,
+                        gender: this.gender,
+                        language: this.language
+                    };
+                    const mypointer = this;
+                    axios
+                    .post('/student/ad/save',data,{
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
+                    .then(function (){
+                        mypointer.adtitle ='';
+                        mypointer.description ='';
+                        mypointer.minamount ='';
+                        mypointer.maxamount ='';
+                        // mypointer.$router.push('/student/ad/management')
+                    })
+                }
             }
         },
     },

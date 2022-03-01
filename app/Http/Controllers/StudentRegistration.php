@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use App\Models\StudentAd;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -31,6 +32,30 @@ class StudentRegistration extends Controller
         }
     }
 
+    public function GetAds(){
+        $ads = StudentAd::where('student_id',Auth::guard('student')->id())->get();
+        return response()->json($ads);
+    }
+    public function AdSave(Request $request)
+    {
+        $authUser = Auth::guard('student')->id();
+        $StudentAd = StudentAd::create([
+            'student_id' => $authUser,
+            'title'=> $request->title,
+            'description'=> $request->description,
+            'language_category'=>$request->language,
+            'minimum_budget'=>$request->minamount,
+            'maximum_budget' =>$request->maxamount,
+            'currency' =>$request->currency,
+            'student_gender'=>$request->gender
+        ]);
+        // if($StudentAd){
+        //     return response()->json('Ad created successfully');
+        // }else{
+        //     return response()->json('Not working');
+        // }
+    }
+
     public function CheckProfileInfo()
     {
         $authUser = Student::find(Auth::guard('student')->id());
@@ -52,7 +77,7 @@ class StudentRegistration extends Controller
             $authUser = Student::find(Auth::guard('student')->id());
 
             $file = $request->file('imageProfile');
-            $fileName = time() . '_' . $file->getClientOriginalName();
+            $fileName = time() . $file->getClientOriginalName();
             $path = 'student/images/';
             $file->storeAs($path, $fileName, 'public');
 

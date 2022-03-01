@@ -16,7 +16,7 @@
                                 style="width: 100%"
                             />
                             <img v-else-if="AuthUser.user_image !== null"
-                                :src="'/student/images/'+AuthUser.user_image"
+                                :src="'/storage/student/images/'+AuthUser.user_image"
                                 alt=""
                                 style="width: 100%"
                             />
@@ -249,7 +249,11 @@ export default {
     mounted() {
         let thisValue = this;
         axios
-            .get("/student/getAuthUser")
+            .get("/student/getAuthUser",{
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
             .then(function (response) {
                 thisValue.$store.commit("userDetails", response.data);
                 thisValue.AuthUserName = response.data.name;
@@ -260,7 +264,11 @@ export default {
 
         // Countries
         axios
-            .get("https://countriesnow.space/api/v0.1/countries/flag/images")
+            .get("https://countriesnow.space/api/v0.1/countries/flag/images",{
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
             .then(function (response) {
                 thisValue.countriesInfo = response.data.data;
             })
@@ -281,13 +289,18 @@ export default {
                 this.userImagPreview = e.target.result;
             };
         },
-        DeleteUser() {
+        DeleteUser(e) {
+            e.preventDefault();
             let thisValue = this;
             const data = {
                 user_id: this.AuthUser.id,
             };
             axios
-                .post("/student/delete/account")
+                .post("/student/delete/account",{
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
                 .then(function () {
                     {
                         alert("Account deleted successfully");
@@ -298,7 +311,8 @@ export default {
                     alert("we failed to process your request. Try again later");
                 });
         },
-        EditUser() {
+        EditUser(e) {
+            e.preventDefault();
             if (this.AuthUserName === "") {
                 this.error = "Name can not be empty!";
                 setInterval(() => {
