@@ -6,6 +6,8 @@ import RightNavMain from '../components/RightNavMain.vue';
 import StudentAd from '../components/Students/StudentAds/StudentAd.vue';
 import StudentAdManagement from '../components/Students/StudentAds/StudentAdManagement.vue';
 import StudentDashboard from '../components/Students/StudentDashboard.vue';
+import Messages from '../components/Students/Messages/Messages.vue';
+import Favorites from '../components/Students/Favorites/Favorites.vue';
 
 
 const newLocal = 'Home';
@@ -20,11 +22,11 @@ const routes = [
         name: 'RightNavMain',
         component: RightNavMain
     },
-    // {
-    //     path: '/student/edit',
-    //     name:' EditProfile',
-    //     component: EditProfile,
-    // },
+    {
+        path: '/student/favorite',
+        name:' Favorites',
+        component: Favorites,
+    },
     {
         path: '/student/dashboard',
         name: 'StudentDashboard',
@@ -45,11 +47,11 @@ const routes = [
         name: "StudentAdmanagement",
         component: StudentAdManagement
     },
-    // {
-    //     path: '/student/home',
-    //     name: "NavBar",
-    //     component: NavBar
-    // }
+    {
+        path: '/student/messages',
+        name: "Messages",
+        component: Messages
+    }
 ]
 
 const router = createRouter({

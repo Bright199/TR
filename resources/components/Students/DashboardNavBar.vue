@@ -5,9 +5,9 @@
                 <div class="col">
                     <ul class="NavLinks">
                         <li style="margin-left: 20px">
-                            <a href="/student/home"
-                                ><i class="fa-solid fa-house"></i>&nbsp;Home</a
-                            >
+                            <router-link to="/student/dashboard">
+                                <i class="fa-solid fa-house"></i>&nbsp;Dashboard
+                            </router-link>
                         </li>
                     </ul>
                 </div>
@@ -32,6 +32,7 @@
                         </li>
 
                         <li class="userdropdown">
+                            <!-- <a href="" class="Logout "></a> -->
                             <router-link to="/student/favorite">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-bookmark"></i>&nbsp;
@@ -107,9 +108,14 @@ export default {
             UserName: "",
         };
     },
-    
+    // mounted() {
+    //     this.$store.commit("userDetails", this.user);
+    //     this.trimmedName = this.user.name.split(" ", 1).join(" ");
+    // },
     computed: {
-       
+        //    ...mapGetters({
+        //         UserFirstName
+        //    })
         ...mapState({
             MyUser: (state) => state.loggedUser,
         }),
@@ -118,7 +124,18 @@ export default {
 };
 </script>
 <style scoped>
+/* @media only screen and (min-width: 600px) {
+ .TopBar1{
+     display:none
+ }
+}
 
+
+@media only screen and (min-width: 992px) {
+ .TopBar2{
+    background-color: #fec107
+ }
+} */
 .btn {
     border-radius: 0;
 }

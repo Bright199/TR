@@ -51,6 +51,12 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/create/ad', function(){
             return view('student.ad');
         });
+        Route::get('/messages', function(){
+            return view('student.message');
+        });
+        Route::get('/favorite', function(){
+            return view('student.favorite');
+        });
         Route::get('/ad/management', function(){
             return view('student.adsmanagement');
         });
