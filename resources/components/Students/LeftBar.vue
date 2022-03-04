@@ -3,9 +3,10 @@
         <div class="container LeftBar">
             <!-- post your first ad -->
             <div class="d-flex justify-content-center mt-3">
-                <router-link to="/student/create/ad" class="mt-3"
+                <!-- <router-link to="/student/create/ad" class="mt-3"
                     ><h6>Post an ad</h6></router-link
-                >
+                > -->
+                <a href="/student/create/ad"><h6>Post an ad</h6></a>
             </div>
             <!-- <hr class="Horizontal"> -->
             <br /><br />

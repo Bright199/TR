@@ -20,7 +20,19 @@ class Teacher extends Authenticatable
         'email',
         'password',
         'google_id',
-        'facebook_id'
+        'facebook_id',
+        'teacher_image',
+        'description',
+        'hourly_pay',
+        'currency',
+        'first_language',
+        'first_language_proficiency',
+        'second_language',
+        'second_language_proficiency',
+        'third_language',
+        'third_language_proficiency',
+        'nationality',
+        'our_teacher'
     ];
 
     protected $hidden = [
@@ -28,3 +40,4 @@ class Teacher extends Authenticatable
         'remember_token',
     ];
 }
+

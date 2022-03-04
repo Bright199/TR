@@ -7,6 +7,8 @@ import StudentAd from '../components/Students/StudentAds/StudentAd.vue';
 import StudentAdManagement from '../components/Students/StudentAds/StudentAdManagement.vue';
 import StudentDashboard from '../components/Students/StudentDashboard.vue';
 import Messages from '../components/Students/Messages/Messages.vue';
+import Teachers from '../components/Students/Teachers.vue';
+import SingleTeacher from '../components/Students/SingleTeacher.vue';
 import Favorites from '../components/Students/Favorites/Favorites.vue';
 
 
@@ -51,6 +53,17 @@ const routes = [
         path: '/student/messages',
         name: "Messages",
         component: Messages
+    },
+    {
+        path: '/student/teachers',
+        name: "Teachers",
+        component: Teachers
+    },
+    {
+        path: '/student/single/teacher/:id',
+        name: "SingleTeacher",
+        component: SingleTeacher,
+        props: true 
     }
 ]
 

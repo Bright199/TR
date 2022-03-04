@@ -30,7 +30,15 @@
                                 <hr />
                             </ul>
                         </li>
-
+                        <li class="userdropdown">
+                            <!-- <a href="" class="Logout "></a> -->
+                            <router-link to="/student/teachers">
+                                <span class="UserName"
+                                    ><i class="fa-solid fa-chalkboard-user"></i
+                                    >&nbsp; Teachers</span
+                                >
+                            </router-link>
+                        </li>
                         <li class="userdropdown">
                             <!-- <a href="" class="Logout "></a> -->
                             <router-link to="/student/favorite">
@@ -102,7 +110,7 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 export default {
-    name: "NavBar",
+    name: "DashboardNavBar",
     data() {
         return {
             UserName: "",

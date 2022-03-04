@@ -32,7 +32,7 @@ Route::get('/student/home', function () {
 Route::prefix('student')->name('student.')->group(function () {
     Route::middleware(['guest:student'])->group(function () {
         // Route::view('/login', 'student.login')->name('login');
-        Route::get('/login',[StudentRegistration::class, 'loginForm'])->name('login');
+        Route::get('/login', [StudentRegistration::class, 'loginForm'])->name('login');
         Route::post('/login', [StudentRegistration::class, 'login'])->name('login');
         Route::view('/register', 'student.register')->name('register');
         Route::post('/register', [StudentRegistration::class, 'store'])->name('register');
@@ -48,16 +48,22 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::post('/profile/check', [StudentRegistration::class, 'CheckProfileInfo']);
         Route::post('/ad/save', [StudentRegistration::class, 'AdSave']);
         Route::get('/ads', [StudentRegistration::class, 'GetAds']);
-        Route::get('/create/ad', function(){
+        Route::get('/our/teachers', [StudentRegistration::class, 'GetOurTeachers']);
+        Route::get('/single/teacher/{id}', [StudentRegistration::class, 'GetSingleTeacher']);
+        Route::get('/create/ad', function () {
             return view('student.ad');
         });
-        Route::get('/messages', function(){
+
+        Route::get('/messages', function () {
             return view('student.message');
         });
-        Route::get('/favorite', function(){
+        Route::get('/teachers', function () {
+            return view('student.teachers');
+        });
+        Route::get('/favorite', function () {
             return view('student.favorite');
         });
-        Route::get('/ad/management', function(){
+        Route::get('/ad/management', function () {
             return view('student.adsmanagement');
         });
     });
@@ -75,7 +81,7 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
     Route::middleware(['auth:teacher'])->group(function () {
         Route::view('/dashboard', 'teacher.dashboard')->name('dashboard');
         Route::post('/logout', [TeachersRegistration::class, 'logout'])->name('logout');
-        Route::get('/logout', function(){
+        Route::get('/logout', function () {
             return view('/dashboard');
         });
     });

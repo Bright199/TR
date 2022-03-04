@@ -30,6 +30,15 @@
                                 <hr />
                             </ul>
                         </li>
+                        <li class="userdropdown">
+                            <!-- <a href="" class="Logout "></a> -->
+                            <router-link to="/student/teachers">
+                                <span class="UserName"
+                                    ><i class="fa-solid fa-chalkboard-user"></i>&nbsp;
+                                    Teachers</span
+                                >
+                            </router-link>
+                        </li>
 
                         <li class="userdropdown">
                             <router-link to="/student/favorite">

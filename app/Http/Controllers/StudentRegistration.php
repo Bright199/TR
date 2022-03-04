@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\Models\StudentAd;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -30,6 +31,19 @@ class StudentRegistration extends Controller
         } else {
             return redirect()->route('student.dashboard');
         }
+    }
+
+    public function GetOurTeachers()
+    {
+        $teachers = Teacher::where('our_tearcher',1)->get();
+        return response()->json($teachers);
+    }
+
+    public function GetSingleTeacher($id)
+    {
+        $teacher = Teacher::where('our_tearcher',$id)->get();
+        return view('student.singleteacher')->with('teacher',$teacher);
+        // return response()->json($teachers);
     }
 
     public function GetAds(){

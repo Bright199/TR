@@ -9,7 +9,8 @@
                     <div class="col-md-3"></div>
                     <div class="col-md-6">
                         <h2>There are no ads for you yet. Make one by following the link below</h2>
-                <router-link to="/student/create/ad">Create ad</router-link>
+                <!-- <router-link to="/student/create/ad">Create ad</router-link> -->
+                <a href="/student/create/ad">Create ad</a>
                     </div>
                     <div class="col-md-3"></div>
                 </div>
