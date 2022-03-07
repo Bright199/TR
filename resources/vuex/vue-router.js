@@ -26,7 +26,7 @@ const routes = [
     },
     {
         path: '/student/favorite',
-        name:' Favorites',
+        name: ' Favorites',
         component: Favorites,
     },
     {
@@ -61,9 +61,10 @@ const routes = [
     },
     {
         path: '/student/single/teacher/:id',
-        name: "SingleTeacher",
-        component: SingleTeacher,
-        props: true 
+        // name: "SingleTeacher",
+        // component: SingleTeacher,
+        components: { default: SingleTeacher },
+        props: { default: true }
     }
 ]
 

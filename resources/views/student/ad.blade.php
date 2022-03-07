@@ -33,6 +33,7 @@
 </head>
 
 <body>
+  <div>
     <div id="vueapp">
 
     </div>
@@ -49,6 +50,7 @@
             <div class="col-md-4"></div>
         </div>
     </div>
+  </div>
 </body>
 
 </html>
@@ -68,7 +70,7 @@
 
       createOrder: function(data, actions) {
         return actions.order.create({
-          purchase_units: [{"amount":{"currency_code":"USD","value":2.99}}]
+          purchase_units: [{"amount":{"currency_code":"USD","value":100}}]
         });
       },
 
@@ -83,7 +85,7 @@
           element.innerHTML = '';
           element.innerHTML = '<h3>Thank you for your payment!</h3>';
 
-          // Or go to another URL:  actions.redirect('thank_you.html');
+         actions.redirect('http://localhost:8000/student/dashboard');
           
         });
       },
