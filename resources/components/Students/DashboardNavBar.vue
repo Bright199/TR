@@ -108,18 +108,32 @@
     </div>
 </template>
 <script>
+import axios from 'axios';
 import { mapState, mapGetters } from "vuex";
 export default {
     name: "DashboardNavBar",
     data() {
         return {
             UserName: "",
+            AuthUserName:''
         };
     },
-    // mounted() {
-    //     this.$store.commit("userDetails", this.user);
-    //     this.trimmedName = this.user.name.split(" ", 1).join(" ");
-    // },
+    mounted() {
+        let thisValue = this;
+        axios
+            .get("/student/getAuthUser",{
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
+            .then(function (response) {
+                thisValue.$store.commit("userDetails", response.data);
+                thisValue.AuthUserName = response.data.name;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
     computed: {
         //    ...mapGetters({
         //         UserFirstName

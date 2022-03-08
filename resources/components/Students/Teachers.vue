@@ -25,10 +25,10 @@
                                     <h3>
                                         {{ teacher.name }}
                                     </h3>
-                                    <p>Description</p>
+                                    <p>{{teacher.description}}</p>
                                 </div>
                                 <div class="col-md-2">
-                                    <a href="/student/dashboard">Hire</a>
+                                    <a href="/student/dashboard">Hire {{teacher.name}}</a>
                                 </div>
                             </div>
                         </a>

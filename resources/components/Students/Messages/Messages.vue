@@ -3,37 +3,40 @@
         <DashboardNavBar />
         <div class="container mt-4">
             <div class="row">
-                <div class="col-md-3 LeftBar p-0">
+                <div class="col-md-4 LeftBar p-0">
                     <div
                         class="container-jumbotron d-flex justify-content-center border p-3"
                     >
                         <h3>Conversations</h3>
                     </div>
                     <ul class="Chats">
-                        
-                        <li class="ChatList ActiveChat">
-                            <div class="row">
-                                <div class="col-md-3 mr-3">
-                                    <img
-                                        src="/images/Green2.png"
-                                        alt=""
-                                        width="70"
-                                        class="Avatar"
-                                    />
+                        <div v-if="contacts.length == ''">
+                            <li>No contacts</li>
+                        </div>
+                        <div v-else>
+                            <li v-for="(contact, index) in contacts" class="ChatList ActiveChat" :key="index">
+                                <div class="row">
+                                    <div class="col-md-3 ">
+                                        <img
+                                            :src="'/images/'+contact.teacher_image"
+                                            alt=""
+                                            width="70"
+                                            class="Avatar"
+                                        />
+                                    </div>
+                                    <div class="col-md-8 mt-2">
+                                        <p class="Name">{{contact.name}}</p>
+                                        <p style="line-height: 0.2px">
+                                           {{contact.email}}
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="col-md-8 mt-2">
-                                    <p class="Name">Name</p>
-                                    <p style="line-height: 0.2px">
-                                        email@gmail.com
-                                    </p>
-                                </div>
-                            </div>
-                        </li>
-                        
+                            </li>
+                        </div>
                     </ul>
                 </div>
                 <!-- <div class="col-md-1"></div> -->
-                <div class="col-md-8 RightBar p-0" style="margin-left:14px">
+                <div class="col-md-7 RightBar p-0" style="margin-left: 14px">
                     <div
                         class="container-jumbotron d-flex justify-content-center p-3"
                     >
@@ -41,7 +44,7 @@
                     </div>
                     <div class="container MessageContainer">
                         <ul class="MessageInnerContainer">
-                            <li class="ReceivedMessage">
+                            <!-- <li class="ReceivedMessage">
                                 <p>Receiver's message</p>
                                 <p class="ReceiversMessageTime">
                                     {{ new Date() }}
@@ -56,37 +59,19 @@
                                 <p class="SendersMessageTime">
                                     {{ new Date() }}
                                 </p>
-                            </li>
-                            <li class="ReceivedMessage">
-                                <p>Receiver's message</p>
-                                <p class="ReceiversMessageTime">
-                                    {{ new Date() }}
-                                </p>
-                            </li>
-                            <li class="SenderMessage">
-                                <p>Sender's message</p>
-                                <p class="SendersMessageTime">
-                                    {{ new Date() }}
-                                </p>
-                            </li>
-                            <li class="ReceivedMessage">
-                                <p>Receiver's message</p>
-                                <p class="ReceiversMessageTime">
-                                    {{ new Date() }}
-                                </p>
-                            </li>
-                            <li class="SenderMessage">
-                                <p>Sender's message</p>
-                                <p class="SendersMessageTime">
-                                    {{ new Date() }}
-                                </p>
-                            </li>
-                            <li class="SenderMessage">
-                                <p>Sender's message</p>
-                                <p class="SendersMessageTime">
-                                    {{ new Date() }}
-                                </p>
-                            </li>
+                            </li> -->
+
+                            <div v-if="messages.length">
+                                <li
+                                    v-for="(message, index) in messages"
+                                    :key="index"
+                                >
+                                    {{ message }}
+                                </li>
+                            </div>
+                            <div v-else>
+                                <h5>Start a conversation</h5>
+                            </div>
                         </ul>
                     </div>
                     <div class="container p-0 mt-1">
@@ -95,8 +80,14 @@
                                 type="text"
                                 class="form-control"
                                 placeholder="Message..."
+                                name="userMessage"
+                                v-model="userMessage"
                             />
-                            <button class="btn SendBtn" type="submit">
+                            <button
+                                class="btn SendBtn"
+                                type="submit"
+                                @click="SendMessage"
+                            >
                                 Send message
                             </button>
                         </div>
@@ -112,13 +103,42 @@ import DashboardNavBar from "../DashboardNavBar.vue";
 export default {
     name: "Messages",
     components: { DashboardNavBar },
+    data() {
+        return {
+            messages: [],
+            userMessage: "",
+            contacts: "",
+        };
+    },
+    methods: {
+        SendMessage() {
+            const trimmedMessage = this.userMessage.trim();
+            if (trimmedMessage == "") {
+                alert("cannot send empty entry");
+                return;
+            }
+            this.messages.push(this.userMessage);
+            // alert(this.userMessage)
+        },
+    },
+    mounted() {
+        const thisValue = this;
+        axios
+            .get("/student/message/contacts")
+            .then(function (response) {
+                thisValue.contacts = response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
 };
 </script>
 <style scoped>
-.ActiveChat{
-    background-color: #f7f7f7
+.ActiveChat {
+    background-color: #f7f7f7;
 }
-.ChatList:hover{
+.ChatList:hover {
     cursor: pointer;
 }
 .Name {
@@ -137,14 +157,14 @@ export default {
     color: #919191;
     margin-top: -10px;
 }
-.btn:focus,input:focus {
+.btn:focus,
+input:focus {
     outline: none;
     box-shadow: none;
     border: 1px solid #029e02;
 }
 .btn:hover {
-    
-    background-color:#03aa03;
+    background-color: #03aa03;
 }
 .SendBtn {
     background: #029e02;

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Message;
 use App\Models\Student;
 use App\Models\StudentAd;
+use App\Models\StudentContact;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,21 +35,50 @@ class StudentRegistration extends Controller
         }
     }
 
+    public function sendMessage(Request $request)
+    {
+        $message = Message::create([
+            'to' => $request->teacherId,
+            'from' => Auth::guard('student')->id(),
+            'message' => $request->message
+        ]);
+
+        $contact = StudentContact::where('teacher_id', $request->teacherId)->first();
+        if ($contact == null) {
+            $teacherDetails = Teacher::find($request->teacherId);
+            StudentContact::create([
+                'name' => $teacherDetails->name,
+                'email' => $teacherDetails->email,
+                'teacher_image' => $teacherDetails->teacher_image,
+                'teacher_id' => $request->teacherId
+            ]);
+        }
+
+        return redirect('/student/messages');
+    }
+
     public function GetOurTeachers()
     {
-        $teachers = Teacher::where('our_tearcher',1)->get();
+        $teachers = Teacher::where('our_tearcher', 1)->get();
         return response()->json($teachers);
+    }
+
+    public function GetMessageContacts()
+    {
+        $studentContacts = StudentContact::all();
+        return response()->json($studentContacts);
     }
 
     public function GetSingleTeacher($id)
     {
-        $teacher = Teacher::where('our_tearcher',$id)->get();
-        return view('student.singleteacher')->with('teacher',$teacher);
+        $teacher = Teacher::where('our_tearcher', $id)->get();
+        return view('student.singleteacher')->with('teacher', $teacher);
         // return response()->json($teachers);
     }
 
-    public function GetAds(){
-        $ads = StudentAd::where('student_id',Auth::guard('student')->id())->get();
+    public function GetAds()
+    {
+        $ads = StudentAd::where('student_id', Auth::guard('student')->id())->get();
         return response()->json($ads);
     }
     public function AdSave(Request $request)
@@ -55,13 +86,13 @@ class StudentRegistration extends Controller
         $authUser = Auth::guard('student')->id();
         $StudentAd = StudentAd::create([
             'student_id' => $authUser,
-            'title'=> $request->title,
-            'description'=> $request->description,
-            'language_category'=>$request->language,
-            'minimum_budget'=>$request->minamount,
-            'maximum_budget' =>$request->maxamount,
-            'currency' =>$request->currency,
-            'student_gender'=>$request->gender
+            'title' => $request->title,
+            'description' => $request->description,
+            'language_category' => $request->language,
+            'minimum_budget' => $request->minamount,
+            'maximum_budget' => $request->maxamount,
+            'currency' => $request->currency,
+            'student_gender' => $request->gender
         ]);
         // if($StudentAd){
         //     return response()->json('Ad created successfully');

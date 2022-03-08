@@ -17,6 +17,10 @@ class Student extends Authenticatable
     {
         return $this->hasMany(StudentAd::class);
     }
+    public function studentContact()
+    {
+        return $this->hasMany(StudentContact::class);
+    }
 
     protected $fillable = [
         'name',
