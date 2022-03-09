@@ -11,23 +11,49 @@
                     </div>
                     <ul class="Chats">
                         <div v-if="contacts.length == ''">
-                            <li>No contacts</li>
+                            <div class="spinner" v-if="loading == true">
+                                <div class="dot1"></div>
+                                <div class="dot2"></div>
+                            </div>
+                            <li
+                                v-if="loaded == true"
+                                class="d-flex justify-content-center"
+                            >
+                                No contacts
+                            </li>
                         </div>
                         <div v-else>
-                            <li v-for="(contact, index) in contacts" class="ChatList ActiveChat" :key="index">
+                            <div class="spinner" v-if="loading == true">
+                                <div class="dot1"></div>
+                                <div class="dot2"></div>
+                            </div>
+                            <li
+                                v-for="(contact, index) in contacts"
+                                class="ChatList"
+                                :class="
+                                    chatIsActive == contact.id
+                                        ? 'ActiveChat'
+                                        : ''
+                                "
+                                :key="index"
+                                @click="getUserChats(contact.id)"
+                            >
                                 <div class="row">
-                                    <div class="col-md-3 ">
+                                    <div class="col-md-3">
                                         <img
-                                            :src="'/images/'+contact.teacher_image"
+                                            :src="
+                                                '/images/' +
+                                                contact.teacher_image
+                                            "
                                             alt=""
                                             width="70"
                                             class="Avatar"
                                         />
                                     </div>
                                     <div class="col-md-8 mt-2">
-                                        <p class="Name">{{contact.name}}</p>
+                                        <p class="Name">{{ contact.name }}</p>
                                         <p style="line-height: 0.2px">
-                                           {{contact.email}}
+                                            {{ contact.email }}
                                         </p>
                                     </div>
                                 </div>
@@ -65,12 +91,33 @@
                                 <li
                                     v-for="(message, index) in messages"
                                     :key="index"
+                                    :class="
+                                        message.teacher_email != AuthUserEmail
+                                            ? 'SenderMessage'
+                                            : 'ReceivedMessage'
+                                    "
                                 >
-                                    {{ message }}
+                                    <p>
+                                        {{ message.message }}
+                                    </p>
+                                    <p
+                                        :class="
+                                            message.teacher_email !=
+                                            AuthUserEmail
+                                                ? 'SendersMessageTime'
+                                                : 'ReceiversMessageTime'
+                                        "
+                                    >
+                                        {{ message.created_at }}
+                                    </p>
                                 </li>
                             </div>
-                            <div v-else>
-                                <h5>Start a conversation</h5>
+                            <div v-else class="d-flex justify-content-center">
+                                <h5 class="mt-5" v-if="conversationsLoaded == true">Select a chat to start a conversation</h5>
+                                <div class="spinner" v-if="loading2 == true">
+                                    <div class="dot1"></div>
+                                    <div class="dot2"></div>
+                                </div>
                             </div>
                         </ul>
                     </div>
@@ -108,25 +155,86 @@ export default {
             messages: [],
             userMessage: "",
             contacts: "",
+            loading: false,
+            loading2: false,
+            chatIsActive: 0,
+            userId: 0,
+            AuthUserName: "",
+            loaded: false,
+            conversationsLoaded: true
         };
     },
     methods: {
+        getUserChats(teacherId) {
+            this.conversationsLoaded = false
+            this.chatIsActive = teacherId;
+            this.userId = teacherId;
+            this.loading2 = true;
+            const thisValue = this;
+            axios
+                .get(`/student/conversations/${thisValue.userId}`)
+                .then(function (response) {
+                    // console.log(response)
+                    thisValue.messages = response.data;
+                    
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(() => {
+                    this.loading2 = false;
+                });
+        },
+        getMessageContacts() {
+            const thisValue = this;
+            this.loading = true;
+            axios
+                .get("/student/message/contacts")
+                .then(function (response) {
+                    thisValue.contacts = response.data;
+                    if (thisValue.contacts == null) {
+                        thisValue.loaded = true;
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
         SendMessage() {
             const trimmedMessage = this.userMessage.trim();
             if (trimmedMessage == "") {
-                alert("cannot send empty entry");
+                alert("Can not send empty entry");
+                return;
+            }else if(this.chatIsActive === 0 ){
+                alert("Select user to message")
                 return;
             }
-            this.messages.push(this.userMessage);
-            // alert(this.userMessage)
+            this.messages.push({message: trimmedMessage, created_at: new Date()});
+             const data = {
+                 message: trimmedMessage,
+                 teacherId: this.chatIsActive
+             }
+            axios
+            .post("/student/message",data)
+            this.userMessage = ''
         },
     },
     mounted() {
-        const thisValue = this;
+        this.getMessageContacts();
+
+        let thisValue = this;
         axios
-            .get("/student/message/contacts")
+            .get("/student/getAuthUser", {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
             .then(function (response) {
-                thisValue.contacts = response.data;
+                // thisValue.$store.commit("userDetails", response.data);
+                thisValue.AuthUserEmail = response.data.email;
             })
             .catch(function (error) {
                 console.log(error);
@@ -135,6 +243,73 @@ export default {
 };
 </script>
 <style scoped>
+/* spinner */
+.spinner {
+    margin: 100px auto;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    text-align: center;
+
+    -webkit-animation: sk-rotate 2s infinite linear;
+    animation: sk-rotate 2s infinite linear;
+}
+
+.dot1,
+.dot2 {
+    width: 60%;
+    height: 60%;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    background-color: #029e02;
+    border-radius: 100%;
+
+    -webkit-animation: sk-bounce 2s infinite ease-in-out;
+    animation: sk-bounce 2s infinite ease-in-out;
+}
+
+.dot2 {
+    top: auto;
+    bottom: 0;
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+}
+
+@-webkit-keyframes sk-rotate {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes sk-rotate {
+    100% {
+        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes sk-bounce {
+    0%,
+    100% {
+        -webkit-transform: scale(0);
+    }
+    50% {
+        -webkit-transform: scale(1);
+    }
+}
+
+@keyframes sk-bounce {
+    0%,
+    100% {
+        transform: scale(0);
+        -webkit-transform: scale(0);
+    }
+    50% {
+        transform: scale(1);
+        -webkit-transform: scale(1);
+    }
+}
+/*  */
 .ActiveChat {
     background-color: #f7f7f7;
 }
@@ -193,7 +368,7 @@ input:focus {
     border-right: 15px solid transparent;
     border-bottom: 15px solid transparent;
     border-left: 15px solid transparent;
-    top: 77px;
+    top: 60px;
     left: -15px;
     transform: rotate(-45deg);
     /* z-index: -1; */
@@ -207,7 +382,7 @@ input:focus {
     border-right: 15px solid transparent;
     border-bottom: 15px solid transparent;
     border-left: 15px solid transparent;
-    top: 77px;
+    top: 60px;
     left: -15px;
     transform: rotate(-45deg);
 }

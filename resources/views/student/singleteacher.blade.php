@@ -7,9 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>
-        @foreach ($teacher as $detail)
+        {{-- @foreach ($teacher as $detail)
         {{ $detail->name }}
-        @endforeach
+        @endforeach --}}
+        {{ $teacherName }}
     </title>
     <link rel="icon" href="{{ asset('images/Logo.png') }}">
 
@@ -114,7 +115,6 @@
             </div>
         </div>
     </div>
-    @foreach ($teacher as $detail)
 
     <div class="container mt-3">
         <div class="row">
@@ -124,31 +124,31 @@
                         <img src="{{ asset('images/Green2.png') }}" alt="" width="100%">
                     </div>
                     <div class="col-md-8 border shadow-sm">
-                        <h3>{{ $detail->name }}
+                        <h3>{{ $teacherName }}
                             &nbsp;<i class="fa-solid fa-shield-blank" style="color:#029e02; font-size:18px"></i>
                         </h3>
-                        <p>{{ $detail->description }}</p>
+                        <p>{{ $teacherDescription }}</p>
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-3"></div>
                                 <div class="col-md-9 d-flex justify-content-end">
                                     <p>
-                                        Speaks {{ $detail->first_language }} <span class="MainFluencyLevel" style="font-weight:500;
-                                           ">{{ $detail->first_language_proficiency }}</span>
-                                        {{ $detail->second_language }}
+                                        Speaks {{ $teacherFirstLang }} <span class="MainFluencyLevel" style="font-weight:500;
+                                           ">{{ $teacherFirstLangProf }}</span>
+                                        {{ $teacherSecondLang }}
                                         <span class="FluencyLevel" style="font-weight:500; ">{{
-                                            $detail->second_language_proficiency }}</span>
+                                            $teacherSecondLangProf }}</span>
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        @if ($detail->our_tearcher === 1)
+                        @if ($isOurTeacher === 1)
                         <p>Works for <span style="font-weight: 500; color:#029e02">TREnglish </span> </p>
                         @endif
                         <p style="font-weight:700; font-size:16px"><i class="fa-solid fa-dollar-sign"></i>{{
-                            $detail->hourly_pay }} USD /hour</p>
-                        <p>Joined on {{ date('d-m-Y', strtotime($detail->created_at)) }}</p>
-                        <p>{{ $detail->nationality }}</p>
+                            $teacherHourlyPay }} USD /hour</p>
+                        <p>Joined on {{ date('d-m-Y', strtotime($teacherJoinedAt)) }}</p>
+                        <p>{{ $teacherNationality }}</p>
 
                     </div>
                     <div class="col-md-2">
@@ -159,22 +159,20 @@
             <div class="col-md-2 mt-3">
                 <!-- Button to Open the Modal -->
                 <a href="#" class="hireBtn" data-bs-toggle="modal" data-bs-target="#MessageModal">
-                    Hire {{ $detail->name }}
+                    Hire {{explode(' ',$teacherName)[0]}} {{substr($teacherName,0,1)}}
                 </a>
             </div>
         </div>
     </div>
-    @endforeach
 
 
     <!-- The Modal -->
     <div class="modal fade" id="MessageModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                @foreach ($teacher as $detail)
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h6 class="modal-title">Messaging {{$detail->name}}</h6>
+                    <h6 class="modal-title">Messaging {{explode(' ',$teacherName)[0]}} {{substr($teacherName,0,1)}}</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
@@ -182,7 +180,7 @@
                 <div class="modal-body">
                     <textarea class="form-control" rows="5" id="userMessage" name="text"
                         placeholder='Message...'></textarea>
-                    <input type="hidden" name="" id="userId" value="{{$detail->id}}">
+                    <input type="hidden" name="" id="userId" value="{{$teacherId}}">
                 </div>
 
                 <!-- Modal footer -->
@@ -192,7 +190,6 @@
                 <div class="container d-flex justify-content-center">
                     <button class="SendBtn" id="SendMessage">Send message</button>
                 </div>
-                @endforeach
 
             </div>
         </div>

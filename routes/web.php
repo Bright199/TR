@@ -52,6 +52,7 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/our/teachers', [StudentRegistration::class, 'GetOurTeachers']);
         Route::get('/single/teacher/{id}', [StudentRegistration::class, 'GetSingleTeacher']);
         Route::get('/message/contacts', [StudentRegistration::class, 'GetMessageContacts']);
+        Route::get('/conversations/{teacherId}', [StudentRegistration::class, 'GetConversations'])->where('teacherId', '[0-9]+');;
         Route::post('/message', [StudentRegistration::class, 'sendMessage']);
         Route::get('/create/ad', function () {
             return view('student.ad');

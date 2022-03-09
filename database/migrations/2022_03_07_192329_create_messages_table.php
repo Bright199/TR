@@ -17,6 +17,7 @@ class CreateMessagesTable extends Migration
             $table->id();
             $table->integer('to');
             $table->integer('from');
+            $table->string('teacher_email');
             $table->boolean('is_read')->default(0);
             $table->text('message');
             $table->timestamps();

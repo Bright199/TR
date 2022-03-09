@@ -37,19 +37,22 @@ class StudentRegistration extends Controller
 
     public function sendMessage(Request $request)
     {
+        $teacherDetails = Teacher::find($request->teacherId);
+       
         $message = Message::create([
             'to' => $request->teacherId,
             'from' => Auth::guard('student')->id(),
-            'message' => $request->message
+            'message' => $request->message,
+            'teacher_email'=>$teacherDetails->email,
         ]);
 
         $contact = StudentContact::where('teacher_id', $request->teacherId)->first();
         if ($contact == null) {
-            $teacherDetails = Teacher::find($request->teacherId);
             StudentContact::create([
                 'name' => $teacherDetails->name,
                 'email' => $teacherDetails->email,
                 'teacher_image' => $teacherDetails->teacher_image,
+                'student_id' => Auth::guard('student')->id(),
                 'teacher_id' => $request->teacherId
             ]);
         }
@@ -63,16 +66,40 @@ class StudentRegistration extends Controller
         return response()->json($teachers);
     }
 
+    public function GetConversations($teacherId)
+    {
+        $studentId = Auth::guard('student')->id();
+        $teacher = $teacherId;
+        $message = Message::where(function ($query) use ($studentId, $teacher){
+            $query->where('to',$studentId)->where('from',$teacher);
+        })->orWhere(function ($query) use ($studentId, $teacher){
+            $query->where('to',$teacher)->where('from',$studentId);
+        })->get();
+         return response()->json($message);
+    }
+
     public function GetMessageContacts()
     {
-        $studentContacts = StudentContact::all();
+        $studentContacts = StudentContact::where('student_id',Auth::guard('student')->id())->get();
         return response()->json($studentContacts);
     }
 
     public function GetSingleTeacher($id)
     {
-        $teacher = Teacher::where('our_tearcher', $id)->get();
-        return view('student.singleteacher')->with('teacher', $teacher);
+        $teacher = Teacher::find($id);
+        
+        return view('student.singleteacher')
+        ->with('teacherName', $teacher->name)
+        ->with('teacherDescription', $teacher->description)
+        ->with('teacherFirstLang', $teacher->first_language)
+        ->with('teacherFirstLangProf', $teacher->first_language_proficiency)
+        ->with('teacherSecondLang', $teacher->second_language)
+        ->with('teacherSecondLangProf', $teacher->second_language_proficiency)
+        ->with('isOurTeacher', $teacher->our_tearcher)
+        ->with('teacherHourlyPay', $teacher->hourly_pay)
+        ->with('teacherJoinedAt', $teacher->created_at)
+        ->with('teacherId', $teacher->id)
+        ->with('teacherNationality', $teacher->nationality);
         // return response()->json($teachers);
     }
 

@@ -16,6 +16,7 @@ class CreateStudentContactsTable extends Migration
         Schema::create('student_contacts', function (Blueprint $table) {
             $table->id();
             $table->integer('teacher_id');
+            $table->integer('student_id');
             $table->string('name');
             $table->string('email');
             $table->string('teacher_image');
