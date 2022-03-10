@@ -38,12 +38,15 @@ class StudentRegistration extends Controller
     public function sendMessage(Request $request)
     {
         $teacherDetails = Teacher::find($request->teacherId);
+        $studentDetails = Student::find(Auth::guard('student')->id());
        
         $message = Message::create([
             'to' => $request->teacherId,
             'from' => Auth::guard('student')->id(),
             'message' => $request->message,
             'teacher_email'=>$teacherDetails->email,
+            'teacher_name'=>$teacherDetails->name,
+            'student_name'=>$studentDetails->name,
         ]);
 
         $contact = StudentContact::where('teacher_id', $request->teacherId)->first();
@@ -62,8 +65,14 @@ class StudentRegistration extends Controller
 
     public function GetOurTeachers()
     {
-        $teachers = Teacher::where('our_tearcher', 1)->get();
+        $teachers = Teacher::where('our_tearcher', 1)->paginate(2);
         return response()->json($teachers);
+    }
+    public function GetFreelanceTeachers()
+    {
+        $teachers = Teacher::where('our_tearcher', 0)->paginate(2);
+        return response()->json($teachers);
+        // return view('student.freelanceteachers');
     }
 
     public function GetConversations($teacherId)
@@ -75,6 +84,12 @@ class StudentRegistration extends Controller
         })->orWhere(function ($query) use ($studentId, $teacher){
             $query->where('to',$teacher)->where('from',$studentId);
         })->get();
+         return response()->json($message);
+    }
+    public function getReceivedMessages()
+    {
+        $studentId = Auth::guard('student')->id();
+       $message = Message::where('to',$studentId)->get();
          return response()->json($message);
     }
 
@@ -89,6 +104,24 @@ class StudentRegistration extends Controller
         $teacher = Teacher::find($id);
         
         return view('student.singleteacher')
+        ->with('teacherName', $teacher->name)
+        ->with('teacherDescription', $teacher->description)
+        ->with('teacherFirstLang', $teacher->first_language)
+        ->with('teacherFirstLangProf', $teacher->first_language_proficiency)
+        ->with('teacherSecondLang', $teacher->second_language)
+        ->with('teacherSecondLangProf', $teacher->second_language_proficiency)
+        ->with('isOurTeacher', $teacher->our_tearcher)
+        ->with('teacherHourlyPay', $teacher->hourly_pay)
+        ->with('teacherJoinedAt', $teacher->created_at)
+        ->with('teacherId', $teacher->id)
+        ->with('teacherNationality', $teacher->nationality);
+        // return response()->json($teachers);
+    }
+    public function GetFreelanceSingleTeacher($id)
+    {
+        $teacher = Teacher::find($id);
+        
+        return view('student.freelancesingleteacher')
         ->with('teacherName', $teacher->name)
         ->with('teacherDescription', $teacher->description)
         ->with('teacherFirstLang', $teacher->first_language)

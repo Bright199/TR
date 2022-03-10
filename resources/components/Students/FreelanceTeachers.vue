@@ -4,23 +4,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 mr-6 mt-4 shadow-sm LeftBar">
-                    <!-- <button @click="getOurTeachers">Our teachers</button>
-                <br> -->
                     <router-link
-                        to="/student/teachers"
+                        to="/student/freelance/teachers"
                         style="background-color: #029e02; color: white"
-                        >Our teachers</router-link
-                    >
-                    <router-link to="/student/freelance/teachers"
                         >Freelance teachers</router-link
                     >
-                    <!-- <a href="" class="">Our teachers</a><br />
-                <a href="" class="">Freelance teachers</a> -->
+                    <router-link to="/student/teachers"
+                        >Our teachers</router-link
+                    >
                 </div>
-
                 <div class="col-md-9 mb-4 mt-4 shadow">
                     <div class="container-jumbotron border-bottom pt-3 ps-3">
-                        <p >
+                        <p>
                             <span
                                 style="
                                     font-size: 25px;
@@ -31,7 +26,7 @@
                             >
                             <span v-if="teachers.to"
                                 >Showing {{ teachers.to }} of
-                                {{ teachers.total }} our teachers</span
+                                {{ teachers.total }} freelance teachers</span
                             >
                         </p>
                     </div>
@@ -41,7 +36,7 @@
                             :key="index"
                         >
                             <a
-                                :href="'single/teacher/' + teacher.id"
+                                :href="'/student/freelance/single/teacher/' + teacher.id"
                                 class="teacherDetailsLink"
                             >
                                 <div class="row teacherDetails">
@@ -59,7 +54,9 @@
                                         <p>{{ teacher.description }}</p>
                                     </div>
                                     <div class="col-md-2">
-                                        <a href="/student/dashboard">Hire </a>
+                                        <a href="/student/dashboard"
+                                            >Hire {{ teacher.name }}</a
+                                        >
                                     </div>
                                 </div>
                             </a>
@@ -77,8 +74,8 @@
                     <div class="container">
                         <Pagination
                             :data="teachers"
-                            align="right"
-                            @pagination-change-page="getOurTeachers"
+                            align="center"
+                            @pagination-change-page="getFreelanceTeachers"
                         />
                     </div>
                 </div>
@@ -104,14 +101,14 @@ export default {
         };
     },
     mounted() {
-        this.getOurTeachers();
+        this.getFreelanceTeachers();
     },
     methods: {
-        getOurTeachers(page = 1) {
+        getFreelanceTeachers(page = 1) {
             window.scrollTo(0, 0);
             this.loading2 = true;
             axios
-                .get("/student/our/teachers?page=" + page)
+                .get("/student/other/teachers?page=" + page)
                 .then((response) => {
                     this.teachers = response.data;
                     if (this.teachers == null) {
@@ -128,7 +125,6 @@ export default {
 <style scoped>
 .LeftBar {
     height: 250px;
-    /* padding: 10px; */
 }
 .LeftBar a {
     /* background-color: #029e02; */
@@ -231,8 +227,5 @@ export default {
     height: 700px;
     overflow-y: auto;
     overflow-x: hidden;
-    /* box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3); */
 }
 </style>

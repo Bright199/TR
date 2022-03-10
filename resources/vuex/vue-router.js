@@ -8,6 +8,7 @@ import StudentAdManagement from '../components/Students/StudentAds/StudentAdMana
 import StudentDashboard from '../components/Students/StudentDashboard.vue';
 import Messages from '../components/Students/Messages/Messages.vue';
 import Teachers from '../components/Students/Teachers.vue';
+import FreelanceTeachers from '../components/Students/FreelanceTeachers.vue';
 import SingleTeacher from '../components/Students/SingleTeacher.vue';
 import Favorites from '../components/Students/Favorites/Favorites.vue';
 
@@ -58,6 +59,11 @@ const routes = [
         path: '/student/teachers',
         name: "Teachers",
         component: Teachers
+    },
+    {
+        path: '/student/freelance/teachers',
+        name: "FreelanceTeachers",
+        component: FreelanceTeachers
     },
     {
         path: '/student/single/teacher/:id',

@@ -2,7 +2,7 @@
     <div>
         <div class="container-jumbotron TopBar1">
             <div class="row">
-                <div class="col">
+                <div class="col-md-4">
                     <ul class="NavLinks">
                         <li style="margin-left: 20px">
                             <router-link to="/student/dashboard">
@@ -11,23 +11,44 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col">
+                <div class="col-md-8">
                     <ul class="NavLinks2">
-                        <li class="userdropdown">
+                        <li class="userdropdown" v-if="receivedMessages.length">
                             <!-- <a href="" class="Logout "></a> -->
                             <router-link to="/student/messages">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-message"></i>&nbsp;
-                                    Messages</span
+                                    Messages <span >{{receivedMessages.length}}</span></span
                                 >
                             </router-link>
-                            <ul class="userdropdown-content">
-                                <li>
-                                    <router-link to="/student/messages"
-                                        >From: Teacher's name</router-link
-                                    >
-                                </li>
+                            <ul class="userdropdown-content" >
+                                <div
+                                    v-for="message in receivedMessages"
+                                    :key="message.id"
+                                >
+                                    <li v-if="MyUser.id != message.from">
+                                        <router-link to="/student/messages">{{
+                                            message.message
+                                        }}</router-link>
+                                        <hr>
+                                    </li>
+
+                                    <li v-else class="text-danger"> Deleted message</li>
+                                </div>
+                                
                                 <hr />
+                            </ul>
+                        </li>
+                        <li class="userdropdown" v-else>
+                            <!-- <a href="" class="Logout "></a> -->
+                            <router-link to="/student/messages">
+                                <span class="UserName"
+                                    ><i class="fa-solid fa-message"></i>&nbsp;
+                                    Messages </span
+                                >
+                            </router-link>
+                            <ul class="userdropdown-content" >
+                                <li>No message Yet</li>
                             </ul>
                         </li>
                         <li class="userdropdown">
@@ -108,36 +129,41 @@
     </div>
 </template>
 <script>
-import axios from 'axios';
+import axios from "axios";
 import { mapState, mapGetters } from "vuex";
 export default {
     name: "DashboardNavBar",
     data() {
         return {
             UserName: "",
-            AuthUserName:''
+            AuthUserName: "",
+            receivedMessages: "",
         };
     },
     mounted() {
-        let thisValue = this;
         axios
-            .get("/student/getAuthUser",{
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                    })
-            .then(function (response) {
-                thisValue.$store.commit("userDetails", response.data);
-                thisValue.AuthUserName = response.data.name;
+            .get("/student/getAuthUser", {
+                headers: {
+                    "Content-Type": "application/json",
+                },
             })
-            .catch(function (error) {
+            .then((response) => {
+                this.$store.commit("userDetails", response.data);
+                this.AuthUserName = response.data.name;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        axios
+            .get("/student/getReceivedMessages")
+            .then((response) => {
+                this.receivedMessages = response.data;
+            })
+            .catch((error) => {
                 console.log(error);
             });
     },
     computed: {
-        //    ...mapGetters({
-        //         UserFirstName
-        //    })
         ...mapState({
             MyUser: (state) => state.loggedUser,
         }),

@@ -42,6 +42,7 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::post('/logout', [StudentRegistration::class, 'logout'])->name('logout');
         Route::get('/logout', [StudentRegistration::class, 'logout'])->name('logout');
         Route::get('/getAuthUser', [StudentRegistration::class, 'getAuthUser']);
+        Route::get('/getReceivedMessages', [StudentRegistration::class, 'getReceivedMessages']);
         Route::get('/edit/profile', [StudentRegistration::class, 'EditStudentProfile']);
         Route::post('/edit', [StudentRegistration::class, 'EditProfile']);
         Route::post('/delete/account', [StudentRegistration::class, 'DeleteProfile']);
@@ -49,13 +50,18 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::post('/ad/save', [StudentRegistration::class, 'AdSave']);
         Route::get('/ads', [StudentRegistration::class, 'GetAds']);
         Route::get('/our/teachers', [StudentRegistration::class, 'GetOurTeachers']);
-        Route::get('/our/teachers', [StudentRegistration::class, 'GetOurTeachers']);
         Route::get('/single/teacher/{id}', [StudentRegistration::class, 'GetSingleTeacher']);
+        Route::get('/freelance/single/teacher/{id}', [StudentRegistration::class, 'GetFreelanceSingleTeacher']);
         Route::get('/message/contacts', [StudentRegistration::class, 'GetMessageContacts']);
+        Route::get('/other/teachers', [StudentRegistration::class, 'GetFreelanceTeachers']);
         Route::get('/conversations/{teacherId}', [StudentRegistration::class, 'GetConversations'])->where('teacherId', '[0-9]+');;
         Route::post('/message', [StudentRegistration::class, 'sendMessage']);
         Route::get('/create/ad', function () {
             return view('student.ad');
+        });
+        
+        Route::get('/freelance/teachers', function(){
+            return view('student.freelanceteachers');
         });
 
         Route::get('/messages', function () {
@@ -115,7 +121,9 @@ Route::get('google/auth/callback', [SocialiteLogin::class, 'google']);
 // })->name('teacher.google.login');
 // Route::get('google/auth/callback', [TeacherSocialiteLogin::class, 'teacherGoogle']);
 
-
+Route::get('/restaurant', function(){
+    return view('hakan');
+});
 
 
 
