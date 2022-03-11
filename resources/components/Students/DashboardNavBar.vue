@@ -13,30 +13,48 @@
                 </div>
                 <div class="col-md-8">
                     <ul class="NavLinks2">
-                        <li class="userdropdown" v-if="receivedMessages.length">
+                        <li
+                            class="messageuserdropdown"
+                            v-if="receivedMessages.length"
+                        >
                             <!-- <a href="" class="Logout "></a> -->
                             <router-link to="/student/messages">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-message"></i>&nbsp;
-                                   <span class="unReadMessage">{{receivedMessages.length}}</span></span
+                                    <span
+                                        class="unReadMessage"
+                                        v-if="(loaded = true)"
+                                        >{{ unread }}</span
+                                    ></span
                                 >
                             </router-link>
-                            <ul class="userdropdown-content" >
-                                <div
+                            <ul class="messageuserdropdown-content">
+                                <li
                                     v-for="message in receivedMessages"
                                     :key="message.id"
+                                    class="border-bottom px-5 mt-2"
+                                    :class="message.is_read ===0?'unReadMessageBg':''"
                                 >
-                                    <li v-if="MyUser.id != message.from">
-                                        <router-link to="/student/messages">{{
-                                            message.teacher_name
-                                        }}</router-link>
-                                        <hr>
-                                    </li>
-
-                                    <li v-else class="text-danger" style="font-size: 12px"> Deleted message</li>
-                                </div>
-                                
-                                <hr />
+                                    <router-link :to="'/student/single/teacher/messages/'+message.from">
+                                        <p
+                                            style="
+                                                margi-bottom: 0px;
+                                                color: #029e02;
+                                            "
+                                        >
+                                            {{ message.teacher_name }} &nbsp;&nbsp;<span class="timeSent">{{dateTime(message.created_at)}}</span>
+                                        </p>
+                                        <p v-if="message.message.length < 20">
+                                            {{ message.message }}
+                                        </p>
+                                        <p v-else>
+                                            {{
+                                                message.message.slice(0, 20) +
+                                                "..."
+                                            }}
+                                        </p>
+                                    </router-link>
+                                </li>
                             </ul>
                         </li>
                         <li class="userdropdown" v-else>
@@ -44,11 +62,15 @@
                             <router-link to="/student/messages">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-message"></i>&nbsp;
-                                   </span
-                                >
+                                </span>
                             </router-link>
-                            <ul class="userdropdown-content " >
-                                <li style="font-size:14px" class="d-flex justify-content-center">No message yet</li>
+                            <ul class="userdropdown-content">
+                                <li
+                                    style="font-size: 14px"
+                                    class="d-flex justify-content-center"
+                                >
+                                    No message yet
+                                </li>
                             </ul>
                         </li>
                         <li class="userdropdown">
@@ -123,14 +145,15 @@
             </div>
         </div>
 
-        <!-- <div class="container">
-            {{ loggedUser }}
+        <!-- <div class="container badge-success">
+            {{ unread }}
         </div> -->
     </div>
 </template>
 <script>
 import axios from "axios";
 import { mapState, mapGetters } from "vuex";
+import moment from 'moment'
 export default {
     name: "DashboardNavBar",
     data() {
@@ -138,37 +161,63 @@ export default {
             UserName: "",
             AuthUserName: "",
             receivedMessages: "",
+            unread: "",
+            loaded: false,
         };
     },
     mounted() {
-        axios
-            .get("/student/getAuthUser", {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-            .then((response) => {
-                this.$store.commit("userDetails", response.data);
-                this.AuthUserName = response.data.name;
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        axios
-            .get("/student/getReceivedMessages")
-            .then((response) => {
-                this.receivedMessages = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        this.getAuthUser();
+        this.getReceivedMessages();
+        this.getUnreadMessages();
     },
+
+    methods: {
+        dateTime(value) {
+            return  moment(value).startOf('hour').fromNow();
+        },
+        getUnreadMessages() {
+            axios
+                .get("/student/getUnreadMessages")
+                .then((response) => {
+                    this.unread = response.data.length;
+                    if (response.data.length > 0) {
+                        this.loaded = true;
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        getAuthUser() {
+            axios
+                .get("/student/getAuthUser")
+                .then((response) => {
+                    this.$store.commit("userDetails", response.data);
+                    this.AuthUserName = response.data.name;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+
+        getReceivedMessages() {
+            axios
+                .get("/student/getReceivedMessages")
+                .then((response) => {
+                    this.receivedMessages = response.data;
+                    // console.log(response.data[0].is_read)
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+    },
+
     computed: {
         ...mapState({
             MyUser: (state) => state.loggedUser,
         }),
     },
-    // methods: {},
 };
 </script>
 <style scoped>
@@ -184,6 +233,20 @@ export default {
     background-color: #fec107
  }
 } */
+.timeSent{
+    font-size:12px;
+    color:#151419;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+.unReadMessageBg{
+    background-color:#eff0ef
+}
+.unReadMessageBg:hover{
+    background-color:#f8f8f8;
+    cursor: pointer;
+}
 .btn {
     border-radius: 0;
 }
@@ -233,6 +296,49 @@ export default {
     color: #151419;
     padding: 2px 10px;
 }
+/* This is message drop down */
+
+.messageuserdropdown {
+    position: relative;
+}
+
+.messageuserdropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 270px;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    z-index: 1;
+    right: -10px;
+    /* top: 50px; */
+    height: 250px;
+    overflow-y: auto;
+}
+
+.messageuserdropdown-content a {
+    color: #fec107;
+    font-size: 16px;
+}
+.messageuserdropdown-content li {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    /* border-top: 1px solid rgba(0, 0, 0, 0.1); */
+    margin: 0px 0px 5px 0px;
+}
+.messageuserdropdown-content li:hover {
+    background-color: rgba(245, 245, 245, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    box-shadow: 0px 2px 3px 0px rgba(133, 133, 133, 0.1);
+}
+.messageuserdropdown-content li p {
+    margin-bottom: 5px;
+}
+.messageuserdropdown:hover .messageuserdropdown-content {
+    display: block;
+}
+
+/* end of message dropdwown */
 
 .userdropdown {
     position: relative;
@@ -270,16 +376,16 @@ export default {
 .UserName:hover {
     cursor: pointer;
 }
-.fa-message{
+.fa-message {
     position: relative;
 }
-.unReadMessage{
+.unReadMessage {
     background-color: red;
     display: flex;
     position: absolute;
     align-items: center;
     justify-content: center;
-    border-radius:50%;
+    border-radius: 50%;
     width: 20px;
     height: 20px;
     color: white;
@@ -287,16 +393,16 @@ export default {
     top: -5px;
     right: -5px;
 }
-.fa-bookmark{
+.fa-bookmark {
     position: relative;
 }
-.unReadFavorite{
+.unReadFavorite {
     background-color: red;
     display: flex;
     position: absolute;
     align-items: center;
     justify-content: center;
-    border-radius:50%;
+    border-radius: 50%;
     width: 20px;
     height: 20px;
     color: white;

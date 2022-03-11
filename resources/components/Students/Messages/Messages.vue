@@ -7,7 +7,7 @@
                     <div
                         class="container-jumbotron d-flex justify-content-center border p-3"
                     >
-                        <h3>Conversations</h3>
+                        <h3 style="color: #029e02">Contacts</h3>
                     </div>
                     <ul class="Chats">
                         <div v-if="contacts.length == ''">
@@ -17,7 +17,7 @@
                             </div>
                             <li
                                 v-if="loaded == true"
-                                class="d-flex justify-content-center"
+                                class="d-flex justify-content-center mt-5"
                             >
                                 No contacts
                             </li>
@@ -41,6 +41,17 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <img
+                                            v-if="
+                                                contact.teacher_image === null
+                                            "
+                                            src="/images/avatar.png"
+                                            alt=""
+                                            width="70"
+                                            height="70"
+                                            class="Avatar"
+                                        />
+                                        <img
+                                            v-else
                                             :src="
                                                 '/images/' +
                                                 contact.teacher_image
@@ -51,9 +62,11 @@
                                         />
                                     </div>
                                     <div class="col-md-8 mt-2">
-                                        <p class="Name">{{ contact.name }}</p>
+                                        <p class="Name">
+                                            {{ contact.teacher_name }}
+                                        </p>
                                         <p style="line-height: 0.2px">
-                                            {{ contact.email }}
+                                            {{ contact.teacher_email }}
                                         </p>
                                     </div>
                                 </div>
@@ -78,7 +91,7 @@
                                     v-for="(message, index) in messages"
                                     :key="index"
                                     :class="
-                                        message.teacher_email != AuthUserEmail
+                                        message.to !== AuthUser.id
                                             ? 'SenderMessage'
                                             : 'ReceivedMessage'
                                     "
@@ -88,13 +101,14 @@
                                     </p>
                                     <p
                                         :class="
-                                            message.teacher_email !=
-                                            AuthUserEmail
+                                            message.teacher_to !== AuthUser.id
                                                 ? 'SendersMessageTime'
                                                 : 'ReceiversMessageTime'
                                         "
                                     >
-                                        {{ message.created_at }}
+                                        {{
+                                            dateTime(message.created_at)
+                                        }}
                                     </p>
                                 </li>
                             </div>
@@ -137,6 +151,8 @@
 </template>
 <script>
 import axios from "axios";
+import { mapState, mapMutations } from "vuex";
+import moment from "moment";
 import DashboardNavBar from "../DashboardNavBar.vue";
 export default {
     name: "Messages",
@@ -156,6 +172,9 @@ export default {
         };
     },
     methods: {
+        dateTime(value) {
+            return moment(value).format('dddd') + " " + moment(value).format("MMM Do YY");
+        },
         getUserChats(teacherId) {
             this.conversationsLoaded = false;
             this.chatIsActive = teacherId;
@@ -185,8 +204,8 @@ export default {
             axios
                 .get("/student/message/contacts")
                 .then((response) => {
-                    thisValue.contacts = response.data;
-                    if (this.contacts == null) {
+                    this.contacts = response.data;
+                    if (response.data.length === 0) {
                         this.loaded = true;
                     }
                 })
@@ -200,10 +219,10 @@ export default {
         SendMessage() {
             const trimmedMessage = this.userMessage.trim();
             if (trimmedMessage == "") {
-                alert("Can not send empty entry");
+                alert("Can not send empty message");
                 return;
             } else if (this.chatIsActive === 0) {
-                alert("Select user to message");
+                alert("Select teacher to send message");
                 return;
             }
             this.messages.push({
@@ -221,24 +240,27 @@ export default {
             axios.post("/student/message", data);
             this.userMessage = "";
         },
+
+        // getAuthUser(){
+        //     axios
+        //     .get("/student/getAuthUser")
+        //     .then((response) => {
+        //         this.AuthUserEmail = response.data.email;
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
+        // }
     },
     mounted() {
         this.getMessageContacts();
-
-        // let thisValue = this;
-        axios
-            .get("/student/getAuthUser", {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-            .then((response) => {
-                // thisValue.$store.commit("userDetails", response.data);
-                this.AuthUserEmail = response.data.email;
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        // this.getAuthUser()
+    },
+    computed: {
+        ...mapState({
+            AuthUser: (state) => state.loggedUser,
+            
+        }),
     },
 };
 </script>
@@ -401,7 +423,7 @@ input:focus {
     -moz-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.2); */
 }
 .MessageContainer {
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 350px;
     border-bottom: 1px solid rgb(247, 247, 247);
     background-color: #f7f7f7;

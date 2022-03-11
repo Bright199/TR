@@ -3,7 +3,7 @@
         <DashboardNavBar />
         <div class="container">
             <div class="row">
-                <div class="col-md-3 mr-6 mt-4 shadow-sm LeftBar">
+                <div class="col-md-3 me-3 mt-4 shadow-sm  LeftBar">
                     <router-link to="/student/teachers"
                       style="background-color: #029e02; color: white"
                         >Our teachers</router-link
@@ -13,7 +13,7 @@
                         >Freelance teachers</router-link
                     >
                 </div>
-                <div class="col-md-9 mb-4 mt-4 shadow">
+                <div class="col-md-8 mb-4 mt-4 shadow-sm">
                     <div class="container-jumbotron border-bottom pt-3 ps-3">
                         <p>
                             <span
@@ -128,6 +128,7 @@ export default {
 <style scoped>
 .LeftBar {
     height: 250px;
+
 }
 .LeftBar a {
     /* background-color: #029e02; */
@@ -136,7 +137,8 @@ export default {
     display: block;
     text-align: center;
     width: 80%;
-    margin: 10px;
+    margin: auto;
+    margin-bottom: 10px;
     text-decoration: none;
     /* color: white; */
     font-size: 20px;

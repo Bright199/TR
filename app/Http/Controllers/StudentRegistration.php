@@ -39,38 +39,64 @@ class StudentRegistration extends Controller
     {
         $teacherDetails = Teacher::find($request->teacherId);
         $studentDetails = Student::find(Auth::guard('student')->id());
-       
+
         $message = Message::create([
             'to' => $request->teacherId,
             'from' => Auth::guard('student')->id(),
             'message' => $request->message,
-            'teacher_email'=>$teacherDetails->email,
-            'teacher_name'=>$teacherDetails->name,
-            'student_name'=>$studentDetails->name,
+            'teacher_email' => $teacherDetails->email,
+            'teacher_name' => $teacherDetails->name,
+            'student_name' => $studentDetails->name,
         ]);
 
         $contact = StudentContact::where('teacher_id', $request->teacherId)->first();
         if ($contact == null) {
-            StudentContact::create([
-                'name' => $teacherDetails->name,
-                'email' => $teacherDetails->email,
-                'teacher_image' => $teacherDetails->teacher_image,
-                'student_id' => Auth::guard('student')->id(),
-                'teacher_id' => $request->teacherId
-            ]);
+
+            if ($teacherDetails->teacher_image) {
+                StudentContact::create([
+                    'teacher_name' => $teacherDetails->name,
+                    'teacher_email' => $teacherDetails->email,
+                    'student_name' => $studentDetails->name,
+                    'student_email' => $studentDetails->email,
+                    'teacher_image' => $teacherDetails->teacher_image,
+                    'student_id' => Auth::guard('student')->id(),
+                    'teacher_id' => $request->teacherId
+                ]);
+            } else {
+                StudentContact::create([
+                    'teacher_name' => $teacherDetails->name,
+                    'teacher_email' => $teacherDetails->email,
+                    'student_name' => $studentDetails->name,
+                    'student_email' => $studentDetails->email,
+                    'student_id' => Auth::guard('student')->id(),
+                    'teacher_id' => $request->teacherId
+                ]);
+            }
         }
 
         return redirect('/student/messages');
     }
+    public function getUnreadMessages()
+    {
+        $studentId = Auth::guard('student')->id();
+        $unreadmessage = Message::where('to', $studentId)
+        ->where('is_read', 0)
+        ->get();
+        return response()->json($unreadmessage);
+    }
 
     public function GetOurTeachers()
     {
-        $teachers = Teacher::where('our_tearcher', 1)->orderBy('id','desc')->paginate(2);
+        $teachers = Teacher::where('our_tearcher', 1)
+            ->where('id', '!=', Auth::guard('student')->id())
+            ->orderBy('id', 'desc')->paginate(2);
         return response()->json($teachers);
     }
     public function GetFreelanceTeachers()
     {
-        $teachers = Teacher::where('our_tearcher', 0)->paginate(2);
+        $teachers = Teacher::where('our_tearcher', 0)
+            ->where('id', '!=', Auth::guard('student')->id())
+            ->orderBy('id', 'desc')->paginate(2);
         return response()->json($teachers);
         // return view('student.freelanceteachers');
     }
@@ -79,60 +105,60 @@ class StudentRegistration extends Controller
     {
         $studentId = Auth::guard('student')->id();
         $teacher = $teacherId;
-        $message = Message::where(function ($query) use ($studentId, $teacher){
-            $query->where('to',$studentId)->where('from',$teacher);
-        })->orWhere(function ($query) use ($studentId, $teacher){
-            $query->where('to',$teacher)->where('from',$studentId);
+        $message = Message::where(function ($query) use ($studentId, $teacher) {
+            $query->where('to', $studentId)->where('from', $teacher);
+        })->orWhere(function ($query) use ($studentId, $teacher) {
+            $query->where('to', $teacher)->where('from', $studentId);
         })->get();
-         return response()->json($message);
+        return response()->json($message);
     }
     public function getReceivedMessages()
     {
         $studentId = Auth::guard('student')->id();
-       $message = Message::where('to',$studentId)->get();
-         return response()->json($message);
+        $message = Message::where('to', $studentId)->get();
+        return response()->json($message);
     }
 
     public function GetMessageContacts()
     {
-        $studentContacts = StudentContact::where('student_id',Auth::guard('student')->id())->orderBy('id','desc')->get();
+        $studentContacts = StudentContact::where('student_id', Auth::guard('student')->id())->orderBy('id', 'desc')->get();
         return response()->json($studentContacts);
     }
 
     public function GetSingleTeacher($id)
     {
         $teacher = Teacher::find($id);
-        
+
         return view('student.singleteacher')
-        ->with('teacherName', $teacher->name)
-        ->with('teacherDescription', $teacher->description)
-        ->with('teacherFirstLang', $teacher->first_language)
-        ->with('teacherFirstLangProf', $teacher->first_language_proficiency)
-        ->with('teacherSecondLang', $teacher->second_language)
-        ->with('teacherSecondLangProf', $teacher->second_language_proficiency)
-        ->with('isOurTeacher', $teacher->our_tearcher)
-        ->with('teacherHourlyPay', $teacher->hourly_pay)
-        ->with('teacherJoinedAt', $teacher->created_at)
-        ->with('teacherId', $teacher->id)
-        ->with('teacherNationality', $teacher->nationality);
+            ->with('teacherName', $teacher->name)
+            ->with('teacherDescription', $teacher->description)
+            ->with('teacherFirstLang', $teacher->first_language)
+            ->with('teacherFirstLangProf', $teacher->first_language_proficiency)
+            ->with('teacherSecondLang', $teacher->second_language)
+            ->with('teacherSecondLangProf', $teacher->second_language_proficiency)
+            ->with('isOurTeacher', $teacher->our_tearcher)
+            ->with('teacherHourlyPay', $teacher->hourly_pay)
+            ->with('teacherJoinedAt', $teacher->created_at)
+            ->with('teacherId', $teacher->id)
+            ->with('teacherNationality', $teacher->nationality);
         // return response()->json($teachers);
     }
     public function GetFreelanceSingleTeacher($id)
     {
         $teacher = Teacher::find($id);
-        
+
         return view('student.freelancesingleteacher')
-        ->with('teacherName', $teacher->name)
-        ->with('teacherDescription', $teacher->description)
-        ->with('teacherFirstLang', $teacher->first_language)
-        ->with('teacherFirstLangProf', $teacher->first_language_proficiency)
-        ->with('teacherSecondLang', $teacher->second_language)
-        ->with('teacherSecondLangProf', $teacher->second_language_proficiency)
-        ->with('isOurTeacher', $teacher->our_tearcher)
-        ->with('teacherHourlyPay', $teacher->hourly_pay)
-        ->with('teacherJoinedAt', $teacher->created_at)
-        ->with('teacherId', $teacher->id)
-        ->with('teacherNationality', $teacher->nationality);
+            ->with('teacherName', $teacher->name)
+            ->with('teacherDescription', $teacher->description)
+            ->with('teacherFirstLang', $teacher->first_language)
+            ->with('teacherFirstLangProf', $teacher->first_language_proficiency)
+            ->with('teacherSecondLang', $teacher->second_language)
+            ->with('teacherSecondLangProf', $teacher->second_language_proficiency)
+            ->with('isOurTeacher', $teacher->our_tearcher)
+            ->with('teacherHourlyPay', $teacher->hourly_pay)
+            ->with('teacherJoinedAt', $teacher->created_at)
+            ->with('teacherId', $teacher->id)
+            ->with('teacherNationality', $teacher->nationality);
         // return response()->json($teachers);
     }
 

@@ -59,10 +59,11 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/create/ad', function () {
             return view('student.ad');
         });
+        Route::get('/single/teacher/messages/{teacherId}', function () {
+            return view('student.singlemessages');
+        });
 
-        // Route::get('/message',function(){
-        //     return view('student.freelanceteachers');
-        // });
+        Route::get('/getUnreadMessages',[StudentRegistration::class,'getUnreadMessages']);
         
         Route::get('/freelance/teachers', function(){
             return view('student.freelanceteachers');

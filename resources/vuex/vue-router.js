@@ -7,6 +7,7 @@ import StudentAd from '../components/Students/StudentAds/StudentAd.vue';
 import StudentAdManagement from '../components/Students/StudentAds/StudentAdManagement.vue';
 import StudentDashboard from '../components/Students/StudentDashboard.vue';
 import Messages from '../components/Students/Messages/Messages.vue';
+import SingleMessage from '../components/Students/Messages/SingleMessage.vue';
 import Teachers from '../components/Students/Teachers.vue';
 import FreelanceTeachers from '../components/Students/FreelanceTeachers.vue';
 import SingleTeacher from '../components/Students/SingleTeacher.vue';
@@ -70,6 +71,13 @@ const routes = [
         // name: "SingleTeacher",
         // component: SingleTeacher,
         components: { default: SingleTeacher },
+        props: { default: true }
+    },
+    {
+        path: '/student/single/teacher/messages/:id',
+        // name: "SingleTeacher",
+        // component: SingleTeacher,
+        components: { default: SingleMessage },
         props: { default: true }
     }
 ]

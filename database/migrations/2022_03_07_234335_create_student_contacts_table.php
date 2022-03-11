@@ -17,9 +17,11 @@ class CreateStudentContactsTable extends Migration
             $table->id();
             $table->integer('teacher_id');
             $table->integer('student_id');
-            $table->string('name');
-            $table->string('email');
-            $table->string('teacher_image');
+            $table->string('teacher_name');
+            $table->string('teacher_email');
+            $table->string('student_name');
+            $table->string('student_email');
+            $table->string('teacher_image')->nullable();
             $table->timestamps();
         });
     }
