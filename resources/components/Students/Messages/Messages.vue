@@ -31,12 +31,12 @@
                                 v-for="(contact, index) in contacts"
                                 class="ChatList"
                                 :class="
-                                    chatIsActive == contact.id
+                                    chatIsActive == contact.teacher_id
                                         ? 'ActiveChat'
                                         : ''
                                 "
                                 :key="index"
-                                @click="getUserChats(contact.id)"
+                                @click="getUserChats(contact.teacher_id)"
                             >
                                 <div class="row">
                                     <div class="col-md-3">
@@ -68,25 +68,11 @@
                     >
                         <h3>Messages</h3>
                     </div>
-                    <div class="container MessageContainer">
+                    <div
+                        class="container MessageContainer"
+                        ref="MessageContainer"
+                    >
                         <ul class="MessageInnerContainer">
-                            <!-- <li class="ReceivedMessage">
-                                <p>Receiver's message</p>
-                                <p class="ReceiversMessageTime">
-                                    {{ new Date() }}
-                                </p>
-                            </li>
-                            <li class="SenderMessage">
-                                <p>
-                                    Lorem ipsum dolor, sit amet consectetur
-                                    adipisicing elit. Amet, quo! dolor, sit amet
-                                    consectetur adipisicing elit. Amet, quo!
-                                </p>
-                                <p class="SendersMessageTime">
-                                    {{ new Date() }}
-                                </p>
-                            </li> -->
-
                             <div v-if="messages.length">
                                 <li
                                     v-for="(message, index) in messages"
@@ -113,7 +99,12 @@
                                 </li>
                             </div>
                             <div v-else class="d-flex justify-content-center">
-                                <h5 class="mt-5" v-if="conversationsLoaded == true">Select a chat to start a conversation</h5>
+                                <h5
+                                    class="mt-5"
+                                    v-if="conversationsLoaded == true"
+                                >
+                                    Select a chat to start a conversation
+                                </h5>
                                 <div class="spinner" v-if="loading2 == true">
                                     <div class="dot1"></div>
                                     <div class="dot2"></div>
@@ -161,24 +152,27 @@ export default {
             userId: 0,
             AuthUserName: "",
             loaded: false,
-            conversationsLoaded: true
+            conversationsLoaded: true,
         };
     },
     methods: {
         getUserChats(teacherId) {
-            this.conversationsLoaded = false
+            this.conversationsLoaded = false;
             this.chatIsActive = teacherId;
             this.userId = teacherId;
             this.loading2 = true;
-            const thisValue = this;
+            // const thisValue = this;
+
             axios
-                .get(`/student/conversations/${thisValue.userId}`)
-                .then(function (response) {
-                    // console.log(response)
-                    thisValue.messages = response.data;
-                    
+                .get(`/student/conversations/${this.userId}`)
+                .then((response) => {
+                    this.messages = response.data;
+                    setInterval(() => {
+                        this.$refs.MessageContainer.scrollTop =
+                            this.$refs.MessageContainer.scrollHeight;
+                    }, 500);
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     console.log(error);
                 })
                 .finally(() => {
@@ -190,13 +184,13 @@ export default {
             this.loading = true;
             axios
                 .get("/student/message/contacts")
-                .then(function (response) {
+                .then((response) => {
                     thisValue.contacts = response.data;
-                    if (thisValue.contacts == null) {
-                        thisValue.loaded = true;
+                    if (this.contacts == null) {
+                        this.loaded = true;
                     }
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     console.log(error);
                 })
                 .finally(() => {
@@ -208,35 +202,41 @@ export default {
             if (trimmedMessage == "") {
                 alert("Can not send empty entry");
                 return;
-            }else if(this.chatIsActive === 0 ){
-                alert("Select user to message")
+            } else if (this.chatIsActive === 0) {
+                alert("Select user to message");
                 return;
             }
-            this.messages.push({message: trimmedMessage, created_at: new Date()});
-             const data = {
-                 message: trimmedMessage,
-                 teacherId: this.chatIsActive
-             }
-            axios
-            .post("/student/message",data)
-            this.userMessage = ''
+            this.messages.push({
+                message: trimmedMessage,
+                created_at: new Date(),
+            });
+            const data = {
+                message: trimmedMessage,
+                teacherId: this.chatIsActive,
+            };
+            setInterval(() => {
+                this.$refs.MessageContainer.scrollTop =
+                    this.$refs.MessageContainer.scrollHeight;
+            }, 500);
+            axios.post("/student/message", data);
+            this.userMessage = "";
         },
     },
     mounted() {
         this.getMessageContacts();
 
-        let thisValue = this;
+        // let thisValue = this;
         axios
             .get("/student/getAuthUser", {
                 headers: {
                     "Content-Type": "application/json",
                 },
             })
-            .then(function (response) {
+            .then((response) => {
                 // thisValue.$store.commit("userDetails", response.data);
-                thisValue.AuthUserEmail = response.data.email;
+                this.AuthUserEmail = response.data.email;
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             });
     },
@@ -401,7 +401,7 @@ input:focus {
     -moz-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.2); */
 }
 .MessageContainer {
-    overflow-y: auto;
+    overflow-y: scroll;
     height: 350px;
     border-bottom: 1px solid rgb(247, 247, 247);
     background-color: #f7f7f7;

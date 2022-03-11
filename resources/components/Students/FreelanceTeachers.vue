@@ -30,7 +30,7 @@
                             >
                         </p>
                     </div>
-                    <div v-if="teachers.data" class="TeachersContainer">
+                    <div v-if="teachers.total >0" class="TeachersContainer">
                         <div
                             v-for="(teacher, index) in teachers.data"
                             :key="index"
@@ -67,9 +67,12 @@
                             <div class="dot1"></div>
                             <div class="dot2"></div>
                         </div>
-                        <h2 v-if="loaded == true">
-                            Check again some other time for available teachers
-                        </h2>
+                        <div class="contnainer py-5" v-if="loaded == true">
+                            <h4 class="d-flex justify-content-center " >
+                                Check our teachers
+                            </h4>
+                            <p class="d-flex justify-content-center ">Currently freelance teachers are unavailable</p>
+                        </div>
                     </div>
                     <div class="container">
                         <Pagination
@@ -111,12 +114,13 @@ export default {
                 .get("/student/other/teachers?page=" + page)
                 .then((response) => {
                     this.teachers = response.data;
-                    if (this.teachers == null) {
+                    if (response.data.data.length === 0) {
                         this.loaded = true;
                     }
                 })
                 .finally(() => {
                     this.loading2 = false;
+                   
                 });
         },
     },

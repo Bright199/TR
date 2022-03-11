@@ -4,15 +4,20 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 mr-6 mt-4 shadow-sm LeftBar">
-                    <router-link to="/student/teachers"
-                      style="background-color: #029e02; color: white"
+                    <!-- <button @click="getOurTeachers">Our teachers</button>
+                <br> -->
+                    <router-link
+                        to="/student/teachers"
+                        style="background-color: #029e02; color: white"
                         >Our teachers</router-link
                     >
-                    <router-link
-                        to="/student/freelance/teachers"
+                    <router-link to="/student/freelance/teachers"
                         >Freelance teachers</router-link
                     >
+                    <!-- <a href="" class="">Our teachers</a><br />
+                <a href="" class="">Freelance teachers</a> -->
                 </div>
+
                 <div class="col-md-9 mb-4 mt-4 shadow">
                     <div class="container-jumbotron border-bottom pt-3 ps-3">
                         <p>
@@ -30,13 +35,13 @@
                             >
                         </p>
                     </div>
-                    <div v-if="teachers.total > 0" class="TeachersContainer">
+                    <div v-if="teachers.length" class="TeachersContainer">
                         <div
                             v-for="(teacher, index) in teachers.data"
                             :key="index"
                         >
                             <a
-                                :href="'/student/freelance/single/teacher/' + teacher.id"
+                                :href="'single/teacher/' + teacher.id"
                                 class="teacherDetailsLink"
                             >
                                 <div class="row teacherDetails">
@@ -54,9 +59,7 @@
                                         <p>{{ teacher.description }}</p>
                                     </div>
                                     <div class="col-md-2">
-                                        <a href="/student/dashboard"
-                                            >Hire {{ teacher.name }}</a
-                                        >
+                                        <a href="/student/dashboard">Hire </a>
                                     </div>
                                 </div>
                             </a>
@@ -77,7 +80,7 @@
                     <div class="container">
                         <Pagination
                             :data="teachers"
-                            align="center"
+                            align="right"
                             @pagination-change-page="getOurTeachers"
                         />
                     </div>
@@ -114,7 +117,8 @@ export default {
                 .get("/student/our/teachers?page=" + page)
                 .then((response) => {
                     this.teachers = response.data;
-                    if (response.data.data.length === 0) {
+                    console.log(this.teachers.data)
+                    if (this.teachers.data.length === 0) {
                         this.loaded = true;
                     }
                 })
@@ -128,6 +132,7 @@ export default {
 <style scoped>
 .LeftBar {
     height: 250px;
+    /* padding: 10px; */
 }
 .LeftBar a {
     /* background-color: #029e02; */
@@ -230,5 +235,8 @@ export default {
     height: 700px;
     overflow-y: auto;
     overflow-x: hidden;
+    /* box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3); */
 }
 </style>

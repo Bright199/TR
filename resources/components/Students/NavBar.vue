@@ -18,7 +18,7 @@
                             <router-link to="/student/messages">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-message"></i>&nbsp;
-                                    Messages</span
+                                    <span class="unReadMessage">5</span></span
                                 >
                             </router-link>
                             <ul class="userdropdown-content">
@@ -44,7 +44,7 @@
                             <router-link to="/student/favorite">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-bookmark"></i>&nbsp;
-                                    My favorites</span
+                                    <span class="unReadFavorite">5</span></span
                                 >
                             </router-link>
                             <ul class="userdropdown-content">
@@ -135,9 +135,10 @@ export default {
     box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -webkit-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -moz-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
+    background-color: #fec107
 }
 .fa-solid {
-    color: #fec107;
+    color: #151419;
 }
 .NavLinks2 {
     display: flex;
@@ -212,5 +213,41 @@ export default {
 }
 .UserName:hover {
     cursor: pointer;
+}
+
+.fa-bookmark{
+    position: relative;
+}
+.unReadFavorite{
+    background-color: red;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    border-radius:50%;
+    width: 20px;
+    height: 20px;
+    color: white;
+    font-size: 12px;
+    top: -5px;
+    right: -5px;
+}
+
+.fa-message{
+    position: relative;
+}
+.unReadMessage{
+    background-color: red;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    border-radius:50%;
+    width: 20px;
+    height: 20px;
+    color: white;
+    font-size: 12px;
+    top: -5px;
+    right: -5px;
 }
 </style>

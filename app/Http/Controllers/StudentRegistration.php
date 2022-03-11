@@ -65,7 +65,7 @@ class StudentRegistration extends Controller
 
     public function GetOurTeachers()
     {
-        $teachers = Teacher::where('our_tearcher', 1)->paginate(2);
+        $teachers = Teacher::where('our_tearcher', 1)->orderBy('id','desc')->paginate(2);
         return response()->json($teachers);
     }
     public function GetFreelanceTeachers()
@@ -95,7 +95,7 @@ class StudentRegistration extends Controller
 
     public function GetMessageContacts()
     {
-        $studentContacts = StudentContact::where('student_id',Auth::guard('student')->id())->get();
+        $studentContacts = StudentContact::where('student_id',Auth::guard('student')->id())->orderBy('id','desc')->get();
         return response()->json($studentContacts);
     }
 

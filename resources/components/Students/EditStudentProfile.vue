@@ -368,11 +368,11 @@ export default {
 .btn {
     border-radius: 0;
 }
-.TopBar1 {
+/* .TopBar1 {
     box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -webkit-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -moz-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
-}
+} */
 .EditCard {
     box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
     -webkit-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);

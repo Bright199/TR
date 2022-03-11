@@ -18,7 +18,7 @@
                             <router-link to="/student/messages">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-message"></i>&nbsp;
-                                    Messages <span >{{receivedMessages.length}}</span></span
+                                   <span class="unReadMessage">{{receivedMessages.length}}</span></span
                                 >
                             </router-link>
                             <ul class="userdropdown-content" >
@@ -28,12 +28,12 @@
                                 >
                                     <li v-if="MyUser.id != message.from">
                                         <router-link to="/student/messages">{{
-                                            message.message
+                                            message.teacher_name
                                         }}</router-link>
                                         <hr>
                                     </li>
 
-                                    <li v-else class="text-danger"> Deleted message</li>
+                                    <li v-else class="text-danger" style="font-size: 12px"> Deleted message</li>
                                 </div>
                                 
                                 <hr />
@@ -44,11 +44,11 @@
                             <router-link to="/student/messages">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-message"></i>&nbsp;
-                                    Messages </span
+                                   </span
                                 >
                             </router-link>
-                            <ul class="userdropdown-content" >
-                                <li>No message Yet</li>
+                            <ul class="userdropdown-content " >
+                                <li style="font-size:14px" class="d-flex justify-content-center">No message yet</li>
                             </ul>
                         </li>
                         <li class="userdropdown">
@@ -65,7 +65,7 @@
                             <router-link to="/student/favorite">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-bookmark"></i>&nbsp;
-                                    My favorites</span
+                                    <span class="unReadFavorite">10</span></span
                                 >
                             </router-link>
                             <ul class="userdropdown-content">
@@ -191,9 +191,10 @@ export default {
     box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -webkit-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -moz-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
+    background-color: #fec107;
 }
 .fa-solid {
-    color: #fec107;
+    color: #151419;
 }
 .NavLinks2 {
     display: flex;
@@ -268,5 +269,39 @@ export default {
 }
 .UserName:hover {
     cursor: pointer;
+}
+.fa-message{
+    position: relative;
+}
+.unReadMessage{
+    background-color: red;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    border-radius:50%;
+    width: 20px;
+    height: 20px;
+    color: white;
+    font-size: 12px;
+    top: -5px;
+    right: -5px;
+}
+.fa-bookmark{
+    position: relative;
+}
+.unReadFavorite{
+    background-color: red;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    border-radius:50%;
+    width: 20px;
+    height: 20px;
+    color: white;
+    font-size: 12px;
+    top: -5px;
+    right: -5px;
 }
 </style>
