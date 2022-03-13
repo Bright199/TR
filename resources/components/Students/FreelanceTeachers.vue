@@ -130,6 +130,9 @@ export default {
 .LeftBar {
     height: 250px;
 }
+.LeftBar :first-child{
+    margin-top: 15px
+}
 .LeftBar a {
     /* background-color: #029e02; */
     padding: 5px;

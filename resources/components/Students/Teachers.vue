@@ -148,6 +148,11 @@ export default {
     background-color: #029e02;
     color: white;
 }
+
+.LeftBar :first-child{
+    margin-top: 15px
+}
+
 .teacherDetails {
     border-bottom: 1px solid rgb(207, 205, 205);
     margin-left: 3px;

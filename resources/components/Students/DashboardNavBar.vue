@@ -263,13 +263,15 @@ export default {
     display: flex;
     padding: 10px;
     flex-direction: row;
+    
     /* background-color: #fec107; */
     justify-content: flex-end;
 }
 .NavLinks2 li {
     list-style: none;
     margin-right: 25px;
-    font-size: 20px;
+    font-size: 16px;
+    margin-top: 20px;
 }
 .NavLinks2 li a {
     text-decoration: none;
@@ -277,7 +279,7 @@ export default {
 }
 .NavLinks {
     display: flex;
-    padding: 10px;
+    padding: 8px;
     flex-direction: row;
     /* background-color: #fec107; */
     justify-content: flex-start;
@@ -286,6 +288,8 @@ export default {
     list-style: none;
     margin-right: 25px;
     font-size: 20px;
+    margin-top: 20px;
+
 }
 .NavLinks li a {
     text-decoration: none;
@@ -344,7 +348,9 @@ export default {
     position: relative;
     /* display: inline-block; */
 }
-
+.userdropdown li{
+    margin-top:12px
+}
 .userdropdown-content {
     display: none;
     position: absolute;

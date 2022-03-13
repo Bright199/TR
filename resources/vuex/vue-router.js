@@ -79,6 +79,13 @@ const routes = [
         // component: SingleTeacher,
         components: { default: SingleMessage },
         props: { default: true }
+    },
+    {
+        path: "/student/freelance/single/teacher/:id",
+        // name: "SingleTeacher",
+        // component: SingleTeacher,
+        components: { default: SingleTeacher },
+        props: { default: true }
     }
 ]
 

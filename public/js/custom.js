@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
     // This for the owl corousel
     $(".owl-carousel").owlCarousel({
@@ -36,3 +37,7 @@ $(document).ready(function(){
     //     $('.LoginRegisterLinks').addClass('ToggleLinks2')
     // })
 });
+
+if (window.location.hash && window.location.hash == '#_=_') {
+    window.location.hash = '';
+}

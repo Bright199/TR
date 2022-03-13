@@ -143,6 +143,11 @@ class StudentRegistration extends Controller
             ->with('teacherNationality', $teacher->nationality);
         // return response()->json($teachers);
     }
+
+    public function TeacherDetails($id){
+        $teacher = Teacher::find($id);
+        return response()->json($teacher);
+    }
     public function GetFreelanceSingleTeacher($id)
     {
         $teacher = Teacher::find($id);

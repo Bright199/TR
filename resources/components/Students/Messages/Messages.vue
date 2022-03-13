@@ -83,7 +83,7 @@
                     </div>
                     <div
                         class="container MessageContainer"
-                        ref="MessageContainer"
+                        id="MessageContainer"
                     >
                         <ul class="MessageInnerContainer">
                             <div v-if="messages.length">
@@ -106,9 +106,7 @@
                                                 : 'ReceiversMessageTime'
                                         "
                                     >
-                                        {{
-                                            dateTime(message.created_at)
-                                        }}
+                                        {{ dateTime(message.created_at) }}
                                     </p>
                                 </li>
                             </div>
@@ -173,7 +171,11 @@ export default {
     },
     methods: {
         dateTime(value) {
-            return moment(value).format('dddd') + " " + moment(value).format("MMM Do YY");
+            return (
+                moment(value).format("dddd") +
+                " " +
+                moment(value).format("MMM Do YY")
+            );
         },
         getUserChats(teacherId) {
             this.conversationsLoaded = false;
@@ -186,10 +188,10 @@ export default {
                 .get(`/student/conversations/${this.userId}`)
                 .then((response) => {
                     this.messages = response.data;
-                    setInterval(() => {
-                        this.$refs.MessageContainer.scrollTop =
-                            this.$refs.MessageContainer.scrollHeight;
-                    }, 500);
+                        setInterval(() => {
+                           const container = this.$el.querySelector("#MessageContainer")
+                            container.scrollTop = container.scrollHeight
+                        }, 500);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -234,9 +236,9 @@ export default {
                 teacherId: this.chatIsActive,
             };
             setInterval(() => {
-                this.$refs.MessageContainer.scrollTop =
-                    this.$refs.MessageContainer.scrollHeight;
-            }, 500);
+                           const container = this.$el.querySelector("#MessageContainer")
+                            container.scrollTop = container.scrollHeight
+                        }, 500);
             axios.post("/student/message", data);
             this.userMessage = "";
         },
@@ -259,7 +261,6 @@ export default {
     computed: {
         ...mapState({
             AuthUser: (state) => state.loggedUser,
-            
         }),
     },
 };
