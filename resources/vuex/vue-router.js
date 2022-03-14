@@ -10,7 +10,7 @@ import Messages from '../components/Students/Messages/Messages.vue';
 import SingleMessage from '../components/Students/Messages/SingleMessage.vue';
 import Teachers from '../components/Students/Teachers.vue';
 import FreelanceTeachers from '../components/Students/FreelanceTeachers.vue';
-import SingleTeacher from '../components/Students/SingleTeacher.vue';
+import SingleFreelanceTeacher from '../components/Students/SingleFreelanceTeacher.vue';
 import Favorites from '../components/Students/Favorites/Favorites.vue';
 
 
@@ -70,7 +70,7 @@ const routes = [
         path: '/student/single/teacher/:id',
         // name: "SingleTeacher",
         // component: SingleTeacher,
-        components: { default: SingleTeacher },
+        components: { default: SingleFreelanceTeacher },
         props: { default: true }
     },
     {
@@ -84,7 +84,7 @@ const routes = [
         path: "/student/freelance/single/teacher/:id",
         // name: "SingleTeacher",
         // component: SingleTeacher,
-        components: { default: SingleTeacher },
+        components: { default: SingleFreelanceTeacher },
         props: { default: true }
     }
 ]

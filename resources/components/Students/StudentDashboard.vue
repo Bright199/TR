@@ -1,6 +1,9 @@
 <template>
     <div>
-        <NavBar />
+        <div class="container-jumbotron p-2 bg-dark">
+
+        </div>
+        <DashboardNavBar />
         <div class="container">
             <div class="container-jumbotron">
                 <div class="row">
@@ -20,10 +23,11 @@ import NavBar from "./NavBar.vue";
 import RightBar from "./RightBar.vue";
 import LeftBar from "./LeftBar.vue";
 import { mapState, mapMutations } from "vuex";
+import DashboardNavBar from "./DashboardNavBar.vue";
 import axios from "axios";
 export default {
     name: "StudentDashboard",
-    components: { NavBar, RightBar, LeftBar },
+    components: { NavBar, RightBar, LeftBar,DashboardNavBar },
     data() {
         return {
             trimmedName: {},

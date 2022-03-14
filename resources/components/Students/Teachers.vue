@@ -14,73 +14,7 @@
                     >
                 </div>
                 <div class="col-md-8 mb-4 mt-4 shadow-sm">
-                    <div class="container-jumbotron border-bottom pt-3 ps-3">
-                        <p>
-                            <span
-                                style="
-                                    font-size: 25px;
-                                    font-weight: 550;
-                                    margin-top: 8px;
-                                "
-                                >Top results &nbsp;</span
-                            >
-                            <span v-if="teachers.to"
-                                >Showing {{ teachers.to }} of
-                                {{ teachers.total }} our teachers</span
-                            >
-                        </p>
-                    </div>
-                    <div v-if="teachers.total > 0" class="TeachersContainer">
-                        <div
-                            v-for="(teacher, index) in teachers.data"
-                            :key="index"
-                        >
-                            <a
-                                :href="'/student/freelance/single/teacher/' + teacher.id"
-                                class="teacherDetailsLink"
-                            >
-                                <div class="row teacherDetails">
-                                    <div class="col-md-4">
-                                        <img
-                                            src="/images/Green2.png"
-                                            alt=""
-                                            width="150"
-                                        />
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h3>
-                                            {{ teacher.name }}
-                                        </h3>
-                                        <p>{{ teacher.description }}</p>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <a href="/student/dashboard"
-                                            >Hire {{ teacher.name }}</a
-                                        >
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div v-else>
-                        <div class="spinner" v-if="loading2 == true">
-                            <div class="dot1"></div>
-                            <div class="dot2"></div>
-                        </div>
-                        <div class="contnainer py-5" v-if="loaded == true">
-                            <h4 class="d-flex justify-content-center " >
-                                Check freelance teachers
-                            </h4>
-                            <p class="d-flex justify-content-center ">Currently our teachers are unavailable</p>
-                        </div>
-                    </div>
-                    <div class="container">
-                        <Pagination
-                            :data="teachers"
-                            align="center"
-                            @pagination-change-page="getOurTeachers"
-                        />
-                    </div>
+                    <TeacherDetails/>
                 </div>
             </div>
         </div>
@@ -89,12 +23,12 @@
 <script>
 import axios from "axios";
 import DashboardNavBar from "./DashboardNavBar.vue";
-import LaravelVuePagination from "laravel-vue-pagination";
+import TeacherDetails from './OurTeacherDetail/TeacherDetails.vue'
 export default {
     name: "Teachers",
     components: {
         DashboardNavBar,
-        Pagination: LaravelVuePagination,
+        TeacherDetails
     },
     data() {
         return {
@@ -104,24 +38,9 @@ export default {
         };
     },
     mounted() {
-        this.getOurTeachers();
     },
     methods: {
-        getOurTeachers(page = 1) {
-            window.scrollTo(0, 0);
-            this.loading2 = true;
-            axios
-                .get("/student/our/teachers?page=" + page)
-                .then((response) => {
-                    this.teachers = response.data;
-                    if (response.data.data.length === 0) {
-                        this.loaded = true;
-                    }
-                })
-                .finally(() => {
-                    this.loading2 = false;
-                });
-        },
+       
     },
 };
 </script>

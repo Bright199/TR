@@ -1,11 +1,9 @@
 <template>
     <div>
-        <div class="container LeftBar">
+        <div class="container  LeftBar">
             <!-- post your first ad -->
-            <div class="d-flex justify-content-center mt-3">
-                <!-- <router-link to="/student/create/ad" class="mt-3"
-                    ><h6>Post an ad</h6></router-link
-                > -->
+            <div class="d-flex justify-content-center pt-5 mt-3">
+                
                 <a href="/student/create/ad"><h6>Post an ad</h6></a>
             </div>
             <!-- <hr class="Horizontal"> -->
@@ -73,10 +71,10 @@ export default {
 </script>
 <style scoped>
 .LeftBar {
-    box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
-    /* padding: 10px; */
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+   /* padding: 10px; */
     height: 500px;
 }
 .my-ad {

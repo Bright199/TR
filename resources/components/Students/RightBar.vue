@@ -2,7 +2,7 @@
     <div>
         <div class="LeftBar m-0">
             <div class="container p-2 mt-3">
-                <p class="TopHeading p-1">Available teachers</p>
+                <p class="TopHeading ps-5 pt-3">Available teachers</p>
             </div>
             <!-- <hr class="Horizontal" /> -->
             <div class="container mb-3 border-bottom">
@@ -16,7 +16,7 @@
                                 : ''
                         "
                     >
-                        <h4>Our teachers</h4>
+                        <h5>Our teachers</h5>
                     </div>
                     <div
                         @click="ActiveTeacherDiv(1)"
@@ -27,7 +27,7 @@
                                 : ''
                         "
                     >
-                        <h4>Freelance teachers</h4>
+                        <h5>Freelance teachers</h5>
                     </div>
                 </div>
             </div>
@@ -72,19 +72,20 @@ export default {
     color: #151419;
 }
 .OurTeachersLinkActive {
-    background-color: rgba(0, 0, 0, 0.1);
+   background-color: rgb(2, 158, 2, 0.1);
     padding: 2px;
+    border: 1px solid #029e02;
 }
 .OurTeachersLinkActive:hover {
     cursor: pointer;
 }
 .OtherTeachersLink:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+   background-color: rgb(2, 158, 2, 0.2);
     padding: 2px;
     cursor: pointer;
 }
 .OurTeachersLink:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+   background-color: rgb(2, 158, 2, 0.1);
     padding: 2px;
     cursor: pointer;
 }
@@ -106,9 +107,9 @@ export default {
     border-radius: 5px;
 }
 .LeftBar {
-    box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 .Horizontal {
     margin-top: 1rem;
@@ -119,7 +120,7 @@ export default {
 .TopHeading {
     color: #151419;
     margin-top: 5px;
-    font-size: 22px;
+    font-size: 18px;
 }
 
 ::-webkit-scrollbar {

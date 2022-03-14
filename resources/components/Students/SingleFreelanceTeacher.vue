@@ -12,7 +12,7 @@
                                 width="200"
                             />
                         </div>
-                        <div class="col-md-8 border shadow-sm">
+                        <div class="col-md-8 border p-5 shadow-sm">
                             <h3>
                                 {{ teacherDetails.name }} &nbsp;<i
                                     class="fa-solid fa-shield-blank"
@@ -47,11 +47,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- @if ($isOurTeacher === 1) -->
-                            <p>
+                            <p v-if="teacherDetails.our_tearcher == 1">
                                 Works for
                                 <span style="font-weight: 500; color: #029e02"
                                     >TREnglish
+                                </span>
+                            </p>
+                            <p v-else-if="loaded==true">
+                                Works as
+                                <span style="font-weight: 500; color: #029e02"
+                                    >Freelance teacher
                                 </span>
                             </p>
                             <!-- @endif -->
@@ -90,14 +95,15 @@ import { mapState, mapMutations } from "vuex";
 import moment from "moment";
 import DashboardNavBar from "./DashboardNavBar.vue";
 export default {
-    name: "SingleTeacher",
+    name: "SingleFreelanceTeacher",
     props: ["id"],
     components: {
         DashboardNavBar,
     },
     data() {
         return {
-            teacherDetails:''
+            teacherDetails:'',
+             loaded: false,
         }
     },
     methods: {
@@ -106,7 +112,7 @@ export default {
                 .get(`/student/teacher/details/${this.id}`)
                 .then((response) => {
                     this.teacherDetails = response.data;
-                    
+                    this.loaded = true;
                 })
                 .catch((error) => {
                     console.log(error);

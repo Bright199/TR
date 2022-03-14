@@ -64,7 +64,7 @@ class SocialiteLogin extends Controller
                 return redirect('/student/login')->with('oath', 'We encountered a problem. Try again or manually login');
             }
         } else {
-            return back();
+            return $request;
         }
     }
     public function facebook(Request $request)
@@ -120,7 +120,7 @@ class SocialiteLogin extends Controller
                 return redirect('/student/login')->with('oath', 'We encountered a problem. Try again or manually login');
             }
         } else {
-            return back();
+            return $request;
         }
     }
 }
