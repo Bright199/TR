@@ -57,6 +57,9 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/other/teachers', [StudentRegistration::class, 'GetFreelanceTeachers']);
         Route::get('/conversations/{teacherId}', [StudentRegistration::class, 'GetConversations'])->where('teacherId', '[0-9]+');;
         Route::post('/message', [StudentRegistration::class, 'sendMessage']);
+        Route::post('/markMessageRead', [StudentRegistration::class, 'markMessageRead']);
+        Route::post('/addToFavorite', [StudentRegistration::class, 'addToFavorite']);
+        Route::post('/removeFromFavorite', [StudentRegistration::class, 'removeFromFavorite']);
         Route::get('/create/ad', function () {
             return view('student.ad');
         });
@@ -65,6 +68,8 @@ Route::prefix('student')->name('student.')->group(function () {
         });
 
         Route::get('/getUnreadMessages',[StudentRegistration::class,'getUnreadMessages']);
+        Route::get('/getFavorites',[StudentRegistration::class,'getFavorites']);
+        Route::get('/getFavoriteTeacherIds',[StudentRegistration::class,'getFavoriteTeacherIds']);
         
         Route::get('/freelance/teachers', function(){
             return view('student.freelanceteachers');

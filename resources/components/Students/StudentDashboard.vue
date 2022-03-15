@@ -1,9 +1,18 @@
 <template>
     <div>
-        <div class="container-jumbotron p-2 bg-dark">
-
-        </div>
+        <div class="container-jumbotron p-2 " style="background-color:#029e02 "></div>
         <DashboardNavBar />
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-8">
+                    <p class="d-flex justify-content-center" style="font-size:20px;margin-bottom:0px">
+                        Find a teacher in few minutes by hiring our teachers or
+                        by creating an ad &nbsp;
+                    </p><a class="d-flex justify-content-center" href="/student/create/ad" style="margin-top:0px">post an ad</a>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <div class="container-jumbotron">
                 <div class="row">
@@ -27,7 +36,7 @@ import DashboardNavBar from "./DashboardNavBar.vue";
 import axios from "axios";
 export default {
     name: "StudentDashboard",
-    components: { NavBar, RightBar, LeftBar,DashboardNavBar },
+    components: { NavBar, RightBar, LeftBar, DashboardNavBar },
     data() {
         return {
             trimmedName: {},
@@ -36,11 +45,11 @@ export default {
     mounted() {
         let thisValue = this;
         axios
-            .get("/student/getAuthUser",{
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                    })
+            .get("/student/getAuthUser", {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
             .then(function (response) {
                 thisValue.$store.commit("userDetails", response.data);
                 thisValue.trimmedName = response.data;
@@ -55,5 +64,4 @@ export default {
     }),
     // methods: {},
 };
-
 </script>

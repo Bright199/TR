@@ -18,7 +18,7 @@ class CreateStudentFavoritesTable extends Migration
             $table->integer('teacher_id');
             $table->string('teacher_name');
             $table->string('teacher_email');
-            $table->string('teacher_image');
+            $table->string('teacher_image')->nullable();
             $table->integer('student_id');
             $table->timestamps();
         });

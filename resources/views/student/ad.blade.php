@@ -97,3 +97,8 @@
   }
   initPayPalButton();
 </script>
+<style>
+  body{
+  color:#183153
+}
+</style>

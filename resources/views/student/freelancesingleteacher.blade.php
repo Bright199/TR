@@ -387,4 +387,8 @@
         outline: none;
         border: 1px solid #029e02
     }
+
+    body{
+    color:#183153
+}
 </style>

@@ -65,17 +65,28 @@
                                 }}</span>
                             </p>
                             <p v-if="teacher.description.length > 200">
-                                <span v-if="showShortDescription" class="shortDescription">
-                                    {{ teacher.description.slice(0,150) }}
-                                    <span @click="readMore" style="color:#029e02">...Read More</span>
+                                <span
+                                    v-if="showShortDescription"
+                                    class="shortDescription"
+                                >
+                                    {{ teacher.description.slice(0, 150) }}
+                                    <span
+                                        @click="readMore"
+                                        style="color: #029e02"
+                                        >...Read More</span
+                                    >
                                 </span>
                                 <span v-else class="shortDescription">
                                     {{ teacher.description }}
-                                     <span @click="readLess" style="color:#029e02">Hide details</span>
+                                    <span
+                                        @click="readLess"
+                                        style="color: #029e02"
+                                        >Hide details</span
+                                    >
                                 </span>
                             </p>
                             <p v-else>
-                                {{teacher.description}}
+                                {{ teacher.description }}
                             </p>
                         </div>
                         <div class="col-md-3">
@@ -130,6 +141,34 @@
                                     >
                                         per hour
                                     </p>
+
+                                    <p
+                                        v-if="
+                                            StudentFavoritesIds.indexOf(
+                                                teacher.id
+                                            ) === -1
+                                        "
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        :title="addedToFavorite == true?'Save to My Lists':'Added to My Lists'"
+                                        class="d-flex justify-content-end"
+                                        @click="addToFavorite(teacher.id)"
+                                    >
+
+                                        <i :class="addedToFavorite == true?'fa-regular':'fa-solid'" class="fa-heart" :style="addedToFavorite == true?'':'color:#fe0609'"></i>
+                                        <!-- <i class="fa-regular fa-heart"></i> -->
+                                    </p>
+                                    <p
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        :title="addedToFavorite == true?'Added to My Lists':'Save to My Lists'"
+                                        class="d-flex justify-content-end"
+                                        v-else
+                                        @click="removeFromFavorite(teacher.id)"
+                                    >
+                                        <i :class="addedToFavorite == true?'fa-solid':'fa-regular'" class="fa-heart" :style="addedToFavorite == true?'color:#fe0609':''"></i>
+                                        <!-- <i class="fa-solid fa-heart"></i> -->
+                                    </p>
                                 </div>
                             </div>
                             <br /><br />
@@ -159,18 +198,25 @@
                 </div>
             </div>
         </div>
-            <div class="container">
-                <Pagination
-                    :data="teachers"
-                    align="right"
-                    @pagination-change-page="getOurTeachers"
-                />
-            </div>
+        <div class="container">
+            <Pagination
+                :data="teachers"
+                align="right"
+                @pagination-change-page="getOurTeachers"
+            />
+        </div>
         <!-- {{teachers}} -->
         <!--  -->
     </div>
 </template>
 <script>
+var tooltipTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+);
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+});
+
 import LaravelVuePagination from "laravel-vue-pagination";
 import axios from "axios";
 export default {
@@ -182,13 +228,52 @@ export default {
             loaded: false,
             loading2: false,
             teacherLength: 0,
-            showShortDescription:true
+            showShortDescription: true,
+            StudentFavoritesIds: "",
+            FavoriteCount: "",
+            addedToFavorite: true
         };
     },
     mounted() {
         this.getOurTeachers();
+        this.getFavorites();
     },
     methods: {
+        getFavorites() {
+            axios
+                .get("/student/getFavoriteTeacherIds")
+                .then((response) => {
+                    // this.FavoriteCount = response.data.length;
+                    this.StudentFavoritesIds = response.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        removeFromFavorite(teacherId) {
+            if(this.addedToFavorite ==true){
+                this.addedToFavorite = false
+            }else{
+                 this.addedToFavorite = true
+            }
+            this.addedToFavorite = false
+            axios.post("/student/removeFromFavorite", { id: teacherId });
+        },
+        addToFavorite(teacherId) {
+            if(this.addedToFavorite == true){
+                this.addedToFavorite = false
+            }else{
+                 this.addedToFavorite = true
+            }
+            axios
+                .post("/student/addToFavorite", { id: teacherId })
+                .then((response) => {
+                    this.StudentFavoritesIds.push({ teacherId });
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
         getOurTeachers(page = 1) {
             window.scrollTo(0, 0);
             this.loading2 = true;
@@ -206,16 +291,41 @@ export default {
                     this.loading2 = false;
                 });
         },
-        readMore(){
-            this.showShortDescription = false
+        readMore() {
+            this.showShortDescription = false;
         },
-        readLess(){
-            this.showShortDescription = true
-        }
+        readLess() {
+            this.showShortDescription = true;
+        },
     },
 };
 </script>
 <style scoped>
+.fa-heart:hover{
+    animation: beat 1.2s ease-in-out infinite;
+}
+
+@keyframes beat {
+  0%{
+  font-size: 15px;
+  }
+  25% {
+  font-size: 16px;
+  }
+  50% {
+  font-size: 17px;
+  }
+  75% {
+  font-size: 18px;
+  }
+  100% {
+  font-size: 19px;
+  }
+  
+}
+body {
+    color: #183153;
+}
 .btn {
     border-radius: 0;
 }
@@ -271,12 +381,12 @@ export default {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-     background: #dddddd;
+    background: #dddddd;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-   background: #dddddd;
+    background: #dddddd;
     cursor: pointer;
 }
 

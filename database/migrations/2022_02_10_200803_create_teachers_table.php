@@ -17,6 +17,7 @@ class CreateTeachersTable extends Migration
             $table->id();
             $table->string('name');
             $table->boolean('our_tearcher')->default(0);
+            $table->boolean('online')->default(0);
             $table->string('teacher_image')->nullable();
             $table->text('description')->nullable();
             $table->string('hourly_pay')->nullable();

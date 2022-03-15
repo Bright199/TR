@@ -38,3 +38,8 @@
 
 </html>
 <script src="{{ mix('js/app.js') }}" defer></script>
+<style>
+    body{
+    color:#183153
+}
+</style>

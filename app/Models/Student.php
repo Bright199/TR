@@ -30,7 +30,8 @@ class Student extends Authenticatable
         'facebook_id',
         'user_image',
         'country',
-        'phone_number'
+        'phone_number',
+        'online',
     ];
 
     protected $hidden = [

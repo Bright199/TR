@@ -128,6 +128,8 @@
 <script src="{{ asset('js/countries.js') }}"></script>
 
 </html>
-<script>
-
-</script>
+<style>
+    body{
+    color:#183153
+}
+</style>

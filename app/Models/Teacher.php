@@ -32,7 +32,8 @@ class Teacher extends Authenticatable
         'third_language',
         'third_language_proficiency',
         'nationality',
-        'our_teacher'
+        'our_teacher',
+        'online',
     ];
 
     protected $hidden = [

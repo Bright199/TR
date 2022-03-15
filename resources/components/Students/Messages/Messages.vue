@@ -1,6 +1,17 @@
 <template>
     <div>
         <DashboardNavBar />
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-8">
+                    <p class="d-flex justify-content-center" style="font-size:20px;margin-bottom:0px">
+                        Find a teacher in few minutes by hiring our teachers or
+                        by creating an ad &nbsp;
+                    </p><a class="d-flex justify-content-center" href="/student/create/ad" style="margin-top:0px">post an ad</a>
+                </div>
+            </div>
+        </div>
         <div class="container mt-4">
             <div class="row">
                 <div class="col-md-4 LeftBar p-0">
@@ -450,18 +461,18 @@ input:focus {
     padding: 2px;
 }
 .LeftBar {
-    box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
     height: 450px;
     overflow-y: auto;
     overflow-x: hidden;
 }
 .RightBar {
-    box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     height: 450px;
 }
 ::-webkit-scrollbar {

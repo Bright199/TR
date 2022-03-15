@@ -52,8 +52,7 @@
     })
 </script>
 <style>
-    .LeftBarStudent {
-        /* padding: 0; */
-
-    }
+    body{
+    color:#183153
+}
 </style>

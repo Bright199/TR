@@ -7,6 +7,7 @@ use App\Models\Message;
 use App\Models\Student;
 use App\Models\StudentAd;
 use App\Models\StudentContact;
+use App\Models\StudentFavorite;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -80,9 +81,15 @@ class StudentRegistration extends Controller
     {
         $studentId = Auth::guard('student')->id();
         $unreadmessage = Message::where('to', $studentId)
-        ->where('is_read', 0)
-        ->get();
+            ->where('is_read', 0)
+            ->get();
         return response()->json($unreadmessage);
+    }
+
+    public function markMessageRead(Request $request)
+    {
+        Message::where('id', $request->rowId)
+            ->update(['is_read' => 1]);
     }
 
     public function GetOurTeachers()
@@ -144,7 +151,8 @@ class StudentRegistration extends Controller
         // return response()->json($teachers);
     }
 
-    public function TeacherDetails($id){
+    public function TeacherDetails($id)
+    {
         $teacher = Teacher::find($id);
         return response()->json($teacher);
     }
@@ -192,6 +200,47 @@ class StudentRegistration extends Controller
         // }
     }
 
+    public function getFavorites()
+    {
+        $favoriteTeachers = StudentFavorite::where('student_id',Auth::guard('student')->id())->get();
+        return response()->json($favoriteTeachers);
+    }
+    public function getFavoriteTeacherIds()
+    {
+        $favoriteTeachersIds = StudentFavorite::where('student_id', Auth::guard('student')->id())->pluck('teacher_id');
+        return $favoriteTeachersIds->toArray();
+    }
+
+    public function addToFavorite(Request $request)
+    {
+        $teacherDetails = Teacher::find($request->id);
+        $teacherCheck = StudentFavorite::where('teacher_id', $request->id)->first();
+        // return response()->json($teacherCheck);
+        if ($teacherCheck === null) {
+            if ($teacherDetails->teacher_image) {
+               $favorite = StudentFavorite::create([
+                    'teacher_id' => $teacherDetails->id,
+                    'teacher_name' => $teacherDetails->name,
+                    'teacher_email' => $teacherDetails->email,
+                    'teacher_image' => $teacherDetails->teacher_image,
+                    'student_id' => Auth::guard('student')->id()
+                ]);
+                return response()->json($favorite);
+            } else {
+                $favorite =  StudentFavorite::create([
+                    'teacher_id' => $request->id,
+                    'teacher_name' => $teacherDetails->name,
+                    'teacher_email' => $teacherDetails->email,
+                    'student_id' => Auth::guard('student')->id()
+                ]);
+                return response()->json($favorite);
+            }
+        }
+    }
+
+    public function removeFromFavorite(Request $request){
+        StudentFavorite::where('teacher_id',$request->id)->delete();
+    }
     public function CheckProfileInfo()
     {
         $authUser = Student::find(Auth::guard('student')->id());

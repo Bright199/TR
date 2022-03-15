@@ -23,8 +23,8 @@
                                     ><i class="fa-solid fa-message"></i>&nbsp;
                                     <span
                                         class="unReadMessage"
-                                        v-if="(loaded = true)"
-                                        >{{ unread }}</span
+                                        v-if="(loaded = true && unreadMessageCount > 0)"
+                                        >{{ unreadMessageCount }}</span
                                     ></span
                                 >
                             </router-link>
@@ -34,6 +34,7 @@
                                     :key="message.id"
                                     class="border-bottom px-5 mt-2"
                                     :class="message.is_read ===0?'unReadMessageBg':''"
+                                    @click="markRead(message.id)"
                                 >
                                     <router-link :to="'/student/single/teacher/messages/'+message.from">
                                         <p
@@ -82,21 +83,56 @@
                                 >
                             </router-link>
                         </li>
-                        <li class="userdropdown">
+                        <li
+                            class="messageuserdropdown"
+                            v-if="FavoriteCount >0"
+                        >
                             <!-- <a href="" class="Logout "></a> -->
                             <router-link to="/student/favorite">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-bookmark"></i>&nbsp;
-                                    <span class="unReadFavorite">10</span></span
+                                    <span
+                                        class="unReadMessage"
+                                        v-if="(loaded = true && FavoriteCount > 0)"
+                                        >{{ FavoriteCount }}</span
+                                    ></span
                                 >
                             </router-link>
-                            <ul class="userdropdown-content">
-                                <li>
-                                    <router-link to="/student/favorite"
-                                        >Teacher's name</router-link
-                                    >
+                            <ul class="messageuserdropdown-content">
+                                <li
+                                    v-for="favorite in StudentFavorites"
+                                    :key="favorite.id"
+                                    class="border-bottom px-5 mt-2"
+                                >
+                                    <router-link :to="'/student/single/teacher/messages/'+message.from">
+                                        <p
+                                            style="
+                                                margi-bottom: 0px;
+                                                color: #029e02;
+                                            "
+                                        >
+                                            {{ favorite.teacher_name }} 
+                                            <!-- &nbsp;&nbsp;
+                                            <span class="timeSent">{{dateTime(favorite.created_at)}}</span> -->
+                                        </p>
+                                    </router-link>
                                 </li>
-                                <hr />
+                            </ul>
+                        </li>
+                        <li class="userdropdown" v-else>
+                            <!-- <a href="" class="Logout "></a> -->
+                            <router-link to="/student/favorite">
+                                <span class="UserName"
+                                    ><i class="fa-solid fa-bookmark"></i>&nbsp;
+                                </span>
+                            </router-link>
+                            <ul class="userdropdown-content">
+                                <li
+                                    style="font-size: 14px"
+                                    class="d-flex justify-content-center"
+                                >
+                                    No favorites yet
+                                </li>
                             </ul>
                         </li>
                         <!-- {{ trimmedName }} -->
@@ -161,8 +197,10 @@ export default {
             UserName: "",
             AuthUserName: "",
             receivedMessages: "",
-            unread: "",
+            unreadMessageCount: "",
             loaded: false,
+            StudentFavorites:'',
+            FavoriteCount:0
         };
     },
     mounted() {
@@ -172,6 +210,11 @@ export default {
     },
 
     methods: {
+        markRead(messageRowId){
+            axios
+                .post("/student/markMessageRead",{rowId: messageRowId})
+            
+        },
         dateTime(value) {
             return  moment(value).startOf('hour').fromNow();
         },
@@ -179,7 +222,21 @@ export default {
             axios
                 .get("/student/getUnreadMessages")
                 .then((response) => {
-                    this.unread = response.data.length;
+                    this.unreadMessageCount = response.data.length;
+                    if (response.data.length > 0) {
+                        this.loaded = true;
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        getFavorites() {
+            axios
+                .get("/student/getFavorites")
+                .then((response) => {
+                    this.FavoriteCount = response.data.length;
+                    this.StudentFavorites = response.data
                     if (response.data.length > 0) {
                         this.loaded = true;
                     }
@@ -241,7 +298,7 @@ export default {
     right: 20px;
 }
 .unReadMessageBg{
-    background-color:#eff0ef
+    background-color:#f7f7f7
 }
 .unReadMessageBg:hover{
     background-color:#f8f8f8;
@@ -257,7 +314,8 @@ export default {
     background-color: #fec107;
 }
 .fa-solid {
-    color: #151419;
+    color: #183153;
+    font-size: 20px;
 }
 .NavLinks2 {
     display: flex;
@@ -275,7 +333,7 @@ export default {
 }
 .NavLinks2 li a {
     text-decoration: none;
-    color: #151419;
+    color: #183153;
 }
 .NavLinks {
     display: flex;
@@ -293,11 +351,11 @@ export default {
 }
 .NavLinks li a {
     text-decoration: none;
-    color: #151419;
+    color: #183153;
 }
 .LinkItem {
     font-size: 18px;
-    color: #151419;
+    color: #183153;
     padding: 2px 10px;
 }
 /* This is message drop down */
@@ -375,7 +433,8 @@ export default {
 }
 
 .UserName {
-    color: #151419;
+        
+
     text-transform: capitalize;
     font-weight: 600;
 }
@@ -386,7 +445,7 @@ export default {
     position: relative;
 }
 .unReadMessage {
-    background-color: red;
+    background-color: #fe0609 ;
     display: flex;
     position: absolute;
     align-items: center;
@@ -396,8 +455,8 @@ export default {
     height: 20px;
     color: white;
     font-size: 12px;
-    top: -5px;
-    right: -5px;
+    top: -12px;
+    right: -8px;
 }
 .fa-bookmark {
     position: relative;
