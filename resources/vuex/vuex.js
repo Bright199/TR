@@ -4,8 +4,8 @@ const store = createStore({
   state() {
     return {
       loggedUser: '',
-      profileImageUrl: ''
-
+      profileImageUrl: '',
+      FavoriteCount: 0
     }
   },
   mutations: {
@@ -13,16 +13,20 @@ const store = createStore({
       state.loggedUser = obtainedUser
       // state.isAuthenticated = true
     },
-    profileImage(state,profileImage)
-    {
+    profileImage(state, profileImage) {
       state.profileImageUrl = profileImage
+    },
+    setFavoriteCount(state, payload) {
+      state.FavoriteCount = payload
+    },
+    addFavoriteCount(state, payload) {
+      state.FavoriteCount ++
+    },
+    subtrFavoriteCount(state, payload) {
+      state.FavoriteCount --
     }
   },
-  getters: {
-    UserFirstName(state) {
-      return state.loggedUser
-    }
-  }
+  
 })
 
 export default store;

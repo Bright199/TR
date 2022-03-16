@@ -150,23 +150,54 @@
                                         "
                                         data-bs-toggle="tooltip"
                                         data-bs-placement="top"
-                                        :title="addedToFavorite == true?'Save to My Lists':'Added to My Lists'"
+                                        :title="
+                                            addedToFavorite == true
+                                                ? 'Save to My Lists'
+                                                : 'Added to My Lists'
+                                        "
                                         class="d-flex justify-content-end"
                                         @click="addToFavorite(teacher.id)"
                                     >
-
-                                        <i :class="addedToFavorite == true?'fa-regular':'fa-solid'" class="fa-heart" :style="addedToFavorite == true?'':'color:#fe0609'"></i>
+                                        <i
+                                            :class="
+                                                addedToFavorite == true
+                                                    ? 'fa-regular'
+                                                    : 'fa-solid'
+                                            "
+                                            class="fa-heart"
+                                            :style="
+                                                addedToFavorite == true
+                                                    ? ''
+                                                    : 'color:#fe0609'
+                                            "
+                                        ></i>
                                         <!-- <i class="fa-regular fa-heart"></i> -->
                                     </p>
                                     <p
                                         data-bs-toggle="tooltip"
                                         data-bs-placement="top"
-                                        :title="addedToFavorite == true?'Added to My Lists':'Save to My Lists'"
+                                        :title="
+                                            addedToFavorite == true
+                                                ? 'Added to My Lists'
+                                                : 'Save to My Lists'
+                                        "
                                         class="d-flex justify-content-end"
                                         v-else
                                         @click="removeFromFavorite(teacher.id)"
                                     >
-                                        <i :class="addedToFavorite == true?'fa-solid':'fa-regular'" class="fa-heart" :style="addedToFavorite == true?'color:#fe0609':''"></i>
+                                        <i
+                                            :class="
+                                                addedToFavorite == true
+                                                    ? 'fa-solid'
+                                                    : 'fa-regular'
+                                            "
+                                            class="fa-heart"
+                                            :style="
+                                                addedToFavorite == true
+                                                    ? 'color:#fe0609'
+                                                    : ''
+                                            "
+                                        ></i>
                                         <!-- <i class="fa-solid fa-heart"></i> -->
                                     </p>
                                 </div>
@@ -230,8 +261,8 @@ export default {
             teacherLength: 0,
             showShortDescription: true,
             StudentFavoritesIds: "",
-            FavoriteCount: "",
-            addedToFavorite: true
+            // FavoriteCount: "",
+            addedToFavorite: true,
         };
     },
     mounted() {
@@ -243,7 +274,6 @@ export default {
             axios
                 .get("/student/getFavoriteTeacherIds")
                 .then((response) => {
-                    // this.FavoriteCount = response.data.length;
                     this.StudentFavoritesIds = response.data;
                 })
                 .catch((error) => {
@@ -251,19 +281,22 @@ export default {
                 });
         },
         removeFromFavorite(teacherId) {
-            if(this.addedToFavorite ==true){
-                this.addedToFavorite = false
-            }else{
-                 this.addedToFavorite = true
+            if (this.addedToFavorite == true) {
+                this.addedToFavorite = false;
+                this.$store.commit("subtrFavoriteCount", 1);
+            } else {
+                this.$store.commit("addFavoriteCount", 1);
+                this.addedToFavorite = true;
             }
-            this.addedToFavorite = false
             axios.post("/student/removeFromFavorite", { id: teacherId });
         },
         addToFavorite(teacherId) {
-            if(this.addedToFavorite == true){
-                this.addedToFavorite = false
-            }else{
-                 this.addedToFavorite = true
+            if (this.addedToFavorite == true) {
+                this.addedToFavorite = false;
+                this.$store.commit("addFavoriteCount", 1);
+            } else {
+                this.addedToFavorite = true;
+                this.$store.commit("subtrFavoriteCount", 1);
             }
             axios
                 .post("/student/addToFavorite", { id: teacherId })
@@ -301,27 +334,17 @@ export default {
 };
 </script>
 <style scoped>
-.fa-heart:hover{
+.fa-heart:hover {
     animation: beat 1.2s ease-in-out infinite;
+    font-size: 20px;
 }
-
 @keyframes beat {
-  0%{
-  font-size: 15px;
-  }
-  25% {
-  font-size: 16px;
-  }
-  50% {
-  font-size: 17px;
-  }
-  75% {
-  font-size: 18px;
-  }
-  100% {
-  font-size: 19px;
-  }
-  
+    0% {
+        font-size: 19px;
+    }
+    100% {
+        font-size: 18px;
+    }
 }
 body {
     color: #183153;

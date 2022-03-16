@@ -30,6 +30,7 @@
                             :value="country.value"
                         >
                             {{ country.name }}
+                            <!-- <span type='hidden'>{{ country.flag}}</span> -->
                         </option>
                     </select>
                 </div>
@@ -62,6 +63,7 @@ export default {
                     })
             .then(function (response) {
                 thisValue.countriesInfo = response.data.data;
+                // console.log(response)
             })
             .catch(function (error) {
                 console.log(error);

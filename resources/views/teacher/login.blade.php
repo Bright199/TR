@@ -14,11 +14,13 @@
                     <img src="https://img.icons8.com/color/30/000000/google-logo.png" />
                     Login with google</a>
 
-                @if (session('oath'))
+                <div class="container mt-1">
+                    @if (session('oath'))
                 <div class="alert alert-danger">
                     {{ session('oath') }}
                 </div>
                 @endif
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('teacher.login') }}">

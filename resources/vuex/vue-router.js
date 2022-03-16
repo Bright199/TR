@@ -12,6 +12,7 @@ import Teachers from '../components/Students/Teachers.vue';
 import FreelanceTeachers from '../components/Students/FreelanceTeachers.vue';
 import SingleFreelanceTeacher from '../components/Students/SingleFreelanceTeacher.vue';
 import Favorites from '../components/Students/Favorites/Favorites.vue';
+import SingleFavorite from '../components/Students/Favorites/SingleFavorite.vue';
 
 
 const newLocal = 'Home';
@@ -30,6 +31,11 @@ const routes = [
         path: '/student/favorite',
         name: ' Favorites',
         component: Favorites,
+    },
+    {
+        path: '/student/single/favorite/:id',
+        components: { default: SingleFavorite },
+        props: { default: true }
     },
     {
         path: '/student/dashboard',

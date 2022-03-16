@@ -205,6 +205,14 @@ class StudentRegistration extends Controller
         $favoriteTeachers = StudentFavorite::where('student_id',Auth::guard('student')->id())->get();
         return response()->json($favoriteTeachers);
     }
+    public function getAllStudentFavorites()
+    {
+        $teacherIds = StudentFavorite::where('student_id', Auth::guard('student')->id())->pluck('teacher_id');
+        $teacherIds->toArray();
+        $teacherDetails = Teacher::whereIn('id', $teacherIds)->paginate(10);
+        return response()->json($teacherDetails);
+    }
+
     public function getFavoriteTeacherIds()
     {
         $favoriteTeachersIds = StudentFavorite::where('student_id', Auth::guard('student')->id())->pluck('teacher_id');

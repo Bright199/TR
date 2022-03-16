@@ -79,7 +79,7 @@
                             <router-link to="/student/teachers">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-chalkboard-user"></i
-                                    >&nbsp; Teachers</span
+                                    >&nbsp; </span
                                 >
                             </router-link>
                         </li>
@@ -104,7 +104,7 @@
                                     :key="favorite.id"
                                     class="border-bottom px-5 mt-2"
                                 >
-                                    <router-link :to="'/student/single/teacher/messages/'+message.from">
+                                    <router-link :to="'/student/single/favorite/'+favorite.teacher_id">
                                         <p
                                             style="
                                                 margi-bottom: 0px;
@@ -200,13 +200,14 @@ export default {
             unreadMessageCount: "",
             loaded: false,
             StudentFavorites:'',
-            FavoriteCount:0
+            // FavoriteCount:0
         };
     },
     mounted() {
         this.getAuthUser();
         this.getReceivedMessages();
         this.getUnreadMessages();
+        this.getFavorites();
     },
 
     methods: {
@@ -235,7 +236,8 @@ export default {
             axios
                 .get("/student/getFavorites")
                 .then((response) => {
-                    this.FavoriteCount = response.data.length;
+                    // this.FavoriteCount = response.data.length;
+                    this.$store.commit('setFavoriteCount',response.data.length)
                     this.StudentFavorites = response.data
                     if (response.data.length > 0) {
                         this.loaded = true;
@@ -273,6 +275,7 @@ export default {
     computed: {
         ...mapState({
             MyUser: (state) => state.loggedUser,
+            FavoriteCount: (state)=> state.FavoriteCount
         }),
     },
 };

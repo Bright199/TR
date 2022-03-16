@@ -70,6 +70,7 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/getUnreadMessages',[StudentRegistration::class,'getUnreadMessages']);
         Route::get('/getFavorites',[StudentRegistration::class,'getFavorites']);
         Route::get('/getFavoriteTeacherIds',[StudentRegistration::class,'getFavoriteTeacherIds']);
+        Route::get('/getAllStudentFavorites',[StudentRegistration::class,'getAllStudentFavorites']);
         
         Route::get('/freelance/teachers', function(){
             return view('student.freelanceteachers');
@@ -83,6 +84,9 @@ Route::prefix('student')->name('student.')->group(function () {
         });
         Route::get('/favorite', function () {
             return view('student.favorite');
+        });
+        Route::get('/single/favorite/{id}', function () {
+            return view('student.singlefavorite');
         });
         Route::get('/ad/management', function () {
             return view('student.adsmanagement');

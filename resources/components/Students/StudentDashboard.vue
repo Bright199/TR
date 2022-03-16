@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container-jumbotron p-2 " style="background-color:#029e02 "></div>
+        <!-- <div class="container-jumbotron p-2 " style="background-color:#029e02 "></div> -->
         <DashboardNavBar />
         <div class="container mt-3">
             <div class="row">
