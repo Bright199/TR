@@ -64,7 +64,7 @@
                                     teacher.third_language_proficiency
                                 }}</span>
                             </p>
-                            <p v-if="teacher.description.length > 200">
+                            <p v-if="teacher.description.length > 200" >
                                 <span
                                     v-if="showShortDescription"
                                     class="shortDescription"
@@ -203,8 +203,9 @@
                                 </div>
                             </div>
                             <br /><br />
-                            <a href="" class="btn d-block FilterBtn">Details</a
-                            ><br />
+                            <router-link :to="'/student/single/teacher/'+teacher.id" class="btn d-block FilterBtn">Details</router-link>
+                            <!-- <a href="" >Details</a -->
+                            <br />
                             <a
                                 href=""
                                 class="btn d-block btn-warning mb-3 RemoveOutline"

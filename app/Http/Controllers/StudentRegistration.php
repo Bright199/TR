@@ -38,6 +38,7 @@ class StudentRegistration extends Controller
 
     public function sendMessage(Request $request)
     {
+        // return response()->json($request->teacherId);
         $teacherDetails = Teacher::find($request->teacherId);
         $studentDetails = Student::find(Auth::guard('student')->id());
 
@@ -51,7 +52,7 @@ class StudentRegistration extends Controller
         ]);
 
         $contact = StudentContact::where('teacher_id', $request->teacherId)->first();
-        if ($contact == null) {
+        if ($contact === null) {
 
             if ($teacherDetails->teacher_image) {
                 StudentContact::create([
@@ -75,7 +76,6 @@ class StudentRegistration extends Controller
             }
         }
 
-        return redirect('/student/messages');
     }
     public function getUnreadMessages()
     {
@@ -132,23 +132,26 @@ class StudentRegistration extends Controller
         return response()->json($studentContacts);
     }
 
-    public function GetSingleTeacher($id)
-    {
-        $teacher = Teacher::find($id);
+    // public function GetSingleTeacher($id)
+    // {
+    //     $teacher = Teacher::find($id);
 
-        return view('student.singleteacher')
-            ->with('teacherName', $teacher->name)
-            ->with('teacherDescription', $teacher->description)
-            ->with('teacherFirstLang', $teacher->first_language)
-            ->with('teacherFirstLangProf', $teacher->first_language_proficiency)
-            ->with('teacherSecondLang', $teacher->second_language)
-            ->with('teacherSecondLangProf', $teacher->second_language_proficiency)
-            ->with('isOurTeacher', $teacher->our_tearcher)
-            ->with('teacherHourlyPay', $teacher->hourly_pay)
-            ->with('teacherJoinedAt', $teacher->created_at)
-            ->with('teacherId', $teacher->id)
-            ->with('teacherNationality', $teacher->nationality);
-        // return response()->json($teachers);
+    //     return view('student.singleteacher')
+    //         ->with('teacherName', $teacher->name)
+    //         ->with('teacherDescription', $teacher->description)
+    //         ->with('teacherFirstLang', $teacher->first_language)
+    //         ->with('teacherFirstLangProf', $teacher->first_language_proficiency)
+    //         ->with('teacherSecondLang', $teacher->second_language)
+    //         ->with('teacherSecondLangProf', $teacher->second_language_proficiency)
+    //         ->with('isOurTeacher', $teacher->our_tearcher)
+    //         ->with('teacherHourlyPay', $teacher->hourly_pay)
+    //         ->with('teacherJoinedAt', $teacher->created_at)
+    //         ->with('teacherId', $teacher->id)
+    //         ->with('teacherNationality', $teacher->nationality);
+    // }
+
+    public function GetSingleTeacher(){
+        return view('student.ourteacher');
     }
 
     public function TeacherDetails($id)

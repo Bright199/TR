@@ -79,6 +79,9 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/messages', function () {
             return view('student.message');
         });
+        Route::get('/message', function () {
+            return view('student.message');
+        });
         Route::get('/teachers', function () {
             return view('student.teachers');
         });
@@ -136,7 +139,7 @@ Route::get('google/auth/callback', [SocialiteLogin::class, 'google']);
 // })->name('teacher.google.login');
 // Route::get('google/auth/callback', [TeacherSocialiteLogin::class, 'teacherGoogle']);
 
-Route::get('/restaurant', function(){
+Route::get('/netflix', function(){
     return view('hakan');
 });
 

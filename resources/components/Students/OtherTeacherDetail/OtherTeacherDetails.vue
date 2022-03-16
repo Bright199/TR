@@ -133,8 +133,8 @@
                                 </div>
                             </div>
                             <br /><br />
-                            <a href="" class="btn d-block FilterBtn">Details</a
-                            ><br />
+                            <router-link :to="'/student/single/teacher/'+teacher.id" class="btn d-block FilterBtn">Details</router-link>
+                            <br />
                             <a
                                 href=""
                                 class="btn d-block btn-warning mb-3 RemoveOutline"
