@@ -199,10 +199,10 @@ export default {
                 .get(`/student/conversations/${this.userId}`)
                 .then((response) => {
                     this.messages = response.data;
-                        setInterval(() => {
-                           const container = this.$el.querySelector("#MessageContainer")
+                    setTimeout(() => {
+                         const container = this.$el.querySelector("#MessageContainer")
                             container.scrollTop = container.scrollHeight
-                        }, 500);
+                    }, 500);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -246,7 +246,7 @@ export default {
                 message: trimmedMessage,
                 teacherId: this.chatIsActive,
             };
-            setInterval(() => {
+            setTimeout(() => {
                            const container = this.$el.querySelector("#MessageContainer")
                             container.scrollTop = container.scrollHeight
                         }, 500);

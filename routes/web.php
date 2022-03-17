@@ -72,6 +72,10 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/getFavoriteTeacherIds',[StudentRegistration::class,'getFavoriteTeacherIds']);
         Route::get('/getAllStudentFavorites',[StudentRegistration::class,'getAllStudentFavorites']);
         
+        Route::get('/lesson/book',function(){
+            return view('student.bookdemo');
+        });
+
         Route::get('/freelance/teachers', function(){
             return view('student.freelanceteachers');
         });

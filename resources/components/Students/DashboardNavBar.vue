@@ -104,7 +104,7 @@
                                     :key="favorite.id"
                                     class="border-bottom px-5 mt-2"
                                 >
-                                    <router-link :to="'/student/single/favorite/'+favorite.teacher_id">
+                                    <router-link :to="'/student/single/teacher/'+favorite.teacher_id">
                                         <p
                                             style="
                                                 margi-bottom: 0px;

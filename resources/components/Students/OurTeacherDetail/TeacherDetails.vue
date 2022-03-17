@@ -207,9 +207,9 @@
                             <!-- <a href="" >Details</a -->
                             <br />
                             <a
-                                href=""
+                                href="/student/lesson/book"
                                 class="btn d-block btn-warning mb-3 RemoveOutline"
-                                >Hire</a
+                                >Book trial lesson</a
                             >
                         </div>
                     </div>

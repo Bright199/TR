@@ -135,7 +135,7 @@ export default {
                 .get(`/student/conversations/${this.id}`)
                 .then((response) => {
                     this.messages = response.data;
-                    setInterval(() => {
+                    setTimeout(() => {
                            const container = this.$el.querySelector("#MessageContainer")
                             container.scrollTop = container.scrollHeight
                         }, 500);
@@ -162,7 +162,7 @@ export default {
                 message: trimmedMessage,
                 teacherId: this.id,
             };
-            setInterval(() => {
+            setTimeout(() => {
                            const container = this.$el.querySelector("#MessageContainer")
                             container.scrollTop = container.scrollHeight
                         }, 500);

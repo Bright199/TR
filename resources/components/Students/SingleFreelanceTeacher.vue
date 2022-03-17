@@ -208,7 +208,7 @@
                             id="userMessage"
                             v-model="message"
                             name="message"
-                            placeholder="Message..."
+                            placeholder="Write your message here..."
                         ></textarea>
                     </div>
 
