@@ -1,15 +1,15 @@
 <template>
-    <div>
+    <div class="Main">
         <DashboardNavBar />
-        <div class="container mt-3">
+        <div class="container bg-white mt-3 ">
             <div class="spinner" v-if="loading == true">
                 <div class="dot1"></div>
                 <div class="dot2"></div>
             </div>
             <div class="row" v-if="loaded == true">
-                <div class="col-md-10">
+                <div class="col-md-9 shadow-sm border">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-3 pt-5 mb-2">
                             <img
                                 v-if="teacherDetails.teacher_image"
                                 :src="'/images/' + teacherDetails.teacher_image"
@@ -23,7 +23,7 @@
                                 width="200"
                             />
                         </div>
-                        <div class="col-md-9 border p-5 shadow-sm">
+                        <div class="col-md-9  p-5 ">
                             <div class="row">
                                 <div class="col-md-8">
                                     <h3>
@@ -168,7 +168,7 @@
                         <div class="col-md-2"></div>
                     </div>
                 </div>
-                <div class="col-md-2 mt-3">
+                <div class="col-md-3 mt-3">
                     <!-- Button to Open the Modal -->
                     <a
                         href="#"
@@ -176,7 +176,14 @@
                         data-bs-toggle="modal"
                         data-bs-target="#MessageModal"
                     >
-                        Hire
+                        Message
+                    </a>
+                    <a
+                        :href="'/student/lesson/book/'+teacherDetails.id"
+                        class="BookBtn"
+                       
+                    >
+                        Book trial lesson
                     </a>
                 </div>
             </div>
@@ -339,6 +346,23 @@ export default {
 </script>
 
 <style scoped>
+.Main{ 
+    background-color: rgb(2, 120, 157, .2);
+}
+.BookBtn{
+    background-color: #fec107;
+     padding: 5px;
+    color: #183153;
+    display: block;
+    text-align: center;
+    /* width: 50%; */
+    margin: auto;
+    margin-bottom: 10px;
+    text-decoration: none;
+    /* color: white; */
+    font-size: 20px;
+    border: 1px solid #fec107;
+}
 .MainFluencyLevel {
     color: #029e02;
     background-color: rgb(2, 158, 2, 0.1);
@@ -361,18 +385,9 @@ export default {
     font-size: 25px;
 }
 .fa-heart:hover {
-    animation: beat 1.2s ease-in-out infinite;
-    font-size: 25px;
     cursor: pointer;
 }
-@keyframes beat {
-    0% {
-        font-size: 23px;
-    }
-    100% {
-        font-size: 22px;
-    }
-}
+
 .btn {
     outline: none;
      box-shadow: none;
@@ -395,7 +410,7 @@ export default {
     color: #f8f8f8;
     display: block;
     text-align: center;
-    width: 50%;
+    /* width: 50%; */
     margin: auto;
     margin-bottom: 10px;
     text-decoration: none;

@@ -35,7 +35,18 @@ class StudentRegistration extends Controller
             return redirect()->route('student.dashboard');
         }
     }
-
+    public function BookLesson($teacherId)
+    {
+        $teacherDetails = Teacher::find($teacherId);
+        return view('student.bookdemo')
+        ->with('teacherId',$teacherDetails->id);
+    }
+    public function BookLessonPayment($teacherId)
+    {
+        $teacherDetails = Teacher::find($teacherId);
+        return view('student.bookdemopayment')
+        ->with('teacherId',$teacherDetails->id);
+    }
     public function sendMessage(Request $request)
     {
         // return response()->json($request->teacherId);

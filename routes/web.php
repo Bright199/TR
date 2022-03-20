@@ -72,9 +72,8 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/getFavoriteTeacherIds',[StudentRegistration::class,'getFavoriteTeacherIds']);
         Route::get('/getAllStudentFavorites',[StudentRegistration::class,'getAllStudentFavorites']);
         
-        Route::get('/lesson/book',function(){
-            return view('student.bookdemo');
-        });
+        Route::get('/lesson/book/{teacherId}',[StudentRegistration::class,'BookLesson']);
+        Route::get('/lesson/book/payment/{teacherId}',[StudentRegistration::class,'BookLessonPayment'])->name('booking.payment');
 
         Route::get('/freelance/teachers', function(){
             return view('student.freelanceteachers');
@@ -97,6 +96,10 @@ Route::prefix('student')->name('student.')->group(function () {
         });
         Route::get('/ad/management', function () {
             return view('student.adsmanagement');
+        });
+
+        Route::get('/date', function(){
+            return view('student.date');
         });
     });
 });
