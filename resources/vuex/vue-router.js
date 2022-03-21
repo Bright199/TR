@@ -13,7 +13,7 @@ import FreelanceTeachers from '../components/Students/FreelanceTeachers.vue';
 import SingleFreelanceTeacher from '../components/Students/SingleFreelanceTeacher.vue';
 import Favorites from '../components/Students/Favorites/Favorites.vue';
 import SingleFavorite from '../components/Students/Favorites/SingleFavorite.vue';
-import DatePicker from '../components/Students/PayPal/DatePicker.vue'
+import TrialLessonBooking from '../components/Students/PayPal/TrialLessonBooking.vue'
 
 const newLocal = 'Home';
 const routes = [
@@ -94,8 +94,8 @@ const routes = [
         props: { default: true }
     },
     {
-        path: "/student/date",
-        components: { default: DatePicker },
+        path: "/student/book/demo/lesson/:id",
+        components: { default: TrialLessonBooking },
         props: { default: true }
     }
 ]

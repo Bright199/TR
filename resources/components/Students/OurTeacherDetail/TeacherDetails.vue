@@ -207,7 +207,7 @@
                             <!-- <a href="" >Details</a -->
                             <br />
                             <a
-                                :href="'/student/lesson/book/'+teacher.id"
+                                :href="'/student/book/demo/lesson/'+teacher.id"
                                 class="btn d-block btn-warning mb-3 RemoveOutline"
                                 >Book trial lesson</a
                             >

@@ -98,8 +98,8 @@ Route::prefix('student')->name('student.')->group(function () {
             return view('student.adsmanagement');
         });
 
-        Route::get('/date', function(){
-            return view('student.date');
+        Route::get('/book/demo/lesson/{teacherId}', function(){
+            return view('student.bookdemo');
         });
     });
 });
