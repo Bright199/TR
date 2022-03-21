@@ -69,14 +69,31 @@
                     </div>
                 </div>
                 <div class="col-md-7 RightBar shadow-sm border">
+                    <ul class="timeSlots d-flex">
+                        <li
+                            @click="timePicker(index)"
+                            :class="activeTime ===index?'activeSlot':''"
+                            class="text-center"
+                            v-for="(timeslot, index) in timeSlots(
+                                startTime,
+                                endTime
+                            )"
+                            :key="index"
+                        >
+                           <span> {{ timeslot }}</span>
+                        </li>
+                    </ul>
 
+                    <button type="button">Confirm time</button>
+                    {{timeZone}}
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
-import moment from 'moment';
+// import moment from "moment";
+import moment from "moment-timezone";
 export default {
     name: "DatePicker",
     data() {
@@ -101,10 +118,16 @@ export default {
             monthDay: new Date().getDay(),
             fullYear: new Date().getFullYear(),
             disablePrevBtn: false,
+            startTime: "00:00",
+            endTime: "23:30",
+            activeTime: ''
         };
     },
 
     methods: {
+        timePicker(index){
+            this.activeTime = index
+        },
         nextMonthName() {
             this.disablePrevBtn = false;
             if (this.monthNumber === 11) {
@@ -116,11 +139,11 @@ export default {
         },
         prevMonthName() {
             if (
-                this.monthNumber === new Date().getMonth()+1 &&
+                this.monthNumber === new Date().getMonth() + 1 &&
                 this.fullYear === new Date().getFullYear()
             ) {
                 this.disablePrevBtn = true;
-            }else{
+            } else {
                 this.disablePrevBtn = false;
             }
             // console.log(this.monthNumber)
@@ -135,8 +158,26 @@ export default {
         chooseDate(date) {
             // console.log(new Date(this.fullYear, this.monthNumber, date));
         },
+
+        timeSlots(startTime, endTime) {
+            let fromTime = moment(startTime, "HH:mm");
+            let toTime = moment(endTime, "HH:mm");
+            if (toTime.isBefore(fromTime)) {
+                toTime.add(1, "day");
+            }
+
+            const ar = [];
+            while (fromTime <= toTime) {
+                ar.push(new moment(fromTime).format("HH:mm"));
+                fromTime.add(30, "minutes");
+            }
+            return ar;
+        },
     },
     computed: {
+        timeZone(){
+          return moment.tz.guess();
+        },
         monthName() {
             return this.months[this.monthNumber];
         },
@@ -163,6 +204,10 @@ export default {
         ) {
             this.disablePrevBtn = true;
         }
+        // const arr = this.timeSlots("00:00", "23:30");
+        // console.log(arr)
+        // setTimeout(() => {
+        // }, 5000);
     },
 };
 </script>
@@ -229,8 +274,34 @@ export default {
 .days p {
     font-size: 22px;
 }
-.RightBar{
-    height: 550px;
+.RightBar {
+    /* height: 550px; */
     overflow-y: auto;
 }
+
+.timeSlots {
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+.timeSlots li {
+    width: 16.66%;
+    padding: 5px;
+    list-style: none;
+    color: #029e02;
+}
+.timeSlots li:hover {
+    cursor: pointer;
+    font-weight: 550;
+    border: 1px solid #029e02;
+    border-radius: 2px;
+}
+.activeSlot{
+    background-color: #029e02;
+    color: white;
+}
+.activeSlot span{
+    background-color: #029e02;
+    color: white;
+}
+
 </style>

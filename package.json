@@ -32,6 +32,7 @@
         "jquery": "^3.6.0",
         "laravel-vue-pagination": "^3.0.0",
         "moment": "^2.29.1",
+        "moment-timezone": "^0.5.34",
         "vue-advanced-cropper": "^2.8.1",
         "vue-router": "^4.0.12",
         "vuex": "^4.0.2"
