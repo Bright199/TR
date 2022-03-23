@@ -35,17 +35,12 @@
        
         
     </div>
+    <script src="{{ mix('js/app.js') }}" defer></script>
 </body>
 
 </html>
-<script src="{{ mix('js/app.js') }}" defer></script>
-<script>
-    $(document).ready(function(){
-       
-    })
-</script>
 <style>
     body{
-    color:#183153
+    color:#183153;
 }
 </style>

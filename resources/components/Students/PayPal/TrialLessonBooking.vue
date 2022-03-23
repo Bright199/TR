@@ -1,14 +1,73 @@
 <template>
     <div>
+        <div class="container-jumbotron shadow-sm py-3">
+            <div class="row">
+                <div class="col-md-4 ms-3">
+                    <router-link to="/student/dashboard" class="DashboardClass">
+                        <i class="fa-solid fa-angle-left"></i>
+                        &nbsp;Dashboard
+                    </router-link>
+                </div>
+                <div class="col-md-7">
+                    <ul class="d-flex CrumbContainer">
+                        <li class="activeCrumb text-center">1. Select time</li>
+                        <li class="text-center">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </li>
+                        <li class="text-center">2. Make a payment</li>
+                        <li class="text-center">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </li>
+                        <li class="text-center">3. Prepare your lesson</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <div class="container">
+            <div class="row">
+                <div class="col-3">
+                    <div class="spinner" v-if="loading == true">
+                        <div class="dot1"></div>
+                        <div class="dot2"></div>
+                    </div>
+                </div>
+                <div class="col-3"></div>
+                <div class="col-3"></div>
+                <div class="col-3"></div>
+            </div>
+            <div
+                class="container  pt-2 teacherDetails"
+                v-if="loaded === true"
+            >
+                <div class="row">
+                    <div class="col-md-4 p-1 border">
+                        <img
+                            v-if="teacherDetails.teacher_image === null"
+                            src="/images/avatar.png"
+                            width="50"
+                            alt=""
+                        />
+                        <img
+                            v-else
+                            :src="'/images/' + teacherDetails.teacher_image"
+                            alt=""
+                            width="50"
+                        />&nbsp;
+                        <router-link
+                            :to="'/student/single/teacher/' + teacherDetails.id"
+                            ><span>{{ teacherDetails.name }}</span></router-link
+                        >
+                    </div>
+                    <div class="col-md-7"></div>
+                </div>
+            </div>
             <p class="pt-3 px-3" style="font-size: 20px">
                 Book 1 hour trial lesson
             </p>
             <div class="row">
                 <div class="col-md-5 mb-3">
-                    <div
-                        class="container calendarContainer border shadow-sm p-0"
-                    >
+                    <div class="container calendarContainer shadow">
                         <p
                             class="d-flex justify-content-center py-2 border-bottom"
                             style="font-size: 20px"
@@ -42,6 +101,7 @@
                                     {{}}
                                 </p>
                                 <p
+                                   
                                     class="text-center"
                                     v-for="date in lastDateOfMonth"
                                     :key="date"
@@ -51,7 +111,8 @@
                                             : ''
                                     "
                                 >
-                                    <span @click="chooseDate(date)">{{
+                                    <span v-if="monthNumber === new Date().getMonth() && date < monthDate" class="text-light">{{}}</span>
+                                    <span v-else @click="chooseDate(date)">{{
                                         date
                                     }}</span>
                                 </p>
@@ -85,7 +146,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-7 RightBar shadow-sm border p-0">
+                <div class="col-md-7 RightBar shadow ps-0">
                     <ul class="timeSlots d-flex">
                         <li
                             :class="activeTime === index ? 'activeSlot' : ''"
@@ -95,7 +156,7 @@
                                 endTime
                             )"
                             :key="index"
-                            @click="chooseTime(timeslot,index)"
+                            @click="chooseTime(timeslot, index)"
                         >
                             <span> {{ timeslot }}</span>
                         </li>
@@ -132,8 +193,10 @@
 <script>
 // import moment from "moment";
 import moment from "moment-timezone";
+import axios from "axios";
 export default {
     name: "TrialLessonBooking",
+    props: ["id"],
     data() {
         return {
             months: [
@@ -162,22 +225,35 @@ export default {
             pickedTime: "",
             pickedDate: "",
             activateDateClass: "",
+            teacherDetails: "",
+            loaded: false,
+            loading: false,
         };
     },
 
     methods: {
         bookTrialLesson() {
-            console.log(this.pickedTime);
-            console.log(this.pickedDate);
+            const data ={
+            date:this.pickedDate,
+            timeslot:this.pickedTime,
+            teacherId:this.id
+            }
+            // console.log(moment(this.pickedDate).format('MMMM Do YYYY, h:mm:ss a'))
+            axios
+            .post("/student/trial/lesson/confirmation",data)
+            .then((res)=>{
+                window.location.replace('/student/book/demo/payment/'+this.id)
+            })
+            
         },
 
         nextMonthName() {
-            this.disablePrevBtn = false
-            this.pickedDate = ''
-            this.pickedTime = ''
-            this.activateDateClass = ''
-            this.activeTime =''
-            if (this.pickedTime !== "" || this.pickedDate === '') {
+            this.disablePrevBtn = false;
+            this.pickedDate = "";
+            this.pickedTime = "";
+            this.activateDateClass = "";
+            this.activeTime = "";
+            if (this.pickedTime !== "" || this.pickedDate === "") {
                 this.$refs.timeConfirmationBtn.disabled = true;
             }
             if (this.monthNumber === 11) {
@@ -188,11 +264,11 @@ export default {
             }
         },
         prevMonthName() {
-            this.pickedDate = ''
-            this.pickedTime = ''
-            this.activateDateClass = ''
-            this.activeTime =''
-            if (this.pickedTime !== "" || this.pickedDate === '') {
+            this.pickedDate = "";
+            this.pickedTime = "";
+            this.activateDateClass = "";
+            this.activeTime = "";
+            if (this.pickedTime !== "" || this.pickedDate === "") {
                 this.$refs.timeConfirmationBtn.disabled = true;
             }
             if (
@@ -219,7 +295,7 @@ export default {
                 this.$refs.timeConfirmationBtn.disabled = false;
             }
         },
-        chooseTime(timeslot,index) {
+        chooseTime(timeslot, index) {
             this.activeTime = index;
             this.pickedTime = timeslot;
             if (this.pickedDate !== "") {
@@ -240,6 +316,21 @@ export default {
                 fromTime.add(30, "minutes");
             }
             return ar;
+        },
+        getTeacherDetails() {
+            this.loading = true;
+            axios
+                .get(`/student/teacher/details/${this.id}`)
+                .then((response) => {
+                    this.teacherDetails = response.data;
+                    this.loaded = true;
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
     },
     computed: {
@@ -277,10 +368,105 @@ export default {
         if (this.pickedTime === "" || this.pickedDate === "") {
             this.$refs.timeConfirmationBtn.disabled = true;
         }
+
+        this.getTeacherDetails();
     },
 };
 </script>
 <style scoped>
+.activeCrumb {
+    font-weight: 550;
+    list-style: none;
+    margin-right: 10px;
+}
+.CrumbContainer li:not(.activeCrumb) {
+    list-style: none;
+    margin-right: 10px;
+    color: #79787c;
+}
+.CrumbContainer {
+    flex-wrap: wrap;
+}
+.fa-angle-left {
+    color: #fec107;
+}
+.DashboardClass {
+    font-size: 18px;
+    color: #151419;
+    text-decoration: none;
+}
+
+/* spinner */
+.spinner {
+    margin: 100px auto;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    text-align: center;
+
+    -webkit-animation: sk-rotate 2s infinite linear;
+    animation: sk-rotate 2s infinite linear;
+}
+
+.dot1,
+.dot2 {
+    width: 60%;
+    height: 60%;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    background-color: #029e02;
+    border-radius: 100%;
+
+    -webkit-animation: sk-bounce 2s infinite ease-in-out;
+    animation: sk-bounce 2s infinite ease-in-out;
+}
+
+.dot2 {
+    top: auto;
+    bottom: 0;
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+}
+
+@-webkit-keyframes sk-rotate {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes sk-rotate {
+    100% {
+        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes sk-bounce {
+    0%,
+    100% {
+        -webkit-transform: scale(0);
+    }
+    50% {
+        -webkit-transform: scale(1);
+    }
+}
+
+@keyframes sk-bounce {
+    0%,
+    100% {
+        transform: scale(0);
+        -webkit-transform: scale(0);
+    }
+    50% {
+        transform: scale(1);
+        -webkit-transform: scale(1);
+    }
+}
+/*  */
+.teacherDetails img {
+    border-radius: 50%;
+    height: 50px;
+}
 .disablePrevBtn {
     display: none;
 }
@@ -293,26 +479,26 @@ export default {
     position: absolute;
     left: 20%;
     top: 5px;
-    border: 1px solid #fafafa;
+    border: none;
     width: 5%;
     padding: 5px;
-    background-color: #fafafa;
+    background-color: #ffffff;
 }
-.Btns .prevMonth:hover {
-    background-color: #f1f0f0;
-}
+/* .Btns .prevMonth:hover {
+    background-color: #ffffff;
+} */
 .Btns .nextMonth {
     position: absolute;
     right: 20%;
     top: 5px;
-    border: 1px solid #fafafa;
     width: 5%;
+    border: none;
     padding: 5px;
-    background-color: #fafafa;
+    background-color: #ffffff;
 }
-.Btns .nextMonth:hover {
-    background-color: #f1f0f0;
-}
+/* .Btns .nextMonth:hover {
+    background-color: #ffffff;
+} */
 .calendarContainer {
     position: relative;
 }
@@ -356,13 +542,13 @@ export default {
 }
 .timeSlots li {
     width: 16.66%;
-    padding: 5px;
+    /* padding: 5px; */
     list-style: none;
     color: #029e02;
 }
 .timeSlots li:hover {
     cursor: pointer;
-    font-weight: 550;
+    /* font-weight: 550; */
     border: 1px solid #029e02;
     border-radius: 2px;
 }
@@ -377,10 +563,13 @@ export default {
 .timeConfirmationBtn {
     border: none;
     padding: 5px;
-    background-color: #029e02;
-    color: white;
+    background-color: #fec107;
+    color: #151419;
     border-radius: 20px;
     width: 60%;
+}
+.timeConfirmationBtn:hover {
+    background-color: #f0b506;
 }
 .disableBtn {
     background-color: #e7ece7;

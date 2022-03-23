@@ -195,45 +195,46 @@
         </div>
     </div>
 
-</html>
-<script src="{{ mix('js/app.js') }}" defer></script>
-
-<script>
-    $(document).ready(function(){
-        $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-       $('#SendMessage').click(function(e){
-         const message = $('#userMessage').val().trim();
-         if(message == ''){
-            alert('message empty')
-            return
-         }
-         else{
-             const userDetails = {
-                 message: message,
-                 teacherId: $('#userId').val()
-             }
-                $.ajax({
-                    url : "/student/message",
-                    type: "POST", 
-                    data : userDetails, 
-                    // async : false, 
-                    success: function(response, textStatus, jqXHR) {
-                        $('#userMessage').val('')
-                        window.location  = '/student/messages'
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                      
-                        console.log(errorThrown);
+                <script src="{{ mix('js/app.js') }}" defer></script>
+                
+                <script>
+                    $(document).ready(function(){
+                        $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-         }
-       })
-    })
-</script>
+                       $('#SendMessage').click(function(e){
+                         const message = $('#userMessage').val().trim();
+                         if(message == ''){
+                            alert('message empty')
+                            return
+                         }
+                         else{
+                             const userDetails = {
+                                 message: message,
+                                 teacherId: $('#userId').val()
+                             }
+                                $.ajax({
+                                    url : "/student/message",
+                                    type: "POST", 
+                                    data : userDetails, 
+                                    // async : false, 
+                                    success: function(response, textStatus, jqXHR) {
+                                        $('#userMessage').val('')
+                                        window.location  = '/student/messages'
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                      
+                                        console.log(errorThrown);
+                                    }
+                                });
+                         }
+                       })
+                    })
+                </script>
+</body>
+</html>
 
 <style >
     .SendBtn {

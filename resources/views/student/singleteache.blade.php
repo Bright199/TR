@@ -165,7 +165,7 @@
         </div>
     </div>
 
-    
+
 
     <!-- The Modal -->
     <div class="modal fade" id="MessageModal">
@@ -195,12 +195,10 @@
             </div>
         </div>
     </div>
+    <script src="{{ mix('js/app.js') }}" defer></script>
 
-</html>
-<script src="{{ mix('js/app.js') }}" defer></script>
-
-<script>
-    $(document).ready(function(){
+    <script>
+        $(document).ready(function(){
         $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -234,9 +232,13 @@
          }
        })
     })
-</script>
+    </script>
+</body>
 
-<style >
+</html>
+
+
+<style>
     .SendBtn {
         /* padding: 4px 15px; */
         width: 50%;
@@ -260,7 +262,7 @@
         box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
         -webkit-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
         -moz-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
-        background-color:#fec107
+        background-color: #fec107
     }
 
     .fa-solid {
@@ -388,8 +390,8 @@
         outline: none;
         border: 1px solid #029e02
     }
-   
-    body{
-    color:#183153
-}
+
+    body {
+        color: #183153
+    }
 </style>

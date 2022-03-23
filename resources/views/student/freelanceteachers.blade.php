@@ -26,8 +26,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-        <script src="https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=USD"
-        data-sdk-integration-source="button-factory" ></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=USD"
+        data-sdk-integration-source="button-factory"></script>
     {{-- font awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -36,12 +36,12 @@
     <div id="vueapp">
 
     </div>
-    
+</body>
 </html>
 <script src="{{ mix('js/app.js') }}" defer></script>
 
 <style>
-    body{
-    color:#183153
-}
+    body {
+        color: #183153
+    }
 </style>

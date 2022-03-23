@@ -116,14 +116,15 @@
 
 
         <script src="{{ asset('Carousel/owl.carousel.min.js') }}"></script>
+        <script src="{{ mix('js/app.js') }}" defer></script>
+        <script src="{{ asset('js/custom.js') }}"></script>
+        <script src="{{ asset('js/countries.js') }}"></script>
 </body>
-<script src="{{ mix('js/app.js') }}" defer></script>
-<script src="{{ asset('js/custom.js') }}"></script>
-<script src="{{ asset('js/countries.js') }}"></script>
+
 
 </html>
 <style>
-    body{
-    color:#183153
-}
+    body {
+        color: #183153
+    }
 </style>

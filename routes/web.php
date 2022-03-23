@@ -67,15 +67,22 @@ Route::prefix('student')->name('student.')->group(function () {
             return view('student.singlemessages');
         });
 
-        Route::get('/getUnreadMessages',[StudentRegistration::class,'getUnreadMessages']);
-        Route::get('/getFavorites',[StudentRegistration::class,'getFavorites']);
-        Route::get('/getFavoriteTeacherIds',[StudentRegistration::class,'getFavoriteTeacherIds']);
-        Route::get('/getAllStudentFavorites',[StudentRegistration::class,'getAllStudentFavorites']);
-        
-        Route::get('/lesson/book/{teacherId}',[StudentRegistration::class,'BookLesson']);
-        Route::get('/lesson/book/payment/{teacherId}',[StudentRegistration::class,'BookLessonPayment'])->name('booking.payment');
+        Route::get('/getUnreadMessages', [StudentRegistration::class, 'getUnreadMessages']);
+        Route::get('/getFavorites', [StudentRegistration::class, 'getFavorites']);
+        Route::get('/getFavoriteTeacherIds', [StudentRegistration::class, 'getFavoriteTeacherIds']);
+        Route::get('/getAllStudentFavorites', [StudentRegistration::class, 'getAllStudentFavorites']);
 
-        Route::get('/freelance/teachers', function(){
+        // Route::get('/lesson/book/{teacherId}', [StudentRegistration::class, 'BookLesson']);
+        Route::post('/trial/lesson/confirmation', [StudentRegistration::class, 'TrialLessonConfirmation']);
+        // Route::get('/trial/lesson/confirmation',function (){
+        //     return view('student.bookdemo');
+        // });
+
+        Route::get('/book/demo/payment/{teacherId}',[StudentRegistration::class,'DemoPayment']);
+        Route::get('/book/demo/lesson/{teacherId}', function () {
+            return view('student.bookdemo');
+        });
+        Route::get('/freelance/teachers', function () {
             return view('student.freelanceteachers');
         });
 
@@ -96,10 +103,6 @@ Route::prefix('student')->name('student.')->group(function () {
         });
         Route::get('/ad/management', function () {
             return view('student.adsmanagement');
-        });
-
-        Route::get('/book/demo/lesson/{teacherId}', function(){
-            return view('student.bookdemo');
         });
     });
 });
@@ -146,7 +149,7 @@ Route::get('google/auth/callback', [SocialiteLogin::class, 'google']);
 // })->name('teacher.google.login');
 // Route::get('google/auth/callback', [TeacherSocialiteLogin::class, 'teacherGoogle']);
 
-Route::get('/netflix', function(){
+Route::get('/netflix', function () {
     return view('hakan');
 });
 

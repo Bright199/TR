@@ -40,17 +40,17 @@
         @endif --}}
         
     </div>
+    <script src="{{ mix('js/app.js') }}" defer></script>
+    <script>
+        $(document).ready(function(){
+            // $('.Logout').mouseover(function(){
+               
+            // })
+        })
+    </script>
 </body>
 
 </html>
-<script src="{{ mix('js/app.js') }}" defer></script>
-<script>
-    $(document).ready(function(){
-        // $('.Logout').mouseover(function(){
-           
-        // })
-    })
-</script>
 <style>
     body{
     color:#183153
