@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class TrialLessonBooking extends Model
 {
     use HasFactory;
-    protected $fillable = ['teacher_id','student_id','date','timeslot'];
+    protected $fillable = ['teacher_id','student_id','date','timeslot','booked','lesson_completed'];
 }

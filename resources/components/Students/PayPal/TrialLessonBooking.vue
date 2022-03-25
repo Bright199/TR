@@ -24,99 +24,84 @@
             </div>
         </div>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-3">
-                    <div class="spinner" v-if="loading == true">
-                        <div class="dot1"></div>
-                        <div class="dot2"></div>
-                    </div>
+        <div class="container-jumbotron body">
+            <div class="container">
+                <div class="spinner" v-if="loading == true">
+                    <div class="dot1"></div>
+                    <div class="dot2"></div>
                 </div>
-                <div class="col-3"></div>
-                <div class="col-3"></div>
-                <div class="col-3"></div>
-            </div>
-            <div
-                class="container  pt-2 teacherDetails"
-                v-if="loaded === true"
-            >
-                <div class="row">
-                    <div class="col-md-4 p-1 border">
-                        <img
-                            v-if="teacherDetails.teacher_image === null"
-                            src="/images/avatar.png"
-                            width="50"
-                            alt=""
-                        />
-                        <img
-                            v-else
-                            :src="'/images/' + teacherDetails.teacher_image"
-                            alt=""
-                            width="50"
-                        />&nbsp;
-                        <router-link
-                            :to="'/student/single/teacher/' + teacherDetails.id"
-                            ><span>{{ teacherDetails.name }}</span></router-link
+
+                <div
+                    class="container pt-2 teacherDetails"
+                    v-if="loaded === true"
+                ></div>
+                <BookedProcess v-if="showCalendar2 == true" :teacherDetails = teacherDetails />
+
+                <div class="row" v-if="showCalendar == true">
+                    <div class="col-md-5 mb-3">
+                        <div
+                            class="container calendarContainer shadow bg-white"
                         >
-                    </div>
-                    <div class="col-md-7"></div>
-                </div>
-            </div>
-            <p class="pt-3 px-3" style="font-size: 20px">
-                Book 1 hour trial lesson
-            </p>
-            <div class="row">
-                <div class="col-md-5 mb-3">
-                    <div class="container calendarContainer shadow">
-                        <p
-                            class="d-flex justify-content-center py-2 border-bottom"
-                            style="font-size: 20px"
-                        >
-                            {{ currentMonth + " " + fullYear }}
-                        </p>
-                        <section>
-                            <div class="days d-flex">
-                                <p
-                                    :class="
-                                        monthNumber === new Date().getMonth() &&
-                                        fullYear === new Date().getFullYear()
-                                            ? 'removeBottomMargin'
-                                            : ''
-                                    "
-                                    class="text-center"
-                                    v-for="(day, index) in days"
-                                    :key="index"
-                                >
-                                    {{ day }}
-                                </p>
-                            </div>
-                        </section>
-                        <section>
-                            <div class="dates d-flex">
-                                <p
-                                    class="text-center"
-                                    v-for="day in firstDay"
-                                    :key="day"
-                                >
-                                    {{}}
-                                </p>
-                                <p
-                                   
-                                    class="text-center"
-                                    v-for="date in lastDateOfMonth"
-                                    :key="date"
-                                    :class="
-                                        date === activateDateClass
-                                            ? 'currentDate'
-                                            : ''
-                                    "
-                                >
-                                    <span v-if="monthNumber === new Date().getMonth() && date < monthDate" class="text-light">{{}}</span>
-                                    <span v-else @click="chooseDate(date)">{{
-                                        date
-                                    }}</span>
-                                </p>
-                                <!-- :class="
+                            <p
+                                class="d-flex justify-content-center py-2 border-bottom"
+                                style="font-size: 20px"
+                            >
+                                {{ currentMonth + " " + fullYear }}
+                            </p>
+                            <section>
+                                <div class="days d-flex">
+                                    <p
+                                        :class="
+                                            monthNumber ===
+                                                new Date().getMonth() &&
+                                            fullYear ===
+                                                new Date().getFullYear()
+                                                ? 'removeBottomMargin'
+                                                : ''
+                                        "
+                                        class="text-center"
+                                        v-for="(day, index) in days"
+                                        :key="index"
+                                    >
+                                        {{ day }}
+                                    </p>
+                                </div>
+                            </section>
+                            <section>
+                                <div class="dates d-flex">
+                                    <p
+                                        class="text-center"
+                                        v-for="day in firstDay"
+                                        :key="day"
+                                    >
+                                        {{}}
+                                    </p>
+                                    <p
+                                        class="text-center"
+                                        v-for="date in lastDateOfMonth"
+                                        :key="date"
+                                        :class="
+                                            date === activateDateClass
+                                                ? 'currentDate'
+                                                : ''
+                                        "
+                                    >
+                                        <span
+                                            v-if="
+                                                monthNumber ===
+                                                    new Date().getMonth() &&
+                                                date < monthDate
+                                            "
+                                            class="text-light"
+                                            >{{}}</span
+                                        >
+                                        <span
+                                            v-else
+                                            @click="chooseDate(date)"
+                                            >{{ date }}</span
+                                        >
+                                    </p>
+                                    <!-- :class="
                                             new Date(
                                                 fullYear,
                                                 monthNumber,
@@ -126,62 +111,105 @@
                                                 ? 'currentDate'
                                                 : ''
                                         " -->
+                                </div>
+                            </section>
+                            <div class="Btns">
+                                <button
+                                    class="prevMonth"
+                                    @click="prevMonthName"
+                                    :class="
+                                        disablePrevBtn == true
+                                            ? 'disablePrevBtn'
+                                            : ''
+                                    "
+                                >
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <button
+                                    class="nextMonth"
+                                    @click="nextMonthName"
+                                >
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
                             </div>
-                        </section>
-                        <div class="Btns">
-                            <button
-                                class="prevMonth"
-                                @click="prevMonthName"
-                                :class="
-                                    disablePrevBtn == true
-                                        ? 'disablePrevBtn'
-                                        : ''
-                                "
-                            >
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </button>
-                            <button class="nextMonth" @click="nextMonthName">
-                                <i class="fa-solid fa-chevron-right"></i>
-                            </button>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-7 RightBar shadow ps-0">
-                    <ul class="timeSlots d-flex">
-                        <li
-                            :class="activeTime === index ? 'activeSlot' : ''"
-                            class="text-center"
-                            v-for="(timeslot, index) in timeSlots(
-                                startTime,
-                                endTime
-                            )"
-                            :key="index"
-                            @click="chooseTime(timeslot, index)"
-                        >
-                            <span> {{ timeslot }}</span>
-                        </li>
-                    </ul>
-                    <div class="container-jumbotron border-top p-3">
-                        <div class="row">
-                            <div class="col-md-7">
-                                <p>
-                                    The calendar is in your time zone
-                                    {{ timeZone + " " + timeNow }}
+                    <div class="col-md-7 RightBar shadow p-2 bg-white">
+                        <div class="row border-bottom RightBarTop">
+                            <div class="col-md-4 ps-3">
+                                <img
+                                    v-if="teacherDetails.teacher_image === null"
+                                    src="/images/avatar.png"
+                                    width="50"
+                                    alt=""
+                                />
+                                <img
+                                    v-else
+                                    :src="
+                                        '/images/' +
+                                        teacherDetails.teacher_image
+                                    "
+                                    alt=""
+                                    width="50"
+                                />&nbsp;
+                                <router-link
+                                    :to="
+                                        '/student/single/teacher/' +
+                                        teacherDetails.id
+                                    "
+                                    style="text-decoration:none"
+                                    ><span>{{
+                                        teacherDetails.name
+                                    }}</span></router-link
+                                >
+                            </div>
+                            <div class="col-md-7 BookL">
+                                <p
+                                    class="d-flex justify-content-center shadow-sm"
+                                >
+                                    Book 1 hour trial lesson
                                 </p>
                             </div>
-                            <div class="col-md-5">
-                                <button
-                                    type="button"
-                                    @click="bookTrialLesson"
-                                    :class="
-                                        pickedTime === '' || pickedDate === ''
-                                            ? 'disableBtn'
-                                            : 'timeConfirmationBtn'
-                                    "
-                                    ref="timeConfirmationBtn"
-                                >
-                                    Confirm time
-                                </button>
+                        </div>
+                        <ul class="timeSlots d-flex">
+                            <li
+                                :class="
+                                    activeTime === index ? 'activeSlot' : ''
+                                "
+                                class="text-center"
+                                v-for="(timeslot, index) in timeSlots(
+                                    startTime,
+                                    endTime
+                                )"
+                                :key="index"
+                                @click="chooseTime(timeslot, index)"
+                            >
+                                <span> {{ timeslot }}</span>
+                            </li>
+                        </ul>
+                        <div class="container-jumbotron border-top p-3">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <p>
+                                        The calendar is in your time zone
+                                        {{ timeZone + " " + timeNow }}
+                                    </p>
+                                </div>
+                                <div class="col-md-5">
+                                    <button
+                                        type="button"
+                                        @click="bookTrialLesson"
+                                        :class="
+                                            pickedTime === '' ||
+                                            pickedDate === ''
+                                                ? 'disableBtn'
+                                                : 'timeConfirmationBtn'
+                                        "
+                                        ref="timeConfirmationBtn"
+                                    >
+                                        Confirm time
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -193,9 +221,11 @@
 <script>
 // import moment from "moment";
 import moment from "moment-timezone";
+import BookedProcess from "./BookedProcess.vue"
 import axios from "axios";
 export default {
     name: "TrialLessonBooking",
+    components: {BookedProcess},
     props: ["id"],
     data() {
         return {
@@ -228,23 +258,33 @@ export default {
             teacherDetails: "",
             loaded: false,
             loading: false,
+            demoLessonsWithThisTeacher: 0,
+            showCalendar: false,
+            showCalendar2: false,
         };
     },
 
     methods: {
         bookTrialLesson() {
-            const data ={
-            date:this.pickedDate,
-            timeslot:this.pickedTime,
-            teacherId:this.id
+            if (this.pickedTime === "" || this.pickedDate === "") {
+                // this.$refs.timeConfirmationBtn.disabled = true;
+                alert("Make sure you pick a day and time");
+                return;
             }
+            const data = {
+                date: this.pickedDate,
+                timeslot: this.pickedTime,
+                teacherId: this.id,
+                timezone: moment.tz.guess(),
+            };
             // console.log(moment(this.pickedDate).format('MMMM Do YYYY, h:mm:ss a'))
             axios
-            .post("/student/trial/lesson/confirmation",data)
-            .then((res)=>{
-                window.location.replace('/student/book/demo/payment/'+this.id)
-            })
-            
+                .post("/student/trial/lesson/confirmation", data)
+                .then((res) => {
+                    window.location.replace(
+                        "/student/book/demo/payment/" + this.id
+                    );
+                });
         },
 
         nextMonthName() {
@@ -289,7 +329,8 @@ export default {
             }
         },
         chooseDate(date) {
-            this.pickedDate = new Date(this.fullYear, this.monthNumber, date);
+            // console.log(new Date(this.fullYear, this.monthNumber, date));
+            this.pickedDate = new Date(this.fullYear, this.monthNumber, date+1);
             this.activateDateClass = date;
             if (this.pickedTime !== "") {
                 this.$refs.timeConfirmationBtn.disabled = false;
@@ -332,6 +373,20 @@ export default {
                     this.loading = false;
                 });
         },
+        getStudentTeacherBookedLesson() {
+            axios
+                .get("/student/teacher/demo/lessons/" + this.id)
+                .then((response) => {
+                    if (!Object.keys(response.data).length) {
+                        this.showCalendar = true;
+                    }else{
+                        this.showCalendar2 = true;
+                    }
+
+                  
+                });
+        },
+        
     },
     computed: {
         timeNow() {
@@ -365,15 +420,20 @@ export default {
         ) {
             this.disablePrevBtn = true;
         }
-        if (this.pickedTime === "" || this.pickedDate === "") {
-            this.$refs.timeConfirmationBtn.disabled = true;
-        }
-
+        
         this.getTeacherDetails();
+        this.getStudentTeacherBookedLesson();
     },
 };
 </script>
 <style scoped>
+
+.body {
+    background-color: rgba(236, 238, 236);
+    padding: 25px;
+    min-height: 800px;
+    height: 100%;
+}
 .activeCrumb {
     font-weight: 550;
     list-style: none;
@@ -463,7 +523,7 @@ export default {
     }
 }
 /*  */
-.teacherDetails img {
+.RightBarTop img {
     border-radius: 50%;
     height: 50px;
 }
@@ -524,16 +584,30 @@ export default {
 }
 
 .removeBottomMargin:first-child {
-    border-bottom: 2px solid #e4e6e4;
+    border-bottom: 1px solid #e4e6e4;
 }
 .days p {
     font-size: 20px;
     margin-right: 4px;
-    border-bottom: 2px solid #029e02;
+    border-bottom: 1px solid #029e02;
 }
 .RightBar {
     /* height: 550px; */
     overflow-y: auto;
+    position: relative;
+}
+.RightBarTop {
+}
+.BookL {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+}
+.BookL p {
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    background-color: #f0e260;
+    padding: 8px;
 }
 
 .timeSlots {
@@ -563,13 +637,13 @@ export default {
 .timeConfirmationBtn {
     border: none;
     padding: 5px;
-    background-color: #fec107;
+    background-color: #f0e260;
     color: #151419;
     border-radius: 20px;
     width: 60%;
 }
 .timeConfirmationBtn:hover {
-    background-color: #f0b506;
+    background-color: #f1e252;
 }
 .disableBtn {
     background-color: #e7ece7;

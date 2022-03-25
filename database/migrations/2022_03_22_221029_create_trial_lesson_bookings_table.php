@@ -16,6 +16,8 @@ class CreateTrialLessonBookingsTable extends Migration
         Schema::create('trial_lesson_bookings', function (Blueprint $table) {
             $table->id();
             $table->integer('teacher_id');
+            $table->boolean('booked')->default(0);
+            $table->boolean('lesson_completed')->default(0);
             $table->integer('student_id');
             $table->dateTime('date');
             $table->time('timeslot');

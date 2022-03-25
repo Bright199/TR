@@ -10,6 +10,8 @@ use App\Models\StudentContact;
 use App\Models\StudentFavorite;
 use App\Models\Teacher;
 use App\Models\TrialLessonBooking;
+use Carbon\Carbon;
+use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -36,24 +38,30 @@ class StudentRegistration extends Controller
             return redirect()->route('student.dashboard');
         }
     }
-    
+
 
     public function TrialLessonConfirmation(Request $request)
     {
         $trialConfirmation = TrialLessonBooking::create([
             'teacher_id' => $request->teacherId,
             'student_id' => Auth::guard('student')->id(),
-            'date' => date('Y-m-d',strtotime($request->date)) ,
+            'date' => date('Y-m-d', strtotime($request->date)),
             'timeslot' => $request->timeslot
         ]);
-
     }
 
-    public function DemoPayment ($teacherId){
-            $teacherDetails = Teacher::find($teacherId);
-            $trialDetails = TrialLessonBooking::where('student_id', Auth::guard('student')->id())->where('teacher_id',$teacherId)->get();
-            return view('student.demopayment')
-            ->with('teacherDetails',$teacherDetails)
+
+    public function getStudentTeacherDemoLesson($teacherId)
+    {
+        $trialLessons = TrialLessonBooking::where('teacher_id', $teacherId)->where('student_id', Auth::guard('student')->id())->first();
+        return response()->json($trialLessons);
+    }
+    public function DemoPayment($teacherId)
+    {
+        $teacherDetails = Teacher::find($teacherId);
+        $trialDetails = TrialLessonBooking::where('student_id', Auth::guard('student')->id())->where('teacher_id', $teacherId)->get();
+        return view('student.demopayment')
+            ->with('teacherDetails', $teacherDetails)
             ->with('trialLessonDetails', $trialDetails);
     }
     // public function BookLessonPayment($teacherId)
@@ -101,7 +109,6 @@ class StudentRegistration extends Controller
                 ]);
             }
         }
-
     }
     public function getUnreadMessages()
     {
@@ -176,7 +183,8 @@ class StudentRegistration extends Controller
     //         ->with('teacherNationality', $teacher->nationality);
     // }
 
-    public function GetSingleTeacher(){
+    public function GetSingleTeacher()
+    {
         return view('student.ourteacher');
     }
 
@@ -231,7 +239,7 @@ class StudentRegistration extends Controller
 
     public function getFavorites()
     {
-        $favoriteTeachers = StudentFavorite::where('student_id',Auth::guard('student')->id())->get();
+        $favoriteTeachers = StudentFavorite::where('student_id', Auth::guard('student')->id())->get();
         return response()->json($favoriteTeachers);
     }
     public function getAllStudentFavorites()
@@ -255,7 +263,7 @@ class StudentRegistration extends Controller
         // return response()->json($teacherCheck);
         if ($teacherCheck === null) {
             if ($teacherDetails->teacher_image) {
-               $favorite = StudentFavorite::create([
+                $favorite = StudentFavorite::create([
                     'teacher_id' => $teacherDetails->id,
                     'teacher_name' => $teacherDetails->name,
                     'teacher_email' => $teacherDetails->email,
@@ -275,8 +283,9 @@ class StudentRegistration extends Controller
         }
     }
 
-    public function removeFromFavorite(Request $request){
-        StudentFavorite::where('teacher_id',$request->id)->delete();
+    public function removeFromFavorite(Request $request)
+    {
+        StudentFavorite::where('teacher_id', $request->id)->delete();
     }
     public function CheckProfileInfo()
     {
