@@ -179,7 +179,7 @@
                         Message
                     </a>
                     <a
-                        :href="'/student/lesson/book/'+teacherDetails.id"
+                        :href="'/student/book/demo/lesson/'+teacherDetails.id"
                         class="BookBtn"
                        
                     >

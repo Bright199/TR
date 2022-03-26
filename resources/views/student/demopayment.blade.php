@@ -1,4 +1,4 @@
-d<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -40,10 +40,10 @@ d<!DOCTYPE html>
                 <div class="col-md-4 ms-3">
                     <a href="/student/book/demo/lesson/{{ $teacherDetails->id }}" class="DashboardClass">
                         <i class="fa-solid fa-angle-left"></i>
-                        &nbsp;Calendar
+                        Calendar
                     </a>
-                    <a href="/student/cancel/book/demo/lesson/{{ $teacherDetails->id }}" class="DashboardClass"
-                        style="color:brown">
+                    <a href="" class="DashboardClass"
+                        style="color:brown" data-bs-toggle="modal" data-bs-target="#myModal">
                         <span><i class="fa-solid fa-xmark"></i>
                             Cancel</span>
                     </a>
@@ -65,12 +65,35 @@ d<!DOCTYPE html>
         </div>
     </div>
     @isset($trialLessonDetails[0])
+        {{-- Modal --}}
+        <!-- Button to Open the Modal -->
+       
+        <!-- The Modal -->
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
 
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <p class="modal-title">Are you sure you want to cancel?</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                   
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <a href="/student/cancel/book/demo/lesson/{{ $teacherDetails->id }}" class="CancelDemoBooking">Cancel booking</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {{-- end --}}
         {{-- Trial lesson Details --}}
         <div class="container-jumbotron body">
             <div class="container">
                 <div class="row">
-                  <div class="col-md-1 p-0"></div>
+                    <div class="col-md-1 p-0"></div>
                     <div class="col-md-4 p-4 bg-white me-5 BookingDetails"
                         style="border-top-right-radius: 7px;border-top-left-radius: 7px">
                         <div class="container-jumbotron border-bottom p-3">
@@ -164,9 +187,9 @@ d<!DOCTYPE html>
                         <div class="container-jumbotron border-bottom p-3">
                             <p style="color:#777777">It’s safe to pay on TREnglish. All
                                 transactions are protected by SSL encryption.</p>
-                                <div class="d-flex justify-content-center">
-                                  <img  src="{{ asset('images/secure.png') }}" alt="" width="200">
-                                </div>
+                            <div class="d-flex justify-content-center">
+                                <img src="{{ asset('images/secure.png') }}" alt="" width="200">
+                            </div>
                         </div>
                         <div class="container">
                             <div class="p-3 border-bottom">
@@ -179,9 +202,10 @@ d<!DOCTYPE html>
                                 </div>
                             </div>
                             <div class="container">
-                                <div class="row p-3 border-bottom">
+                                <div class="row p-3">
                                     <div class="col-md-2 d-flex justify-content-center  align-items-center">
-                                      <i class="fa-solid fa-check-double" style="color:#029e02; font-size: 30px"></i>
+                                        {{-- <i class="fa-solid fa-check-double" style="color:#029e02; font-size: 30px"></i> --}}
+                                        <img src="{{ asset('images/guaranty.png') }}" alt="">
                                     </div>
                                     <div class="col-md-10">
                                         <p style="color:#777777">Learn with 100% satisfaction guarantee
@@ -277,6 +301,16 @@ d<!DOCTYPE html>
 
 </html>
 <style scoped>
+  .CancelDemoBooking{
+    background-color: #029e02;
+    text-decoration: none;
+    padding: 5px 15px;
+    color: white
+  }
+  .CancelDemoBooking:hover{
+    background-color: #039b03;
+    color: white
+  }
     body {
         color: #183153;
     }

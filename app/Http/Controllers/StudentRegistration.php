@@ -49,6 +49,18 @@ class StudentRegistration extends Controller
             'timeslot' => $request->timeslot
         ]);
     }
+    public function CancelDemoBooking($teacherId)
+    {
+        $trialConfirmation = TrialLessonBooking::where('teacher_id',$teacherId)
+        ->where('student_id', Auth::guard('student')->id())->where('booked',0)->delete();
+        return redirect('/student/dashboard');
+    }
+    public function incompleteDemoBooking()
+    {
+        $incompleteDemoBooking = TrialLessonBooking::where('student_id', Auth::guard('student')->id())->where('booked',0)->pluck('teacher_id');
+        $teachers = Teacher::whereIn('id', $incompleteDemoBooking->toArray())->get();
+        return response()->json($teachers);
+    }
 
 
     public function getStudentTeacherDemoLesson($teacherId)

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="container-jumbotron shadow-sm py-3">
-            <div class="row">
+            <div class="row m-0 p-0">
                 <div class="col-md-4 ms-3">
                     <router-link to="/student/dashboard" class="DashboardClass">
                         <i class="fa-solid fa-angle-left"></i>
@@ -38,7 +38,10 @@
                 <BookedProcess v-if="showCalendar2 == true" :teacherDetails = teacherDetails />
 
                 <div class="row" v-if="showCalendar == true">
-                    <div class="col-md-5 mb-3">
+                    <div class="col-md-2 m-0 p-o">
+                        <img src="/images/calendar.png" alt="" width="150" class="CalendarImag">
+                    </div>
+                    <div class="col-md-4 mb-3">
                         <div
                             class="container calendarContainer shadow bg-white"
                         >
@@ -134,7 +137,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-7 RightBar shadow p-2 bg-white">
+                    <div class="col-md-6 RightBar shadow p-2 bg-white">
                         <div class="row border-bottom RightBarTop">
                             <div class="col-md-4 ps-3">
                                 <img
@@ -165,7 +168,7 @@
                             </div>
                             <div class="col-md-7 BookL">
                                 <p
-                                    class="d-flex justify-content-center shadow-sm"
+                                    class="d-flex justify-content-center align-item-end shadow-sm"
                                 >
                                     Book 1 hour trial lesson
                                 </p>
@@ -428,11 +431,13 @@ export default {
 </script>
 <style scoped>
 
+
+
 .body {
     background-color: rgba(236, 238, 236);
     padding: 25px;
-    min-height: 800px;
-    height: 100%;
+    max-height: 800px;
+  min-height: 600px;
 }
 .activeCrumb {
     font-weight: 550;
@@ -571,9 +576,9 @@ export default {
 }
 .dates p span:hover {
     cursor: pointer;
-    background-color: #029e02;
+    border:1px solid #029e02;
+    border-radius: 2px;
     padding: 5px;
-    color: white;
     font-weight: 550;
 }
 .currentDate span {
@@ -587,7 +592,7 @@ export default {
     border-bottom: 1px solid #e4e6e4;
 }
 .days p {
-    font-size: 20px;
+    /* font-size: 20px; */
     margin-right: 4px;
     border-bottom: 1px solid #029e02;
 }
@@ -596,23 +601,20 @@ export default {
     overflow-y: auto;
     position: relative;
 }
-.RightBarTop {
-}
-.BookL {
-    position: absolute;
-    top: -8px;
-    right: -12px;
-}
+
+
 .BookL p {
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
-    background-color: #f0e260;
+    background-color: white;
     padding: 8px;
 }
 
 .timeSlots {
     flex-wrap: wrap;
+    flex-direction: row;
     margin-top: 10px;
+    overflow: auto;
 }
 .timeSlots li {
     width: 16.66%;
@@ -637,13 +639,13 @@ export default {
 .timeConfirmationBtn {
     border: none;
     padding: 5px;
-    background-color: #f0e260;
+    background-color: #fec107;
     color: #151419;
     border-radius: 20px;
     width: 60%;
 }
 .timeConfirmationBtn:hover {
-    background-color: #f1e252;
+    background-color: #fcc41d;
 }
 .disableBtn {
     background-color: #e7ece7;
