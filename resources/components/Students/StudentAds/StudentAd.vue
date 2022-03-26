@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="container-jumbotron TopBar1">
-            <Header />
+            <DashboardNavBar />
         </div>
         <div class="container mt-3">
             <div class="row">
@@ -137,11 +137,11 @@
     </div>
 </template>
 <script>
-import Header from "../Edits/Header.vue";
+import DashboardNavBar from "../DashboardNavBar.vue";
 import axios from "axios";
 export default {
     name: "StudentAd",
-    components: { Header },
+    components: { DashboardNavBar },
     // QuillEditor
     data() {
         return {

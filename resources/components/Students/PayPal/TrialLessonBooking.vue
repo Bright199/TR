@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-md-4 mb-3">
                         <div
-                            class="container calendarContainer shadow bg-white"
+                            class="container calendarContainer shadow-sm bg-white"
                         >
                             <p
                                 class="d-flex justify-content-center py-2 border-bottom"
@@ -137,7 +137,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 RightBar shadow p-2 bg-white">
+                    <div class="col-md-6 RightBar shadow-sm p-2 bg-white" >
                         <div class="row border-bottom RightBarTop">
                             <div class="col-md-4 ps-3">
                                 <img
@@ -531,6 +531,10 @@ export default {
 .RightBarTop img {
     border-radius: 50%;
     height: 50px;
+}
+.RightBar {
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
 }
 .disablePrevBtn {
     display: none;

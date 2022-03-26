@@ -1,24 +1,33 @@
 <template>
-    <div>
+    <div class="bg-light">
         <DashboardNavBar />
         <div class="container mt-3">
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-8">
-                    <p class="d-flex justify-content-center" style="font-size:20px;margin-bottom:0px">
+                    <p
+                        class="d-flex justify-content-center"
+                        style="font-size: 20px; margin-bottom: 0px"
+                    >
                         Find a teacher in few minutes by hiring our teachers or
                         by creating an ad &nbsp;
-                    </p><a class="d-flex justify-content-center" href="/student/create/ad" style="margin-top:0px">post an ad</a>
+                    </p>
+                    <a
+                        class="d-flex justify-content-center"
+                        href="/student/create/ad"
+                        style="margin-top: 0px"
+                        >post an ad</a
+                    >
                 </div>
             </div>
         </div>
         <div class="container mt-4">
             <div class="row">
-                <div class="col-md-4 LeftBar p-0">
+                <div class="col-md-3 LeftBar shadow-sm bg-white p-0">
                     <div
-                        class="container-jumbotron d-flex justify-content-center border p-3"
+                        class="container-jumbotron d-flex justify-content-center border-bottom p-2"
                     >
-                        <h3 style="color: #029e02">Contacts</h3>
+                        <img src="/images/contacts.png" alt="" width="80" />
                     </div>
                     <ul class="Chats">
                         <div v-if="contacts.length == ''">
@@ -57,9 +66,13 @@
                                             "
                                             src="/images/avatar.png"
                                             alt=""
-                                            width="70"
-                                            height="70"
+                                            width="50"
+                                            height="50"
                                             class="Avatar"
+                                            style="
+                                                margin-top: 5px;
+                                                margin-right: 0px;
+                                            "
                                         />
                                         <img
                                             v-else
@@ -70,13 +83,19 @@
                                             alt=""
                                             width="70"
                                             class="Avatar"
+                                            style="margin-top: 5px"
                                         />
                                     </div>
-                                    <div class="col-md-8 mt-2">
+                                    <div class="col-md-9 mt-2">
                                         <p class="Name">
                                             {{ contact.teacher_name }}
                                         </p>
-                                        <p style="line-height: 0.2px">
+                                        <p
+                                            style="
+                                                margin-top: 0px;
+                                                font-size: 12px;
+                                            "
+                                        >
                                             {{ contact.teacher_email }}
                                         </p>
                                     </div>
@@ -87,13 +106,13 @@
                 </div>
                 <!-- <div class="col-md-1"></div> -->
                 <div class="col-md-7 RightBar p-0" style="margin-left: 14px">
-                    <div
+                    <!-- <div
                         class="container-jumbotron d-flex justify-content-center p-3"
                     >
-                        <h3>Messages</h3>
-                    </div>
+                        <p>Messages</p>
+                    </div> -->
                     <div
-                        class="container MessageContainer"
+                        class="container MessageContainer shadow-sm bg-white"
                         id="MessageContainer"
                     >
                         <ul class="MessageInnerContainer">
@@ -122,12 +141,12 @@
                                 </li>
                             </div>
                             <div v-else class="d-flex justify-content-center">
-                                <h5
+                                <p
                                     class="mt-5"
                                     v-if="conversationsLoaded == true"
                                 >
                                     Select a chat to start a conversation
-                                </h5>
+                                </p>
                                 <div class="spinner" v-if="loading2 == true">
                                     <div class="dot1"></div>
                                     <div class="dot2"></div>
@@ -149,7 +168,7 @@
                                 type="submit"
                                 @click="SendMessage"
                             >
-                                Send message
+                                <i class="fa-solid fa-paper-plane"></i>
                             </button>
                         </div>
                     </div>
@@ -183,9 +202,8 @@ export default {
     methods: {
         dateTime(value) {
             return (
-                moment(value).format("dddd") +
-                " " +
-                moment(value).format("MMM Do YY")
+                moment(value).format('MMMM Do, H:mm')
+                // moment(value).startOf().fromNow()
             );
         },
         getUserChats(teacherId) {
@@ -200,8 +218,9 @@ export default {
                 .then((response) => {
                     this.messages = response.data;
                     setTimeout(() => {
-                         const container = this.$el.querySelector("#MessageContainer")
-                            container.scrollTop = container.scrollHeight
+                        const container =
+                            this.$el.querySelector("#MessageContainer");
+                        container.scrollTop = container.scrollHeight;
                     }, 500);
                 })
                 .catch((error) => {
@@ -247,9 +266,9 @@ export default {
                 teacherId: this.chatIsActive,
             };
             setTimeout(() => {
-                           const container = this.$el.querySelector("#MessageContainer")
-                            container.scrollTop = container.scrollHeight
-                        }, 500);
+                const container = this.$el.querySelector("#MessageContainer");
+                container.scrollTop = container.scrollHeight;
+            }, 500);
             axios.post("/student/message", data);
             this.userMessage = "";
         },
@@ -351,19 +370,17 @@ export default {
     cursor: pointer;
 }
 .Name {
-    font-size: 18px;
-    font-weight: 550;
     color: #029e02;
-    margin-bottom: 6px;
+    margin-bottom: 0px;
 }
 .ReceiversMessageTime {
     font-size: 12px;
-    color: #9e9e9e;
+    color: #979797;
     margin-top: -10px;
 }
 .SendersMessageTime {
     font-size: 12px;
-    color: #919191;
+    color: #8b8f8b;
     margin-top: -10px;
 }
 .btn:focus,
@@ -380,7 +397,7 @@ input:focus {
     color: white;
 }
 .ReceivedMessage {
-    background: #ffffff;
+    background: #f7f7f7;
     padding: 8px;
     width: 270px;
     margin-top: 10px;
@@ -398,7 +415,7 @@ input:focus {
     content: "";
     width: 0px;
     height: 0px;
-    border-top: 15px solid #ffffff;
+    border-top: 15px solid #f7f7f7;
     border-right: 15px solid transparent;
     border-bottom: 15px solid transparent;
     border-left: 15px solid transparent;
@@ -412,7 +429,7 @@ input:focus {
     content: "";
     width: 0px;
     height: 0px;
-    border-top: 15px solid rgba(254, 193, 7, 0.502);
+    border-top: 15px solid #d1fdd1;
     border-right: 15px solid transparent;
     border-bottom: 15px solid transparent;
     border-left: 15px solid transparent;
@@ -421,7 +438,7 @@ input:focus {
     transform: rotate(-45deg);
 }
 .SenderMessage {
-    background: rgba(254, 193, 7, 0.502);
+    background: #d1fdd1;
     padding: 8px;
     width: 270px;
     position: relative;
@@ -438,10 +455,6 @@ input:focus {
     overflow-y: auto;
     height: 350px;
     border-bottom: 1px solid rgb(247, 247, 247);
-    background-color: #f7f7f7;
-    -moz-box-shadow: inset 0 0 5px rgb(150, 150, 150, 0.1);
-    -webkit-box-shadow: inset 0 0 5px rgb(150, 150, 150, 0.1);
-    box-shadow: inset 0 0 5px rgb(150, 150, 150, 0.1);
 }
 .MessageInnerContainer li {
     list-style: none;
@@ -461,18 +474,11 @@ input:focus {
     padding: 2px;
 }
 .LeftBar {
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    -moz-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-
     height: 450px;
     overflow-y: auto;
     overflow-x: hidden;
 }
 .RightBar {
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    -moz-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     height: 450px;
 }
 ::-webkit-scrollbar {

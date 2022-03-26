@@ -154,12 +154,15 @@
                                 <hr />
                                 <li>
                                     <router-link to="/student/edit/profile"
-                                        >View Profile</router-link
+                                        >Profile
+                                        <img src="/images/profile.png" width="25" alt="">
+                                        </router-link
                                     >
                                 </li>
                                 <li>
                                     <router-link to="/student/ad/management"
-                                        >My ads</router-link
+                                        >My ads<img src="/images/ads.png" width="50" alt="">
+                                        </router-link
                                     >
                                 </li>
                                 <li>
@@ -314,7 +317,7 @@ export default {
     box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -webkit-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -moz-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
-    background-color: #fec107;
+    background-color: #fed907;
 }
 .fa-solid {
     color: #183153;

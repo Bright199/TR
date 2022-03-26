@@ -1,13 +1,13 @@
 <template>
-    <div class="Main">
+    <div class="bg-light">
         <DashboardNavBar />
-        <div class="container bg-white mt-3 ">
+        <div class="container  mt-3 ">
             <div class="spinner" v-if="loading == true">
                 <div class="dot1"></div>
                 <div class="dot2"></div>
             </div>
             <div class="row" v-if="loaded == true">
-                <div class="col-md-9 shadow-sm border">
+                <div class="col-md-8 bg-white me-1">
                     <div class="row">
                         <div class="col-md-3 pt-5 mb-2">
                             <img
@@ -168,7 +168,7 @@
                         <div class="col-md-2"></div>
                     </div>
                 </div>
-                <div class="col-md-3 mt-3">
+                <div class="col-md-3 mt-3 " style="margin-left:2px;">
                     <!-- Button to Open the Modal -->
                     <a
                         href="#"
@@ -350,7 +350,7 @@ export default {
     background-color: rgb(2, 120, 157, .2);
 }
 .BookBtn{
-    background-color: #fec107;
+    background-color: #fed907;
      padding: 5px;
     color: #183153;
     display: block;
@@ -361,7 +361,6 @@ export default {
     text-decoration: none;
     /* color: white; */
     font-size: 20px;
-    border: 1px solid #fec107;
 }
 .MainFluencyLevel {
     color: #029e02;

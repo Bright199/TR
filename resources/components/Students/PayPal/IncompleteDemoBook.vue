@@ -26,7 +26,6 @@
                                     />
                                 </div>
                                 <div class="col-md-9">
-                                    <p>Incomplete booking</p>
                                 </div>
                             </div>
                         </div>
@@ -163,11 +162,12 @@ export default {
 }
 .teachersList li {
     list-style: none;
+    background-color: #f5f8f5
 }
 .teachersList li img {
     border-radius: 50%;
     padding: 2px;
-    border: 1px solid #029e02;
+    border: 1px solid #f9faf9;
 }
 .teacherName {
     margin-bottom: 0px;

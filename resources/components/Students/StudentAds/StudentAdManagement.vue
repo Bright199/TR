@@ -1,7 +1,7 @@
 <template>
     <div>
          <div class="container-jumbotron TopBar1">
-            <NavBar />
+            <DashboardNavBar />
         </div>
         <div class="container">
             <div class="container" v-if="!MyAds.length">
@@ -41,10 +41,10 @@
 <script>
 import axios from 'axios'
 import { mapState, mapMutations} from 'vuex';
-import NavBar from '../NavBar.vue'
+import DashboardNavBar from '../DashboardNavBar.vue'
 export default {
     name:'StudentAdManagement',
-    components:{NavBar},
+    components:{DashboardNavBar},
     data() {
         return{
             MyAds:''

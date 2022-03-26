@@ -24,6 +24,69 @@
                     v-for="teacher in teachers.data"
                     :key="teacher.id"
                 >
+                    <!-- The Modal -->
+                    <div class="modal fade" id="MessageModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <p class="modal-title">
+                                        <i class="fa-solid fa-message"></i>
+                                        {{ teacher.name }}
+                                    </p>
+                                    <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        id="close"
+                                    ></button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <!-- <textarea
+                                        class="form-control"
+                                        rows="2"
+                                        id="userMessage"
+                                        v-model="message"
+                                        name="message"
+                                        placeholder="Write your message here..."
+                                    ></textarea> -->
+                                    <!-- <div>
+                                        <i
+                                            class="fa-solid fa-paper-plane"
+                                            style="font-size: 20px"
+                                            @click="SendMessage(teacher.id)"
+                                        ></i>
+                                    </div> -->
+
+                                    <div class="input-group">
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="userMessage"
+                                            v-model="message"
+                                            name="message"
+                                            placeholder="Write your message here..."
+                                        />
+                                        <button
+                                            type="submit"
+                                            class="SendBtn"
+                                            @click="SendMessage(teacher.id)"
+                                        >
+                                            <i
+                                                class="fa-solid fa-paper-plane"
+                                               
+                                            ></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Modal footer -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end modal -->
                     <div class="row pt-3">
                         <div class="col-md-3 mb-2">
                             <img
@@ -64,7 +127,7 @@
                                     teacher.third_language_proficiency
                                 }}</span>
                             </p>
-                            <p v-if="teacher.description.length > 200" >
+                            <p v-if="teacher.description.length > 200">
                                 <span
                                     v-if="showShortDescription"
                                     class="shortDescription"
@@ -203,11 +266,22 @@
                                 </div>
                             </div>
                             <br /><br />
-                            <router-link :to="'/student/single/teacher/'+teacher.id" class="btn d-block FilterBtn">Details</router-link>
+                            <!-- Button to Open the Modal -->
+                            <a
+                                href="#"
+                                class="btn d-block FilterBtn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#MessageModal"
+                            >
+                                Message
+                            </a>
+                            <!-- <router-link :to="'/student/single/teacher/'+teacher.id" class="btn d-block FilterBtn">Details</router-link> -->
                             <!-- <a href="" >Details</a -->
                             <br />
                             <a
-                                :href="'/student/book/demo/lesson/'+teacher.id"
+                                :href="
+                                    '/student/book/demo/lesson/' + teacher.id
+                                "
                                 class="btn d-block btn-warning mb-3 RemoveOutline"
                                 >Book trial lesson</a
                             >
@@ -230,6 +304,7 @@
                 </div>
             </div>
         </div>
+
         <div class="container">
             <Pagination
                 :data="teachers"
@@ -264,6 +339,7 @@ export default {
             StudentFavoritesIds: "",
             // FavoriteCount: "",
             addedToFavorite: true,
+            message: "",
         };
     },
     mounted() {
@@ -271,6 +347,26 @@ export default {
         this.getFavorites();
     },
     methods: {
+        SendMessage(teacherId) {
+            const message = this.message.trim();
+            if (message == "") {
+                alert("Message empty");
+                return;
+            } else if (teacherId == "") {
+                alert("select a teacher");
+                return;
+            } else {
+                axios
+                    .post("/student/message", { message, teacherId })
+                    .then((response) => {
+                        this.$router.push("/student/messages");
+                        this.$el.querySelector("#close").click();
+                    })
+                    .finally(() => {
+                        this.message = "";
+                    });
+            }
+        },
         getFavorites() {
             axios
                 .get("/student/getFavoriteTeacherIds")
@@ -335,6 +431,35 @@ export default {
 };
 </script>
 <style scoped>
+.fa-message{
+    color: #029e02
+}
+textarea {
+    resize: none;
+}
+#userMessage:focus {
+    box-shadow: none;
+    outline: none;
+    border: 1px solid #029e02;
+}
+.SendBtn {
+    border: none;
+    background-color: #029e02;
+    color:white;
+    padding: 3px 10px 5px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.SendBtn:hover {
+    border: none;
+    color: white;
+   
+}
+
+
+.SendBtn:hover {
+    background-color: #04ad04;
+}
 .fa-heart:hover {
     animation: beat 1.2s ease-in-out infinite;
     font-size: 20px;
