@@ -15,6 +15,7 @@ import Favorites from '../components/Students/Favorites/Favorites.vue';
 import SingleFavorite from '../components/Students/Favorites/SingleFavorite.vue';
 import TrialLessonBooking from '../components/Students/PayPal/TrialLessonBooking.vue'
 import IncompleteDemoBook from '../components/Students/PayPal/IncompleteDemoBook.vue'
+import DemoPaymentSummary from '../components/Students/PayPal/DemoPaymentSummary.vue'
 // import PayPal from '../components/Students/PayPal/PayPal.vue'
 
 const newLocal = 'Home';
@@ -98,6 +99,11 @@ const routes = [
     {
         path: "/student/book/demo/lesson/:id",
         components: { default: TrialLessonBooking },
+        props: { default: true }
+    },
+    {
+        path: "/student/demo/booking/payment/summary/:id",
+        components: { default: DemoPaymentSummary },
         props: { default: true }
     },
     {

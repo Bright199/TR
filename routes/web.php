@@ -82,6 +82,11 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/incomplete/demo/booking',function(){
             return view('student.incompletebooking');
         });
+        Route::get('/demo/booking/payment/summary/{teacherId}',function(){
+            return view('student.demopaymentsummary');
+        });
+        Route::get('/demo/payment/info/{teacherId}',[StudentRegistration::class,'DemoPaymentDetails']);
+        Route::post('insert/payment/details',[StudentRegistration::class, 'insertDemoPaymentDetails']);
         Route::get('/book/demo/lesson/{teacherId}', function () {
             return view('student.bookdemo');
         });

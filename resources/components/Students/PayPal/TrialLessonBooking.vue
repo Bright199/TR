@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-md-4 mb-3">
                         <div
-                            class="container calendarContainer shadow-sm bg-white"
+                            class="container calendarContainer shadow-sm "
                         >
                             <p
                                 class="d-flex justify-content-center py-2 border-bottom"
@@ -160,7 +160,8 @@
                                         '/student/single/teacher/' +
                                         teacherDetails.id
                                     "
-                                    style="text-decoration:none"
+
+                                    style="text-decoration:none; color: #029e02"
                                     ><span>{{
                                         teacherDetails.name
                                     }}</span></router-link
@@ -534,7 +535,15 @@ export default {
 }
 .RightBar {
     border-top-right-radius: 7px;
-    border-bottom-right-radius: 7px;
+    border-top-left-radius: 7px;
+}
+.calendarContainer {
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    background-color: #029e02;
+}
+.calendarContainer p{
+    color: white
 }
 .disablePrevBtn {
     display: none;
@@ -549,7 +558,7 @@ export default {
     left: 20%;
     top: 5px;
     border: none;
-    width: 5%;
+    width: 7%;
     padding: 5px;
     background-color: #ffffff;
 }
@@ -560,7 +569,7 @@ export default {
     position: absolute;
     right: 20%;
     top: 5px;
-    width: 5%;
+    width: 7%;
     border: none;
     padding: 5px;
     background-color: #ffffff;
@@ -580,25 +589,26 @@ export default {
 }
 .dates p span:hover {
     cursor: pointer;
-    border:1px solid #029e02;
+    border:1px solid white;
     border-radius: 2px;
     padding: 5px;
     font-weight: 550;
 }
 .currentDate span {
-    background-color: #029e02;
+    background-color: white;
     padding: 5px;
-    color: white;
+    color: #292929;
     font-weight: 550;
 }
 
 .removeBottomMargin:first-child {
-    border-bottom: 1px solid #e4e6e4;
+    /* border-bottom: 1px solid #fcc41d; */
 }
 .days p {
     /* font-size: 20px; */
     margin-right: 4px;
-    border-bottom: 1px solid #029e02;
+    border-bottom: 1px solid #e4e6e4;
+    /* border-bottom: 1px solid #029e02; */
 }
 .RightBar {
     /* height: 550px; */

@@ -7,6 +7,7 @@ use App\Models\Message;
 use App\Models\Student;
 use App\Models\StudentAd;
 use App\Models\StudentContact;
+use App\Models\StudentDemoPaymentDetail;
 use App\Models\StudentFavorite;
 use App\Models\Teacher;
 use App\Models\TrialLessonBooking;
@@ -49,15 +50,39 @@ class StudentRegistration extends Controller
             'timeslot' => $request->timeslot
         ]);
     }
+    public function DemoPaymentDetails($teacherId)
+    {
+        $demoDetails = StudentDemoPaymentDetail::where('teacher_id',$teacherId)
+        ->where('student_id', Auth::guard('student')->id())->first();
+        return response()->json($demoDetails);
+    }
+    public function insertDemoPaymentDetails(Request $request)
+    {
+        $paymentDetails = StudentDemoPaymentDetail::create([
+            'teacher_id' => $request->teacherId,
+            'student_id' => Auth::guard('student')->id(),
+            'payer_name' => $request->orderData['payer']['name']['given_name'],
+            'payer_surname' => $request->orderData['payer']['name']['surname'],
+            'email_address' => $request->orderData['payer']['email_address'],
+            'currency_code' => $request->orderData['purchase_units'][0]['payments']['captures'][0]['amount']['currency_code'],
+            'amount' => $request->orderData['purchase_units'][0]['payments']['captures'][0]['amount']['value'],
+            'payer_id' => $request->orderData['id'],
+        ]);
+        if ($paymentDetails) {
+            TrialLessonBooking::where('teacher_id', $request->teacherId)
+            ->where('student_id', Auth::guard('student')->id())->update(['booked' => 1]);
+        }
+        // return response()->json($paymentDetails);
+    }
     public function CancelDemoBooking($teacherId)
     {
-        $trialConfirmation = TrialLessonBooking::where('teacher_id',$teacherId)
-        ->where('student_id', Auth::guard('student')->id())->where('booked',0)->delete();
+        $trialConfirmation = TrialLessonBooking::where('teacher_id', $teacherId)
+            ->where('student_id', Auth::guard('student')->id())->where('booked', 0)->delete();
         return redirect('/student/dashboard');
     }
     public function incompleteDemoBooking()
     {
-        $incompleteDemoBooking = TrialLessonBooking::where('student_id', Auth::guard('student')->id())->where('booked',0)->pluck('teacher_id');
+        $incompleteDemoBooking = TrialLessonBooking::where('student_id', Auth::guard('student')->id())->where('booked', 0)->pluck('teacher_id');
         $teachers = Teacher::whereIn('id', $incompleteDemoBooking->toArray())->get();
         return response()->json($teachers);
     }

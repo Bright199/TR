@@ -161,7 +161,7 @@
                                 </li>
                                 <li>
                                     <router-link to="/student/ad/management"
-                                        >My ads<img src="/images/ads.png" width="50" alt="">
+                                        >My ads
                                         </router-link
                                     >
                                 </li>

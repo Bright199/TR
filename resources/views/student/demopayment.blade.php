@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TREnglish</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('images/Logo.png') }}">
 
     <!-- Scripts -->
@@ -42,8 +43,8 @@
                         <i class="fa-solid fa-angle-left"></i>
                         Calendar
                     </a>
-                    <a href="" class="DashboardClass"
-                        style="color:brown" data-bs-toggle="modal" data-bs-target="#myModal">
+                    <a href="" class="DashboardClass" style="color:brown" data-bs-toggle="modal"
+                        data-bs-target="#myModal">
                         <span><i class="fa-solid fa-xmark"></i>
                             Cancel</span>
                     </a>
@@ -67,7 +68,7 @@
     @isset($trialLessonDetails[0])
         {{-- Modal --}}
         <!-- Button to Open the Modal -->
-       
+
         <!-- The Modal -->
         <div class="modal fade" id="myModal">
             <div class="modal-dialog modal-sm">
@@ -79,10 +80,11 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
-                   
+
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                      <a href="/student/cancel/book/demo/lesson/{{ $teacherDetails->id }}" class="CancelDemoBooking">Cancel booking</a>
+                        <a href="/student/cancel/book/demo/lesson/{{ $teacherDetails->id }}"
+                            class="CancelDemoBooking">Cancel booking</a>
                     </div>
 
                 </div>
@@ -90,7 +92,7 @@
         </div>
         {{-- end --}}
         {{-- Trial lesson Details --}}
-        <div class="container-jumbotron body">
+        <div class="container-jumbotron body" id="MainContainer">
             <div class="container">
                 <div class="row">
                     <div class="col-md-1 p-0"></div>
@@ -142,6 +144,7 @@
                                             $<span>{{ $teacherDetails->hourly_pay }}</span></td>
                                         <input type="text" value="{{ $teacherDetails->hourly_pay }}" id="hourlyPrice"
                                             hidden>
+                                        <input type="text" value="{{ $teacherDetails->id }}" id="teacherId" hidden>
                                     </tr>
                                     <tr>
                                         <td>Transaction fee</td>
@@ -266,9 +269,7 @@
                             purchase_units: [{
                                 "amount": {
                                     "currency_code": "USD",
-                                    "value": parseFloat(document.getElementById('hourlyPrice')
-                                        .value) + parseFloat(document.getElementById(
-                                        'transactionFee').value)
+                                    "value": 2
                                 }
                             }]
                         });
@@ -278,18 +279,45 @@
                         return actions.order.capture().then(function(orderData) {
 
                             // Full available details
-                            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                            // console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
 
                             // Show a success message within this page, e.g.
                             const element = document.getElementById('paypal-button-container');
                             element.innerHTML = '';
-                            element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                            // element.innerHTML = '<h3>Thank you for your payment!</h3>';
 
-                            actions.redirect('http://localhost:8000/student/dashboard');
+                            $(document).ready(function() {
+                                const teacherId = $('#teacherId').val();
+                                const data = {
+                                    teacherId: teacherId,
+                                    orderData: orderData
+                                }
+                                $.ajaxSetup({
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                            'content')
+                                    }
+                                })
+                                $.ajax({
+                                    url: "/student/insert/payment/details",
+                                    type: "POST",
+                                    data: data,
+                                    // async : false, 
+                                    success: function(response, textStatus, jqXHR) {
+                                    window.location  = '/student/demo/booking/payment/summary/'+teacherId
+                                        // console.log(response)
+                                    },
+                                    error: function(jqXHR, textStatus, errorThrown) {
+                                        console.log(errorThrown);
+                                    }
+                                });
+                            })
 
                         });
                     },
-
+                    onCancel: function() {
+                        alert('you cancelled the payment');
+                    },
                     onError: function(err) {
                         console.log(err);
                     }
@@ -301,16 +329,18 @@
 
 </html>
 <style scoped>
-  .CancelDemoBooking{
-    background-color: #029e02;
-    text-decoration: none;
-    padding: 5px 15px;
-    color: white
-  }
-  .CancelDemoBooking:hover{
-    background-color: #039b03;
-    color: white
-  }
+    .CancelDemoBooking {
+        background-color: #029e02;
+        text-decoration: none;
+        padding: 5px 15px;
+        color: white
+    }
+
+    .CancelDemoBooking:hover {
+        background-color: #039b03;
+        color: white
+    }
+
     body {
         color: #183153;
     }
