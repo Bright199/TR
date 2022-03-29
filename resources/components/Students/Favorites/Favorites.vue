@@ -26,8 +26,79 @@
                             class="col-md-12 col-lg-12 col-sm-12 p-3 HoverTeacher"
                             v-for="teacher in Favteachers.data"
                             :key="teacher.id"
-                            :class="teacher.id === removalClass?'removalClass':''"
+                            :class="
+                                teacher.id === removalClass
+                                    ? 'removalClass'
+                                    : ''
+                            "
                         >
+                            <div class="modal fade" id="MessageModal">
+                                <div
+                                    class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                >
+                                    <div class="modal-content">
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <p class="modal-title">
+                                                <i
+                                                    class="fa-solid fa-message"
+                                                ></i>
+                                                {{ teacher.name }}
+                                            </p>
+                                            <button
+                                                type="button"
+                                                class="btn-close"
+                                                data-bs-dismiss="modal"
+                                                id="close"
+                                            ></button>
+                                        </div>
+
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            <!-- <textarea
+                                        class="form-control"
+                                        rows="2"
+                                        id="userMessage"
+                                        v-model="message"
+                                        name="message"
+                                        placeholder="Write your message here..."
+                                    ></textarea> -->
+                                            <!-- <div>
+                                        <i
+                                            class="fa-solid fa-paper-plane"
+                                            style="font-size: 20px"
+                                            @click="SendMessage(teacher.id)"
+                                        ></i>
+                                    </div> -->
+
+                                            <div class="input-group">
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="userMessage"
+                                                    v-model="message"
+                                                    name="message"
+                                                    placeholder="Write your message here..."
+                                                />
+                                                <button
+                                                    type="submit"
+                                                    class="SendBtn"
+                                                    @click="
+                                                        SendMessage(teacher.id)
+                                                    "
+                                                >
+                                                    <i
+                                                        class="fa-solid fa-paper-plane"
+                                                    ></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal footer -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end modal -->
                             <div class="row pt-3">
                                 <div class="col-md-3 mb-2">
                                     <img
@@ -186,19 +257,26 @@
                                             >
                                                 <i
                                                     class="fa-solid fa-heart"
-                                                    style="color:#fe0609"
+                                                    style="color: #fe0609"
                                                 ></i>
                                             </p>
                                         </div>
                                     </div>
                                     <br /><br />
-                                    <a href="" class="btn d-block FilterBtn"
-                                        >Details</a
-                                    ><br />
                                     <a
                                         href=""
+                                        class="btn d-block FilterBtn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#MessageModal"
+                                        >Message</a
+                                    ><br />
+                                    <a
+                                        :href="
+                                            '/student/book/demo/lesson/' +
+                                            teacher.id
+                                        "
                                         class="btn d-block btn-warning mb-3 RemoveOutline"
-                                        >Hire</a
+                                        >Book trial lesson</a
                                     >
                                 </div>
                             </div>
@@ -266,14 +344,34 @@ export default {
             favTeachersLength: 0,
             loaded: false,
             loading2: false,
-            removalClass:0,
-
+            removalClass: 0,
+            message:'',
             showShortDescription: true,
             StudentFavoritesIds: "",
             addedToFavorite: true,
         };
     },
     methods: {
+        SendMessage(teacherId) {
+            const message = this.message.trim();
+            if (message == "") {
+                alert("Message empty");
+                return;
+            } else if (teacherId == "") {
+                alert("select a teacher");
+                return;
+            } else {
+                axios
+                    .post("/student/message", { message, teacherId })
+                    .then((response) => {
+                        this.$router.push("/student/messages");
+                        this.$el.querySelector("#close").click();
+                    })
+                    .finally(() => {
+                        this.message = "";
+                    });
+            }
+        },
         getFavorites() {
             axios
                 .get("/student/getFavoriteTeacherIds")
@@ -312,7 +410,7 @@ export default {
             }
             axios.post("/student/removeFromFavorite", { id: teacherId });
         },
-        
+
         readMore() {
             this.showShortDescription = false;
         },
@@ -327,8 +425,8 @@ export default {
 };
 </script>
 <style scoped>
-.removalClass{
-    display:none
+.removalClass {
+    display: none;
 }
 .LeftBar {
     height: 250px;
@@ -421,6 +519,30 @@ export default {
     100% {
         font-size: 18px;
     }
+}
+.fa-message{
+    color: #029e02
+}
+textarea {
+    resize: none;
+}
+#userMessage:focus {
+    box-shadow: none;
+    outline: none;
+    border: 1px solid #029e02;
+}
+.SendBtn {
+    border: none;
+    background-color: #029e02;
+    color:white;
+    padding: 3px 10px 5px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.SendBtn:hover {
+    border: none;
+    color: white;
+   
 }
 
 .btn {

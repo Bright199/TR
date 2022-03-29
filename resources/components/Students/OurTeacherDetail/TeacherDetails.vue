@@ -1,5 +1,6 @@
 <template>
     <div>
+       
         <!--  -->
         <div class="m-0 pb-4 OuterContainer">
             <div class="container-jumbotron ps-4">
@@ -26,7 +27,7 @@
                 >
                     <!-- The Modal -->
                     <div class="modal fade" id="MessageModal">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                             <div class="modal-content">
                                 <!-- Modal Header -->
                                 <div class="modal-header">

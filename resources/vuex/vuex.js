@@ -5,10 +5,36 @@ const store = createStore({
     return {
       loggedUser: '',
       profileImageUrl: '',
-      FavoriteCount: 0
+      FavoriteCount: 0,
+      openModal: false,
+      TeacherStudentChats: '',
+      openSingleModal: false,
+      teacherId: '',
+      unreadMessageCount: 0
     }
   },
   mutations: {
+
+    TeacherStudentChats(state, payload) {
+      state.TeacherStudentChats = payload
+      state.openSingleModal = true
+      state.openModal = false
+    },
+    teacherId(state, payload) {
+      state.teacherId = payload
+    },
+    SingleMessageModalClose(state)
+    {
+      state.openSingleModal = false
+      state.openModal = true
+    },
+
+    MessageModalPopup(state) {
+      state.openModal = true
+    },
+    MessageModalClose(state) {
+      state.openModal = false
+    },
     userDetails(state, obtainedUser) {
       state.loggedUser = obtainedUser
       // state.isAuthenticated = true
@@ -24,6 +50,12 @@ const store = createStore({
     },
     subtrFavoriteCount(state, payload) {
       state.FavoriteCount --
+    },
+    unreadMessageCount(state, payload) {
+      state.unreadMessageCount = payload
+    },
+    reduceUnreadMessagesCount(state, payload) {
+      state.unreadMessageCount -= payload
     }
   },
   

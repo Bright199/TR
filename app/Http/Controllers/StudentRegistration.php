@@ -158,7 +158,8 @@ class StudentRegistration extends Controller
 
     public function markMessageRead(Request $request)
     {
-        Message::where('id', $request->rowId)
+        Message::where('to', Auth::guard('student')->id())
+        ->where('from', $request->teacherId)
             ->update(['is_read' => 1]);
     }
 
@@ -199,6 +200,30 @@ class StudentRegistration extends Controller
     public function GetMessageContacts()
     {
         $studentContacts = StudentContact::where('student_id', Auth::guard('student')->id())->orderBy('id', 'desc')->get();
+        
+        // get a collection of items where sender_id is the user who sent us a message
+        // and messages_count is the number of unread messages we have from him
+        $unreadIds = Message::select(\DB::raw('`from` as teacher_id, count(`from`) as unread_count'))
+            ->where('to', Auth::guard('student')->id())
+            ->where('is_read', false)
+            ->groupBy('from')//[['teacher_id' => 2, 'unread_count'=>2]]
+            ->get();
+        $lastMessage = Message::where('to', Auth::guard('student')->id())
+            ->orWhere('from', Auth::guard('student')->id())
+            ->orderBy('id', 'desc')
+            ->get();
+
+             // add an unread key to each contact with the count of unread messages
+        $studentContacts = $studentContacts->map(function($contact) use ($unreadIds, $lastMessage) {
+            $contactUnread = $unreadIds->where('teacher_id', $contact->teacher_id)->first();
+            $exchangedMessage = $lastMessage->first();
+
+            $contact->unread = $contactUnread ? $contactUnread->unread_count : 0;
+            $contact->message = $exchangedMessage ? $exchangedMessage->message : '';
+            $contact->message_date = $exchangedMessage ? $exchangedMessage->created_at : '';
+
+            return $contact;
+        });
         return response()->json($studentContacts);
     }
 

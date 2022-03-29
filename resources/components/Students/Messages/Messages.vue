@@ -66,8 +66,8 @@
                                             "
                                             src="/images/avatar.png"
                                             alt=""
-                                            width="50"
-                                            height="50"
+                                            width="60"
+                                            height="60"
                                             class="Avatar"
                                             style="
                                                 margin-top: 5px;
@@ -81,7 +81,8 @@
                                                 contact.teacher_image
                                             "
                                             alt=""
-                                            width="70"
+                                            width="60"
+                                            height="60"
                                             class="Avatar"
                                             style="margin-top: 5px"
                                         />
@@ -90,14 +91,14 @@
                                         <p class="Name">
                                             {{ contact.teacher_name }}
                                         </p>
-                                        <p
+                                        <!-- <p
                                             style="
                                                 margin-top: 0px;
                                                 font-size: 12px;
                                             "
                                         >
                                             {{ contact.teacher_email }}
-                                        </p>
+                                        </p> -->
                                     </div>
                                 </div>
                             </li>
@@ -469,7 +470,6 @@ input:focus {
     padding: 0;
 }
 .Avatar {
-    border: 1px solid gray;
     border-radius: 50%;
     padding: 2px;
 }

@@ -2,14 +2,27 @@
     <div>
         <!-- <div class="container-jumbotron p-2 " style="background-color:#029e02 "></div> -->
         <DashboardNavBar />
+        <MessageComponent v-if="modalState ===true"/>
+        <SingleMessageComponent v-if="singleModalState ===true"/>
+        <!-- @open-message-modal="OpenModal" -->
+        <!-- v-if="OpenMessagesModal? $emit('OpenModal'):''" -->
         <div class="container mt-3">
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-8">
-                    <p class="d-flex justify-content-center" style="font-size:20px;margin-bottom:0px">
+                    <p
+                        class="d-flex justify-content-center"
+                        style="font-size: 20px; margin-bottom: 0px"
+                    >
                         Find a teacher in few minutes by hiring our teachers or
                         by creating an ad &nbsp;
-                    </p><a class="d-flex justify-content-center" href="/student/create/ad" style="margin-top:0px">post an ad</a>
+                    </p>
+                    <a
+                        class="d-flex justify-content-center"
+                        href="/student/create/ad"
+                        style="margin-top: 0px"
+                        >post an ad</a
+                    >
                 </div>
             </div>
         </div>
@@ -34,13 +47,24 @@ import LeftBar from "./LeftBar.vue";
 import { mapState, mapMutations } from "vuex";
 import DashboardNavBar from "./DashboardNavBar.vue";
 import axios from "axios";
+import MessageComponent from './Messages/MessageComponent.vue';
+import SingleMessageComponent from './Messages/SingleMessageComponent.vue';
 export default {
     name: "StudentDashboard",
-    components: { NavBar, RightBar, LeftBar, DashboardNavBar },
+    emits: ['OpenMessageModal'],
+    components: { NavBar, RightBar, LeftBar, DashboardNavBar,MessageComponent,SingleMessageComponent },
     data() {
         return {
             trimmedName: {},
+            // OpenMessagesModal: false,
+            message:''
         };
+    },
+    methods: {
+        // OpenModal()
+        // {
+        //    this.OpenMessagesModal = true;
+        // }
     },
     mounted() {
         let thisValue = this;
@@ -59,9 +83,17 @@ export default {
                 console.log(error);
             });
     },
-    computed: mapState({
-        loggedUser: (state) => state.loggedUser,
-    }),
-    // methods: {},
+    computed: {
+        ...mapState({
+            modalState: (state) =>state.openModal,
+            singleModalState: (state) =>state.openSingleModal,
+            loggedUser: (state) => state.loggedUser,
+
+        })
+    },
+    
 };
 </script>
+<style scoped>
+
+</style>

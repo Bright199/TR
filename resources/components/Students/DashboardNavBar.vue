@@ -18,8 +18,20 @@
                             v-if="receivedMessages.length"
                         >
                             <!-- <a href="" class="Logout "></a> -->
-                            <router-link to="/student/messages">
+                            <!-- <router-link to="/student/messages">
                                 <span class="UserName"
+                                
+                                    ><i class="fa-solid fa-message"></i>&nbsp;
+                                    <span
+                                        class="unReadMessage"
+                                        v-if="(loaded = true && unreadMessageCount > 0)"
+                                        >{{ unreadMessageCount }}</span
+                                    ></span
+                                >
+                            </router-link> -->
+                            <router-link to="#"  @click="OpenMessageModal">
+                                <span class="UserName"
+                                   
                                     ><i class="fa-solid fa-message"></i>&nbsp;
                                     <span
                                         class="unReadMessage"
@@ -28,7 +40,7 @@
                                     ></span
                                 >
                             </router-link>
-                            <ul class="messageuserdropdown-content">
+                            <!-- <ul class="messageuserdropdown-content">
                                 <li
                                     v-for="message in receivedMessages"
                                     :key="message.id"
@@ -56,15 +68,20 @@
                                         </p>
                                     </router-link>
                                 </li>
-                            </ul>
+                            </ul> -->
                         </li>
                         <li class="userdropdown" v-else>
                             <!-- <a href="" class="Logout "></a> -->
-                            <router-link to="/student/messages">
+                            <router-link to="#">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-message"></i>&nbsp;
                                 </span>
                             </router-link>
+                            <!-- <router-link to="/student/messages">
+                                <span class="UserName"
+                                    ><i class="fa-solid fa-message"></i>&nbsp;
+                                </span>
+                            </router-link> -->
                             <ul class="userdropdown-content">
                                 <li
                                     style="font-size: 14px"
@@ -98,7 +115,7 @@
                                     ></span
                                 >
                             </router-link>
-                            <ul class="messageuserdropdown-content">
+                            <!-- <ul class="messageuserdropdown-content">
                                 <li
                                     v-for="favorite in StudentFavorites"
                                     :key="favorite.id"
@@ -112,20 +129,24 @@
                                             "
                                         >
                                             {{ favorite.teacher_name }} 
-                                            <!-- &nbsp;&nbsp;
-                                            <span class="timeSent">{{dateTime(favorite.created_at)}}</span> -->
+                                            
                                         </p>
                                     </router-link>
                                 </li>
-                            </ul>
+                            </ul> -->
                         </li>
                         <li class="userdropdown" v-else>
                             <!-- <a href="" class="Logout "></a> -->
-                            <router-link to="/student/favorite">
+                            <router-link to="#">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-bookmark"></i>&nbsp;
                                 </span>
                             </router-link>
+                            <!-- <router-link to="/student/favorite">
+                                <span class="UserName"
+                                    ><i class="fa-solid fa-bookmark"></i>&nbsp;
+                                </span>
+                            </router-link> -->
                             <ul class="userdropdown-content">
                                 <li
                                     style="font-size: 14px"
@@ -138,7 +159,7 @@
                         <!-- {{ trimmedName }} -->
                         <li class="userdropdown">
                             <!-- <a href="" class="Logout "></a> -->
-                            <span class="UserName">{{ MyUser.name }}</span>
+                            <span class="UserName" style="color: #029e02" v-if="MyUser">{{ MyUser.name.split(" ")[0] }}</span>
                             <ul class="userdropdown-content">
                                 <li>
                                     <p>
@@ -200,7 +221,6 @@ export default {
             UserName: "",
             AuthUserName: "",
             receivedMessages: "",
-            unreadMessageCount: "",
             loaded: false,
             StudentFavorites:'',
             // FavoriteCount:0
@@ -214,6 +234,10 @@ export default {
     },
 
     methods: {
+        OpenMessageModal()
+        {
+            this.$store.commit('MessageModalPopup')
+        },
         markRead(messageRowId){
             axios
                 .post("/student/markMessageRead",{rowId: messageRowId})
@@ -226,7 +250,7 @@ export default {
             axios
                 .get("/student/getUnreadMessages")
                 .then((response) => {
-                    this.unreadMessageCount = response.data.length;
+                    this.$store.commit('unreadMessageCount', response.data.length)
                     if (response.data.length > 0) {
                         this.loaded = true;
                     }
@@ -278,7 +302,8 @@ export default {
     computed: {
         ...mapState({
             MyUser: (state) => state.loggedUser,
-            FavoriteCount: (state)=> state.FavoriteCount
+            FavoriteCount: (state)=> state.FavoriteCount,
+            unreadMessageCount: (state)=> state.unreadMessageCount
         }),
     },
 };
