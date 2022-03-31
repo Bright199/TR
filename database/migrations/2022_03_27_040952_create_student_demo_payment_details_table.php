@@ -19,7 +19,7 @@ class CreateStudentDemoPaymentDetailsTable extends Migration
             $table->string('payer_surname');
             $table->string('email_address');
             $table->string('currency_code');
-            $table->integer('amount');
+            $table->decimal('amount');
             $table->integer('teacher_id');
             $table->integer('student_id');
             $table->string('payer_id');

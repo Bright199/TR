@@ -15,7 +15,7 @@
                         <div class="row navBtns">
                             <div class="col-md-4">
                                 <router-link to="/student/all/booked/lessons"
-                                   class="d-flex justify-content-center mb-2" >My demo lessons</router-link
+                                   class="d-flex justify-content-center mb-2" >My lessons</router-link
                                 >
                             </div>
                             <div class="col-md-4">

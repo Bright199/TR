@@ -1,6 +1,6 @@
 <template>
     <div class="bg-light">
-        <div class="container p-4" style="background-color: #029e02">
+        <div class="container p-4" style="background-color: #183153; height:100vh">
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6 bg-white">
@@ -78,6 +78,7 @@ export default {
         this.getBookedPaymentDetails();
     },
     methods: {
+        
         getBookedPaymentDetails() {
             axios
                 .get("/student/demo/payment/info/" + this.id)

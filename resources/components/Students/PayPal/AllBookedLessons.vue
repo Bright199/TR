@@ -4,13 +4,28 @@
         <div class="container-jumbotron bg-light" style="height: 100vh">
             <div class="container mt-2 p-4">
                 <div class="row">
-                    <div class="col-md-2 mb-2 me-2 shadow-sm bg-white p-2">
+                    <div
+                        class="col-md-2 mb-2 me-2 shadow-sm bg-white p-2 LinksContainer"
+                    >
                         <ul class="Links">
-                            <li class="text-center">My Lessons</li>
-                            <li class="text-center">Demo Lessons</li>
+                            <li
+                                class="text-center"
+                                @click="LessonsActivate"
+                                :class="LessonsActive ? 'demoActive' : ''"
+                            >
+                                My Lessons
+                            </li>
+                            <li
+                                class="text-center"
+                                :class="demoActive ? 'demoActive' : ''"
+                                @click="demoActivate"
+                            >
+                                Demo Lessons
+                            </li>
                         </ul>
                     </div>
-                    <DemoLists />
+                    <DemoLists v-if="demoActive" />
+                    <LessonsLists v-if="LessonsActive" />
                 </div>
             </div>
         </div>
@@ -20,18 +35,29 @@
 <script>
 import DashboardNavBar from "../DashboardNavBar.vue";
 import DemoLists from "./DemoLists.vue";
+import LessonsLists from "./LessonsLists.vue";
 export default {
     name: "AllBookedLessons",
-    components: { DashboardNavBar, DemoLists },
+    components: { DashboardNavBar, DemoLists, LessonsLists },
     data() {
         return {
             allLessons: "",
+            demoActive: false,
+            LessonsActive: true,
         };
     },
     mounted() {
         this.getAllBookedLessons();
     },
     methods: {
+        demoActivate() {
+            this.demoActive = true;
+            this.LessonsActive = false;
+        },
+        LessonsActivate() {
+            this.LessonsActive = true;
+            this.demoActive = false;
+        },
         getAllBookedLessons() {},
     },
 };
@@ -40,12 +66,23 @@ export default {
 <style>
 .Links li {
     list-style: none;
-    background-color: #029e02;
-    color: white;
     margin-bottom: 8px;
-    /* padding: 5px 15px 7px; */
+    border: 1px solid #029e02;
+    border-radius: 3px;
+}
+.Links li:hover {
+    background-color: #029e02;
+    cursor: pointer;
+    color: white;
 }
 .Links {
     padding: 0;
+}
+.LinksContainer {
+    height: 150px;
+}
+.demoActive {
+    background-color: #029e02;
+    color: white;
 }
 </style>

@@ -13,22 +13,14 @@
                 </div>
                 <div class="col-md-8">
                     <ul class="NavLinks2">
+                        <li>
+                            <i class="fa-solid fa-wallet"></i>
+                        </li>
                         <li
                             class="messageuserdropdown"
                             v-if="receivedMessages.length"
                         >
-                            <!-- <a href="" class="Logout "></a> -->
-                            <!-- <router-link to="/student/messages">
-                                <span class="UserName"
-                                
-                                    ><i class="fa-solid fa-message"></i>&nbsp;
-                                    <span
-                                        class="unReadMessage"
-                                        v-if="(loaded = true && unreadMessageCount > 0)"
-                                        >{{ unreadMessageCount }}</span
-                                    ></span
-                                >
-                            </router-link> -->
+                           
                             <router-link to="#"  @click="OpenMessageModal">
                                 <span class="UserName"
                                    
@@ -40,39 +32,11 @@
                                     ></span
                                 >
                             </router-link>
-                            <!-- <ul class="messageuserdropdown-content">
-                                <li
-                                    v-for="message in receivedMessages"
-                                    :key="message.id"
-                                    class="border-bottom px-5 mt-2"
-                                    :class="message.is_read ===0?'unReadMessageBg':''"
-                                    @click="markRead(message.id)"
-                                >
-                                    <router-link :to="'/student/single/teacher/messages/'+message.from">
-                                        <p
-                                            style="
-                                                margi-bottom: 0px;
-                                                color: #029e02;
-                                            "
-                                        >
-                                            {{ message.teacher_name }} &nbsp;&nbsp;<span class="timeSent">{{dateTime(message.created_at)}}</span>
-                                        </p>
-                                        <p v-if="message.message.length < 20">
-                                            {{ message.message }}
-                                        </p>
-                                        <p v-else>
-                                            {{
-                                                message.message.slice(0, 20) +
-                                                "..."
-                                            }}
-                                        </p>
-                                    </router-link>
-                                </li>
-                            </ul> -->
+                            
                         </li>
                         <li class="userdropdown" v-else>
                             <!-- <a href="" class="Logout "></a> -->
-                            <router-link to="#">
+                            <router-link to="#" @click="OpenMessageModal">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-message"></i>&nbsp;
                                 </span>
@@ -85,7 +49,7 @@
                             <ul class="userdropdown-content">
                                 <li
                                     style="font-size: 14px"
-                                    class="d-flex justify-content-center"
+                                    class="d-flex justify-content-center align-items-center align-content-center"
                                 >
                                     No message yet
                                 </li>
@@ -115,38 +79,15 @@
                                     ></span
                                 >
                             </router-link>
-                            <!-- <ul class="messageuserdropdown-content">
-                                <li
-                                    v-for="favorite in StudentFavorites"
-                                    :key="favorite.id"
-                                    class="border-bottom px-5 mt-2"
-                                >
-                                    <router-link :to="'/student/single/teacher/'+favorite.teacher_id">
-                                        <p
-                                            style="
-                                                margi-bottom: 0px;
-                                                color: #029e02;
-                                            "
-                                        >
-                                            {{ favorite.teacher_name }} 
-                                            
-                                        </p>
-                                    </router-link>
-                                </li>
-                            </ul> -->
+                            
                         </li>
                         <li class="userdropdown" v-else>
-                            <!-- <a href="" class="Logout "></a> -->
                             <router-link to="#">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-bookmark"></i>&nbsp;
                                 </span>
                             </router-link>
-                            <!-- <router-link to="/student/favorite">
-                                <span class="UserName"
-                                    ><i class="fa-solid fa-bookmark"></i>&nbsp;
-                                </span>
-                            </router-link> -->
+                            
                             <ul class="userdropdown-content">
                                 <li
                                     style="font-size: 14px"
@@ -160,19 +101,7 @@
                         <li class="userdropdown">
                             <!-- <a href="" class="Logout "></a> -->
                             <span class="UserName" style="color: #029e02" v-if="MyUser">{{ MyUser.name.split(" ")[0] }}</span>
-                            <ul class="userdropdown-content">
-                                <li>
-                                    <p>
-                                        Account&nbsp;<i
-                                            class="fa-solid fa-gear"
-                                            style="
-                                                color: #151419;
-                                                font-size: 20px;
-                                            "
-                                        ></i>
-                                    </p>
-                                </li>
-                                <hr />
+                            <ul class="userdropdown-content" style="padding:7px">
                                 <li>
                                     <router-link to="/student/edit/profile"
                                         >Profile
@@ -444,7 +373,9 @@ export default {
     /* display: inline-block; */
 }
 .userdropdown li{
-    margin-top:12px
+    margin-bottom:4px;
+    margin-left: 12px;
+    margin-top: 4px;
 }
 .userdropdown-content {
     display: none;
@@ -452,14 +383,14 @@ export default {
     background-color: #ffffff;
     min-width: 220px;
     box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
-    padding: 12px 16px;
+    /* padding: 12px 16px; */
     z-index: 1;
     right: -10px;
     /* top: 50px; */
 }
 .userdropdown-content a {
     color: #fec107;
-    font-size: 18px;
+    /* font-size: 18px; */
 }
 .userdropdown-content a:hover {
     color: #fec107;

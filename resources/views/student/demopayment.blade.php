@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
-<body onbeforeunload="return myFunction()">
+<body >
 
 
 
@@ -244,15 +244,7 @@
             window.onpopstate = function() {
                 window.history.go(1);
             };
-            window.addEventListener("beforeunload", function(event) {
-                event.returnValue = "";
-            });
-
-            function myFunction() {
-                return "";
-            }
-            // $(document).ready(function(){
-            // })
+            
             function initPayPalButton() {
                 paypal.Buttons({
                     style: {
@@ -269,7 +261,7 @@
                             purchase_units: [{
                                 "amount": {
                                     "currency_code": "USD",
-                                    "value": 2
+                                    "value": parseFloat(document.getElementById('hourlyPrice').value) + parseFloat(document.getElementById('transactionFee').value)
                                 }
                             }]
                         });

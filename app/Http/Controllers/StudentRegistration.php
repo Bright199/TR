@@ -53,7 +53,7 @@ class StudentRegistration extends Controller
     public function DemoPaymentDetails($teacherId)
     {
         $demoDetails = StudentDemoPaymentDetail::where('teacher_id',$teacherId)
-        ->where('student_id', Auth::guard('student')->id())->first();
+        ->where('student_id', Auth::guard('student')->id())->orderBy('id', 'desc')->first();
         return response()->json($demoDetails);
     }
     public function insertDemoPaymentDetails(Request $request)
