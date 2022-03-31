@@ -187,6 +187,12 @@
                                     >
                                 </li>
                                 <li>
+                                    <router-link to="/student/all/booked/lessons"
+                                        >My lessons
+                                        </router-link
+                                    >
+                                </li>
+                                <li>
                                     <a href="/student/logout"
                                         >Logout
                                         <i

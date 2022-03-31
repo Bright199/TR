@@ -82,6 +82,10 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/incomplete/demo/booking',function(){
             return view('student.incompletebooking');
         });
+        Route::get('/all/booked/lessons',function(){
+            return view('student.allbookedlessons');
+        });
+        Route::get('/getAllBookedDemoLessons',[StudentRegistration::class, 'getAllBookedDemoLessons']);
         Route::get('/demo/booking/payment/summary/{teacherId}',function(){
             return view('student.demopaymentsummary');
         });

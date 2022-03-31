@@ -15,6 +15,7 @@ import Favorites from '../components/Students/Favorites/Favorites.vue';
 import SingleFavorite from '../components/Students/Favorites/SingleFavorite.vue';
 import TrialLessonBooking from '../components/Students/PayPal/TrialLessonBooking.vue'
 import IncompleteDemoBook from '../components/Students/PayPal/IncompleteDemoBook.vue'
+import AllBookedLessons from '../components/Students/PayPal/AllBookedLessons.vue'
 import DemoPaymentSummary from '../components/Students/PayPal/DemoPaymentSummary.vue'
 // import PayPal from '../components/Students/PayPal/PayPal.vue'
 
@@ -110,6 +111,11 @@ const routes = [
         path: "/student/incomplete/demo/booking",
         name: "IncompleteDemoBook",
         components: { default: IncompleteDemoBook },
+    },
+    {
+        path: "/student/all/booked/lessons",
+        name: "AllBookedLessons",
+        components: { default: AllBookedLessons },
     }
 ]
 

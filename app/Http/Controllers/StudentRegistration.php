@@ -86,6 +86,11 @@ class StudentRegistration extends Controller
         $teachers = Teacher::whereIn('id', $incompleteDemoBooking->toArray())->get();
         return response()->json($teachers);
     }
+    public function getAllBookedDemoLessons()
+    {
+        $bookedDemoLessons = TrialLessonBooking::where('student_id', Auth::guard('student')->id())->where('booked', 1)->get();
+        return response()->json($bookedDemoLessons);
+    }
 
 
     public function getStudentTeacherDemoLesson($teacherId)

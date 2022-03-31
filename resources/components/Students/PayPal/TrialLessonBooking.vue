@@ -8,7 +8,7 @@
                         &nbsp;Dashboard
                     </router-link>
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-7" v-if="showCalendar == true">
                     <ul class="d-flex CrumbContainer">
                         <li class="activeCrumb text-center">1. Select time</li>
                         <li class="text-center">
@@ -601,9 +601,7 @@ export default {
     font-weight: 550;
 }
 
-.removeBottomMargin:first-child {
-    /* border-bottom: 1px solid #fcc41d; */
-}
+
 .days p {
     /* font-size: 20px; */
     margin-right: 4px;

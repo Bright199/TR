@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <div class="container-jumbotron p-3 bg-light">
+        <div class="container-jumbotron p-3 bg-light" style="height: 100vh">
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 bg-white LeftBar">
@@ -86,8 +86,8 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="container p-4" v-else>
-                            <p class="d-flex justify-content-center" v-if="loaded== true">
+                        <div class="container p-2" v-else>
+                            <p class="" v-if="loaded== true">
                                 No incomplete record
                             </p>
                         </div>

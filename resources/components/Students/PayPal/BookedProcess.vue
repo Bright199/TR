@@ -14,7 +14,7 @@
                     <div class="container bg-white p-4">
                         <div class="row navBtns">
                             <div class="col-md-4">
-                                <router-link to="/student/all/demo/lessons"
+                                <router-link to="/student/all/booked/lessons"
                                    class="d-flex justify-content-center mb-2" >My demo lessons</router-link
                                 >
                             </div>
