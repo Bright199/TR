@@ -32,7 +32,7 @@
                     <div class="col-md-3 LeftBarStudent">
                         <LeftBar />
                     </div>
-                    <div class="col-md-9 ml-5">
+                    <div class="col-md-9 ">
                         <RightBar />
                     </div>
                 </div>
@@ -56,15 +56,11 @@ export default {
     data() {
         return {
             trimmedName: {},
-            // OpenMessagesModal: false,
             message:''
         };
     },
     methods: {
-        // OpenModal()
-        // {
-        //    this.OpenMessagesModal = true;
-        // }
+    
     },
     mounted() {
         let thisValue = this;

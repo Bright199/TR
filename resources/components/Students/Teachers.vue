@@ -23,7 +23,7 @@
 <script>
 import axios from "axios";
 import DashboardNavBar from "./DashboardNavBar.vue";
-import TeacherDetails from './OurTeacherDetail/TeacherDetails.vue'
+import TeacherDetails from './OurTeacherDetail/TeachersDetails.vue'
 export default {
     name: "Teachers",
     components: {

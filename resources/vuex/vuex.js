@@ -10,11 +10,53 @@ const store = createStore({
       TeacherStudentChats: '',
       openSingleModal: false,
       teacherId: '',
-      unreadMessageCount: 0
+      unreadMessageCount: 0,
+      priceRange: {
+        minPrice: '',
+        maxPrice:''
+      },
+      TeacherLanguage:'',
+      TeacherCountry:'',
+      showTeachersComponent: 0,
+
+    }
+  },
+  actions: {
+    TeachersByPrice (context,payload) {
+      setTimeout(() => {
+       context.commit('TeachersByPrice',payload)
+      }, 500)
     }
   },
   mutations: {
-
+    TeachersByPrice(state, payload) {
+      state.priceRange.minPrice = payload.minPrice
+      state.priceRange.maxPrice = payload.maxPrice
+      state.showTeachersComponent = 0
+      setTimeout(() => {
+        state.showTeachersComponent = 4
+       }, 500)
+    },
+    getTeachersByLanguage(state, payload) {
+      state.TeacherLanguage = payload.language
+      state.showTeachersComponent = 0
+      setTimeout(() => {
+        state.showTeachersComponent = 2
+       }, 500)
+    },
+    getTeachersByCountry(state, payload) {
+      state.TeacherCountry = payload.country
+      state.showTeachersComponent = 0
+      setTimeout(() => {
+        state.showTeachersComponent = 3
+       }, 500)
+    },
+    ActivateOtherTeacherDiv(state) {
+      state.showTeachersComponent = 1
+    },
+    ActivateOurTeacherDiv(state) {
+      state.showTeachersComponent = 0
+    },
     TeacherStudentChats(state, payload) {
       state.TeacherStudentChats = payload
       state.openSingleModal = true
@@ -23,8 +65,7 @@ const store = createStore({
     teacherId(state, payload) {
       state.teacherId = payload
     },
-    SingleMessageModalClose(state)
-    {
+    SingleMessageModalClose(state) {
       state.openSingleModal = false
       state.openModal = true
     },
@@ -46,10 +87,10 @@ const store = createStore({
       state.FavoriteCount = payload
     },
     addFavoriteCount(state, payload) {
-      state.FavoriteCount ++
+      state.FavoriteCount++
     },
     subtrFavoriteCount(state, payload) {
-      state.FavoriteCount --
+      state.FavoriteCount--
     },
     unreadMessageCount(state, payload) {
       state.unreadMessageCount = payload
@@ -58,7 +99,7 @@ const store = createStore({
       state.unreadMessageCount -= payload
     }
   },
-  
+
 })
 
 export default store;

@@ -98,6 +98,10 @@ Route::prefix('student')->name('student.')->group(function () {
             return view('student.freelanceteachers');
         });
 
+        Route::post('/getTeachersByPrice', [StudentRegistration::class, 'getTeachersByPrice']);
+        Route::post('/getTeachersByLanguage', [StudentRegistration::class, 'getTeachersByLanguage']);
+        Route::post('/getTeachersByCountry', [StudentRegistration::class, 'getTeachersByCountry']);
+
         Route::get('/messages', function () {
             return view('student.message');
         });

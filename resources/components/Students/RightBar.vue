@@ -1,55 +1,45 @@
 <template>
     <div>
         <div class="LeftBar m-0">
-            <div class="container p-2 mt-3">
-                <p class="TopHeading ps-5 pt-3">Available teachers</p>
+            <div class="container border-bottom">
+                <p class="TopHeading ps-4 pt-3">Available teachers</p>
             </div>
-            <!-- <hr class="Horizontal" /> -->
-            <div class="container mb-3 border-bottom">
-                <div class="row">
-                    <div
-                        @click="ActiveTeacherDiv(0)"
-                        class="col-md-4 d-flex pt-2 justify-content-center OurTeachersLink"
-                        :class="
-                            ActiveTeachersDiv == 0
-                                ? 'OurTeachersLinkActive'
-                                : ''
-                        "
-                    >
-                        <h5>Our teachers</h5>
-                    </div>
-                    <div
-                        @click="ActiveTeacherDiv(1)"
-                        class="col-md-4 d-flex pt-2 justify-content-center OtherTeachersLink"
-                        :class="
-                            ActiveTeachersDiv == 1
-                                ? 'OurTeachersLinkActive'
-                                : ''
-                        "
-                    >
-                        <h5>Freelance teachers</h5>
-                    </div>
-                </div>
-            </div>
+            
             <div class="">
                 <!-- Ours Teachers -->
-                <TeachersDetails v-if="ActiveTeachersDiv == 0" />
+                <TeachersDetails v-if="showTeachersComponent == 0" />
                 <!--  -->
                 <!-- Other teachers -->
-                <OtherTeacherDetails v-if="ActiveTeachersDiv == 1" />
+                <OtherTeacherDetails v-if="showTeachersComponent == 1" />
+                <!--  -->
+                <!-- teachers by price -->
+                <TeachersByPrice v-if="showTeachersComponent == 4" />
+                <!--  -->
+                <!-- teachers by language -->
+                <TeachersByLanguage v-if="showTeachersComponent == 2" />
+                <!--  -->
+                <!-- teachers by country -->
+                <TeachersByCountry v-if="showTeachersComponent == 3" />
                 <!--  -->
             </div>
         </div>
     </div>
 </template>
 <script>
-import TeachersDetails from "./OurTeacherDetail/TeacherDetails.vue";
+import TeachersDetails from "./OurTeacherDetail/TeachersDetails.vue";
 import OtherTeacherDetails from "./OtherTeacherDetail/OtherTeacherDetails.vue";
+import TeachersByPrice from './OurTeacherDetail/TeachersByPrice.vue';
+import TeachersByLanguage from './OurTeacherDetail/TeachersByLanguage.vue';
+import TeachersByCountry from './OurTeacherDetail/TeachersByCountry.vue';
+import { mapState } from 'vuex';
 export default {
     name: "RightBar",
     components: {
         TeachersDetails,
         OtherTeacherDetails,
+        TeachersByPrice,
+        TeachersByLanguage,
+        TeachersByCountry
     },
     data() {
         return {
@@ -57,9 +47,17 @@ export default {
         };
     },
     methods: {
-        ActiveTeacherDiv(value) {
-            this.ActiveTeachersDiv = value;
+        ActivateOurTeacherDiv() {
+            this.$store.commit('ActivateOurTeacherDiv') 
         },
+        ActivateOtherTeacherDiv() {
+            this.$store.commit('ActivateOtherTeacherDiv') 
+        },
+    },
+    computed: {
+        ...mapState({
+            showTeachersComponent: (state) => state.showTeachersComponent
+        })
     },
 };
 </script>

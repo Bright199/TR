@@ -1,74 +1,50 @@
 <template>
     <div>
-        <div class="container  LeftBar">
+        <div class="container LeftBar">
             <!-- post your first ad -->
-            <div class="d-flex justify-content-center pt-5 mt-3">
-                
+            <div
+                class="d-flex justify-content-center align-content-center p-3 border-bottom"
+            >
                 <a href="/student/create/ad"><h6>Post an ad</h6></a>
             </div>
-            <!-- <hr class="Horizontal"> -->
-            <br /><br />
-            <!-- Languages -->
+            <p class="pt-2" style="color: #029e02">Filter by</p>
+
             <form>
                 <div>
-                    <p>Filter by</p>
-                    <h5>Language</h5>
-                    <select class="form-select form-select-sm mt-3">
-                        <option>English</option>
-                        <option>French</option>
-                        <option>Germany</option>
-                        <option>Turkish</option>
-                    </select>
+                    <ByAllTeachers />
                 </div>
                 <br />
+                <!--  -->
                 <div>
-                    <h5>Country</h5>
-                    <select class="form-select form-select-sm mt-3">
-                        <option
-                            v-for="(country, index) in countriesInfo"
-                            :key="index"
-                            :value="country.value"
-                        >
-                            {{ country.name }}
-                            <!-- <span type='hidden'>{{ country.flag}}</span> -->
-                        </option>
-                    </select>
+                    <ByLanguage />
                 </div>
                 <br />
+                <!--  -->
                 <div>
-                    <a href="" type="submit" class="btn d-block FilterBtn"
-                        >Filter results</a
-                    >
+                    <ByCountry />
+                </div>
+                <br />
+                <!--  -->
+                <div>
+                    <ByPrice />
                 </div>
             </form>
         </div>
     </div>
 </template>
 <script>
-import axios from "axios";
+import ByPrice from "./FilterResults/ByPrice.vue";
+import ByCountry from "./FilterResults/ByCountry.vue";
+import ByLanguage from "./FilterResults/ByLanguage.vue";
+import ByAllTeachers from "./FilterResults/ByAllTeachers.vue";
 export default {
     name: "LeftBar",
+    components: { ByLanguage, ByCountry, ByPrice, ByAllTeachers },
     data() {
-        return {
-            countriesInfo: [],
-        };
+        return {};
     },
-    mounted() {
-        const thisValue = this;
-        axios
-            .get("https://countriesnow.space/api/v0.1/countries/flag/images",{
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                    })
-            .then(function (response) {
-                thisValue.countriesInfo = response.data.data;
-                // console.log(response)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    },
+    mounted() {},
+    methods: {},
 };
 </script>
 <style scoped>
@@ -76,7 +52,7 @@ export default {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     -moz-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-   /* padding: 10px; */
+    /* padding: 10px; */
     height: 500px;
 }
 .my-ad {

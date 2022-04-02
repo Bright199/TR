@@ -152,6 +152,21 @@ class StudentRegistration extends Controller
             }
         }
     }
+    public function getTeachersByPrice(Request $request)
+    {
+        $teachersDetails = Teacher::whereBetween('hourly_pay',[$request->minPrice, $request->maxPrice])->paginate(5);
+        return response()->json($teachersDetails);
+    }
+    public function getTeachersByLanguage(Request $request)
+    {
+        $teachersDetails = Teacher::where('first_language',$request->TeacherLanguage)->paginate(5);
+        return response()->json($teachersDetails);
+    }
+    public function getTeachersByCountry(Request $request)
+    {
+        $teachersDetails = Teacher::where('nationality',$request->TeacherCountry)->paginate(5);
+        return response()->json($teachersDetails);
+    }
     public function getUnreadMessages()
     {
         $studentId = Auth::guard('student')->id();
