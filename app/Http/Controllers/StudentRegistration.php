@@ -185,8 +185,7 @@ class StudentRegistration extends Controller
 
     public function GetOurTeachers()
     {
-        $teachers = Teacher::where('our_tearcher', 1)
-            ->where('id', '!=', Auth::guard('student')->id())
+        $teachers = Teacher::where('id', '!=', Auth::guard('student')->id())
             ->orderBy('id', 'desc')->paginate(2);
         return response()->json($teachers);
     }

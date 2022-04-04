@@ -152,6 +152,9 @@ Route::get('google/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
 })->name('student.google.login');
 Route::get('google/auth/callback', [SocialiteLogin::class, 'google']);
+Route::get('/zoom',function(){
+    return view('student.zoom');
+});
 
 // // socialite for teachers
 // Route::get('facebook/auth/redirect', function () {

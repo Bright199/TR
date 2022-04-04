@@ -100,7 +100,7 @@
                         <!-- {{ trimmedName }} -->
                         <li class="userdropdown">
                             <!-- <a href="" class="Logout "></a> -->
-                            <span class="UserName" style="color: #029e02" v-if="MyUser">{{ MyUser.name.split(" ")[0] }}</span>
+                            <span class="UserName" style="color: #029e02; font-weight:normal" v-if="MyUser">{{ MyUser.name.split(" ")[0] }}</span>
                             <ul class="userdropdown-content" style="padding:7px">
                                 <li>
                                     <router-link to="/student/edit/profile"

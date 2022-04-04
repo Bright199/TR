@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import RightBar from '../components/Students/RightBar.vue';
+import WebRtc from '../components/Students/WebRtc.vue';
 import EditStudentProfile from '../components/Students/EditStudentProfile.vue';
 import EditProfile from '../components/Students/EditProfile.vue';
 import RightNavMain from '../components/RightNavMain.vue';
@@ -25,6 +26,11 @@ const routes = [
         path: '/',
         name: 'RightNavMain',
         component: RightNavMain
+    },
+    {
+        path: '/zoom',
+        name: 'WebRtc',
+        component: WebRtc
     },
     {
         path: '/student/home',

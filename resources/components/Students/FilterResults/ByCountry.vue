@@ -4,11 +4,12 @@
         <select
             class="form-select form-select-sm mt-3"
             @change="FilterByCountry"
+            v-model="country"
         >
             <option
-                v-for="(country, index) in countriesInfo"
-                :key="index"
-                :value="country.value"
+                v-for="country in countriesInfo"
+                :value="country.name"
+                :key="country"
             >
                 {{ country.name }}
             </option>

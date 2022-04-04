@@ -22,7 +22,7 @@ class SocialiteLogin extends Controller
                     $googleUser = Socialite::driver('google')->stateless()->user();
                     $user = Student::where('google_id', $googleUser->getId())->first();
 
-                    if ($user) {
+                    if ($user !== null) {
                         Auth::guard('student')->login($user);
                         return redirect('/student/dashboard/');
                     } else {
@@ -32,9 +32,9 @@ class SocialiteLogin extends Controller
                             'google_id' => $googleUser->getId(),
                             'password' => Hash::make($googleUser->getName() . '@' . $googleUser->getId())
                         ]);
+                        Auth::guard('student')->login($user);
+                        return redirect('/student/dashboard/');
                     }
-                    Auth::guard('student')->login($user);
-                    return redirect('/student/dashboard/');
                 } catch (\Throwable $th) {
                     return  $th;
                 }
@@ -43,7 +43,7 @@ class SocialiteLogin extends Controller
                     $googleUser = Socialite::driver('google')->stateless()->user();
                     $user = Teacher::where('google_id', $googleUser->getId())->first();
 
-                    if ($user) {
+                    if ($user !== null) {
                         Auth::guard('teacher')->login($user);
                         return redirect('/teacher/dashboard/');
                     } else {
@@ -53,9 +53,9 @@ class SocialiteLogin extends Controller
                             'google_id' => $googleUser->getId(),
                             'password' => Hash::make($googleUser->getName() . '@' . $googleUser->getId())
                         ]);
+                        Auth::guard('teacher')->login($user);
+                        return redirect('/teacher/dashboard/');
                     }
-                    Auth::guard('teacher')->login($user);
-                    return redirect('/teacher/dashboard/');
                 } catch (\Throwable $th) {
                     return  $th;
                 }
@@ -79,7 +79,7 @@ class SocialiteLogin extends Controller
                     $googleUser = Socialite::driver('facebook')->stateless()->user();
                     $user = Student::where('facebook_id', $googleUser->getId())->first();
 
-                    if ($user) {
+                    if ($user !== null) {
                         Auth::guard('student')->login($user);
                         return redirect('/student/dashboard/');
                     } else {
@@ -89,9 +89,9 @@ class SocialiteLogin extends Controller
                             'facebook_id' => $googleUser->getId(),
                             'password' => Hash::make($googleUser->getName() . '@' . $googleUser->getId())
                         ]);
+                        Auth::guard('student')->login($user);
+                        return redirect('/student/dashboard/');
                     }
-                    Auth::guard('student')->login($user);
-                    return redirect('/student/dashboard/');
                 } catch (\Throwable $th) {
                     $th;
                 }
@@ -100,7 +100,7 @@ class SocialiteLogin extends Controller
                     $googleUser = Socialite::driver('facebook')->stateless()->user();
                     $user = Teacher::where('facebook_id', $googleUser->getId())->first();
 
-                    if ($user) {
+                    if ($user !== null) {
                         Auth::guard('teacher')->login($user);
                         return redirect('/teacher/dashboard/');
                     } else {
@@ -110,9 +110,9 @@ class SocialiteLogin extends Controller
                             'facebook_id' => $googleUser->getId(),
                             'password' => Hash::make($googleUser->getName() . '@' . $googleUser->getId())
                         ]);
+                        Auth::guard('teacher')->login($user);
+                        return redirect('/teacher/dashboard/');
                     }
-                    Auth::guard('teacher')->login($user);
-                    return redirect('/teacher/dashboard/');
                 } catch (\Throwable $th) {
                     $th;
                 }
