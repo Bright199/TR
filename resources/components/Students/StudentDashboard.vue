@@ -1,13 +1,15 @@
 <template>
-    <div>
+    <div class="bg-light">
         <!-- <div class="container-jumbotron p-2 " style="background-color:#029e02 "></div> -->
-        <DashboardNavBar />
-        <MessageComponent v-if="modalState ===true"/>
-        <SingleMessageComponent v-if="singleModalState ===true"/>
+        <div class="container-jumbotron">
+            <DashboardNavBar />
+            <MessageComponent v-if="modalState === true" />
+            <SingleMessageComponent v-if="singleModalState === true" />
+        </div>
         <!-- @open-message-modal="OpenModal" -->
         <!-- v-if="OpenMessagesModal? $emit('OpenModal'):''" -->
         <div class="container mt-3">
-            <div class="row bg-dark">
+            <div class="row ">
                 <div class="col-md-3"></div>
                 <div class="col-md-8">
                     <p
@@ -32,7 +34,7 @@
                     <div class="col-md-3 LeftBarStudent">
                         <LeftBar />
                     </div>
-                    <div class="col-md-9 ">
+                    <div class="col-md-9">
                         <RightBar />
                     </div>
                 </div>
@@ -47,21 +49,26 @@ import LeftBar from "./LeftBar.vue";
 import { mapState, mapMutations } from "vuex";
 import DashboardNavBar from "./DashboardNavBar.vue";
 import axios from "axios";
-import MessageComponent from './Messages/MessageComponent.vue';
-import SingleMessageComponent from './Messages/SingleMessageComponent.vue';
+import MessageComponent from "./Messages/MessageComponent.vue";
+import SingleMessageComponent from "./Messages/SingleMessageComponent.vue";
 export default {
     name: "StudentDashboard",
-    emits: ['OpenMessageModal'],
-    components: { NavBar, RightBar, LeftBar, DashboardNavBar,MessageComponent,SingleMessageComponent },
+    emits: ["OpenMessageModal"],
+    components: {
+        NavBar,
+        RightBar,
+        LeftBar,
+        DashboardNavBar,
+        MessageComponent,
+        SingleMessageComponent,
+    },
     data() {
         return {
             trimmedName: {},
-            message:''
+            message: "",
         };
     },
-    methods: {
-    
-    },
+    methods: {},
     mounted() {
         let thisValue = this;
         axios
@@ -81,15 +88,11 @@ export default {
     },
     computed: {
         ...mapState({
-            modalState: (state) =>state.openModal,
-            singleModalState: (state) =>state.openSingleModal,
+            modalState: (state) => state.openModal,
+            singleModalState: (state) => state.openSingleModal,
             loggedUser: (state) => state.loggedUser,
-
-        })
+        }),
     },
-    
 };
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -39,8 +39,8 @@ export default {
     },
 };
 </script>
-<style src="@vueform/slider/themes/default.css"></style>
-<style>
+<style src="@vueform/slider/themes/default.css" ></style>
+<style scoped>
 .slider-blue {
     --slider-connect-bg: #029e02;
     --slider-tooltip-bg: #029e02;

@@ -193,7 +193,7 @@ export default {
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     .MessageContainer {
-    z-index: 1;
+    z-index: 2;
     position: fixed;
     width: 100%;
     bottom: 0px;
@@ -213,7 +213,7 @@ export default {
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
 .MessageContainer {
-    z-index: 1;
+    z-index: 2;
     position: fixed;
     width: 100%;
     bottom: 0px;
@@ -229,7 +229,7 @@ export default {
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
 .MessageContainer {
-    z-index: 1;
+    z-index: 2;
     position: fixed;
     width: 54%;
     bottom: 0px;
@@ -245,7 +245,7 @@ export default {
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
 .MessageContainer {
-    z-index: 1;
+    z-index: 2;
     position: fixed;
     width: 27%;
     bottom: 0px;
@@ -261,7 +261,7 @@ export default {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
 .MessageContainer {
-    z-index: 1;
+    z-index: 2;
     position: fixed;
     width: 27%;
     bottom: 0px;

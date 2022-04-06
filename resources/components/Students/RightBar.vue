@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="LeftBar m-0">
+        <div class="LeftBar bg-white m-0">
             <div class="container border-bottom">
                 <p class="TopHeading ps-4 pt-3">Available teachers</p>
             </div>

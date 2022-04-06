@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container LeftBar">
+        <div class="container LeftBar bg-white">
             <!-- post your first ad -->
             <div
                 class="d-flex justify-content-center align-content-center p-3 border-bottom"
