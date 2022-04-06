@@ -22,7 +22,10 @@ class User extends Authenticatable
         'email',
         'password',
     ];
-
+    public function zoom()
+    {
+        $this->belongsTo('Zoom');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

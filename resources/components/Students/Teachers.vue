@@ -1,20 +1,22 @@
 <template>
     <div>
         <DashboardNavBar />
+        <MessageComponent v-if="modalState === true" />
+        <SingleMessageComponent v-if="singleModalState === true" />
         <div class="container">
             <div class="row">
-                <div class="col-md-3 me-3 mt-4 shadow-sm  LeftBar">
-                    <router-link to="/student/teachers"
-                      style="background-color: #029e02; color: white"
+                <div class="col-md-3 me-3 mt-4 shadow-sm LeftBar">
+                    <router-link
+                        to="/student/teachers"
+                        style="background-color: #029e02; color: white"
                         >Our teachers</router-link
                     >
-                    <router-link
-                        to="/student/freelance/teachers"
+                    <router-link to="/student/freelance/teachers"
                         >Freelance teachers</router-link
                     >
                 </div>
                 <div class="col-md-8 mb-4 mt-4 shadow-sm">
-                    <TeacherDetails/>
+                    <TeacherDetails />
                 </div>
             </div>
         </div>
@@ -23,12 +25,17 @@
 <script>
 import axios from "axios";
 import DashboardNavBar from "./DashboardNavBar.vue";
-import TeacherDetails from './OurTeacherDetail/TeachersDetails.vue'
+import TeacherDetails from "./OurTeacherDetail/TeachersDetails.vue";
+import SingleMessageComponent from "./Messages/SingleMessageComponent.vue";
+import MessageComponent from "./Messages/MessageComponent.vue";
+import { mapState, mapMutations } from "vuex";
 export default {
     name: "Teachers",
     components: {
         DashboardNavBar,
-        TeacherDetails
+        SingleMessageComponent,
+        MessageComponent,
+        TeacherDetails,
     },
     data() {
         return {
@@ -37,17 +44,20 @@ export default {
             loaded: false,
         };
     },
-    mounted() {
-    },
-    methods: {
-       
+    mounted() {},
+    methods: {},
+    computed: {
+        ...mapState({
+            modalState: (state) => state.openModal,
+            singleModalState: (state) => state.openSingleModal,
+            loggedUser: (state) => state.loggedUser,
+        }),
     },
 };
 </script>
 <style scoped>
 .LeftBar {
     height: 250px;
-
 }
 .LeftBar a {
     /* background-color: #029e02; */
@@ -68,8 +78,8 @@ export default {
     color: white;
 }
 
-.LeftBar :first-child{
-    margin-top: 15px
+.LeftBar :first-child {
+    margin-top: 15px;
 }
 
 .teacherDetails {

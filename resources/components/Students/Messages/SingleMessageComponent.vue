@@ -143,7 +143,7 @@ export default {
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     .MessageContainer {
-    z-index: 2;
+    z-index: 1;
     position: fixed;
     width: 100%;
     bottom: 0px;
@@ -156,11 +156,11 @@ export default {
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
 .MessageContainer {
-    z-index: 2;
+    z-index: 1;
     position: fixed;
     width: 100%;
-    bottom: 0px;
-    right: 0;
+    bottom: 5px;
+    right: 15px;
     height: 500px;
     background-color: white;
 }
@@ -169,11 +169,11 @@ export default {
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
 .MessageContainer {
-    z-index: 2;
+    z-index: 1;
     position: fixed;
     width: 54%;
-    bottom: 0px;
-    right: 0;
+    bottom: 5px;
+    right: 15px;
     height: 500px;
     background-color: white;
 }
@@ -182,11 +182,11 @@ export default {
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
 .MessageContainer {
-    z-index: 2;
+    z-index: 1;
     position: fixed;
     width: 27%;
-    bottom: 0px;
-    right: 0;
+    bottom: 5px;
+    right: 15px;
     height: 500px;
     background-color: white;
 }
@@ -195,7 +195,7 @@ export default {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
 .MessageContainer {
-    z-index: 2;
+    z-index: 1;
     position: fixed;
     width: 27%;
     bottom: 0px;
@@ -247,7 +247,7 @@ list-style: none;
     top: 60px;
     left: -15px;
     transform: rotate(-45deg);
-    /* z-index: -1; */
+    /* z-index: 11; */
 }
 .SenderMessage::after {
     position: absolute;
@@ -274,7 +274,7 @@ list-style: none;
     clear: right;
 }
 /* .MessageContainer {
-    z-index: 4;
+    z-index: 1;
     position: fixed;
     width: 27%;
     background-color: white;

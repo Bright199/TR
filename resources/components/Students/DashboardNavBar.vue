@@ -1,5 +1,4 @@
 <template>
-    <div>
         <div class="container-jumbotron TopBar1">
             <div class="row">
                 <div class="col-md-4">
@@ -140,10 +139,7 @@
             </div>
         </div>
 
-        <!-- <div class="container badge-success">
-            {{ unread }}
-        </div> -->
-    </div>
+        
 </template>
 <script>
 import axios from "axios";

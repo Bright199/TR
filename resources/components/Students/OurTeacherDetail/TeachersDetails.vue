@@ -1,6 +1,5 @@
 <template>
     <div>
-       
         <!--  -->
         <div class="m-0 pb-4 OuterContainer">
             <div class="container-jumbotron ps-4">
@@ -19,75 +18,60 @@
                     >
                 </p>
             </div>
+            <!-- The Modal -->
+            <div class="modal fade" id="MessageModal">
+                <div
+                    class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                >
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <p class="modal-title">
+                                <i class="fa-solid fa-message"></i>
+                                {{ singleTeacherDetails.name }}
+                            </p>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                id="close"
+                            ></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="userMessage"
+                                    v-model="message"
+                                    name="message"
+                                    placeholder="Write your message here..."
+                                />
+                                <button
+                                    type="submit"
+                                    class="SendBtn"
+                                    @click="
+                                        SendMessage(singleTeacherDetails.id)
+                                    "
+                                >
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Modal footer -->
+                    </div>
+                </div>
+            </div>
+            <!-- end modal -->
             <div class="row m-0" v-if="teacherLength > 0">
                 <div
                     class="col-md-12 col-lg-12 col-sm-12 HoverTeacher"
                     v-for="teacher in teachers.data"
                     :key="teacher.id"
                 >
-                    <!-- The Modal -->
-                    <div class="modal fade" id="MessageModal">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                    <p class="modal-title">
-                                        <i class="fa-solid fa-message"></i>
-                                        {{ teacher.name }}
-                                    </p>
-                                    <button
-                                        type="button"
-                                        class="btn-close"
-                                        data-bs-dismiss="modal"
-                                        id="close"
-                                    ></button>
-                                </div>
-
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <!-- <textarea
-                                        class="form-control"
-                                        rows="2"
-                                        id="userMessage"
-                                        v-model="message"
-                                        name="message"
-                                        placeholder="Write your message here..."
-                                    ></textarea> -->
-                                    <!-- <div>
-                                        <i
-                                            class="fa-solid fa-paper-plane"
-                                            style="font-size: 20px"
-                                            @click="SendMessage(teacher.id)"
-                                        ></i>
-                                    </div> -->
-
-                                    <div class="input-group">
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="userMessage"
-                                            v-model="message"
-                                            name="message"
-                                            placeholder="Write your message here..."
-                                        />
-                                        <button
-                                            type="submit"
-                                            class="SendBtn"
-                                            @click="SendMessage(teacher.id)"
-                                        >
-                                            <i
-                                                class="fa-solid fa-paper-plane"
-                                               
-                                            ></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Modal footer -->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end modal -->
                     <div class="row pt-3">
                         <div class="col-md-3 mb-2">
                             <img
@@ -111,7 +95,7 @@
                             <!-- <span style="font-size:bolder">Malawi </span> -->
                             <p>
                                 <i class="fa-solid fa-chalkboard-user"></i
-                                >&nbsp;Teaches English
+                                >&nbsp;Teaches {{teacher.first_language}}
                             </p>
                             <p>
                                 Speaks: <span>{{ teacher.first_language }}</span
@@ -164,7 +148,6 @@
                                 </div>
                                 <div class="col-md-8" style="font-size: 20px">
                                     <p
-                                        v-if="teacher.currency == 'USD'"
                                         style="
                                             font-size: 23px;
                                             font-weight: 550;
@@ -174,7 +157,7 @@
                                         ${{ teacher.hourly_pay }}
                                         {{ teacher.currency }}<br />
                                     </p>
-                                    <p
+                                    <!-- <p
                                         v-else-if="teacher.currency == 'EUR'"
                                         style="
                                             font-size: 23px;
@@ -195,7 +178,7 @@
                                     >
                                         £{{ teacher.hourly_pay }}
                                         {{ teacher.currency }}<br />
-                                    </p>
+                                    </p> -->
                                     <p
                                         style="
                                             line-height: 2px;
@@ -207,15 +190,11 @@
                                     </p>
 
                                     <p
-                                        v-if="
-                                            StudentFavoritesIds.indexOf(
-                                                teacher.id
-                                            ) === -1
-                                        "
+                                        v-if="teacher.favorite_id === ''"
                                         data-bs-toggle="tooltip"
                                         data-bs-placement="top"
                                         :title="
-                                            addedToFavorite == true
+                                            teacher.favorite_id === ''
                                                 ? 'Save to My Lists'
                                                 : 'Added to My Lists'
                                         "
@@ -224,24 +203,23 @@
                                     >
                                         <i
                                             :class="
-                                                addedToFavorite == true
+                                                teacher.favorite_id === ''
                                                     ? 'fa-regular'
                                                     : 'fa-solid'
                                             "
                                             class="fa-heart"
                                             :style="
-                                                addedToFavorite == true
+                                                teacher.favorite_id === ''
                                                     ? ''
                                                     : 'color:#fe0609'
                                             "
                                         ></i>
-                                        <!-- <i class="fa-regular fa-heart"></i> -->
                                     </p>
                                     <p
                                         data-bs-toggle="tooltip"
                                         data-bs-placement="top"
                                         :title="
-                                            addedToFavorite == true
+                                            teacher.favorite_id !== ''
                                                 ? 'Added to My Lists'
                                                 : 'Save to My Lists'
                                         "
@@ -251,18 +229,17 @@
                                     >
                                         <i
                                             :class="
-                                                addedToFavorite == true
+                                                teacher.favorite_id !== ''
                                                     ? 'fa-solid'
                                                     : 'fa-regular'
                                             "
                                             class="fa-heart"
                                             :style="
-                                                addedToFavorite == true
+                                                teacher.favorite_id !== ''
                                                     ? 'color:#fe0609'
                                                     : ''
                                             "
                                         ></i>
-                                        <!-- <i class="fa-solid fa-heart"></i> -->
                                     </p>
                                 </div>
                             </div>
@@ -273,6 +250,9 @@
                                 class="btn d-block FilterBtn"
                                 data-bs-toggle="modal"
                                 data-bs-target="#MessageModal"
+                                @click="
+                                    passTeacherDetails(teacher.id, teacher.name)
+                                "
                             >
                                 Message
                             </a>
@@ -341,13 +321,16 @@ export default {
             // FavoriteCount: "",
             addedToFavorite: true,
             message: "",
+            singleTeacherDetails: {},
         };
     },
     mounted() {
         this.getOurTeachers();
-        this.getFavorites();
     },
     methods: {
+        passTeacherDetails(id, name) {
+            this.singleTeacherDetails = { id, name };
+        },
         SendMessage(teacherId) {
             const message = this.message.trim();
             if (message == "") {
@@ -368,42 +351,27 @@ export default {
                     });
             }
         },
-        getFavorites() {
-            axios
-                .get("/student/getFavoriteTeacherIds")
-                .then((response) => {
-                    this.StudentFavoritesIds = response.data;
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        },
+        // getFavorites() {
+        //     axios
+        //         .get("/student/getFavoriteTeacherIds")
+        //         .then((response) => {
+        //             this.StudentFavoritesIds = response.data;
+        //         })
+        //         .catch((error) => {
+        //             console.log(error);
+        //         });
+        // },
         removeFromFavorite(teacherId) {
-            if (this.addedToFavorite == true) {
-                this.addedToFavorite = false;
-                this.$store.commit("subtrFavoriteCount", 1);
-            } else {
-                this.$store.commit("addFavoriteCount", 1);
-                this.addedToFavorite = true;
-            }
             axios.post("/student/removeFromFavorite", { id: teacherId });
+            setTimeout(function () {
+                location.reload(true);
+            }, 500);
         },
         addToFavorite(teacherId) {
-            if (this.addedToFavorite == true) {
-                this.addedToFavorite = false;
-                this.$store.commit("addFavoriteCount", 1);
-            } else {
-                this.addedToFavorite = true;
-                this.$store.commit("subtrFavoriteCount", 1);
-            }
-            axios
-                .post("/student/addToFavorite", { id: teacherId })
-                .then((response) => {
-                    this.StudentFavoritesIds.push({ teacherId });
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            axios.post("/student/addToFavorite", { id: teacherId });
+            setTimeout(function () {
+                location.reload(true);
+            }, 500);
         },
         getOurTeachers(page = 1) {
             window.scrollTo(0, 0);
@@ -432,8 +400,8 @@ export default {
 };
 </script>
 <style scoped>
-.fa-message{
-    color: #029e02
+.fa-message {
+    color: #029e02;
 }
 textarea {
     resize: none;
@@ -446,7 +414,7 @@ textarea {
 .SendBtn {
     border: none;
     background-color: #029e02;
-    color:white;
+    color: white;
     padding: 3px 10px 5px;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
@@ -454,9 +422,7 @@ textarea {
 .SendBtn:hover {
     border: none;
     color: white;
-   
 }
-
 
 .SendBtn:hover {
     background-color: #04ad04;

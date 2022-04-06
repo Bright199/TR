@@ -1,6 +1,8 @@
 <template>
     <div>
         <DashboardNavBar />
+        <MessageComponent v-if="modalState === true" />
+        <SingleMessageComponent v-if="singleModalState === true" />
         <div class="container mt-3">
             <div class="row">
                 <div class="col-md-3 me-3 mb-3 LeftBar">
@@ -332,11 +334,16 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 import axios from "axios";
 import DashboardNavBar from "../DashboardNavBar.vue";
 import LaravelVuePagination from "laravel-vue-pagination";
+import { mapState } from 'vuex';
+import MessageComponent from '../Messages/MessageComponent.vue';
+import SingleMessageComponent from '../Messages/SingleMessageComponent.vue';
 export default {
     name: "Messages",
     components: {
         DashboardNavBar,
         Pagination: LaravelVuePagination,
+        MessageComponent,
+        SingleMessageComponent
     },
     data() {
         return {
@@ -348,7 +355,6 @@ export default {
             message:'',
             showShortDescription: true,
             StudentFavoritesIds: "",
-            addedToFavorite: true,
         };
     },
     methods: {
@@ -400,15 +406,12 @@ export default {
         },
 
         removeFromFavorite(teacherId) {
-            this.removalClass = teacherId;
-            if (this.addedToFavorite == true) {
-                this.addedToFavorite = false;
-                this.$store.commit("subtrFavoriteCount", 1);
-            } else {
-                this.$store.commit("addFavoriteCount", 1);
-                this.addedToFavorite = true;
-            }
+            
+            this.$store.commit("subtrFavoriteCount", 1);
             axios.post("/student/removeFromFavorite", { id: teacherId });
+            setTimeout(function () {
+                location.reload(true);
+            }, 500);
         },
 
         readMore() {
@@ -421,6 +424,13 @@ export default {
     mounted() {
         this.getStudentFavorites();
         this.getFavorites();
+    },
+    computed: {
+        ...mapState({
+            modalState: (state) => state.openModal,
+            singleModalState: (state) => state.openSingleModal,
+            loggedUser: (state) => state.loggedUser,
+        }),
     },
 };
 </script>

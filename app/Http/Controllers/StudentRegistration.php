@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use DateTimeZone;
+use Carbon\Carbon;
 use App\Models\Message;
 use App\Models\Student;
-use App\Models\StudentAd;
-use App\Models\StudentContact;
-use App\Models\StudentDemoPaymentDetail;
-use App\Models\StudentFavorite;
 use App\Models\Teacher;
-use App\Models\TrialLessonBooking;
-use Carbon\Carbon;
-use DateTimeZone;
+use App\Models\StudentAd;
 use Illuminate\Http\Request;
+use App\Models\StudentContact;
+use App\Models\StudentFavorite;
+use App\Models\TrialLessonBooking;
+// use MacsiDigital\Zoom\Facades\Zoom;
+use App\Http\Controllers\Controller;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use App\Models\StudentDemoPaymentDetail;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class StudentRegistration extends Controller
 {
@@ -39,7 +43,36 @@ class StudentRegistration extends Controller
             return redirect()->route('student.dashboard');
         }
     }
+    public function zoom()
+    {
 
+        // // $user = Zoom::user()->first();
+
+        // $zoom = new \MacsiDigital\Zoom\Support\Entry;
+        // $user  = new \MacsiDigital\Zoom\Teacher($zoom) ;
+        // $meeting = Zoom::meeting()->make([
+        //     'topic' => 'New meeting',
+        //     'duration' =>60,
+        //     'timezone' => config('zoo.timezone'),
+        //     'start_time' => new Carbon(), // best to use a Carbon instance here.
+        //   ]);
+
+        // $meeting->settings()->make([
+        //     'join_before_host' => true,
+        //     'approval_type' => config('zoom.approval_type'),
+        //     // 'registration_type' => 2,
+        //     // 'host_video' => true,
+        //     'parctipant_video'=>true,
+        //     'mute_upon_entry' => true,
+        //     'audio' => config('zoom.audio'),
+        //     'enforce_login' => false,
+        //     'waiting_room' => true,
+        //     // 'auto_recording'=> config('zoom.auto_recording'),
+        // ]);
+
+        // $user->meetings()->save($meeting);
+        //  return $meeting;
+    }
 
     public function TrialLessonConfirmation(Request $request)
     {
@@ -52,8 +85,8 @@ class StudentRegistration extends Controller
     }
     public function DemoPaymentDetails($teacherId)
     {
-        $demoDetails = StudentDemoPaymentDetail::where('teacher_id',$teacherId)
-        ->where('student_id', Auth::guard('student')->id())->orderBy('id', 'desc')->first();
+        $demoDetails = StudentDemoPaymentDetail::where('teacher_id', $teacherId)
+            ->where('student_id', Auth::guard('student')->id())->orderBy('id', 'desc')->first();
         return response()->json($demoDetails);
     }
     public function insertDemoPaymentDetails(Request $request)
@@ -70,7 +103,7 @@ class StudentRegistration extends Controller
         ]);
         if ($paymentDetails) {
             TrialLessonBooking::where('teacher_id', $request->teacherId)
-            ->where('student_id', Auth::guard('student')->id())->update(['booked' => 1]);
+                ->where('student_id', Auth::guard('student')->id())->update(['booked' => 1]);
         }
         // return response()->json($paymentDetails);
     }
@@ -154,17 +187,17 @@ class StudentRegistration extends Controller
     }
     public function getTeachersByPrice(Request $request)
     {
-        $teachersDetails = Teacher::whereBetween('hourly_pay',[$request->minPrice, $request->maxPrice])->paginate(5);
+        $teachersDetails = Teacher::whereBetween('hourly_pay', [$request->minPrice, $request->maxPrice])->paginate(5);
         return response()->json($teachersDetails);
     }
     public function getTeachersByLanguage(Request $request)
     {
-        $teachersDetails = Teacher::where('first_language',$request->TeacherLanguage)->paginate(5);
+        $teachersDetails = Teacher::where('first_language', $request->TeacherLanguage)->paginate(5);
         return response()->json($teachersDetails);
     }
     public function getTeachersByCountry(Request $request)
     {
-        $teachersDetails = Teacher::where('nationality',$request->TeacherCountry)->paginate(5);
+        $teachersDetails = Teacher::where('nationality', $request->TeacherCountry)->paginate(5);
         return response()->json($teachersDetails);
     }
     public function getUnreadMessages()
@@ -179,15 +212,33 @@ class StudentRegistration extends Controller
     public function markMessageRead(Request $request)
     {
         Message::where('to', Auth::guard('student')->id())
-        ->where('from', $request->teacherId)
+            ->where('from', $request->teacherId)
             ->update(['is_read' => 1]);
     }
 
     public function GetOurTeachers()
     {
-        $teachers = Teacher::where('id', '!=', Auth::guard('student')->id())
-            ->orderBy('id', 'desc')->paginate(2);
-        return response()->json($teachers);
+        $favoriteTeachersIds = StudentFavorite::where('student_id', Auth::guard('student')->id())->get();
+        // return $favoriteTeachersIds->toArray();
+
+        $authStudent = Student::find(Auth::guard('student')->id());
+        $teachers = Teacher::where('id', '!=', Auth::guard('student')->id())->where('email', '!=', $authStudent->email)
+            ->orderBy('id', 'desc')->get();
+
+        $teachers = $teachers->map(function ($favoriteTeacher) use ($favoriteTeachersIds) {
+            $myfavoriteTeacher = $favoriteTeachersIds->where('teacher_id', $favoriteTeacher->id)->first();
+            $favoriteTeacher->favorite_id = $myfavoriteTeacher ? $myfavoriteTeacher->teacher_id : '';
+
+            return $favoriteTeacher;
+        });
+        return response()->json($this->paginate($teachers));
+    }
+
+    public function paginate($items, $perPage = 15, $page = null, $options = [])
+    {   
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1); 
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
     public function GetFreelanceTeachers()
     {
@@ -219,23 +270,23 @@ class StudentRegistration extends Controller
     public function GetMessageContacts()
     {
         $studentContacts = StudentContact::where('student_id', Auth::guard('student')->id())->orderBy('id', 'desc')->get();
-        
+
         // get a collection of items where sender_id is the user who sent us a message
         // and messages_count is the number of unread messages we have from him
         $unreadIds = Message::select(\DB::raw('`from` as teacher_id, count(`from`) as unread_count'))
             ->where('to', Auth::guard('student')->id())
             ->where('is_read', false)
-            ->groupBy('from')//[['teacher_id' => 2, 'unread_count'=>2]]
+            ->groupBy('from') //[['teacher_id' => 2, 'unread_count'=>2]]
             ->get();
         $lastMessage = Message::where('to', Auth::guard('student')->id())
             ->orWhere('from', Auth::guard('student')->id())
             ->orderBy('id', 'desc')
             ->get();
 
-             // add an unread key to each contact with the count of unread messages
-        $studentContacts = $studentContacts->map(function($contact) use ($unreadIds, $lastMessage) {
+        // add an unread key to each contact with the count of unread messages
+        $studentContacts = $studentContacts->map(function ($contact) use ($unreadIds, $lastMessage) {
             $contactUnread = $unreadIds->where('teacher_id', $contact->teacher_id)->first();
-            $exchangedMessage = $lastMessage->first();
+            $exchangedMessage = $lastMessage->where('teacher_email',$contact->teacher_email)->first();
 
             $contact->unread = $contactUnread ? $contactUnread->unread_count : 0;
             $contact->message = $exchangedMessage ? $exchangedMessage->message : '';
