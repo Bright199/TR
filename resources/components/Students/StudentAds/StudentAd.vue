@@ -8,9 +8,26 @@
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <h2>Ad creation dashboard</h2>
-                    <p>
-                        Find a teacher quicker by creating an ad at $2.99 Only
+                    <p class="border-bottom">
+                        Find a teacher quicker by creating an ad at
+                        <span style="color: #029e02">$2.99 Only</span>
                     </p>
+                    <div class="row">
+                        <div
+                            class="col-md-2 d-flex justify-content-center align-content-center"
+                        >
+                            <img src="/images/attention.png" alt="attention" />
+                        </div>
+                        <div class="col-md-9 d-flex justify-content-start">
+                            <p>
+                                In order to create an a job ad you are required
+                                to add your profile image and country in the
+                                profile section. You can do this by clicking on
+                                your name in the navigation bar and going to the
+                                profile section.
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-2"></div>
             </div>
@@ -30,6 +47,7 @@
                                     class="form-control"
                                     id="adtitle"
                                     v-model="adtitle"
+                                    autofocus
                                     placeholder="Enter ad title"
                                     name="adtitle"
                                 />
@@ -47,6 +65,7 @@
                             id="ad_description"
                             v-model="description"
                             name="ad_description"
+                            placeholder="Say something about your ad..."
                         ></textarea>
                         <div v-if="errors.description.length">
                             <p style="color: red; font-weight: 550">
@@ -63,7 +82,10 @@
                             </select>
                         </div>
                         <br />
-                        <p>What's your budget range. For example ($10-$20)</p>
+                        <p>
+                            What's your budget range. For example ($3 USD - $5
+                            USD)
+                        </p>
                         <div class="row">
                             <div class="col">
                                 <div class="mb-3 mt-3">
@@ -106,27 +128,25 @@
                                         class="form-select"
                                     >
                                         <option>USD</option>
-                                        <option>EUR</option>
-                                        <option>TL</option>
-                                        <option>CAD</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3 mt-3">
-                            <p>I'm a</p>
+                            <p>I'm looking for:</p>
                             <select v-model="gender" class="form-select">
-                                <option>Male</option>
-                                <option>Female</option>
+                                <option>Male teacher</option>
+                                <option>Female teacher</option>
+                                <option>Any teacher</option>
                             </select>
                         </div>
                         <div class="d-flex justify-content-end">
                             <button
                                 type="submit"
-                                class="btn btn-warning"
+                                class="btn PaymentBtn"
                                 @click="submitAd"
                             >
-                                Post ad
+                                Proceed to payment
                             </button>
                         </div>
                     </form>
@@ -151,7 +171,7 @@ export default {
             minamount: "",
             maxamount: "",
             currency: "USD",
-            gender: "Male",
+            gender: "Male teacher",
 
             AuthUserDetails: "",
             errors: {
@@ -164,7 +184,7 @@ export default {
     },
     methods: {
         submitAd(e) {
-                 e.preventDefault();
+            e.preventDefault();
             if (
                 this.AuthUserDetails.user_image === null &&
                 this.AuthUserDetails.country === null
@@ -172,12 +192,12 @@ export default {
                 alert("Ad a profile image and country by editing your profile");
                 return;
             } else {
-                if (this.adtitle === "") {
+                if (this.adtitle.trim() === "") {
                     this.errors.adtitle = "This field is required!";
                     setInterval(() => {
                         this.errors.adtitle = "";
                     }, 5000);
-                } else if (this.description === "") {
+                } else if (this.description.trim() === "") {
                     this.errors.description = "This field is required!";
                     setInterval(() => {
                         this.errors.description = "";
@@ -193,54 +213,56 @@ export default {
                         this.errors.maxamount = "";
                     }, 5000);
                 } else {
-                    this.errors.maxamount = "";
-                    this.errors.minamount = "";
-                    this.errors.description = "";
-                    this.errors.adtitle = "";
-                    const data = {
-                        title: this.adtitle,
-                        description: this.description,
-                        minamount: this.minamount,
-                        maxamount: this.maxamount,
-                        currency: this.currency,
-                        gender: this.gender,
-                        language: this.language
-                    };
-                    const mypointer = this;
-                    axios
-                    .post('/student/ad/save',data,{
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                    })
-                    .then(function (){
-                        mypointer.adtitle ='';
-                        mypointer.description ='';
-                        mypointer.minamount ='';
-                        mypointer.maxamount ='';
-                        // mypointer.$router.push('/student/ad/management')
-                    })
+                    if (this.maxamount <= this.minamount) {
+                        this.errors.maxamount =
+                            "Maximum budget can't be the same or less that minimum budget!";
+                        setInterval(() => {
+                            this.errors.maxamount = "";
+                        }, 6000);
+                    } else {
+                        this.errors.maxamount = "";
+                        this.errors.minamount = "";
+                        this.errors.description = "";
+                        this.errors.adtitle = "";
+                        const data = {
+                            title: this.adtitle,
+                            description: this.description,
+                            minamount: this.minamount,
+                            maxamount: this.maxamount,
+                            currency: this.currency,
+                            gender: this.gender,
+                            language: this.language,
+                        };
+                        axios.post("/student/ad/save", data).then(() => {
+                            this.adtitle = "";
+                            this.description = "";
+                            this.minamount = "";
+                            this.maxamount = "";
+                            // this.$router.push('/student/ad/management')
+                        });
+                    }
                 }
             }
         },
     },
     mounted() {
-        let thisValue = this;
-        axios
-            .get("/student/getAuthUser")
-            .then(function (response) {
-                thisValue.$store.commit("userDetails", response.data);
-                thisValue.AuthUserDetails = response.data;
-                // console.log(response.data)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        axios.get("/student/getAuthUser").then((response) => {
+            this.$store.commit("userDetails", response.data);
+            this.AuthUserDetails = response.data;
+        });
     },
 };
 </script>
 
 <style scoped>
+.PaymentBtn {
+    background-color: #029e02;
+    color: white;
+}
+.PaymentBtn:hover {
+    background-color: #04ad04;
+    color: white;
+}
 .btn {
     border-radius: 0;
 }

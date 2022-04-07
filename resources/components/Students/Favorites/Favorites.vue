@@ -354,7 +354,6 @@ export default {
             removalClass: 0,
             message:'',
             showShortDescription: true,
-            StudentFavoritesIds: "",
         };
     },
     methods: {
@@ -378,16 +377,7 @@ export default {
                     });
             }
         },
-        getFavorites() {
-            axios
-                .get("/student/getFavoriteTeacherIds")
-                .then((response) => {
-                    this.StudentFavoritesIds = response.data;
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        },
+       
         getStudentFavorites(page = 1) {
             this.loading2 = true;
             axios
@@ -423,7 +413,6 @@ export default {
     },
     mounted() {
         this.getStudentFavorites();
-        this.getFavorites();
     },
     computed: {
         ...mapState({

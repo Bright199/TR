@@ -225,9 +225,14 @@ class StudentRegistration extends Controller
         $teachers = Teacher::where('id', '!=', Auth::guard('student')->id())->where('email', '!=', $authStudent->email)
             ->orderBy('id', 'desc')->get();
 
-        $teachers = $teachers->map(function ($favoriteTeacher) use ($favoriteTeachersIds) {
+        $teacherFavCount = StudentFavorite::all();
+
+        $teachers = $teachers->map(function ($favoriteTeacher) use ($favoriteTeachersIds, $teacherFavCount) {
             $myfavoriteTeacher = $favoriteTeachersIds->where('teacher_id', $favoriteTeacher->id)->first();
+            $favCount = $teacherFavCount->where('teacher_id', $favoriteTeacher->id)->pluck('teacher_id');
+
             $favoriteTeacher->favorite_id = $myfavoriteTeacher ? $myfavoriteTeacher->teacher_id : '';
+            $favoriteTeacher->favorite_count = $favCount ? $favCount->count() : '';
 
             return $favoriteTeacher;
         });
@@ -235,8 +240,8 @@ class StudentRegistration extends Controller
     }
 
     public function paginate($items, $perPage = 15, $page = null, $options = [])
-    {   
-        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1); 
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $items = $items instanceof Collection ? $items : Collection::make($items);
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
@@ -286,7 +291,7 @@ class StudentRegistration extends Controller
         // add an unread key to each contact with the count of unread messages
         $studentContacts = $studentContacts->map(function ($contact) use ($unreadIds, $lastMessage) {
             $contactUnread = $unreadIds->where('teacher_id', $contact->teacher_id)->first();
-            $exchangedMessage = $lastMessage->where('teacher_email',$contact->teacher_email)->first();
+            $exchangedMessage = $lastMessage->where('teacher_email', $contact->teacher_email)->first();
 
             $contact->unread = $contactUnread ? $contactUnread->unread_count : 0;
             $contact->message = $exchangedMessage ? $exchangedMessage->message : '';

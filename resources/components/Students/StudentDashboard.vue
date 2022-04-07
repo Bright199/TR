@@ -8,26 +8,27 @@
         </div>
         <!-- @open-message-modal="OpenModal" -->
         <!-- v-if="OpenMessagesModal? $emit('OpenModal'):''" -->
-        <div class="container mt-3">
-            <div class="row ">
+        <div class="container-jumbotron mb-3 p-4" style="background: #183153">
+            <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-8">
-                    <p
-                        class="d-flex justify-content-center"
-                        style="font-size: 20px; margin-bottom: 0px"
-                    >
-                        Find a teacher in few minutes by hiring our teachers or
-                        by creating an ad &nbsp;
-                    </p>
-                    <a
-                        class="d-flex justify-content-center"
-                        href="/student/create/ad"
-                        style="margin-top: 0px"
-                        >post an ad</a
-                    >
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p class="d-flex justify-content-center text-white">
+                                Find a teacher in few minutes by hiring our
+                                teachers or by creating an ad
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="adLink" href="/student/create/ad" 
+                                >Create job advert</a
+                            >
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        
         <div class="container">
             <div class="container-jumbotron">
                 <div class="row">
@@ -95,4 +96,16 @@ export default {
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.adLink {
+    color: white;
+    text-decoration: none;
+    background: #029e02;
+    padding: 0 12px 2px;
+    border-radius: 3px;
+}
+.adLink:hover {
+    color: white;
+    background: #03b103;
+}
+</style>

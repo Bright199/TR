@@ -7,9 +7,9 @@
         <div class="container">
             <div class="row mt-4">
                 <!-- <div class="col-md-4"></div> -->
-                <div class="col-md-8 EditCard p-4">
+                <div class="col-md-8 EditCard shadow-sm p-4">
                     <div class="row">
-                        <div class="col-sm-3 col-md-3 col-lg-3 p-2 border">
+                        <div class="col-sm-3 col-md-3 col-lg-3 p-2 ">
                             <img v-if="AuthUser.user_image === null"
                                 src="/images/Green2.png"
                                 alt=""
@@ -89,6 +89,7 @@
                                 type="button"
                                 class="btn-close"
                                 data-bs-dismiss="modal"
+                                id="DismisEdit"
                             ></button>
                         </div>
 
@@ -167,19 +168,20 @@
                                 <div class="modal-footer">
                                     <button
                                         type="submit"
-                                        class="btn btn-warning"
+                                        class="btn"
                                         @click="EditUser"
+                                        style="background-color: #029e02; color: white"
                                     >
                                         Save changes
                                     </button>
-                                    <button
+                                    <!-- <button
                                         ref="DismisBtn"
                                         type="button"
                                         class="btn btn-danger"
                                         data-bs-dismiss="modal"
                                     >
                                         Cancel
-                                    </button>
+                                    </button> -->
                                 </div>
                             </form>
                         </div>
@@ -196,6 +198,7 @@
                                 Are you sure you want to delete your account?
                             </h5>
                             <button
+                                 id="DismisDelete"
                                 type="button"
                                 class="btn-close"
                                 data-bs-dismiss="modal"
@@ -204,14 +207,14 @@
 
                         <!-- Modal body -->
                         <div class="modal-body">
-                            <button
-                                ref="DismisBtn"
+                            <!-- <button
+                               
                                 type="button"
                                 class="btn btn-warning"
                                 data-bs-dismiss="modal"
                             >
                                 Cancel
-                            </button>
+                            </button> -->
 
                             <button
                                 class="btn btn-danger"
@@ -313,7 +316,7 @@ export default {
         },
         EditUser(e) {
             e.preventDefault();
-            if (this.AuthUserName === "") {
+            if (this.AuthUserName.trim() === "") {
                 this.error = "Name can not be empty!";
                 setInterval(() => {
                     this.error = "";
@@ -326,35 +329,31 @@ export default {
                 userDetails.append("country", this.CountryOfOrigin);
                 userDetails.append("username", this.AuthUserName);
 
-                const mypointer = this;
                 axios
                     .post("/student/edit", userDetails, {
                         headers: {
                             "Content-Type": "application/json",
                         },
                     })
-                    .then(function (response) {
-                        const elem = mypointer.$refs.DismisBtn
-                        elem.click();
+                    .then(()=> {
+                        document.querySelector('#DismisEdit').click();
+                        this.$router.push("/student/dashboard")
                     })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                   
             } else {
                 const userDetails = new FormData();
                 userDetails.append("country", this.CountryOfOrigin);
                 userDetails.append("username", this.AuthUserName);
 
-                const mypointer = this;
                 axios
                     .post("/student/edit", userDetails, {
                         headers: {
                             "Content-Type": "application/json",
                         },
                     })
-                    .then(function (response) {
-                        const elem = mypointer.$refs.DismisBtn
-                        elem.click();
+                    .then((response)=> {
+                        document.querySelector('#DismisDelete').click();
+
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -373,11 +372,11 @@ export default {
     -webkit-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -moz-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
 } */
-.EditCard {
+/* .EditCard {
     box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
     -webkit-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 4px -1px 10px -3px rgba(0, 0, 0, 0.3);
-}
+} */
 
 .fa-solid {
     color: #fec107;
@@ -472,10 +471,11 @@ export default {
     box-shadow: none;
 }
 .OutLineRemove {
-    background-color: #fec107;
+    background-color: #029e02;
+    color: white;
 }
 .OutLineRemove:hover {
-    background-color: #ffcb2efb;
+    background-color: #03b103;
 }
 .EditBtn:hover {
     background-color: #03b103;

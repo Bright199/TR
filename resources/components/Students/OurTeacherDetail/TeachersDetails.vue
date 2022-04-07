@@ -88,14 +88,23 @@
                             />
                         </div>
                         <div class="col-md-6">
-                            <p style="font-size: 23px; font-weight: 550">
+                            <p style="font-size: 20px; margin-bottom:2px; font-weight: 550">
+                                <router-link :to="'/student/single/teacher/'+teacher.id" style="text-decoration:none; color: #183153">
                                 {{ teacher.name }}
+                                </router-link>
                                 <i class="fa-solid fa-flag-checkered"></i>
                             </p>
+                            <p>
+                                <span v-if="teacher.favorite_count"
+                                    ><i class="fa-solid fa-thumbs-up"></i
+                                    >{{ teacher.favorite_count }}</span
+                                >
+                            </p>
+
                             <!-- <span style="font-size:bolder">Malawi </span> -->
                             <p>
                                 <i class="fa-solid fa-chalkboard-user"></i
-                                >&nbsp;Teaches {{teacher.first_language}}
+                                >&nbsp;Teaches {{ teacher.first_language }}
                             </p>
                             <p>
                                 Speaks: <span>{{ teacher.first_language }}</span
@@ -114,17 +123,17 @@
                             </p>
                             <p v-if="teacher.description.length > 200">
                                 <span
-                                    v-if="showShortDescription"
+                                    v-if="showShortDescription !== teacher.id"
                                     class="shortDescription"
                                 >
                                     {{ teacher.description.slice(0, 150) }}
                                     <span
-                                        @click="readMore"
+                                        @click="readMore(teacher.id)"
                                         style="color: #029e02"
                                         >...Read More</span
                                     >
                                 </span>
-                                <span v-else class="shortDescription">
+                                <span v-else-if="showShortDescription === teacher.id" class="shortDescription">
                                     {{ teacher.description }}
                                     <span
                                         @click="readLess"
@@ -149,7 +158,7 @@
                                 <div class="col-md-8" style="font-size: 20px">
                                     <p
                                         style="
-                                            font-size: 23px;
+                                            font-size: 20px;
                                             font-weight: 550;
                                         "
                                         class="d-flex justify-content-end"
@@ -316,7 +325,7 @@ export default {
             loaded: false,
             loading2: false,
             teacherLength: 0,
-            showShortDescription: true,
+            showShortDescription: 0,
             StudentFavoritesIds: "",
             // FavoriteCount: "",
             addedToFavorite: true,
@@ -362,16 +371,16 @@ export default {
         //         });
         // },
         removeFromFavorite(teacherId) {
-            axios.post("/student/removeFromFavorite", { id: teacherId });
             setTimeout(function () {
                 location.reload(true);
-            }, 500);
+            }, 300);
+            axios.post("/student/removeFromFavorite", { id: teacherId });
         },
         addToFavorite(teacherId) {
-            axios.post("/student/addToFavorite", { id: teacherId });
             setTimeout(function () {
                 location.reload(true);
-            }, 500);
+            }, 300);
+            axios.post("/student/addToFavorite", { id: teacherId });
         },
         getOurTeachers(page = 1) {
             window.scrollTo(0, 0);
@@ -390,11 +399,11 @@ export default {
                     this.loading2 = false;
                 });
         },
-        readMore() {
-            this.showShortDescription = false;
+        readMore(teacherId) {
+            this.showShortDescription = teacherId;
         },
         readLess() {
-            this.showShortDescription = true;
+            this.showShortDescription = 0;
         },
     },
 };

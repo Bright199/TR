@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container LeftBar bg-white">
+        <div class="container LeftBar shadow-sm bg-white">
             <!-- post your first ad -->
             <div
                 class="d-flex justify-content-center align-content-center p-3 border-bottom"
@@ -49,9 +49,9 @@ export default {
 </script>
 <style scoped>
 .LeftBar {
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    -moz-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
     /* padding: 10px; */
     height: 500px;
 }

@@ -11,9 +11,9 @@
                         style="background-color: #029e02; color: white"
                         >Our teachers</router-link
                     >
-                    <router-link to="/student/freelance/teachers"
+                    <!-- <router-link to="/student/freelance/teachers"
                         >Freelance teachers</router-link
-                    >
+                    > -->
                 </div>
                 <div class="col-md-8 mb-4 mt-4 shadow-sm">
                     <TeacherDetails />
