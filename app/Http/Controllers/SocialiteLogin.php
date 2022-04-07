@@ -26,14 +26,19 @@ class SocialiteLogin extends Controller
                         Auth::guard('student')->login($user);
                         return redirect('/student/dashboard/');
                     } else {
-                        $user = Student::create([
-                            'name' => $googleUser->getName(),
-                            'email' => $googleUser->getEmail(),
-                            'google_id' => $googleUser->getId(),
-                            'password' => Hash::make($googleUser->getName() . '@' . $googleUser->getId())
-                        ]);
-                        Auth::guard('student')->login($user);
-                        return redirect('/student/dashboard/');
+                        $emailCheck = Student::where('email', $googleUser->getEmail())->first();
+                        if ($emailCheck === null) {
+                            $user = Student::create([
+                                'name' => $googleUser->getName(),
+                                'email' => $googleUser->getEmail(),
+                                'google_id' => $googleUser->getId(),
+                                'password' => Hash::make($googleUser->getName() . '@' . $googleUser->getId())
+                            ]);
+                            Auth::guard('student')->login($user);
+                            return redirect('/student/dashboard/');
+                        } else {
+                            return redirect('/student/login')->with('oath', 'Email is already taken. Login instead');
+                        }
                     }
                 } catch (\Throwable $th) {
                     return  $th;
@@ -47,14 +52,19 @@ class SocialiteLogin extends Controller
                         Auth::guard('teacher')->login($user);
                         return redirect('/teacher/dashboard/');
                     } else {
-                        $user = Teacher::create([
-                            'name' => $googleUser->getName(),
-                            'email' => $googleUser->getEmail(),
-                            'google_id' => $googleUser->getId(),
-                            'password' => Hash::make($googleUser->getName() . '@' . $googleUser->getId())
-                        ]);
-                        Auth::guard('teacher')->login($user);
-                        return redirect('/teacher/dashboard/');
+                        $emailCheck = Teacher::where('email', $googleUser->getEmail())->first();
+                        if ($emailCheck === null) {
+                            $user = Teacher::create([
+                                'name' => $googleUser->getName(),
+                                'email' => $googleUser->getEmail(),
+                                'google_id' => $googleUser->getId(),
+                                'password' => Hash::make($googleUser->getName() . '@' . $googleUser->getId())
+                            ]);
+                            Auth::guard('teacher')->login($user);
+                            return redirect('/teacher/dashboard/');
+                        } else {
+                            return redirect('/teacher/login')->with('oath', 'Email is already use. Login instead');
+                        }
                     }
                 } catch (\Throwable $th) {
                     return  $th;

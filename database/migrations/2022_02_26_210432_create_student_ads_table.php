@@ -22,6 +22,8 @@ class CreateStudentAdsTable extends Migration
             $table->string('minimum_budget');
             $table->string('maximum_budget');
             $table->string('currency');
+            $table->decimal('ad_fee');
+            $table->boolean('published')->default(0);
             $table->string('student_gender');
             $table->timestamps();
         });

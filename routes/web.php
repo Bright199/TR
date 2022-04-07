@@ -47,8 +47,6 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::post('/edit', [StudentRegistration::class, 'EditProfile']);
         Route::post('/delete/account', [StudentRegistration::class, 'DeleteProfile']);
         Route::post('/profile/check', [StudentRegistration::class, 'CheckProfileInfo']);
-        Route::post('/ad/save', [StudentRegistration::class, 'AdSave']);
-        Route::get('/ads', [StudentRegistration::class, 'GetAds']);
         Route::get('/our/teachers', [StudentRegistration::class, 'GetOurTeachers']);
         Route::get('/single/teacher/{id}', [StudentRegistration::class, 'GetSingleTeacher']);
         Route::get('/teacher/details/{id}', [StudentRegistration::class, 'TeacherDetails']);
@@ -63,10 +61,14 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/create/ad', function () {
             return view('student.ad');
         });
+        Route::get('/ad/payment', function () {
+            return view('student.adpayment');
+        })->name('ad.payment');
+        Route::post('/create/ad', [StudentRegistration::class, 'AdSave']);
+        Route::get('/ads', [StudentRegistration::class, 'GetAds']);
         Route::get('/single/teacher/messages/{teacherId}', function () {
             return view('student.singlemessages');
         });
-
         Route::get('/getUnreadMessages', [StudentRegistration::class, 'getUnreadMessages']);
         Route::get('/getFavorites', [StudentRegistration::class, 'getFavorites']);
         Route::get('/getFavoriteTeacherIds', [StudentRegistration::class, 'getFavoriteTeacherIds']);

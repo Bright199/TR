@@ -239,6 +239,7 @@ export default {
                             this.minamount = "";
                             this.maxamount = "";
                             // this.$router.push('/student/ad/management')
+                            this.$router.push('/student/ad/management') 
                         });
                     }
                 }

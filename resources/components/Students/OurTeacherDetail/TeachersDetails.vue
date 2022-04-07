@@ -96,13 +96,13 @@
                             </p>
                             <p>
                                 <span v-if="teacher.favorite_count"
-                                    ><i class="fa-solid fa-thumbs-up"></i
+                                    ><i class="fa-solid fa-thumbs-up" style="color:#fed907"></i
                                     >{{ teacher.favorite_count }}</span
                                 >
                             </p>
 
                             <!-- <span style="font-size:bolder">Malawi </span> -->
-                            <p>
+                            <p >
                                 <i class="fa-solid fa-chalkboard-user"></i
                                 >&nbsp;Teaches {{ teacher.first_language }}
                             </p>
@@ -113,11 +113,11 @@
                                     teacher.first_language_proficiency
                                 }}</span>
                                 {{ teacher.second_language }}
-                                <span class="SecondFluencyLevel">{{
+                                <span v-if="teacher.second_language_proficiency" class="SecondFluencyLevel">{{
                                     teacher.second_language_proficiency
                                 }}</span>
                                 {{ teacher.third_language }}
-                                <span class="ThirdFluencyLevel">{{
+                                <span  v-if="teacher.third_language_proficiency" class="ThirdFluencyLevel">{{
                                     teacher.third_language_proficiency
                                 }}</span>
                             </p>
@@ -272,7 +272,7 @@
                                 :href="
                                     '/student/book/demo/lesson/' + teacher.id
                                 "
-                                class="btn d-block btn-warning mb-3 RemoveOutline"
+                                class="btn d-block mb-3 RemoveOutline"
                                 >Book trial lesson</a
                             >
                         </div>
@@ -371,16 +371,16 @@ export default {
         //         });
         // },
         removeFromFavorite(teacherId) {
+            axios.post("/student/removeFromFavorite", { id: teacherId });
             setTimeout(function () {
                 location.reload(true);
             }, 300);
-            axios.post("/student/removeFromFavorite", { id: teacherId });
         },
         addToFavorite(teacherId) {
+            axios.post("/student/addToFavorite", { id: teacherId });
             setTimeout(function () {
                 location.reload(true);
             }, 300);
-            axios.post("/student/addToFavorite", { id: teacherId });
         },
         getOurTeachers(page = 1) {
             window.scrollTo(0, 0);
@@ -465,6 +465,12 @@ body {
 .RemoveOutline:focus {
     outline: none;
     box-shadow: none;
+}
+.RemoveOutline {
+    background-color: #fed907
+}
+.RemoveOutline:hover {
+    background-color: #f1ce07
 }
 .MainFluencyLevel {
     color: #029e02;

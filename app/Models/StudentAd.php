@@ -27,7 +27,9 @@ class StudentAd extends Model
         'maximum_budget',
         'currency',
         'student_gender',
-        'student_id'
+        'student_id',
+        'published',
+        'ad_fee',
     ];
 
     // protected $hidden = [

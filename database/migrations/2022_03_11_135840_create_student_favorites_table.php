@@ -15,11 +15,11 @@ class CreateStudentFavoritesTable extends Migration
     {
         Schema::create('student_favorites', function (Blueprint $table) {
             $table->id();
-            $table->integer('teacher_id');
-            $table->string('teacher_name');
-            $table->string('teacher_email');
+            $table->integer('teacher_id')->nullable();
+            $table->string('teacher_name')->nullable();
+            $table->string('teacher_email')->nullable();
             $table->string('teacher_image')->nullable();
-            $table->integer('student_id');
+            $table->integer('student_id')->nullable();
             $table->timestamps();
         });
     }

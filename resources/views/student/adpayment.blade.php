@@ -28,29 +28,68 @@
 
     <script src="https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=USD"
         data-sdk-integration-source="button-factory"></script>
+
     {{-- font awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
-    {{$adDetails}}
-    <div>
+    @if (Session::get('adDetails'))
         <div class="container">
             <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <div id="smart-button-container">
-                        <div style="text-align: center;">
-                            <div id="paypal-button-container"></div>
+                <div class="col-md-3">
+
+                    <img src="{{ asset('images/payment.png') }}" alt="" width="250">
+                </div>
+                <div class="col-md-9 shadow-sm">
+                        <p class="text-center">Your job ad details (Cost of ad <span style="color: #029e02">${{Session::get('adDetails')->ad_fee}} USD</span>)</p>
+                    <div class="container">
+                    <h5>Title: {{ Session::get('adDetails')->title }}</h5>
+                    </div>
+                    <div class="container">
+                        <p>{{ Session::get('adDetails')->description }}</p>
+                    </div>
+                    <div class="container">
+                        <p>Looking for: <span style="color: #029e02">{{ Session::get('adDetails')->student_gender }}</span></p>
+                    </div>
+                    <div class="container border-bottom">
+                        <h5 >Price range:
+                            ${{ Session::get('adDetails')->minimum_budget }} USD  -  ${{Session::get('adDetails')->maximum_budget }} USD
+                        </h5>
+                    </div>
+
+                    <div class="container mt-4">
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <div id="paypal-button-container" class="MyPaypal"></div>
+                            </div>
+                            <div class="col-md-3"></div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4"></div>
             </div>
         </div>
-    </div>
-    <script src="{{ mix('js/app.js') }}" defer></script>
+    @else
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 shadow-sm p-4">
+                    <img src="{{ asset('images/anouncement.png') }}" alt="">
+                    <p>Check <span style="color:#029e02">'My ads'</span> section for all your (paid, unpublished,
+                        published etc) ads</p>
+                    <p>Create a job ad for teachers to see</p>
+                    <a href="{{ url('/student/create/ad') }}"
+                        style="background-color: #029e02; color:white; padding: 2px 15px 7px; text-decoration: none;">Create
+                        job advert</a>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    @endif
 
+
+    <script src="{{ mix('js/app.js') }}" defer></script>
     <script>
         function initPayPalButton() {
             paypal.Buttons({

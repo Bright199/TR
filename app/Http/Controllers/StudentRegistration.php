@@ -357,21 +357,27 @@ class StudentRegistration extends Controller
     public function AdSave(Request $request)
     {
         $authUser = Auth::guard('student')->id();
+        $advertDetails = $request->validate([
+            'title' => ['required', 'string', 'min:10','max:50'],
+            'ad_description' => ['required', 'string','min:20'],
+            'language' => ['required'],
+            'minamount' => ['required', 'numeric'],
+            'maxamount' => ['required', 'numeric'],
+            'gender' => ['required'],
+        ]);
+         
         $StudentAd = StudentAd::create([
             'student_id' => $authUser,
             'title' => $request->title,
-            'description' => $request->description,
+            'description' => $request->ad_description,
             'language_category' => $request->language,
             'minimum_budget' => $request->minamount,
             'maximum_budget' => $request->maxamount,
             'currency' => $request->currency,
-            'student_gender' => $request->gender
+            'student_gender' => $request->gender,
+            'ad_fee' => $request->ad_fee,
         ]);
-        // if($StudentAd){
-        //     return response()->json('Ad created successfully');
-        // }else{
-        //     return response()->json('Not working');
-        // }
+        return redirect()->route('student.ad.payment')->with('adDetails', $StudentAd);
     }
 
     public function getFavorites()
@@ -396,7 +402,7 @@ class StudentRegistration extends Controller
     public function addToFavorite(Request $request)
     {
         $teacherDetails = Teacher::find($request->id);
-        $teacherCheck = StudentFavorite::where('teacher_id', $request->id)->first();
+        $teacherCheck = StudentFavorite::where('teacher_id', $request->id)->where('student_id', Auth::guard('student')->id())->first();
         // return response()->json($teacherCheck);
         if ($teacherCheck === null) {
             if ($teacherDetails->teacher_image) {

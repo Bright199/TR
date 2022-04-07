@@ -124,6 +124,7 @@
                                             >
                                             {{ teacherDetails.second_language }}
                                             <span
+                                                v-if="teacherDetails.second_language "
                                                 class="SecondFluencyLevel"
                                                 style="font-weight: 500"
                                                 >{{
@@ -132,6 +133,7 @@
                                             >
                                             {{ teacherDetails.third_language }}
                                             <span
+                                                v-if="teacherDetails.third_language "
                                                 class="ThirdFluencyLevel"
                                                 style="font-weight: 500"
                                                 >{{

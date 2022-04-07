@@ -125,7 +125,8 @@
                                             font-weight: 550;
                                         "
                                     >
-                                        {{ teacher.name }}
+                                    <router-link :to="'/student/single/teacher/'+teacher.id" style="text-decoration: none; color: #183153">{{ teacher.name }}</router-link>
+                                        
                                         <i
                                             class="fa-solid fa-flag-checkered"
                                         ></i>
