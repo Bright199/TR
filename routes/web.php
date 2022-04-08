@@ -122,6 +122,9 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/ad/management', function () {
             return view('student.adsmanagement');
         });
+        Route::get('/single/ad/{id}', function () {
+            return view('student.singlead');
+        });
     });
 });
 

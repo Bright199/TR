@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
-<body>
+<body class="bg-light">
     <div class="container-jumbotron TopBar1">
         <a href="{{ url('/student/dashboard') }}">Dashboard</a>
     </div>
@@ -50,11 +50,11 @@
                     </div>
                     <div class="col-md-9 d-flex justify-content-start">
                         <p>
-                            In order to create an a job ad you are required
+                            In order to create a job ad for teachers to see you are required
                             to add your profile image and country in the
                             profile section. You can do this by clicking on
                             your name in the navigation bar and going to the
-                            profile section.
+                            profile section <a href="{{url('/student/edit/profile')}}" style="color:#029e02; ">Edit profile</a>
                         </p>
                     </div>
                 </div>
@@ -65,13 +65,14 @@
     {{-- end details --}}
 
     {{-- Ad form --}}
-    <div class="container">
+    <div class="container p-4">
         <div class="row">
             <div class="col-md-2"></div>
-            <div class="col-md-8 shadow-sm p-3">
+            <div class="col-md-8  p-3">
                 <form action="{{ url('/student/create/ad') }}" method="post">
                     @csrf
                     <input type="hidden" name="ad_fee" id="adFee" value="10">
+                   
                     <div class="form-floating mb-3 mt-3">
                         <div class="mb-3 mt-3">
                             <label for="title" class="form-label">Title:</label>
@@ -87,7 +88,7 @@
 
                     <label for="ad_description">Ad description</label>
                     <textarea class="form-control @error('ad_description') is-invalid @enderror" rows="5" id="ad_description"
-                        name="ad_description" placeholder="Say something about your ad..." required  value="{{ old('ad_description') }}"></textarea>
+                        name="ad_description" placeholder="Say something about your ad..." required  >{{ old('ad_description') }}</textarea>
                     @error('ad_description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -95,7 +96,8 @@
                     @enderror
 
                     <div class="mt-3">
-                        <select name="language" class="form-select">
+                        <label for="langauge">Choose language</label>
+                        <select name="language" class="form-select" id="langauge">
                             <option>English</option>
                             <option>Spanish</option>
                             <option>French</option>
@@ -112,7 +114,7 @@
                         <div class="col">
                             <div class="mb-3 mt-3">
                                 <input type="number" class="form-control @error('minamount') is-invalid @enderror"
-                                    name="minamount" required placeholder="minamount" />
+                                    name="minamount" required placeholder="minamount" value="{{ old('minamount') }}"/>
                                 @error('ad_description')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -124,7 +126,7 @@
                         <div class="col">
                             <div class="mb-3 mt-3">
                                 <input type="number" class="form-control @error('maxamount') is-invalid @enderror"
-                                    name="maxamount" placeholder="Maximum budget" required />
+                                    name="maxamount" placeholder="Maximum budget" required value="{{ old('maxamount') }}"/>
                                 @error('maxamount')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

@@ -362,10 +362,12 @@ class StudentRegistration extends Controller
             'ad_description' => ['required', 'string','min:20'],
             'language' => ['required'],
             'minamount' => ['required', 'numeric'],
-            'maxamount' => ['required', 'numeric'],
+            'maxamount' => ['required', 'numeric','gt:'.$request->minamount],
             'gender' => ['required'],
         ]);
-         
+        //  if($request->maxamount <=$request->minamount){
+        //     return back()->with('error', 'Your maximum budget cannot be less than your minimum budget');
+        //  }
         $StudentAd = StudentAd::create([
             'student_id' => $authUser,
             'title' => $request->title,

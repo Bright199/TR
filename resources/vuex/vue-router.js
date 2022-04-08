@@ -6,6 +6,7 @@ import EditProfile from '../components/Students/EditProfile.vue';
 import RightNavMain from '../components/RightNavMain.vue';
 import StudentAd from '../components/Students/StudentAds/StudentAd.vue';
 import StudentAdManagement from '../components/Students/StudentAds/StudentAdManagement.vue';
+import SingleAd from '../components/Students/StudentAds/SingleAd.vue';
 import StudentDashboard from '../components/Students/StudentDashboard.vue';
 import Messages from '../components/Students/Messages/Messages.vue';
 import SingleMessage from '../components/Students/Messages/SingleMessage.vue';
@@ -66,6 +67,11 @@ const routes = [
         path: '/student/ad/management',
         name: "StudentAdmanagement",
         component: StudentAdManagement
+    },
+    {
+        path: '/student/single/ad/:id',
+        name: "SingleAd",
+        component: SingleAd
     },
     {
         path: '/student/messages',
