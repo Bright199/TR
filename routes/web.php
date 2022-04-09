@@ -61,11 +61,19 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/create/ad', function () {
             return view('student.ad');
         });
+        
+        // Ads
         Route::get('/ad/payment', function () {
             return view('student.adpayment');
         })->name('ad.payment');
+        Route::get('/SingleAdPayment', function () {
+            return view('student.singleadpayment');
+        })->name('singlead.payment');
         Route::post('/create/ad', [StudentRegistration::class, 'AdSave']);
+        Route::post('/publish/ad', [StudentRegistration::class, 'PublishAd']);
         Route::get('/ads', [StudentRegistration::class, 'GetAds']);
+        // ads
+
         Route::get('/single/teacher/messages/{teacherId}', function () {
             return view('student.singlemessages');
         });
@@ -122,6 +130,8 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/ad/management', function () {
             return view('student.adsmanagement');
         });
+        Route::get('/getSingleAd{id}', [StudentRegistration::class, 'getSingleAd']);
+        Route::get('/SingleAdPayment{id}', [StudentRegistration::class, 'SingleAdPayment']);
         Route::get('/single/ad/{id}', function () {
             return view('student.singlead');
         });

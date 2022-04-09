@@ -286,10 +286,10 @@
                 </div>
                 <div class="contnainer py-5" v-if="loaded == true">
                     <h4 class="d-flex justify-content-center">
-                        Check out freelance teachers
+                        Check here later for our teachers.
                     </h4>
                     <p class="d-flex justify-content-center">
-                        Our teachers are currently unavailable
+                        Our teachers are currently unavailable.
                     </p>
                 </div>
             </div>

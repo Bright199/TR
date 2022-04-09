@@ -389,7 +389,7 @@ export default {
     /* font-size: 18px; */
 }
 .userdropdown-content a:hover {
-    color: #fec107;
+    color: #029e02;
     /* font-size: 14px; */
 }
 .userdropdown:hover .userdropdown-content {

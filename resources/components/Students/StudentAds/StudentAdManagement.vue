@@ -5,20 +5,37 @@
         </div>
         <div class="container">
             <div class="spinner" v-if="loading">
-                    <div class="dot1"></div>
-                    <div class="dot2"></div>
-                </div>
-            <div class="container bg-white p-4 mt-3" v-if="loaded && studentAds.length">
+                <div class="dot1"></div>
+                <div class="dot2"></div>
+            </div>
+            <div
+                class="container MainContainer bg-white p-4 mt-3"
+                v-if="loaded && studentAds.length"
+            >
                 <table class="table table-responsive table-hover">
                     <tbody>
-                        <tr v-for="(ad, index ) in studentAds" :key="ad.id">
-                        <td>{{index+1}}</td>
-                        <td>{{ad.title}}</td>
-                        <td v-if="ad.published ===0">Status: <span>unpublished</span></td>
-                        <td v-else-if="ad.published === 1">Status: <span style="color: blue">Pending upproval</span></td>
-                        <td v-else-if="ad.published === 2">Status: <span style="color: #029e20">Active</span></td>
-                        <td><router-link :to="'/student/single/ad/'+ad.id">view details</router-link></td>
-                    </tr>
+                        <tr v-for="(ad, index) in studentAds" :key="ad.id">
+                            <td>{{ index + 1 }}</td>
+                            <td>{{ ad.title }}</td>
+                            <td v-if="ad.published === 0">
+                                Status: <span>unpublished</span>
+                            </td>
+                            <td v-else-if="ad.published === 1">
+                                Status:
+                                <span style="color: blue"
+                                    >Pending upproval</span
+                                >
+                            </td>
+                            <td v-else-if="ad.published === 2">
+                                Status:
+                                <span style="color: #029e20">Active</span>
+                            </td>
+                            <td>
+                                <router-link :to="'/student/single/ad/' + ad.id"
+                                    >view details</router-link
+                                >
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -51,18 +68,21 @@ export default {
             studentAds: "",
             loading: false,
             loaded: false,
-            count: 1
+            count: 1,
         };
     },
     methods: {
         getStudentAds() {
-            this.loading = true
-            axios.get("/student/ads").then((response) => {
-                this.studentAds = response.data;
-                this.loaded = true
-            }).finally(()=>{
-                this.loading = false
-            });
+            this.loading = true;
+            axios
+                .get("/student/ads")
+                .then((response) => {
+                    this.studentAds = response.data;
+                    this.loaded = true;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
     },
     computed: mapState({
@@ -142,8 +162,11 @@ export default {
 }
 /*  */
 
-  tr:nth-child(even) {
+tr:nth-child(even) {
     background-color: #f8f9fa;
-    }
- 
+}
+.MainContainer{
+    height: 400px;
+    overflow-y: auto
+}
 </style>

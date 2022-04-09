@@ -351,9 +351,21 @@ class StudentRegistration extends Controller
 
     public function GetAds()
     {
-        $ads = StudentAd::where('student_id', Auth::guard('student')->id())->get();
+        $ads = StudentAd::where('student_id', Auth::guard('student')->id())->orderBy('id', 'desc')->get();
         return response()->json($ads);
     }
+    public function getSingleAd($id)
+    {
+        $ad = StudentAd::where('student_id', Auth::guard('student')->id())->where('id',$id)->get();
+        return response()->json($ad);
+    }
+    public function SingleAdPayment($id)
+    {
+        $StudentAd= StudentAd::where('student_id', Auth::guard('student')->id())->where('id',$id)->get();
+        return view('student.singleadpayment')->with('adDetails', $StudentAd);
+    }
+
+
     public function AdSave(Request $request)
     {
         $authUser = Auth::guard('student')->id();
@@ -365,9 +377,7 @@ class StudentRegistration extends Controller
             'maxamount' => ['required', 'numeric','gt:'.$request->minamount],
             'gender' => ['required'],
         ]);
-        //  if($request->maxamount <=$request->minamount){
-        //     return back()->with('error', 'Your maximum budget cannot be less than your minimum budget');
-        //  }
+       
         $StudentAd = StudentAd::create([
             'student_id' => $authUser,
             'title' => $request->title,
@@ -379,7 +389,14 @@ class StudentRegistration extends Controller
             'student_gender' => $request->gender,
             'ad_fee' => $request->ad_fee,
         ]);
+        // $StudentAd= StudentAd::where('student_id', Auth::guard('student')->id())->first();
         return redirect()->route('student.ad.payment')->with('adDetails', $StudentAd);
+        // return redirect()->route('student.ad.payment')->with('adDetails', $StudentAd);
+    }
+    public function PublishAd(Request $request)
+    {
+        $StudentAd = StudentAd::where('student_id', Auth::guard('student')->id())->where('id',$request->adID)->update(['published'=>1]);
+        // return redirect()->route('student.ad.payment')->with('adDetails', $StudentAd);
     }
 
     public function getFavorites()

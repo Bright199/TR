@@ -34,66 +34,67 @@
 </head>
 
 <body class="bg-light">
-    @if (Session::get('adDetails'))
-        <div class="container p-3 bg-white">
-            <input type="hidden" name="" value="{{ Session::get('adDetails')->id }}" id="adID">
-            <input type="hidden" name="" value="{{ Session::get('adDetails')->student_id }}" id="studentId">
-            <div class="row">
-                <div class="col-md-3">
+    @if (!empty($adDetails))
+        @foreach ($adDetails as $adDetail)
+            <div class="container p-3 bg-white">
+                <input type="hidden" name="" value="{{$adDetail->id}}" id="adID">
+                <input type="hidden" name="" value="{{$adDetail->student_id}}" id="studentId">
+                <div class="row">
+                    <div class="col-md-3">
 
-                    <img src="{{ asset('images/payment.png') }}" alt="" width="250">
-                </div>
-                <div class="col-md-9 shadow-sm">
-                    <div class="container border-bottom">
-                        <p class="text-center">Your ad preview (Cost of ad <span
-                                style="color: #029e02">${{ Session::get('adDetails')->ad_fee }} USD</span>)</p>
+                        <img src="{{ asset('images/payment.png') }}" alt="" width="250">
                     </div>
-                    <input type="hidden" name="" id="adFee" value="{{ Session::get('adDetails')->ad_fee }}">
-                    <div class="container">
-                        <p>Title: <span style="color: #029e02">{{ Session::get('adDetails')->title }}</span></p>
-                    </div>
-                    <div class="container">
-                        <p>{{ Session::get('adDetails')->description }}</p>
-                    </div>
-                    <div class="container">
-                        <p>Looking for: <span
-                                style="color: #029e02">{{ Session::get('adDetails')->student_gender }}</span></p>
-                    </div>
-                    <div class="container">
-                        <p>Language: <span
-                                style="color: #029e02">{{ Session::get('adDetails')->language_category }}</span></p>
-                    </div>
-                    <div class="container border-bottom">
-                        <h5>Price range:
-                            ${{ Session::get('adDetails')->minimum_budget }} USD -
-                            ${{ Session::get('adDetails')->maximum_budget }} USD
-                        </h5>
-                    </div>
-
-                    <div class="container mt-4">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img src="{{ asset('images/guaranty.png') }}" alt="">
-                            </div>
-                            <div class="col-md-6">
-                                <p>Pay for your ad. Your payment on <span style="color: #029e02">TREnglish</span> are
-                                    very secure!</p>
-                            </div>
-                            <div class="col-md-3"></div>
+                    <div class="col-md-9 shadow-sm">
+                        <div class="container border-bottom">
+                            <p class="text-center">Your ad preview (Cost of ad <span
+                                    style="color: #029e02">${{ $adDetail->ad_fee }} USD</span>)</p>
                         </div>
-                        <div class="row">
-                            <div class="col-md-3">
+                        <input type="hidden" name="" id="adFee" value="{{ $adDetail->ad_fee }}">
+                        <div class="container">
+                            <p>Title: <span style="color: #029e02">{{ $adDetail->title }}</span></p>
+                        </div>
+                        <div class="container">
+                            <p>{{ $adDetail->description }}</p>
+                        </div>
+                        <div class="container">
+                            <p>Looking for: <span style="color: #029e02">{{ $adDetail->student_gender }}</span></p>
+                        </div>
+                        <div class="container">
+                            <p>Language: <span style="color: #029e02">{{ $adDetail->language_category }}</span></p>
+                        </div>
+                        <div class="container border-bottom">
+                            <h5>Price range:
+                                ${{ $adDetail->minimum_budget }} USD -
+                                ${{ $adDetail->maximum_budget }} USD
+                            </h5>
+                        </div>
 
+                        <div class="container mt-4">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="{{ asset('images/guaranty.png') }}" alt="">
+                                </div>
+                                <div class="col-md-6">
+                                    <p>Pay for your ad. Your payment on <span style="color: #029e02">TREnglish</span>
+                                        are
+                                        very secure!</p>
+                                </div>
+                                <div class="col-md-3"></div>
                             </div>
-                            <div class="col-md-6">
-                                <div id="paypal-button-container" class="MyPaypal"></div>
+                            <div class="row">
+                                <div class="col-md-3">
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="paypal-button-container" class="MyPaypal"></div>
+                                </div>
+                                <div class="col-md-3"></div>
                             </div>
-                            <div class="col-md-3"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endforeach
     @else
         <div class="container">
             <div class="row">
@@ -171,7 +172,7 @@
                                 data: data,
                                 // async : false, 
                                 success: function(response, textStatus, jqXHR) {
-                                    setTimeout(() => {
+                                   setTimeout(() => {
                                     window.location = '/student/ad/management';
                                    }, 1000);
                                 },
@@ -200,3 +201,4 @@
     }
 
 </style>
+}

@@ -70,8 +70,8 @@ const routes = [
     },
     {
         path: '/student/single/ad/:id',
-        name: "SingleAd",
-        component: SingleAd
+        components: {default: SingleAd},
+        props: {default: true}
     },
     {
         path: '/student/messages',
