@@ -71,6 +71,8 @@ Route::prefix('student')->name('student.')->group(function () {
         })->name('singlead.payment');
         Route::post('/create/ad', [StudentRegistration::class, 'AdSave']);
         Route::post('/publish/ad', [StudentRegistration::class, 'PublishAd']);
+        Route::post('/EditAd', [StudentRegistration::class, 'EditAd']);
+        Route::post('/deleteAd', [StudentRegistration::class, 'deleteAd']);
         Route::get('/ads', [StudentRegistration::class, 'GetAds']);
         // ads
 

@@ -389,10 +389,37 @@ class StudentRegistration extends Controller
             'student_gender' => $request->gender,
             'ad_fee' => $request->ad_fee,
         ]);
-        // $StudentAd= StudentAd::where('student_id', Auth::guard('student')->id())->first();
         return redirect()->route('student.ad.payment')->with('adDetails', $StudentAd);
-        // return redirect()->route('student.ad.payment')->with('adDetails', $StudentAd);
     }
+
+
+    public function deleteAd(Request $request)
+    {
+        StudentAd::where('id', $request->adID)->where('student_id', Auth::guard('student')->id())->delete();
+    }
+    public function EditAd(Request $request)
+    {
+        // $authUser = Auth::guard('student')->id();
+        $advertDetails = $request->validate([
+            'title' => ['required', 'string', 'min:10','max:50'],
+            'ad_description' => ['required', 'string','min:20'],
+            'language' => ['required'],
+            'minamount' => ['required', 'numeric'],
+            'maxamount' => ['required', 'numeric','gt:'.$request->minamount],
+            'gender' => ['required'],
+        ]);
+       
+        StudentAd::where('id',$request->adID)->where('student_id', Auth::guard('student')->id())->update([
+            'title' => $request->title,
+            'description' => $request->ad_description,
+            'language_category' => $request->language,
+            'minimum_budget' => $request->minamount,
+            'maximum_budget' => $request->maxamount,
+            'student_gender' => $request->gender,
+        ]);
+     
+    }
+
     public function PublishAd(Request $request)
     {
         $StudentAd = StudentAd::where('student_id', Auth::guard('student')->id())->where('id',$request->adID)->update(['published'=>1]);

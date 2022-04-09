@@ -10,7 +10,7 @@
                 <div class="col-md-6 p-3 bg-white shadow-sm" v-if="adDetails.length && loaded">
                     <div class="container p-2" style="background: #183153">
                         <p style="color: white">
-                            Preview cost of ad
+                            Preview | cost of ad
                             <span
                                 style="
                                     color: white;
@@ -62,11 +62,12 @@
                             >
                         </p>
                     </div>
-                    <div class="container border-top" v-if="adDetails[0].published === 0">
+                    <div class="container p-0 border-top" v-if="adDetails[0].published === 0">
                         <p>
                             You can publish this ad by paying for it to make
                             teachers contact you
                         </p>
+                        
                         <div class="row">
                           <div class="col-md-3"></div>
                           <div class="col-md-3"></div>
