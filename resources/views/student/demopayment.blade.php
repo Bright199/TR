@@ -276,7 +276,7 @@
                             // Show a success message within this page, e.g.
                             const element = document.getElementById('paypal-button-container');
                             element.innerHTML = '';
-                            // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                            element.innerHTML = '<h3>Thank you for your payment!</h3>';
 
                             $(document).ready(function() {
                                 const teacherId = $('#teacherId').val();

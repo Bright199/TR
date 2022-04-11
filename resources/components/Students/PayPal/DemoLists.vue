@@ -26,7 +26,7 @@
                         </span>
                     </td>
                     <td>
-                        <router-link to="/student/view/demo/lesson"
+                        <router-link :to="'/student/view/demo/lesson'+lesson.id"
                             >View</router-link
                         >
                     </td>

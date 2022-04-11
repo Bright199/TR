@@ -38,16 +38,14 @@
                 <BookedProcess v-if="showCalendar2 == true" :teacherDetails = teacherDetails />
 
                 <div class="row" v-if="showCalendar == true">
-                    <div class="col-md-2 m-0 p-o">
-                        <img src="/images/calendar.png" alt="" width="150" class="CalendarImag">
-                    </div>
-                    <div class="col-md-4 mb-3">
+                    
+                    <div class="col-md-5 p-0 mb-3 me-3">
                         <div
-                            class="container calendarContainer shadow-sm "
+                            class="container p-0 calendarContainer shadow-sm "
                         >
                             <p
-                                class="d-flex justify-content-center py-2 border-bottom"
-                                style="font-size: 20px"
+                                class="d-flex justify-content-center py-2"
+                                style="font-size: 20px; background: #183153; color: white"
                             >
                                 {{ currentMonth + " " + fullYear }}
                             </p>
@@ -161,7 +159,6 @@
                                         teacherDetails.id
                                     "
 
-                                    style="text-decoration:none; color: #029e02"
                                     ><span>{{
                                         teacherDetails.name
                                     }}</span></router-link
@@ -171,7 +168,7 @@
                                 <p
                                     class="d-flex justify-content-center align-item-end shadow-sm"
                                 >
-                                    Book 1 hour trial lesson
+                                    Book 1-hour trial lesson
                                 </p>
                             </div>
                         </div>
@@ -435,7 +432,7 @@ export default {
 
 
 .body {
-    background-color: rgba(236, 238, 236);
+    background-color: #F8F9FA;
     padding: 25px;
     max-height: 800px;
   min-height: 600px;
@@ -540,7 +537,7 @@ export default {
 .calendarContainer {
     border-top-right-radius: 7px;
     border-top-left-radius: 7px;
-    background-color: #029e02;
+    background-color: white;
 }
 .calendarContainer p{
     color: white
@@ -548,11 +545,12 @@ export default {
 .disablePrevBtn {
     display: none;
 }
-.Btns .nextMonth {
+/* .Btns .nextMonth {
     position: absolute;
     right: 0;
     top: 0;
-}
+    background: #F8F9FA
+} */
 .Btns .prevMonth {
     position: absolute;
     left: 20%;
@@ -560,7 +558,8 @@ export default {
     border: none;
     width: 7%;
     padding: 5px;
-    background-color: #ffffff;
+    background-color: #029e02;
+    color: white;
 }
 /* .Btns .prevMonth:hover {
     background-color: #ffffff;
@@ -572,7 +571,8 @@ export default {
     width: 7%;
     border: none;
     padding: 5px;
-    background-color: #ffffff;
+    background-color: #029e02;
+    color: white;
 }
 /* .Btns .nextMonth:hover {
     background-color: #ffffff;
@@ -583,21 +583,23 @@ export default {
 .days p,
 .dates p {
     width: 14.28%;
+    color: #183153;
 }
 .dates {
     flex-wrap: wrap;
 }
 .dates p span:hover {
     cursor: pointer;
-    border:1px solid white;
+    border:1px solid #029e02;
     border-radius: 2px;
     padding: 5px;
     font-weight: 550;
 }
 .currentDate span {
-    background-color: white;
+    background-color: #029e02;
     padding: 5px;
-    color: #292929;
+    color: white;
+    border-radius: 2px;
     font-weight: 550;
 }
 
@@ -616,8 +618,8 @@ export default {
 
 
 .BookL p {
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
+    /* border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px; */
     background-color: white;
     padding: 8px;
 }
@@ -651,16 +653,15 @@ export default {
 .timeConfirmationBtn {
     border: none;
     padding: 5px;
-    background-color: #fec107;
+    background-color: #fed907;
     color: #151419;
-    border-radius: 20px;
     width: 60%;
 }
 .timeConfirmationBtn:hover {
-    background-color: #fcc41d;
+    background-color: #f7d309;
 }
 .disableBtn {
-    background-color: #e7ece7;
+    background-color: #F8F9FA;
     color: #797c79;
     border: none;
     padding: 5px;

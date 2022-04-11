@@ -34,17 +34,12 @@
                             
                         </li>
                         <li class="userdropdown" v-else>
-                            <!-- <a href="" class="Logout "></a> -->
                             <router-link to="#" @click="OpenMessageModal">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-message"></i>&nbsp;
                                 </span>
                             </router-link>
-                            <!-- <router-link to="/student/messages">
-                                <span class="UserName"
-                                    ><i class="fa-solid fa-message"></i>&nbsp;
-                                </span>
-                            </router-link> -->
+                           
                             <ul class="userdropdown-content">
                                 <li
                                     style="font-size: 14px"
@@ -55,7 +50,6 @@
                             </ul>
                         </li>
                         <li class="userdropdown">
-                            <!-- <a href="" class="Logout "></a> -->
                             <router-link to="/student/teachers">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-chalkboard-user"></i
@@ -67,7 +61,6 @@
                             class="messageuserdropdown"
                             v-if="FavoriteCount >0"
                         >
-                            <!-- <a href="" class="Logout "></a> -->
                             <router-link to="/student/favorite">
                                 <span class="UserName"
                                     ><i class="fa-solid fa-bookmark"></i>&nbsp;
@@ -96,9 +89,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <!-- {{ trimmedName }} -->
                         <li class="userdropdown">
-                            <!-- <a href="" class="Logout "></a> -->
                             <span class="UserName" style="color: #029e02; font-weight:normal" v-if="MyUser">{{ MyUser.name.split(" ")[0] }}</span>
                             <ul class="userdropdown-content" style="padding:7px">
                                 <li>
@@ -154,7 +145,6 @@ export default {
             receivedMessages: "",
             loaded: false,
             StudentFavorites:'',
-            // FavoriteCount:0
         };
     },
     mounted() {
@@ -194,7 +184,6 @@ export default {
             axios
                 .get("/student/getFavorites")
                 .then((response) => {
-                    // this.FavoriteCount = response.data.length;
                     this.$store.commit('setFavoriteCount',response.data.length)
                     this.StudentFavorites = response.data
                     if (response.data.length > 0) {
@@ -240,18 +229,7 @@ export default {
 };
 </script>
 <style scoped>
-/* @media only screen and (min-width: 600px) {
- .TopBar1{
-     display:none
- }
-}
 
-
-@media only screen and (min-width: 992px) {
- .TopBar2{
-    background-color: #fec107
- }
-} */
 .timeSent{
     font-size:12px;
     color:#151419;
@@ -281,17 +259,15 @@ export default {
 }
 .NavLinks2 {
     display: flex;
-    padding: 10px;
     flex-direction: row;
     
-    /* background-color: #fec107; */
     justify-content: flex-end;
 }
 .NavLinks2 li {
     list-style: none;
     margin-right: 25px;
     font-size: 16px;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 .NavLinks2 li a {
     text-decoration: none;
@@ -299,27 +275,21 @@ export default {
 }
 .NavLinks {
     display: flex;
-    padding: 8px;
     flex-direction: row;
-    /* background-color: #fec107; */
     justify-content: flex-start;
 }
 .NavLinks li {
     list-style: none;
     margin-right: 25px;
-    font-size: 20px;
-    margin-top: 20px;
+    font-size: 16px;
+    margin-top: 15px;
 
 }
 .NavLinks li a {
     text-decoration: none;
     color: #183153;
 }
-.LinkItem {
-    font-size: 18px;
-    color: #183153;
-    padding: 2px 10px;
-}
+
 /* This is message drop down */
 
 .messageuserdropdown {

@@ -7,18 +7,18 @@
         <div class="container">
             <div class="row mt-4">
                 <!-- <div class="col-md-4"></div> -->
-                <div class="col-md-8 EditCard shadow-sm p-4">
+                <div class="col-md-8 EditCard shadow-sm p-4 bg-white">
                     <div class="row">
                         <div class="col-sm-3 col-md-3 col-lg-3 p-2 ">
                             <img v-if="AuthUser.user_image === null"
                                 src="/images/Green2.png"
                                 alt=""
-                                style="width: 100%"
+                                style="width: 100%; border-radius: 3px"
                             />
                             <img v-else-if="AuthUser.user_image !== null"
                                 :src="'/storage/student/images/'+AuthUser.user_image"
                                 alt=""
-                                style="width: 100%"
+                                style="width: 100%; border-radius: 3px"
                             />
                         </div>
                         <div class="col-sm-6 col-md-6 col-lg-6 p-2">
@@ -83,13 +83,13 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h5 class="modal-title">Editing Profile</h5>
+                        <div class="modal-header" style="background: #183153">
+                            <h5 class="modal-title" style="color:white">Editing Profile</h5>
                             <button
                                 type="button"
-                                class="btn-close"
                                 data-bs-dismiss="modal"
                                 id="DismisEdit"
+                                style="color:white"
                             ></button>
                         </div>
 
@@ -193,33 +193,24 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h5 class="modal-title">
+                        <div class="modal-header" style="background: #183153">
+                            <p class="modal-title" style="color:white;">
                                 Are you sure you want to delete your account?
-                            </h5>
+                            </p>
                             <button
                                  id="DismisDelete"
                                 type="button"
-                                class="btn-close"
                                 data-bs-dismiss="modal"
+                                style="color:white"
                             ></button>
                         </div>
 
                         <!-- Modal body -->
                         <div class="modal-body">
-                            <!-- <button
-                               
-                                type="button"
-                                class="btn btn-warning"
-                                data-bs-dismiss="modal"
-                            >
-                                Cancel
-                            </button> -->
-
                             <button
-                                class="btn btn-danger"
+                                class="btn"
                                 @click="DeleteUser"
-                                style="margin-left: 10px"
+                                style="margin-left: 10px; background: #209e20; color: white;"
                             >
                                 Delete account
                             </button>

@@ -40,6 +40,7 @@
 </html>
 <style>
     body{
-    color:#183153
+    color:#183153;
+    background-color:#F8F9FA
 }
 </style>
