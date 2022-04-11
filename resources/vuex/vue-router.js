@@ -19,8 +19,7 @@ import TrialLessonBooking from '../components/Students/PayPal/TrialLessonBooking
 import IncompleteDemoBook from '../components/Students/PayPal/IncompleteDemoBook.vue'
 import AllBookedLessons from '../components/Students/PayPal/AllBookedLessons.vue'
 import DemoPaymentSummary from '../components/Students/PayPal/DemoPaymentSummary.vue'
-// import PayPal from '../components/Students/PayPal/PayPal.vue'
-
+import SingleDemoLesson from '../components/Students/PayPal/SingleDemoLesson.vue'
 const newLocal = 'Home';
 const routes = [
     {
@@ -112,6 +111,11 @@ const routes = [
     {
         path: "/student/book/demo/lesson/:id",
         components: { default: TrialLessonBooking },
+        props: { default: true }
+    },
+    {
+        path: "/student/view/demo/lesson:id",
+        components: { default: SingleDemoLesson },
         props: { default: true }
     },
     {

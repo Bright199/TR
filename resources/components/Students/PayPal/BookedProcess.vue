@@ -4,13 +4,14 @@
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <p>
+                    <p style="margin-bottom: 2px">
                         It seems you have already booked or started to book a demo lesson with
                         <a
                             :href="'/student/book/demo/payment/' + teacherDetails.id"
-                            >{{ teacherDetails.name }}</a
+                            >{{ teacherDetails.name }}.</a
                         >
                     </p>
+                    <p>Follow one of the links below <i class="fa-solid fa-arrow-down"></i></p>
                     <div class="container bg-white p-4">
                         <div class="row navBtns">
                             <div class="col-md-4">

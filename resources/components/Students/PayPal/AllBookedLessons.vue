@@ -1,7 +1,7 @@
 <template>
     <div>
         <DashboardNavBar />
-        <div class="container-jumbotron bg-light" style="height: 100vh">
+        <div class="container-jumbotron " >
             <div class="container mt-2 p-4">
                 <div class="row">
                     <div

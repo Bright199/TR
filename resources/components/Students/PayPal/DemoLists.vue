@@ -38,7 +38,7 @@
                         <img src="/images/profiles.png" alt="" width="210" />
                     </span>
                     <h4 class="d-flex justify-content-center">
-                        No demo lessons yet
+                        No booked demo lessons yet
                     </h4>
                     <p class="d-flex justify-content-center">
                         You can book your first lesson so easily by accessing

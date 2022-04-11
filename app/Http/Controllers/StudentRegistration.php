@@ -89,6 +89,24 @@ class StudentRegistration extends Controller
             ->where('student_id', Auth::guard('student')->id())->orderBy('id', 'desc')->first();
         return response()->json($demoDetails);
     }
+    public function getSingleDemoLessonDetails($lessonId)
+    {
+        $singleDemoLessonsDetails = TrialLessonBooking::where('student_id', Auth::guard('student')->id())->where('id', $lessonId)->get();
+
+        $teacherDetails = Teacher::all();
+
+        $singleDemoLessonsDetails = $singleDemoLessonsDetails->map(function ($teacherDetail) use ($teacherDetails) {
+            $teacher = $teacherDetails->where('id', $teacherDetail->teacher_id)->first();
+
+            $teacherDetail->teacher_name = $teacher ? $teacher->name : '';
+            $teacherDetail->teacher_online = $teacher ? $teacher->online : '';
+            $teacherDetail->teacher_image = $teacher ? $teacher->teacher_image : '';
+            $teacherDetail->teacher_hourly_pay = $teacher ? $teacher->hourly_pay : '';
+            $teacherDetail->teacher_teaching_language = $teacher ? $teacher->first_language : '';
+            return $teacherDetail;
+        });
+        return response()->json($singleDemoLessonsDetails);
+    }
     public function insertDemoPaymentDetails(Request $request)
     {
         $paymentDetails = StudentDemoPaymentDetail::create([
@@ -356,12 +374,12 @@ class StudentRegistration extends Controller
     }
     public function getSingleAd($id)
     {
-        $ad = StudentAd::where('student_id', Auth::guard('student')->id())->where('id',$id)->get();
+        $ad = StudentAd::where('student_id', Auth::guard('student')->id())->where('id', $id)->get();
         return response()->json($ad);
     }
     public function SingleAdPayment($id)
     {
-        $StudentAd= StudentAd::where('student_id', Auth::guard('student')->id())->where('id',$id)->get();
+        $StudentAd = StudentAd::where('student_id', Auth::guard('student')->id())->where('id', $id)->get();
         return view('student.singleadpayment')->with('adDetails', $StudentAd);
     }
 
@@ -370,14 +388,14 @@ class StudentRegistration extends Controller
     {
         $authUser = Auth::guard('student')->id();
         $advertDetails = $request->validate([
-            'title' => ['required', 'string', 'min:10','max:50'],
-            'ad_description' => ['required', 'string','min:20'],
+            'title' => ['required', 'string', 'min:10', 'max:50'],
+            'ad_description' => ['required', 'string', 'min:20'],
             'language' => ['required'],
             'minamount' => ['required', 'numeric'],
-            'maxamount' => ['required', 'numeric','gt:'.$request->minamount],
+            'maxamount' => ['required', 'numeric', 'gt:' . $request->minamount],
             'gender' => ['required'],
         ]);
-       
+
         $StudentAd = StudentAd::create([
             'student_id' => $authUser,
             'title' => $request->title,
@@ -401,15 +419,15 @@ class StudentRegistration extends Controller
     {
         // $authUser = Auth::guard('student')->id();
         $advertDetails = $request->validate([
-            'title' => ['required', 'string', 'min:10','max:50'],
-            'ad_description' => ['required', 'string','min:20'],
+            'title' => ['required', 'string', 'min:10', 'max:50'],
+            'ad_description' => ['required', 'string', 'min:20'],
             'language' => ['required'],
             'minamount' => ['required', 'numeric'],
-            'maxamount' => ['required', 'numeric','gt:'.$request->minamount],
+            'maxamount' => ['required', 'numeric', 'gt:' . $request->minamount],
             'gender' => ['required'],
         ]);
-       
-        StudentAd::where('id',$request->adID)->where('student_id', Auth::guard('student')->id())->update([
+
+        StudentAd::where('id', $request->adID)->where('student_id', Auth::guard('student')->id())->update([
             'title' => $request->title,
             'description' => $request->ad_description,
             'language_category' => $request->language,
@@ -417,12 +435,11 @@ class StudentRegistration extends Controller
             'maximum_budget' => $request->maxamount,
             'student_gender' => $request->gender,
         ]);
-     
     }
 
     public function PublishAd(Request $request)
     {
-        $StudentAd = StudentAd::where('student_id', Auth::guard('student')->id())->where('id',$request->adID)->update(['published'=>1]);
+        $StudentAd = StudentAd::where('student_id', Auth::guard('student')->id())->where('id', $request->adID)->update(['published' => 1]);
         // return redirect()->route('student.ad.payment')->with('adDetails', $StudentAd);
     }
 
