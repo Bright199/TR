@@ -117,6 +117,7 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::post('/getTeachersByPrice', [StudentRegistration::class, 'getTeachersByPrice']);
         Route::post('/getTeachersByLanguage', [StudentRegistration::class, 'getTeachersByLanguage']);
         Route::post('/getTeachersByCountry', [StudentRegistration::class, 'getTeachersByCountry']);
+        Route::post('/getTeachersByName', [StudentRegistration::class, 'getTeachersByName']);
 
         Route::get('/messages', function () {
             return view('student.message');

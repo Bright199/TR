@@ -6,20 +6,21 @@
             </div>
             <div class="">
                 <!-- Ours Teachers -->
-                <TeachersDetails v-if="showTeachersComponent == 0" />
+                <TeachersDetails v-if="showTeachersComponent === 0" />
                 <!--  -->
                 <!-- Other teachers -->
-                <OtherTeacherDetails v-if="showTeachersComponent == 1" />
+                <OtherTeacherDetails v-if="showTeachersComponent === 1" />
                 <!--  -->
                 <!-- teachers by price -->
-                <TeachersByPrice v-if="showTeachersComponent == 4" />
+                <TeachersByPrice v-if="showTeachersComponent === 4" />
                 <!--  -->
                 <!-- teachers by language -->
-                <TeachersByLanguage v-if="showTeachersComponent == 2" />
+                <TeachersByLanguage v-if="showTeachersComponent === 2" />
                 <!--  -->
                 <!-- teachers by country -->
-                <TeachersByCountry v-if="showTeachersComponent == 3" />
+                <TeachersByCountry v-if="showTeachersComponent === 3" />
                 <!--  -->
+                <TeachersByName v-if="showTeachersComponent  === 5"/>              
             </div>
         </div>
     </div>
@@ -33,6 +34,7 @@ import TeachersByPrice from "./OurTeacherDetail/TeachersByPrice.vue";
 import TeachersByLanguage from "./OurTeacherDetail/TeachersByLanguage.vue";
 import TeachersByCountry from "./OurTeacherDetail/TeachersByCountry.vue";
 import { mapState } from "vuex";
+import TeachersByName from './OurTeacherDetail/TeachersByName.vue';
 export default {
     name: "RightBar",
     components: {
@@ -41,6 +43,7 @@ export default {
         TeachersByPrice,
         TeachersByLanguage,
         TeachersByCountry,
+        TeachersByName,
     },
     data() {
         return {

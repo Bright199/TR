@@ -48,13 +48,10 @@ export default {
 </script>
 
 <style scoped>
-select:focus {
-    outline: none !important;
-}
-select {
+.form-select:focus{ 
+    outline: none;
+    box-shadow: none;
     border: 1px solid #029e02;
 }
-select option:hover {
-    background-color: #029e02;
-}
+
 </style>

@@ -1,11 +1,12 @@
 <template>
     <div>
+        <h5>All teachers</h5>
         <button
             type="button"
             class="AllTeachersBtn"
             @click="getTeachersDetails"
         >
-            All teachers
+            show all teachers
         </button>
     </div>
 </template>
@@ -24,11 +25,13 @@ export default {
 <style>
 .AllTeachersBtn {
     width: 100%;
-    background-color: white;
+    background-color: #029e02;
     border: 1px solid #029e02;
     border-radius: 3px;
+    color: white;
 }
 .AllTeachersBtn:hover {
-    background-color: #f8f9fa;
+    background-color: white;
+    color: #183153;
 }
 </style>

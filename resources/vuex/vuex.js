@@ -17,6 +17,7 @@ const store = createStore({
       },
       TeacherLanguage:'',
       TeacherCountry:'',
+      TeacherName: '',
       showTeachersComponent: 0,
 
     }
@@ -49,6 +50,13 @@ const store = createStore({
       state.showTeachersComponent = 0
       setTimeout(() => {
         state.showTeachersComponent = 3
+       }, 500)
+    },
+    getTeachersByName(state, payload) {
+      state.TeacherName = payload.name
+      state.showTeachersComponent = 0
+      setTimeout(() => {
+        state.showTeachersComponent = 5
        }, 500)
     },
     ActivateOtherTeacherDiv(state) {

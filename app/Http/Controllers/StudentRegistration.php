@@ -218,6 +218,12 @@ class StudentRegistration extends Controller
         $teachersDetails = Teacher::where('nationality', $request->TeacherCountry)->paginate(5);
         return response()->json($teachersDetails);
     }
+    public function getTeachersByName(Request $request)
+    {
+        $teachersDetails = Teacher::where('id', '!=', Auth::guard('student')->id())
+        ->where('name', 'like', '%'. $request->TeacherName . '%')->paginate(5);
+        return response()->json($teachersDetails);
+    }
     public function getUnreadMessages()
     {
         $studentId = Auth::guard('student')->id();

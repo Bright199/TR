@@ -46,11 +46,9 @@ export default {
 </script>
 
 <style scoped>
-select:focus{
-    outline: none ;
-}
-select{
+.form-select:focus{ 
+    outline: none;
+    box-shadow: none;
     border: 1px solid #029e02;
 }
-
 </style>

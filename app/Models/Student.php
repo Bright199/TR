@@ -21,6 +21,18 @@ class Student extends Authenticatable
     {
         return $this->hasMany(StudentContact::class);
     }
+    public function paidlesson()
+    {
+        return $this->hasMany(PaidLesson::class);
+    }
+    public function paidlessonpayment()
+    {
+        return $this->hasMany(PaidLessonPaymentDetail::class);
+    }
+    public function studentdemopayment()
+    {
+        return $this->hasMany(StudentDemoPaymentDetail::class);
+    }
 
     protected $fillable = [
         'name',

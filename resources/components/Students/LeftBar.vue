@@ -11,6 +11,10 @@
 
             <form>
                 <div>
+                    <ByTeacherName />
+                </div>
+                <br />
+                <div>
                     <ByAllTeachers />
                 </div>
                 <br />
@@ -37,9 +41,16 @@ import ByPrice from "./FilterResults/ByPrice.vue";
 import ByCountry from "./FilterResults/ByCountry.vue";
 import ByLanguage from "./FilterResults/ByLanguage.vue";
 import ByAllTeachers from "./FilterResults/ByAllTeachers.vue";
+import ByTeacherName from "./FilterResults/ByTeacherName.vue";
 export default {
     name: "LeftBar",
-    components: { ByLanguage, ByCountry, ByPrice, ByAllTeachers },
+    components: {
+        ByLanguage,
+        ByCountry,
+        ByPrice,
+        ByAllTeachers,
+        ByTeacherName,
+    },
     data() {
         return {};
     },
@@ -53,7 +64,7 @@ export default {
     -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     -moz-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
     /* padding: 10px; */
-    height: 500px;
+    height: 700px;
 }
 .my-ad {
     /* background-color: #f6f2e9; */

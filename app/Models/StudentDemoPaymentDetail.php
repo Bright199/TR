@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class StudentDemoPaymentDetail extends Model
 {
     use HasFactory;
+    public function student(){
+        return $this->belongsTo(Student::class);
+    }
     protected $fillable = [
         'payer_name',
         'teacher_id',
