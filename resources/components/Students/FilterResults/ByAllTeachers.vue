@@ -28,6 +28,7 @@ export default {
     background-color: #029e02;
     border: 1px solid #029e02;
     border-radius: 3px;
+    padding: 0px 0px 2px;
     color: white;
 }
 .AllTeachersBtn:hover {

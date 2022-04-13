@@ -96,7 +96,7 @@
                             </p>
                             <p>
                                 <span v-if="teacher.favorite_count"
-                                    ><i class="fa-solid fa-thumbs-up" style="color:#fed907"></i
+                                    ><i class="fa-solid fa-thumbs-up" style="color:gray"></i
                                     >{{ teacher.favorite_count }}</span
                                 >
                             </p>
@@ -529,7 +529,7 @@ body {
 
 .HoverTeacher:hover:not(img) {
     background-color: rgb(21, 20, 25, 0.05);
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 .HoverTeacher {
     border-bottom: 1px solid rgb(219, 219, 219);

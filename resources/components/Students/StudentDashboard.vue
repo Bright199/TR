@@ -101,7 +101,7 @@ export default {
     color: white;
     text-decoration: none;
     background: #029e02;
-    padding: 0 12px 2px;
+    padding: 0 12px 3px;
     border-radius: 3px;
 }
 .adLink:hover {

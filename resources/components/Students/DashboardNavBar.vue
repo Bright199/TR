@@ -1,141 +1,174 @@
 <template>
-        <div class="container-jumbotron TopBar1">
-            <div class="row">
-                <div class="col-md-4">
-                    <ul class="NavLinks">
-                        <li style="margin-left: 20px">
-                            <router-link to="/student/dashboard">
-                                <i class="fa-solid fa-house"></i>&nbsp;Dashboard
-                            </router-link>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-8">
-                    <ul class="NavLinks2">
-                        <li>
-                            <i class="fa-solid fa-wallet"></i>
-                        </li>
-                        <li
-                            class="messageuserdropdown"
-                            v-if="receivedMessages.length"
-                        >
-                           
-                            <router-link to="#"  @click="OpenMessageModal">
-                                <span class="UserName"
-                                   
-                                    ><i class="fa-solid fa-message"></i>&nbsp;
-                                    <span
-                                        class="unReadMessage"
-                                        v-if="(loaded = true && unreadMessageCount > 0)"
-                                        >{{ unreadMessageCount }}</span
-                                    ></span
-                                >
-                            </router-link>
-                            
-                        </li>
-                        <li class="userdropdown" v-else>
-                            <router-link to="#" @click="OpenMessageModal">
-                                <span class="UserName"
-                                    ><i class="fa-solid fa-message"></i>&nbsp;
-                                </span>
-                            </router-link>
-                           
-                            <ul class="userdropdown-content">
-                                <li
-                                    style="font-size: 14px"
-                                    class="d-flex justify-content-center align-items-center align-content-center"
-                                >
-                                    No message yet
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="userdropdown">
-                            <router-link to="/student/teachers">
-                                <span class="UserName"
-                                    ><i class="fa-solid fa-chalkboard-user"></i
-                                    >&nbsp; </span
-                                >
-                            </router-link>
-                        </li>
-                        <li
-                            class="messageuserdropdown"
-                            v-if="FavoriteCount >0"
-                        >
-                            <router-link to="/student/favorite">
-                                <span class="UserName"
-                                    ><i class="fa-solid fa-bookmark"></i>&nbsp;
-                                    <span
-                                        class="unReadMessage"
-                                        v-if="(loaded = true && FavoriteCount > 0)"
-                                        >{{ FavoriteCount }}</span
-                                    ></span
-                                >
-                            </router-link>
-                            
-                        </li>
-                        <li class="userdropdown" v-else>
-                            <router-link to="#">
-                                <span class="UserName"
-                                    ><i class="fa-solid fa-bookmark"></i>&nbsp;
-                                </span>
-                            </router-link>
-                            
-                            <ul class="userdropdown-content">
-                                <li
-                                    style="font-size: 14px"
-                                    class="d-flex justify-content-center"
-                                >
-                                    No favorites yet
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="userdropdown">
-                            <span class="UserName" style="color: #029e02; font-weight:normal" v-if="MyUser">{{ MyUser.name.split(" ")[0] }}</span>
-                            <ul class="userdropdown-content" style="padding:7px">
-                                <li>
-                                    <router-link to="/student/edit/profile"
-                                        >Profile
-                                        <img src="/images/profile.png" width="25" alt="">
-                                        </router-link
-                                    >
-                                </li>
-                                <li>
-                                    <router-link to="/student/ad/management"
-                                        >My ads
-                                        </router-link
-                                    >
-                                </li>
-                                <li>
-                                    <router-link to="/student/all/booked/lessons"
-                                        >My lessons
-                                        </router-link
-                                    >
-                                </li>
-                                <li>
-                                    <a href="/student/logout"
-                                        >Logout
-                                        <i
-                                            class="fa-solid fa-right-from-bracket"
-                                            style="
-                                                color: #151419;
-                                                font-size: 20px;
+    <div class="container-jumbotron TopBar1">
+        <div class="row">
+            <div class="col-md-4">
+                <ul class="NavLinks">
+                    <li style="margin-left: 20px">
+                        <router-link to="/student/dashboard">
+                            <i class="fa-solid fa-house"></i>&nbsp;Dashboard
+                        </router-link>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="NavLinks2">
+                            <li>
+                                <button @click.prevent="" class="buyBtn">Buy hours</button>
+                            </li>
+                            <li>You have: {{ 0 }} hours</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="NavLinks2">
+                            <li
+                                class="messageuserdropdown"
+                                v-if="receivedMessages.length"
+                            >
+                                <router-link to="#" @click="OpenMessageModal">
+                                    <span class="UserName"
+                                        ><i class="fa-solid fa-message"></i
+                                        >&nbsp;
+                                        <span
+                                            class="unReadMessage"
+                                            v-if="
+                                                (loaded =
+                                                    true &&
+                                                    unreadMessageCount > 0)
                                             "
+                                            >{{ unreadMessageCount }}</span
+                                        ></span
+                                    >
+                                </router-link>
+                            </li>
+                            <li class="userdropdown" v-else>
+                                <router-link to="#" @click="OpenMessageModal">
+                                    <span class="UserName"
+                                        ><i class="fa-solid fa-message"></i
+                                        >&nbsp;
+                                    </span>
+                                </router-link>
+
+                                <ul class="userdropdown-content">
+                                    <li
+                                        style="font-size: 14px"
+                                        class="d-flex justify-content-center align-items-center align-content-center"
+                                    >
+                                        No message yet
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="userdropdown">
+                                <router-link to="/student/teachers">
+                                    <span class="UserName"
+                                        ><i
+                                            class="fa-solid fa-chalkboard-user"
                                         ></i
-                                    ></a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                                        >&nbsp;
+                                    </span>
+                                </router-link>
+                            </li>
+                            <li
+                                class="messageuserdropdown"
+                                v-if="FavoriteCount > 0"
+                            >
+                                <router-link to="/student/favorite">
+                                    <span class="UserName"
+                                        ><i class="fa-solid fa-bookmark"></i
+                                        >&nbsp;
+                                        <span
+                                            class="unReadMessage"
+                                            v-if="
+                                                (loaded =
+                                                    true && FavoriteCount > 0)
+                                            "
+                                            >{{ FavoriteCount }}</span
+                                        ></span
+                                    >
+                                </router-link>
+                            </li>
+                            <li class="userdropdown" v-else>
+                                <router-link to="#">
+                                    <span class="UserName"
+                                        ><i class="fa-solid fa-bookmark"></i
+                                        >&nbsp;
+                                    </span>
+                                </router-link>
+
+                                <ul class="userdropdown-content">
+                                    <li
+                                        style="font-size: 14px"
+                                        class="d-flex justify-content-center"
+                                    >
+                                        No favorites yet
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="userdropdown" style="margin-top: 10px">
+                                
+                                <img
+                                    :src="'/storage/student/images/' + MyUser.user_image"
+                                    alt=""
+                                    v-if="MyUser.user_image !== null && loaded"
+                                    style="border-radius: 50%; width: 35px; height: 35px;"
+                                />
+                                <img
+                                    src="/images/avatar.png"
+                                    alt="profile_picture"
+                                    v-else-if="loaded"
+                                     style="border-radius: 50%; width: 35px; height: 35px;"
+                                />
+                                <ul
+                                    class="userdropdown-content"
+                                    style="padding: 7px"
+                                >
+                                    <li>
+                                        <router-link to="/student/edit/profile"
+                                            >Profile
+                                            <img
+                                                src="/images/profile.png"
+                                                width="25"
+                                                alt=""
+                                            />
+                                        </router-link>
+                                    </li>
+                                    <li>
+                                        <router-link to="/student/ad/management"
+                                            >My ads
+                                        </router-link>
+                                    </li>
+                                    <li>
+                                        <router-link
+                                            to="/student/all/booked/lessons"
+                                            >My lessons
+                                        </router-link>
+                                    </li>
+                                    <li>
+                                        <a href="/student/logout"
+                                            >Logout
+                                            <i
+                                                class="fa-solid fa-right-from-bracket"
+                                                style="
+                                                    color: #151419;
+                                                    font-size: 20px;
+                                                "
+                                            ></i
+                                        ></a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-
-        
+    </div>
 </template>
 <script>
 import axios from "axios";
 import { mapState, mapGetters } from "vuex";
-import moment from 'moment'
+import moment from "moment";
 export default {
     name: "DashboardNavBar",
     data() {
@@ -144,7 +177,7 @@ export default {
             AuthUserName: "",
             receivedMessages: "",
             loaded: false,
-            StudentFavorites:'',
+            StudentFavorites: "",
         };
     },
     mounted() {
@@ -155,23 +188,23 @@ export default {
     },
 
     methods: {
-        OpenMessageModal()
-        {
-            this.$store.commit('MessageModalPopup')
+        OpenMessageModal() {
+            this.$store.commit("MessageModalPopup");
         },
-        markRead(messageRowId){
-            axios
-                .post("/student/markMessageRead",{rowId: messageRowId})
-            
+        markRead(messageRowId) {
+            axios.post("/student/markMessageRead", { rowId: messageRowId });
         },
         dateTime(value) {
-            return  moment(value).startOf('hour').fromNow();
+            return moment(value).startOf("hour").fromNow();
         },
         getUnreadMessages() {
             axios
                 .get("/student/getUnreadMessages")
                 .then((response) => {
-                    this.$store.commit('unreadMessageCount', response.data.length)
+                    this.$store.commit(
+                        "unreadMessageCount",
+                        response.data.length
+                    );
                     if (response.data.length > 0) {
                         this.loaded = true;
                     }
@@ -184,8 +217,11 @@ export default {
             axios
                 .get("/student/getFavorites")
                 .then((response) => {
-                    this.$store.commit('setFavoriteCount',response.data.length)
-                    this.StudentFavorites = response.data
+                    this.$store.commit(
+                        "setFavoriteCount",
+                        response.data.length
+                    );
+                    this.StudentFavorites = response.data;
                     if (response.data.length > 0) {
                         this.loaded = true;
                     }
@@ -222,26 +258,38 @@ export default {
     computed: {
         ...mapState({
             MyUser: (state) => state.loggedUser,
-            FavoriteCount: (state)=> state.FavoriteCount,
-            unreadMessageCount: (state)=> state.unreadMessageCount
+            FavoriteCount: (state) => state.FavoriteCount,
+            unreadMessageCount: (state) => state.unreadMessageCount,
         }),
     },
 };
 </script>
 <style scoped>
-
-.timeSent{
-    font-size:12px;
-    color:#151419;
+.buyBtn{
+    padding: 0px 15px 2px;
+    color: #183153;
+    background: white;
+    border-radius: 2px;
+    border: none;
+    transition: 0.9s
+}
+.buyBtn:hover{
+    color: white;
+    background: #183153;
+    
+}
+.timeSent {
+    font-size: 12px;
+    color: #151419;
     position: absolute;
     top: 15px;
     right: 20px;
 }
-.unReadMessageBg{
-    background-color:#f7f7f7
+.unReadMessageBg {
+    background-color: #f7f7f7;
 }
-.unReadMessageBg:hover{
-    background-color:#f8f8f8;
+.unReadMessageBg:hover {
+    background-color: #f8f8f8;
     cursor: pointer;
 }
 .btn {
@@ -260,7 +308,7 @@ export default {
 .NavLinks2 {
     display: flex;
     flex-direction: row;
-    
+
     justify-content: flex-end;
 }
 .NavLinks2 li {
@@ -283,7 +331,6 @@ export default {
     margin-right: 25px;
     font-size: 16px;
     margin-top: 15px;
-
 }
 .NavLinks li a {
     text-decoration: none;
@@ -338,8 +385,8 @@ export default {
     position: relative;
     /* display: inline-block; */
 }
-.userdropdown li{
-    margin-bottom:4px;
+.userdropdown li {
+    margin-bottom: 4px;
     margin-left: 12px;
     margin-top: 4px;
 }
@@ -367,8 +414,6 @@ export default {
 }
 
 .UserName {
-        
-
     text-transform: capitalize;
     font-weight: 600;
 }
@@ -379,7 +424,7 @@ export default {
     position: relative;
 }
 .unReadMessage {
-    background-color: #fe0609 ;
+    background-color: #fe0609;
     display: flex;
     position: absolute;
     align-items: center;

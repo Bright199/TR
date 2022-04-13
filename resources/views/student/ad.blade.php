@@ -50,7 +50,7 @@
                     </div>
                     <div class="col-md-9 d-flex justify-content-start">
                         <p>
-                            In order to create a job ad for teachers to see you are required
+                            In order to create a job ad for teachers to see, you are required
                             to add your profile image and country in the
                             profile section. You can do this by clicking on
                             your name in the navigation bar and going to the
@@ -190,9 +190,10 @@
         display: none;
     }
 
-    input:focus {
+    input:focus, .form-select:focus {
         box-shadow: none;
-        outline: 0
+        outline: 0;
+        border: 1px solid #029e02;
     }
 
     input[type=number]::-webkit-inner-spin-button,

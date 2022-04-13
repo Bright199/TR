@@ -7,7 +7,7 @@
             >
                 <a href="/student/create/ad"><h6>Post an ad</h6></a>
             </div>
-            <p class="pt-2" style="color: #029e02">Filter by</p>
+            <p class="pt-2" style="color: #029e02">Filter</p>
 
             <form>
                 <div>
