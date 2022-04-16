@@ -2,7 +2,7 @@
     <div class="row TopBar1">
         <div class="col ">
             <ul class="NavLinks">
-                <li style="margin-left: 20px">
+                <li style="margin-left: 16px">
                     <router-link to="/student/dashboard">
                         <i class="fa-solid fa-house"></i>&nbsp;Dashboard
                     </router-link>
@@ -26,7 +26,7 @@ export default {
     box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -webkit-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -moz-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
-    background-color: #fed907
+    /* background-color: #fed907 */
 }
 
 
@@ -43,7 +43,6 @@ export default {
 .NavLinks2 li {
     list-style: none;
     margin-right: 25px;
-    font-size: 20px;
 }
 .NavLinks2 li a {
     text-decoration: none;
@@ -58,7 +57,6 @@ export default {
 .NavLinks li {
     list-style: none;
     margin-right: 25px;
-    font-size: 20px;
 }
 .NavLinks li a {
     text-decoration: none;

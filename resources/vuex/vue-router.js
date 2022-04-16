@@ -15,11 +15,12 @@ import FreelanceTeachers from '../components/Students/FreelanceTeachers.vue';
 import SingleFreelanceTeacher from '../components/Students/SingleFreelanceTeacher.vue';
 import Favorites from '../components/Students/Favorites/Favorites.vue';
 import SingleFavorite from '../components/Students/Favorites/SingleFavorite.vue';
-import TrialLessonBooking from '../components/Students/PayPal/TrialLessonBooking.vue'
-import IncompleteDemoBook from '../components/Students/PayPal/IncompleteDemoBook.vue'
-import AllBookedLessons from '../components/Students/PayPal/AllBookedLessons.vue'
-import DemoPaymentSummary from '../components/Students/PayPal/DemoPaymentSummary.vue'
-import SingleDemoLesson from '../components/Students/PayPal/SingleDemoLesson.vue'
+import TrialLessonBooking from '../components/Students/Booking/TrialLessonBooking.vue'
+import IncompleteDemoBook from '../components/Students/Booking/IncompleteDemoBook.vue'
+import AllBookedLessons from '../components/Students/Booking/AllBookedLessons.vue'
+import DemoPaymentSummary from '../components/Students/Booking/DemoPaymentSummary.vue'
+import SingleDemoLesson from '../components/Students/Booking/SingleDemoLesson.vue'
+import LessonPackages from '../components/Students/Booking/PaidLesson/LessonPackages.vue'      
 const newLocal = 'Home';
 const routes = [
     {
@@ -111,6 +112,11 @@ const routes = [
     {
         path: "/student/book/demo/lesson/:id",
         components: { default: TrialLessonBooking },
+        props: { default: true }
+    },
+    {
+        path: "/student/book/paid/lesson/:id",
+        components: { default: LessonPackages },
         props: { default: true }
     },
     {

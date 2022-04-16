@@ -53,7 +53,7 @@ import DashboardNavBar from "./DashboardNavBar.vue";
 import axios from "axios";
 import MessageComponent from "./Messages/MessageComponent.vue";
 import SingleMessageComponent from "./Messages/SingleMessageComponent.vue";
-import BookPaidLesson from "./PayPal/BookPaidLesson.vue";
+import BookPaidLesson from "./Booking/BookPaidLesson.vue";
 export default {
     name: "StudentDashboard",
     emits: ["OpenMessageModal"],

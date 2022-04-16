@@ -57,11 +57,11 @@
                                 Edit Profile</button
                             ><br />
                             <p
-                                class="DeleteUser"
+                                class="btn text-center DeleteUser mt-2"
                                 data-bs-toggle="modal"
                                 data-bs-target="#DeleteModal"
                             >
-                                Delete my account
+                                Delete account
                             </p>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                                     <label
                                         for="imageProfile"
                                         class="btn btn-light"
-                                        ><i class="fa-solid fa-upload"></i
+                                        ><i class="fa-solid fa-upload" style="color: #029e02"></i
                                         >&nbsp; Upload Image</label
                                     >
                                     <input
@@ -462,11 +462,13 @@ export default {
     box-shadow: none;
 }
 .OutLineRemove {
-    background-color: #029e02;
-    color: white;
+    border: 1px solid #029e02;
+    border-radius: 2px;
+    /* color: white; */
 }
 .OutLineRemove:hover {
     background-color: #03b103;
+    color: white;
 }
 .EditBtn:hover {
     background-color: #03b103;
@@ -479,5 +481,11 @@ export default {
 
 .DeleteUser:hover {
     cursor: pointer;
+    background: rgb(211, 1, 1);
+    color: white;
+}
+.DeleteUser{
+    border: 1px solid rgb(211, 1, 1);
+    border-radius: 2px
 }
 </style>

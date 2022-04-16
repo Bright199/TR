@@ -196,28 +196,7 @@
                                         ${{ teacher.hourly_pay }}
                                         {{ teacher.currency }}<br />
                                     </p>
-                                    <!-- <p
-                                        v-else-if="teacher.currency == 'EUR'"
-                                        style="
-                                            font-size: 23px;
-                                            font-weight: 550;
-                                        "
-                                        class="d-flex justify-content-end"
-                                    >
-                                        €{{ teacher.hourly_pay }}
-                                        {{ teacher.currency }}<br />
-                                    </p>
-                                    <p
-                                        v-else-if="teacher.currency == 'GBP'"
-                                        style="
-                                            font-size: 23px;
-                                            font-weight: 550;
-                                        "
-                                        class="d-flex justify-content-end"
-                                    >
-                                        £{{ teacher.hourly_pay }}
-                                        {{ teacher.currency }}<br />
-                                    </p> -->
+                                    
                                     <p
                                         style="
                                             line-height: 2px;
@@ -500,6 +479,7 @@ body {
 .FilterBtn {
     background-color: #029e02;
     color: white;
+    padding-top: 3px;
 }
 .FilterBtn:focus {
     outline: none;
@@ -511,6 +491,7 @@ body {
 }
 .RemoveOutline {
     background-color: #fed907;
+    padding-top: 3px;
 }
 .RemoveOutline:hover {
     background-color: #f1ce07;

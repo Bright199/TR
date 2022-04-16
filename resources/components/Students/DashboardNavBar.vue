@@ -25,7 +25,7 @@
                             <li>You have: {{ 0 }} hours</li>
                         </ul>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 MainNavLinks2">
                         <ul class="NavLinks2">
                             <li
                                 class="messageuserdropdown"
@@ -33,7 +33,7 @@
                             >
                                 <router-link to="#" @click="OpenMessageModal">
                                     <span class="UserName"
-                                        ><img src="/images/message.png" alt="" width="30">&nbsp;
+                                        ><img src="/images/message.png" alt="" width="25">&nbsp;
                                         <span
                                             class="unReadMessage"
                                             v-if="
@@ -50,7 +50,7 @@
                                 <router-link to="#" @click="OpenMessageModal">
                                     <span class="UserName"
                                         >
-                                       <img src="/images/message.png" alt="" width="30"> &nbsp;
+                                       <img src="/images/message.png" alt="" width="25"> &nbsp;
                                     </span>
                                 </router-link>
 
@@ -66,7 +66,7 @@
                             <li class="userdropdown">
                                 <router-link to="/student/teachers">
                                     <span class="UserName"
-                                        ><img src="/images/teacher.png" alt="teacher" width="30">&nbsp;
+                                        ><img src="/images/teacher.png" alt="teacher" width="25">&nbsp;
                                     </span>
                                 </router-link>
                             </li>
@@ -76,7 +76,7 @@
                             >
                                 <router-link to="/student/favorite">
                                     <span class="UserName"
-                                        ><img src="/images/bookmark.png" alt="bookmark" width="30">&nbsp;
+                                        ><img src="/images/bookmark.png" alt="bookmark" width="25">&nbsp;
                                         <span
                                             class="unReadMessage"
                                             v-if="
@@ -91,7 +91,7 @@
                             <li class="userdropdown" v-else>
                                 <router-link to="#">
                                     <span class="UserName"
-                                        ><img src="/images/bookmark.png" alt="bookmark" width="30">&nbsp;
+                                        ><img src="/images/bookmark.png" alt="bookmark" width="25">&nbsp;
                                     </span>
                                 </router-link>
 
@@ -125,6 +125,7 @@
                                     textColor="white"
                                     :border="false"
                                     class="text2"
+                                    colorType="normal"
                                 />
                                 <!-- <img
                                     src="/images/avatar.png"
@@ -343,8 +344,10 @@ export default {
 
 .NavLinks2 {
     display: flex;
+    flex: 1;
     flex-flow: row wrap;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
 }
 .NavLinks2 li {
     list-style: none;
@@ -358,8 +361,10 @@ export default {
 }
 .NavLinks {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    flex: 1;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
 }
 .NavLinks li {
     list-style: none;
@@ -371,7 +376,9 @@ export default {
     text-decoration: none;
     color: #183153;
 }
-
+.NavLinks i{
+font-size:15px
+}
 /* This is message drop down */
 
 .messageuserdropdown {

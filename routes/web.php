@@ -88,6 +88,9 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::post('/trial/lesson/confirmation', [StudentRegistration::class, 'TrialLessonConfirmation']);
         Route::get('teacher/demo/lessons/{teacherId}',[StudentRegistration::class,'getStudentTeacherDemoLesson']);
 
+        Route::get('/book/paid/lesson/{teacherId?}',function(){
+            return view('student.bookpaidlesson');
+        });
         Route::get('/book/demo/payment/{teacherId}',[StudentRegistration::class,'DemoPayment']);
         Route::get('/cancel/book/demo/lesson/{teacherId}',[StudentRegistration::class,'CancelDemoBooking']);
         Route::get('/incomplete/demo/lessons',[StudentRegistration::class,'incompleteDemoBooking']);
