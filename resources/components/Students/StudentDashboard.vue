@@ -5,6 +5,7 @@
             <DashboardNavBar />
             <MessageComponent v-if="modalState === true" />
             <SingleMessageComponent v-if="singleModalState === true" />
+            <BookPaidLesson v-if="showBookPaidLessonComponent === true" />
         </div>
         <!-- @open-message-modal="OpenModal" -->
         <!-- v-if="OpenMessagesModal? $emit('OpenModal'):''" -->
@@ -20,7 +21,7 @@
                             </p>
                         </div>
                         <div class="col-md-4">
-                            <a class="adLink" href="/student/create/ad" 
+                            <a class="adLink" href="/student/create/ad"
                                 >Create job advert</a
                             >
                         </div>
@@ -28,7 +29,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="container">
             <div class="container-jumbotron">
                 <div class="row">
@@ -52,6 +53,7 @@ import DashboardNavBar from "./DashboardNavBar.vue";
 import axios from "axios";
 import MessageComponent from "./Messages/MessageComponent.vue";
 import SingleMessageComponent from "./Messages/SingleMessageComponent.vue";
+import BookPaidLesson from "./PayPal/BookPaidLesson.vue";
 export default {
     name: "StudentDashboard",
     emits: ["OpenMessageModal"],
@@ -62,6 +64,7 @@ export default {
         DashboardNavBar,
         MessageComponent,
         SingleMessageComponent,
+        BookPaidLesson
     },
     data() {
         return {
@@ -92,6 +95,7 @@ export default {
             modalState: (state) => state.openModal,
             singleModalState: (state) => state.openSingleModal,
             loggedUser: (state) => state.loggedUser,
+            showBookPaidLessonComponent: (state) => state.showBookPaidLessonComponent
         }),
     },
 };

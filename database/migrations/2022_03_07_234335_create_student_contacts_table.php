@@ -21,6 +21,7 @@ class CreateStudentContactsTable extends Migration
             $table->string('teacher_email');
             $table->string('student_name');
             $table->string('student_email');
+            $table->boolean('is_booked_by_student')->default(0);
             $table->string('teacher_image')->nullable();
             $table->timestamps();
         });

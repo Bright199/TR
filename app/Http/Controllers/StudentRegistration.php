@@ -122,6 +122,7 @@ class StudentRegistration extends Controller
         if ($paymentDetails) {
             TrialLessonBooking::where('teacher_id', $request->teacherId)
                 ->where('student_id', Auth::guard('student')->id())->update(['booked' => 1]);
+            StudentContact::where('teacher_id', $request->teacherId)->where('student_id', Auth::guard('student')->id())->update(['is_booked_by_student' => 1]);
         }
         // return response()->json($paymentDetails);
     }
@@ -141,6 +142,21 @@ class StudentRegistration extends Controller
     {
         $bookedDemoLessons = TrialLessonBooking::where('student_id', Auth::guard('student')->id())->where('booked', 1)->get();
         return response()->json($bookedDemoLessons);
+    }
+    public function getAllTrialContactTeachers()
+    {
+        $studentContactsIds = StudentContact::where('student_id', Auth::guard('student')->id())->pluck('teacher_id');
+        $teachersByIds = Teacher::whereIn('id', $studentContactsIds->toArray())->get();
+        $allContacts = StudentContact::where('student_id', Auth::guard('student')->id())->get();
+
+        $allContacts = $allContacts->map(function ($teacher) use ($teachersByIds) {
+            $contactedTeacher = $teachersByIds->where('id', $teacher->teacher_id)->first();
+
+            $teacher->hourly_pay = $contactedTeacher ? $contactedTeacher->hourly_pay : '';
+            $teacher->teacher_image2 = $contactedTeacher ? $contactedTeacher->teacher_image : '';
+            return $teacher;
+        });
+        return response()->json($allContacts);
     }
 
 
@@ -221,7 +237,7 @@ class StudentRegistration extends Controller
     public function getTeachersByName(Request $request)
     {
         $teachersDetails = Teacher::where('id', '!=', Auth::guard('student')->id())
-        ->where('name', 'like', '%'. $request->TeacherName . '%')->paginate(5);
+            ->where('name', 'like', '%' . $request->TeacherName . '%')->paginate(5);
         return response()->json($teachersDetails);
     }
     public function getUnreadMessages()
@@ -243,6 +259,7 @@ class StudentRegistration extends Controller
     public function GetOurTeachers()
     {
         $favoriteTeachersIds = StudentFavorite::where('student_id', Auth::guard('student')->id())->get();
+        $contactedteachers = StudentContact::where('student_id', Auth::guard('student')->id())->get();
         // return $favoriteTeachersIds->toArray();
 
         $authStudent = Student::find(Auth::guard('student')->id());
@@ -251,12 +268,14 @@ class StudentRegistration extends Controller
 
         $teacherFavCount = StudentFavorite::all();
 
-        $teachers = $teachers->map(function ($favoriteTeacher) use ($favoriteTeachersIds, $teacherFavCount) {
+        $teachers = $teachers->map(function ($favoriteTeacher) use ($favoriteTeachersIds, $teacherFavCount, $contactedteachers) {
             $myfavoriteTeacher = $favoriteTeachersIds->where('teacher_id', $favoriteTeacher->id)->first();
             $favCount = $teacherFavCount->where('teacher_id', $favoriteTeacher->id)->pluck('teacher_id');
+            $teacherBooked = $contactedteachers->where('teacher_id', $favoriteTeacher->id)->first();
 
             $favoriteTeacher->favorite_id = $myfavoriteTeacher ? $myfavoriteTeacher->teacher_id : '';
             $favoriteTeacher->favorite_count = $favCount ? $favCount->count() : '';
+            $favoriteTeacher->is_booked_by_student = $teacherBooked ? $teacherBooked->is_booked_by_student : '';
 
             return $favoriteTeacher;
         });

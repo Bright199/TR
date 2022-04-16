@@ -88,21 +88,38 @@
                             />
                         </div>
                         <div class="col-md-6">
-                            <p style="font-size: 20px; margin-bottom:2px; font-weight: 550">
-                                <router-link :to="'/student/single/teacher/'+teacher.id" style="text-decoration:none; color: #183153">
-                                {{ teacher.name }}
+                            <p
+                                style="
+                                    font-size: 20px;
+                                    margin-bottom: 2px;
+                                    font-weight: 550;
+                                "
+                            >
+                                <router-link
+                                    :to="
+                                        '/student/single/teacher/' + teacher.id
+                                    "
+                                    style="
+                                        text-decoration: none;
+                                        color: #183153;
+                                    "
+                                >
+                                    {{ teacher.name }}
                                 </router-link>
                                 <i class="fa-solid fa-flag-checkered"></i>
                             </p>
                             <p>
                                 <span v-if="teacher.favorite_count"
-                                    ><i class="fa-solid fa-thumbs-up" style="color:gray"></i
+                                    ><i
+                                        class="fa-solid fa-thumbs-up"
+                                        style="color: gray"
+                                    ></i
                                     >{{ teacher.favorite_count }}</span
                                 >
                             </p>
 
                             <!-- <span style="font-size:bolder">Malawi </span> -->
-                            <p >
+                            <p>
                                 <i class="fa-solid fa-chalkboard-user"></i
                                 >&nbsp;Teaches {{ teacher.first_language }}
                             </p>
@@ -113,13 +130,21 @@
                                     teacher.first_language_proficiency
                                 }}</span>
                                 {{ teacher.second_language }}
-                                <span v-if="teacher.second_language_proficiency" class="SecondFluencyLevel">{{
-                                    teacher.second_language_proficiency
-                                }}</span>
+                                <span
+                                    v-if="teacher.second_language_proficiency"
+                                    class="SecondFluencyLevel"
+                                    >{{
+                                        teacher.second_language_proficiency
+                                    }}</span
+                                >
                                 {{ teacher.third_language }}
-                                <span  v-if="teacher.third_language_proficiency" class="ThirdFluencyLevel">{{
-                                    teacher.third_language_proficiency
-                                }}</span>
+                                <span
+                                    v-if="teacher.third_language_proficiency"
+                                    class="ThirdFluencyLevel"
+                                    >{{
+                                        teacher.third_language_proficiency
+                                    }}</span
+                                >
                             </p>
                             <p v-if="teacher.description.length > 200">
                                 <span
@@ -133,7 +158,12 @@
                                         >...Read More</span
                                     >
                                 </span>
-                                <span v-else-if="showShortDescription === teacher.id" class="shortDescription">
+                                <span
+                                    v-else-if="
+                                        showShortDescription === teacher.id
+                                    "
+                                    class="shortDescription"
+                                >
                                     {{ teacher.description }}
                                     <span
                                         @click="readLess"
@@ -269,11 +299,23 @@
                             <!-- <a href="" >Details</a -->
                             <br />
                             <a
+                                v-if="
+                                    teacher.is_booked_by_student === 0 ||
+                                    teacher.is_booked_by_student === ''
+                                "
                                 :href="
                                     '/student/book/demo/lesson/' + teacher.id
                                 "
                                 class="btn d-block mb-3 RemoveOutline"
                                 >Book trial lesson</a
+                            >
+                            <a
+                                v-else-if="teacher.is_booked_by_student === 1"
+                                :href="
+                                    '/student/book/demo/lesson/' + teacher.id
+                                "
+                                class="btn d-block mb-3 RemoveOutline"
+                                >Buy hours</a
                             >
                         </div>
                     </div>
@@ -389,6 +431,7 @@ export default {
                 .get("/student/our/teachers?page=" + page)
                 .then((response) => {
                     this.teachers = response.data;
+                    console.log(response.data);
                     if (response.data.data.length > 0) {
                         this.teacherLength = response.data.data.length;
                     } else {
@@ -467,10 +510,10 @@ body {
     box-shadow: none;
 }
 .RemoveOutline {
-    background-color: #fed907
+    background-color: #fed907;
 }
 .RemoveOutline:hover {
-    background-color: #f1ce07
+    background-color: #f1ce07;
 }
 .MainFluencyLevel {
     color: #029e02;

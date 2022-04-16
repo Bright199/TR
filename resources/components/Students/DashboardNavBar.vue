@@ -15,7 +15,12 @@
                     <div class="col-md-6">
                         <ul class="NavLinks2">
                             <li>
-                                <button @click.prevent="" class="buyBtn">Buy hours</button>
+                                <button
+                                    @click.prevent="buyHours"
+                                    class="buyBtn"
+                                >
+                                    Buy hours
+                                </button>
                             </li>
                             <li>You have: {{ 0 }} hours</li>
                         </ul>
@@ -28,8 +33,7 @@
                             >
                                 <router-link to="#" @click="OpenMessageModal">
                                     <span class="UserName"
-                                        ><i class="fa-solid fa-message"></i
-                                        >&nbsp;
+                                        ><img src="/images/message.png" alt="" width="30">&nbsp;
                                         <span
                                             class="unReadMessage"
                                             v-if="
@@ -45,8 +49,8 @@
                             <li class="userdropdown" v-else>
                                 <router-link to="#" @click="OpenMessageModal">
                                     <span class="UserName"
-                                        ><i class="fa-solid fa-message"></i
-                                        >&nbsp;
+                                        >
+                                       <img src="/images/message.png" alt="" width="30"> &nbsp;
                                     </span>
                                 </router-link>
 
@@ -62,10 +66,7 @@
                             <li class="userdropdown">
                                 <router-link to="/student/teachers">
                                     <span class="UserName"
-                                        ><i
-                                            class="fa-solid fa-chalkboard-user"
-                                        ></i
-                                        >&nbsp;
+                                        ><img src="/images/teacher.png" alt="teacher" width="30">&nbsp;
                                     </span>
                                 </router-link>
                             </li>
@@ -75,8 +76,7 @@
                             >
                                 <router-link to="/student/favorite">
                                     <span class="UserName"
-                                        ><i class="fa-solid fa-bookmark"></i
-                                        >&nbsp;
+                                        ><img src="/images/bookmark.png" alt="bookmark" width="30">&nbsp;
                                         <span
                                             class="unReadMessage"
                                             v-if="
@@ -91,8 +91,7 @@
                             <li class="userdropdown" v-else>
                                 <router-link to="#">
                                     <span class="UserName"
-                                        ><i class="fa-solid fa-bookmark"></i
-                                        >&nbsp;
+                                        ><img src="/images/bookmark.png" alt="bookmark" width="30">&nbsp;
                                     </span>
                                 </router-link>
 
@@ -105,20 +104,34 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="userdropdown" style="margin-top: 10px">
-                                
+                            <li class="userdropdown" style="margin-top: 10px" v-if="MyUser !== '' ">
                                 <img
-                                    :src="'/storage/student/images/' + MyUser.user_image"
+                                    :src="
+                                        '/storage/student/images/' +
+                                        MyUser.user_image
+                                    "
                                     alt=""
-                                    v-if="MyUser.user_image !== null && loaded"
-                                    style="border-radius: 50%; width: 35px; height: 35px;"
+                                    v-if="MyUser.user_image !== null"
+                                    style="
+                                        border-radius: 50%;
+                                        width: 35px;
+                                        height: 35px;
+                                    "
                                 />
-                                <img
+                                <ProfileAvatar
+                                    :username="MyUser.name"
+                                    v-else
+                                    size="s"
+                                    textColor="white"
+                                    :border="false"
+                                    class="text2"
+                                />
+                                <!-- <img
                                     src="/images/avatar.png"
                                     alt="profile_picture"
                                     v-else-if="loaded"
                                      style="border-radius: 50%; width: 35px; height: 35px;"
-                                />
+                                /> -->
                                 <ul
                                     class="userdropdown-content"
                                     style="padding: 7px"
@@ -130,6 +143,7 @@
                                                 src="/images/profile.png"
                                                 width="25"
                                                 alt=""
+                                                style="color: #029e02"
                                             />
                                         </router-link>
                                     </li>
@@ -150,7 +164,7 @@
                                             <i
                                                 class="fa-solid fa-right-from-bracket"
                                                 style="
-                                                    color: #151419;
+                                                    color: #183153;
                                                     font-size: 20px;
                                                 "
                                             ></i
@@ -169,8 +183,12 @@
 import axios from "axios";
 import { mapState, mapGetters } from "vuex";
 import moment from "moment";
+import ProfileAvatar from "vue-profile-avatar";
 export default {
     name: "DashboardNavBar",
+    components: {
+        ProfileAvatar,
+    },
     data() {
         return {
             UserName: "",
@@ -188,6 +206,11 @@ export default {
     },
 
     methods: {
+        buyHours() {
+            this.$store.commit({
+                type: "buyHours",
+            });
+        },
         OpenMessageModal() {
             this.$store.commit("MessageModalPopup");
         },
@@ -265,18 +288,30 @@ export default {
 };
 </script>
 <style scoped>
-.buyBtn{
+/* avatar */
+.small {
+    height: 35px;
+    width: 35px;
+}
+.border {
+    border: 1px solid black;
+}
+.text2 {
+    font-size: 10px;
+    font-family: var(--bs-body-font-family);
+}
+/* end avatar */
+.buyBtn {
     padding: 0px 15px 2px;
     color: #183153;
     background: white;
     border-radius: 2px;
-    border: none;
-    transition: 0.9s
+    border: 1px solid #029e02;
+    /* transition: 0.9s; */
 }
-.buyBtn:hover{
+.buyBtn:hover {
     color: white;
-    background: #183153;
-    
+    background: #029e02;
 }
 .timeSent {
     font-size: 12px;
@@ -299,16 +334,16 @@ export default {
     box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -webkit-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -moz-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
-    background-color: #fed907;
+    /* background-color: #fed907; */
 }
 .fa-solid {
     color: #183153;
     font-size: 20px;
 }
+
 .NavLinks2 {
     display: flex;
-    flex-direction: row;
-
+    flex-flow: row wrap;
     justify-content: flex-end;
 }
 .NavLinks2 li {

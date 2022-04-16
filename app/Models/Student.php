@@ -17,7 +17,7 @@ class Student extends Authenticatable
     {
         return $this->hasMany(StudentAd::class);
     }
-    public function studentContact()
+    public function studentContacts()
     {
         return $this->hasMany(StudentContact::class);
     }

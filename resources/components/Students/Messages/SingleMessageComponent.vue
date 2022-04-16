@@ -235,7 +235,7 @@ list-style: none;
     /* float: left; */
     clear: right;
 }
-.ReceivedMessage::after {
+/* .ReceivedMessage::after {
     position: absolute;
     content: "";
     width: 0px;
@@ -248,8 +248,8 @@ list-style: none;
     left: -15px;
     transform: rotate(-45deg);
     /* z-index: -1; */
-}
-.SenderMessage::after {
+/* } */ 
+/* .SenderMessage::after {
     position: absolute;
     content: "";
     width: 0px;
@@ -261,9 +261,9 @@ list-style: none;
     top: 60px;
     left: -15px;
     transform: rotate(-45deg);
-}
+} */
 .SenderMessage {
-    background: #d1fdd1;
+    background: #eafaea;
     padding: 8px;
     width: 240px;
     position: relative;

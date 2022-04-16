@@ -13,51 +13,59 @@ const store = createStore({
       unreadMessageCount: 0,
       priceRange: {
         minPrice: '',
-        maxPrice:''
+        maxPrice: ''
       },
-      TeacherLanguage:'',
-      TeacherCountry:'',
+      TeacherLanguage: '',
+      TeacherCountry: '',
       TeacherName: '',
       showTeachersComponent: 0,
+      showBookPaidLessonComponent: false
 
     }
   },
-  actions: {
-    TeachersByPrice (context,payload) {
-      setTimeout(() => {
-       context.commit('TeachersByPrice',payload)
-      }, 500)
-    }
-  },
+  // actions: {
+  //   TeachersByPrice (context,payload) {
+  //     setTimeout(() => {
+  //      context.commit('TeachersByPrice',payload)
+  //     }, 500)
+  //   }
+  // },
   mutations: {
+    buyHours(state){
+      state.showBookPaidLessonComponent = true
+    },
+    closeBookPaidLessonComponent(state)
+    {
+      state.showBookPaidLessonComponent = false
+    },
     TeachersByPrice(state, payload) {
       state.priceRange.minPrice = payload.minPrice
       state.priceRange.maxPrice = payload.maxPrice
       state.showTeachersComponent = 0
       setTimeout(() => {
         state.showTeachersComponent = 4
-       }, 500)
+      }, 500)
     },
     getTeachersByLanguage(state, payload) {
       state.TeacherLanguage = payload.language
       state.showTeachersComponent = 0
       setTimeout(() => {
         state.showTeachersComponent = 2
-       }, 500)
+      }, 500)
     },
     getTeachersByCountry(state, payload) {
       state.TeacherCountry = payload.country
       state.showTeachersComponent = 0
       setTimeout(() => {
         state.showTeachersComponent = 3
-       }, 500)
+      }, 500)
     },
     getTeachersByName(state, payload) {
       state.TeacherName = payload.name
       state.showTeachersComponent = 0
       setTimeout(() => {
         state.showTeachersComponent = 5
-       }, 500)
+      }, 500)
     },
     ActivateOtherTeacherDiv(state) {
       state.showTeachersComponent = 1
