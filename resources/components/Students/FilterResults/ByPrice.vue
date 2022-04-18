@@ -30,7 +30,7 @@ export default {
     },
     methods: {
         PriceRange() {
-            this.$store.dispatch({
+            this.$store.commit({
                 type: "TeachersByPrice",
                 minPrice: this.price[0],
                 maxPrice: this.price[1],

@@ -345,23 +345,12 @@ class StudentRegistration extends Controller
         return response()->json($studentContacts);
     }
 
-    // public function GetSingleTeacher($id)
-    // {
-    //     $teacher = Teacher::find($id);
+    public function SingleTeacher($id)
+    {
+        $teacher = Teacher::find($id);
 
-    //     return view('student.singleteacher')
-    //         ->with('teacherName', $teacher->name)
-    //         ->with('teacherDescription', $teacher->description)
-    //         ->with('teacherFirstLang', $teacher->first_language)
-    //         ->with('teacherFirstLangProf', $teacher->first_language_proficiency)
-    //         ->with('teacherSecondLang', $teacher->second_language)
-    //         ->with('teacherSecondLangProf', $teacher->second_language_proficiency)
-    //         ->with('isOurTeacher', $teacher->our_tearcher)
-    //         ->with('teacherHourlyPay', $teacher->hourly_pay)
-    //         ->with('teacherJoinedAt', $teacher->created_at)
-    //         ->with('teacherId', $teacher->id)
-    //         ->with('teacherNationality', $teacher->nationality);
-    // }
+        return response()->json($teacher);
+    }
 
     public function GetSingleTeacher()
     {

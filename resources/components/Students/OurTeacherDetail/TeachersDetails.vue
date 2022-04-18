@@ -410,7 +410,6 @@ export default {
                 .get("/student/our/teachers?page=" + page)
                 .then((response) => {
                     this.teachers = response.data;
-                    console.log(response.data);
                     if (response.data.data.length > 0) {
                         this.teacherLength = response.data.data.length;
                     } else {

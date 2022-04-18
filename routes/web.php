@@ -49,6 +49,7 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::post('/profile/check', [StudentRegistration::class, 'CheckProfileInfo']);
         Route::get('/our/teachers', [StudentRegistration::class, 'GetOurTeachers']);
         Route::get('/single/teacher/{id}', [StudentRegistration::class, 'GetSingleTeacher']);
+        Route::get('/getSingleTeacher/{id}', [StudentRegistration::class, 'SingleTeacher']);
         Route::get('/teacher/details/{id}', [StudentRegistration::class, 'TeacherDetails']);
         Route::get('/freelance/single/teacher/{id}', [StudentRegistration::class, 'GetFreelanceSingleTeacher']);
         Route::get('/message/contacts', [StudentRegistration::class, 'GetMessageContacts']);

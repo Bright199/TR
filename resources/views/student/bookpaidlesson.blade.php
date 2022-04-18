@@ -42,5 +42,6 @@
 <style>
     body{
     color:#183153;
+    background: #F8F9FA
 }
 </style>

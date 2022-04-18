@@ -59,7 +59,7 @@
                                         style="font-size: 14px"
                                         class="d-flex justify-content-center align-items-center align-content-center"
                                     >
-                                        No message yet
+                                        No new message yet!
                                     </li>
                                 </ul>
                             </li>
@@ -100,7 +100,7 @@
                                         style="font-size: 14px"
                                         class="d-flex justify-content-center"
                                     >
-                                        No favorites yet
+                                        You haven't added favorites!
                                     </li>
                                 </ul>
                             </li>
@@ -289,6 +289,7 @@ export default {
 };
 </script>
 <style scoped>
+
 /* avatar */
 .small {
     height: 35px;
@@ -335,7 +336,7 @@ export default {
     box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -webkit-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
     -moz-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
-    /* background-color: #fed907; */
+    background-color: white;
 }
 .fa-solid {
     color: #183153;
