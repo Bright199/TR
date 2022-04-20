@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaidLessonController;
 use App\Http\Controllers\SocialiteLogin;
 use App\Http\Controllers\StudentRegistration;
 use App\Http\Controllers\TeacherSocialiteLogin;
@@ -76,6 +77,13 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::post('/deleteAd', [StudentRegistration::class, 'deleteAd']);
         Route::get('/ads', [StudentRegistration::class, 'GetAds']);
         // ads
+
+        // paid lesson
+        Route::post('/buyHours', [StudentRegistration::class, 'buyHours']);
+        // Route::get('/paypaidlesson', function(){
+        //     return view('student.paypaidlesson');
+        // })->name('paypaidlesson');
+        // 
 
         Route::get('/single/teacher/messages/{teacherId}', function () {
             return view('student.singlemessages');

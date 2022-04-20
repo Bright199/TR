@@ -67,7 +67,10 @@ props: ['userId'],
                 totalPrice: totalPrice,
                 booked_hours: this.lessonDetails[2].ADVANCED
             }
-            console.log(lesson)
+            axios.post("/student/buyHours",lesson)
+            // .then((response)=>{
+            //     window.location = '/student/paypaidlesson';
+            // })
         }
     },
 }

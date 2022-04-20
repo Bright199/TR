@@ -43,35 +43,18 @@ class StudentRegistration extends Controller
             return redirect()->route('student.dashboard');
         }
     }
-    public function zoom()
+    public function buyHours(Request $request)
     {
-
-        // // $user = Zoom::user()->first();
-
-        // $zoom = new \MacsiDigital\Zoom\Support\Entry;
-        // $user  = new \MacsiDigital\Zoom\Teacher($zoom) ;
-        // $meeting = Zoom::meeting()->make([
-        //     'topic' => 'New meeting',
-        //     'duration' =>60,
-        //     'timezone' => config('zoo.timezone'),
-        //     'start_time' => new Carbon(), // best to use a Carbon instance here.
-        //   ]);
-
-        // $meeting->settings()->make([
-        //     'join_before_host' => true,
-        //     'approval_type' => config('zoom.approval_type'),
-        //     // 'registration_type' => 2,
-        //     // 'host_video' => true,
-        //     'parctipant_video'=>true,
-        //     'mute_upon_entry' => true,
-        //     'audio' => config('zoom.audio'),
-        //     'enforce_login' => false,
-        //     'waiting_room' => true,
-        //     // 'auto_recording'=> config('zoom.auto_recording'),
-        // ]);
-
-        // $user->meetings()->save($meeting);
-        //  return $meeting;
+        // $teacherDetails = Teacher::find($request->teacherId);
+        // $lessonDetails = [
+        //     'teacherId' => $request->teacherId,
+        //     'totalPrice' => $request->totalPrice,
+        //     'booked_hours' => $request->booked_hours,
+        // ];
+        return view('student.paypaidlesson',['teacherDetails'=>$request->teacherId]);
+        //  ->with('lesson',$lessonDetails);      
+        // return response()->json($teacherDetails);
+        
     }
 
     public function TrialLessonConfirmation(Request $request)

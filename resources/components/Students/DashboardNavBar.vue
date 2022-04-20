@@ -33,7 +33,7 @@
                             >
                                 <router-link to="#" @click="OpenMessageModal">
                                     <span class="UserName"
-                                        ><img src="/images/message.png" alt="" width="25">&nbsp;
+                                        ><img :src="coloredIcon === 1?'/images/message-colored.png':'/images/message.png'" alt="messageIcon" width="35" >&nbsp;
                                         <span
                                             class="unReadMessage"
                                             v-if="
@@ -47,10 +47,10 @@
                                 </router-link>
                             </li>
                             <li class="userdropdown" v-else>
-                                <router-link to="#" @click="OpenMessageModal">
+                                <router-link to="#" @click="OpenMessageModal" >
                                     <span class="UserName"
                                         >
-                                       <img src="/images/message.png" alt="" width="25"> &nbsp;
+                                       <img :src="coloredIcon === 1?'/images/message-colored.png':'/images/message.png'" alt="messageIcon" width="35" > &nbsp;
                                     </span>
                                 </router-link>
 
@@ -63,20 +63,28 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="userdropdown">
-                                <router-link to="/student/teachers">
+                            <li class="userdropdown" @click="teacherColoredIcon">
+                                <router-link to="/student/teachers" >
                                     <span class="UserName"
-                                        ><img src="/images/teacher.png" alt="teacher" width="25">&nbsp;
+                                        ><img :src="coloredIcon ===2?'/images/teacher-colored.png':'/images/teacher.png'" alt="teacher" width="35" >&nbsp;
                                     </span>
                                 </router-link>
+                                <ul class="userdropdown-content">
+                                    <li
+                                        style="font-size: 14px"
+                                        class="d-flex justify-content-center"
+                                    >
+                                        Teachers.
+                                    </li>
+                                </ul>
                             </li>
                             <li
                                 class="messageuserdropdown"
                                 v-if="FavoriteCount > 0"
                             >
-                                <router-link to="/student/favorite">
+                                <router-link to="/student/favorite" @click="bookmarkColoredIcon">
                                     <span class="UserName"
-                                        ><img src="/images/bookmark.png" alt="bookmark" width="25">&nbsp;
+                                        ><img :src="coloredIcon === 3?'/images/bookmark-colored.png':'/images/bookmark.png'" alt="bookmark" width="35"  >&nbsp;
                                         <span
                                             class="unReadMessage"
                                             v-if="
@@ -88,10 +96,10 @@
                                     >
                                 </router-link>
                             </li>
-                            <li class="userdropdown" v-else>
-                                <router-link to="#">
+                            <li class="userdropdown" v-else >
+                                <router-link to="#"  @click="bookmarkColoredIcon">
                                     <span class="UserName"
-                                        ><img src="/images/bookmark.png" alt="bookmark" width="25">&nbsp;
+                                        ><img :src="coloredIcon === 3?'/images/bookmark-colored.png':'/images/bookmark.png'" alt="bookmark" width="35" >&nbsp;
                                     </span>
                                 </router-link>
 
@@ -110,7 +118,7 @@
                                         '/storage/student/images/' +
                                         MyUser.user_image
                                     "
-                                    alt=""
+                                    alt="profile image"
                                     v-if="MyUser.user_image !== null"
                                     style="
                                         border-radius: 50%;
@@ -142,8 +150,8 @@
                                             >Profile
                                             <img
                                                 src="/images/profile.png"
-                                                width="25"
-                                                alt=""
+                                                width="35"
+                                                alt="profileImage"
                                                 style="color: #029e02"
                                             />
                                         </router-link>
@@ -197,6 +205,9 @@ export default {
             receivedMessages: "",
             loaded: false,
             StudentFavorites: "",
+
+            //setting colored icons
+            coloredIcon: 0
         };
     },
     mounted() {
@@ -207,12 +218,19 @@ export default {
     },
 
     methods: {
+        bookmarkColoredIcon(){
+            this.coloredIcon = 3
+        },
+       teacherColoredIcon(){
+           this.coloredIcon = 2
+       },
         buyHours() {
             this.$store.commit({
                 type: "buyHours",
             });
         },
         OpenMessageModal() {
+            this.coloredIcon = 1
             this.$store.commit("MessageModalPopup");
         },
         markRead(messageRowId) {
@@ -345,7 +363,7 @@ export default {
 
 .NavLinks2 {
     display: flex;
-    flex: 1;
+    /* flex: 1; */
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
