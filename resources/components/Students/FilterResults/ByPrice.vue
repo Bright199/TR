@@ -22,7 +22,7 @@ export default {
     },
     data() {
         return {
-            price: [1, 40],
+            price: [1],
             format: {
                 prefix: "$",
             },

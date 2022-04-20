@@ -1,4 +1,8 @@
-
+:root{
+    ---bright-green: #029e20;
+    ---bright-main: #183153;
+    ---bright-yellow: #fed907;
+}
 .CustomNav {
     background-color: #fec107;
 }
