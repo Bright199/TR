@@ -82,7 +82,8 @@ export default {
             const lesson = {
                 teacherId: id,
                 totalPrice: totalPrice,
-                booked_hours: this.numberOfHours
+                booked_hours: this.numberOfHours,
+                package: 'CUSTOM PACKAGE'
             }
             axios.post("/student/paidLessonDetails",lesson)
             .then(()=>{

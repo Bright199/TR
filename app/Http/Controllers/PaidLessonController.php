@@ -21,7 +21,7 @@ class PaidLessonController extends Controller
         $teacherDetails = Teacher::find($request->teacherId);
         // $request->session()->forget('teacherDetails');
         // session()->flush('teacherDetails',$teacherDetails);
-        Session::put('lessonDetails', ['teacherName' => $teacherDetails->name, 'teacherId' => $request->teacherId, 'totalPrice' => $request->totalPrice, 'booked_hours' => $request->booked_hours]);
+        Session::put('lessonDetails', ['package'=>$request->package,'teacherName' => $teacherDetails->name, 'teacherId' => $request->teacherId, 'totalPrice' => $request->totalPrice, 'booked_hours' => $request->booked_hours,'hourly_pay'=>$teacherDetails->hourly_pay]);
         return redirect('student/payforhours');
     }
 }

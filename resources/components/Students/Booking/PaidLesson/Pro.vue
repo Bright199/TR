@@ -69,7 +69,8 @@ props: ['userId'],
             const lesson = {
                 teacherId: id,
                 totalPrice: totalPrice,
-                booked_hours: this.lessonDetails[1].PRO
+                booked_hours: this.lessonDetails[1].PRO,
+                package: 'PRO PACKAGE'
             }
            axios.post("/student/paidLessonDetails",lesson)
             .then(()=>{
