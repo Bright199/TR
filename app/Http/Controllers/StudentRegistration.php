@@ -51,7 +51,8 @@ class StudentRegistration extends Controller
         //     'totalPrice' => $request->totalPrice,
         //     'booked_hours' => $request->booked_hours,
         // ];
-        return view('student.paypaidlesson',['teacherDetails'=>$request->teacherId]);
+        // $details = $request->session()->flush('detail','from a session value');
+        return view('student.paypaidlesson')->with('message','working better now');
         //  ->with('lesson',$lessonDetails);      
         // return response()->json($teacherDetails);
         

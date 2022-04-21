@@ -1,5 +1,9 @@
 <template>
-  <div class="col-md-3 col-lg-3 col-sm-3 p-0 bg-white me-2 border">
+<div class="spinner" v-if="loading">
+        <div class="dot1"></div>
+        <div class="dot2"></div>
+    </div>
+  <div class="col-md-3 col-lg-3 col-sm-3 p-0 bg-white me-2 border" v-if="loaded">
                 <div class="container p-0 HeadingContainer">
                     <p class="text-white text-center p-3 m-0 Heading">Pro</p>
                 </div>
@@ -42,39 +46,108 @@ props: ['userId'],
     },
     methods: {
         getUser() {
-            this.loading = true;
             axios
                 .get("/student/getAuthUser")
                 .then((response) => {
                     this.User = response.data;
+                })
+                
+        },
+        getTeacherDetails() {
+            this.loading = true;
+            axios
+                .get("/student/getSingleTeacher/" + this.userId)
+                .then((result) => {
+                    this.teacherDetails = result.data;
                     this.loaded = true;
                 })
                 .finally(() => {
                     this.loading = false;
                 });
         },
-        getTeacherDetails() {
-            axios
-                .get("/student/getSingleTeacher/" + this.userId)
-                .then((result) => {
-                    this.teacherDetails = result.data;
-                })
-                .catch((err) => {});
-        },
         buyHours(id,totalPrice){
             const lesson = {
                 teacherId: id,
                 totalPrice: totalPrice,
-                booked_hours: this.lessonDetails[2].ADVANCED
+                booked_hours: this.lessonDetails[1].PRO
             }
-            console.log(lesson)
+           axios.post("/student/paidLessonDetails",lesson)
+            .then(()=>{
+                window.location = '/student/payforhours'
+            })
         }
     },
 }
 </script>
 
 <style scoped>
+/* spinner */
+.spinner {
+    margin: 100px auto;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    text-align: center;
 
+    -webkit-animation: sk-rotate 2s infinite linear;
+    animation: sk-rotate 2s infinite linear;
+}
+
+.dot1,
+.dot2 {
+    width: 60%;
+    height: 60%;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    background-color: #029e02;
+    border-radius: 100%;
+
+    -webkit-animation: sk-bounce 2s infinite ease-in-out;
+    animation: sk-bounce 2s infinite ease-in-out;
+}
+
+.dot2 {
+    top: auto;
+    bottom: 0;
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+}
+
+@-webkit-keyframes sk-rotate {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes sk-rotate {
+    100% {
+        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes sk-bounce {
+    0%,
+    100% {
+        -webkit-transform: scale(0);
+    }
+    50% {
+        -webkit-transform: scale(1);
+    }
+}
+
+@keyframes sk-bounce {
+    0%,
+    100% {
+        transform: scale(0);
+        -webkit-transform: scale(0);
+    }
+    50% {
+        transform: scale(1);
+        -webkit-transform: scale(1);
+    }
+}
+/*  */
 
 .buyBtn{
     border: 1px solid #029e20;

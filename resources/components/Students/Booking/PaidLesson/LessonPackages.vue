@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Header from "../Header.vue";
+import Header from "../../Edits/Header.vue";
 import Advanced from "./Advanced.vue";
 import CustomNumberOfLesson from './CustomNumberOfLesson.vue';
 import Pro from "./Pro.vue";

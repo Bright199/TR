@@ -33,9 +33,11 @@
 </head>
 
 <body>
-    @foreach ($teacherDetails as $item)
-        {{$item}}
-    @endforeach
+    @if (Session::get('message'))
+        <p>Working</p>
+    @else
+        <p>Not working</p>
+    @endif
 </body>
 </html>
 

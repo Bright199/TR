@@ -83,8 +83,8 @@ Route::prefix('student')->name('student.')->group(function () {
         // Route::get('/paypaidlesson', function(){
         //     return view('student.paypaidlesson');
         // })->name('paypaidlesson');
-        // 
-
+        
+            
         Route::get('/single/teacher/messages/{teacherId}', function () {
             return view('student.singlemessages');
         });
@@ -97,9 +97,12 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::post('/trial/lesson/confirmation', [StudentRegistration::class, 'TrialLessonConfirmation']);
         Route::get('teacher/demo/lessons/{teacherId}',[StudentRegistration::class,'getStudentTeacherDemoLesson']);
 
-        Route::get('/book/paid/lesson/{teacherId?}',function(){
-            return view('student.bookpaidlesson');
+        Route::get('/book/paid/lesson/{teacherId}',[PaidLessonController::class,'buyHours']);
+        Route::post('/paidLessonDetails', [PaidLessonController::class, 'paidLessonDetails']);
+        Route::get('/payforhours',function(){
+            return view('student.payforhours');
         });
+
         Route::get('/book/demo/payment/{teacherId}',[StudentRegistration::class,'DemoPayment']);
         Route::get('/cancel/book/demo/lesson/{teacherId}',[StudentRegistration::class,'CancelDemoBooking']);
         Route::get('/incomplete/demo/lessons',[StudentRegistration::class,'incompleteDemoBooking']);

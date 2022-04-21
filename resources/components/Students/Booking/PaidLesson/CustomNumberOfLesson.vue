@@ -84,7 +84,10 @@ export default {
                 totalPrice: totalPrice,
                 booked_hours: this.numberOfHours
             }
-            console.log(lesson)
+            axios.post("/student/paidLessonDetails",lesson)
+            .then(()=>{
+                window.location = '/student/payforhours'
+            })
         }
     },
 };
