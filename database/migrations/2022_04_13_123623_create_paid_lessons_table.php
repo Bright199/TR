@@ -19,11 +19,12 @@ class CreatePaidLessonsTable extends Migration
             $table->integer('student_id');
             $table->decimal('teacher_hourly_pay');
             $table->integer('student_booked_hours');
+            $table->string('package');
             $table->decimal('paid_amount');
-            $table->time('time_slot');
-            $table->dateTime('date');
-            $table->boolean('booked');
-            $table->boolean('lessons_completed');
+            $table->time('time_slot')->nullable();
+            $table->dateTime('date')->nullable();
+            $table->boolean('booked')->default(0);
+            $table->integer('lessons_completed')->default(0);
             $table->integer('remaining_lesson_hours');
             $table->decimal('remaining_amount');
             $table->timestamps();

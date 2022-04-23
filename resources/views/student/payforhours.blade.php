@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TREnglish</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('images/Logo.png') }}">
 
     <!-- Scripts -->
@@ -33,11 +34,12 @@
 </head>
 
 <body>
+    @if (Session::get('lessonDetails'))
     <div class="container-jumbotron">
         <div class="container  p-4">
             <div class="row">
                 <div class="col-md-3 col-sm-3 col-lg-3"></div>
-                <div class="col-md-6 col-sm-6 col-lg-6 bg-white p-3">
+                <div class="col-md-6 col-sm-6 col-lg-6 bg-white p-5">
                     <div class="container p-0 border-bottom">
                         <p>You are closer to learning your prefered language with <span style="color: #029e02">World
                                 Class</span> teachers.</p>
@@ -46,10 +48,18 @@
                         <h4>Lesson details</h4>
                     </div>
                     <div class="container p-0">
+                        <input type="hidden" name="" value="{{ Session::get('lessonDetails')['hourly_pay'] }}" id="hourly_pay">
+                        <input type="hidden" name="" value="{{ Session::get('lessonDetails')['booked_hours'] }}" id="booked_hours">
+                        <input type="hidden" name="" value="{{ Session::get('lessonDetails')['package'] }}" id="package">
+                        <input type="hidden" name="" value="{{ Session::get('lessonDetails')['totalPrice'] }}" id="totalPrice">
+                        <input type="hidden" name="" value="{{ Session::get('lessonDetails')['teacherId'] }}" id="teacherId">
                         <p>Your teacher is: <span
                                 style="color: #029e02">{{ Session::get('lessonDetails')['teacherName'] }}</span></p>
                         <p>Each lesson: <span
                                 style="color: #029e02">${{ Session::get('lessonDetails')['hourly_pay'] }}/hour</span>
+                        </p>
+                        <p>You save: <span
+                                style="color: #029e02">${{ Session::get('lessonDetails')['youSave'] }}</span>
                         </p>
                         <p><span>You are buying: </span> <span
                                 style="color: #029e02;">{{ Session::get('lessonDetails')['booked_hours'] }}
@@ -62,25 +72,45 @@
                     </div>
                     <div class="container p-3 border-bottom">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="check1" name="option1"
+                            <input class="form-check-input" type="checkbox" id="terms-conditions" name="option1"
                                 value="something">
-                            <label class="form-check-label text-primary" style="text-decoration: underline"
-                                data-bs-toggle="modal" data-bs-target="#termsConditions">Terms &
-                                conditions</label>
+                            <label class="form-check-label" for="terms-conditions" data-bs-toggle="modal"
+                                data-bs-target="#termsConditions"><span style="text-decoration: none;">I agree to</span>
+                                <span style="text-decoration: underline" class="text-primary">Terms &
+                                    conditions</span>
+                                </label>
                         </div>
+                        <p class="text-danger" id="agreeTerms">Checkbox must be checked.</p>
                     </div>
                     <div class="container p-3">
+                        <div class="d-grid">
+                            <button id="payNow">Pay Now</button>
+                        </div>
                         <div id="paypal-button-container"></div>
                     </div>
 
                 </div>
                 <div class="col-md-3 col-sm-3 col-lg-3 Links p-4">
-                    <p><a href="{{url('student/dashboard')}}">Dashboard</a></p>
-                    <p><a href="{{url('student/dashboard')}}">My lessons</a></p>
+                    <p><a href="{{ url('student/dashboard') }}">Dashboard</a></p>
+                    <p><a href="{{ url('student/all/booked/lessons') }}">My lessons</a></p>
                 </div>
             </div>
         </div>
     </div>
+    @else
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-6 p-3 bg-white ">
+                    <p class="text-center">Your request is lacking some details. Try again</p>
+                </div>
+                <div class="col-md-4 Links p-4 ">
+                    <p><a href="{{ url('student/dashboard') }}">Dashboard</a></p>
+                    <p><a href="{{ url('student/all/booked/lessons') }}">My lessons</a></p>
+                </div>
+            </div>
+        </div>
+    @endif
     <!-- Button trigger modal -->
     <!-- Modal -->
     <div class="modal fade" id="termsConditions" tabindex="-1" aria-labelledby="termsConditions" aria-hidden="true">
@@ -109,11 +139,14 @@
                         lesson. Be
                         sure to communicate with your teacher on time. Let your teacher know in cases when you can not
                         attend the lesson the lesson the lesson and arrange another time to meet.</p>
-                    <p>4. In cases when your teacher does not show up when your lesson is scheduled your money will not be
+                    <p>4. In cases when your teacher does not show up when your lesson is scheduled your money will not
+                        be
                         deducted. You can report a teacher in cases when there is unprofessional conducts.</p>
 
-                    <p>5. Be sure to be on time for each lesson. Each lesson on TREnglish is considered to be 1 hour long.
-                        Therefore, coming on time will make it possible for you to have all the time with your teacher.</p>
+                    <p>5. Be sure to be on time for each lesson. Each lesson on TREnglish is considered to be 1 hour
+                        long.
+                        Therefore, coming on time will make it possible for you to have all the time with your teacher.
+                    </p>
                 </div>
 
             </div>
@@ -123,6 +156,53 @@
 
 
     <script>
+        $(document).ready(function() {
+            $('#payNow').click(function() {
+                if ($('#terms-conditions').is(':checked')) {
+                    $('#payNow').css({
+                        'display': 'none'
+                    })
+                    $('#paypal-button-container').css({
+                        'display': 'block'
+                    })
+                } else {
+                    $('#terms-conditions').css({
+                        'border': '1px solid red'
+                    })
+                    $('#agreeTerms').css({
+                        'display': 'block'
+                    })
+                }
+            });
+
+            $('#terms-conditions').click(() => {
+                if ($('#terms-conditions').is(':checked')) {
+                    $('#payNow').css({
+                        'display': 'none'
+                    })
+                    $('#terms-conditions').css({
+                        'border': '1px solid #007BFF'
+                    })
+                    $('#paypal-button-container').css({
+                        'display': 'block'
+                    })
+                    $('#agreeTerms').css({
+                        'display': 'none'
+                    })
+                } else {
+                    $('#payNow').css({
+                        'display': 'block'
+                    })
+                    $('#terms-conditions').css({
+                        'border': '1px solid gray'
+                    })
+                    $('#paypal-button-container').css({
+                        'display': 'none'
+                    })
+                }
+            })
+        })
+
         function initPayPalButton() {
             paypal.Buttons({
                 style: {
@@ -139,7 +219,7 @@
                         purchase_units: [{
                             "amount": {
                                 "currency_code": "USD",
-                                "value": 10
+                                "value": parseFloat($('#totalPrice').val())
                             }
                         }]
                     });
@@ -154,8 +234,42 @@
                         // Show a success message within this page, e.g.
                         const element = document.getElementById('paypal-button-container');
                         element.innerHTML = '';
-                        alert('Your ad has been submitted waiting for approval');
-                        
+                        element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+                            $(document).ready(function() {
+                                const teacherId = $('#teacherId').val();
+                                const booked_hours = $('#booked_hours').val();
+                                const hourly_pay = $('#hourly_pay').val();
+                                const totalPrice = $('#totalPrice').val();
+                                const package = $('#package').val();
+                                const data = {
+                                    teacherId: teacherId,
+                                    booked_hours: booked_hours,
+                                    hourly_pay: hourly_pay,
+                                    totalPrice: totalPrice,
+                                    package: package,
+                                    orderData: orderData
+                                }
+                                $.ajaxSetup({
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                            'content')
+                                    }
+                                })
+                                $.ajax({
+                                    url: "/student/paidlesson/insert/payment/details",
+                                    type: "POST",
+                                    data: data,
+                                    // async : false, 
+                                    success: function(response, textStatus, jqXHR) {
+                                    window.location  = '/student/paidlesson/booking/payment/summary/'+teacherId
+                                        // console.log(response)
+                                    },
+                                    error: function(jqXHR, textStatus, errorThrown) {
+                                        console.log(errorThrown);
+                                    }
+                                });
+                            })
 
                     });
                 },
@@ -181,14 +295,38 @@
     .form-check-label:hover {
         cursor: pointer;
     }
-.Links a{
-    text-decoration: none;
-    background-color: #029e02;
-    color: white;
-    padding: 2px 15px 4px
-}
 
-.Links a:hover{
-    color: white;
-}
+    .Links a {
+        text-decoration: none;
+        background-color: #029e02;
+        color: white;
+        padding: 2px 15px 4px;
+    }
+   
+    .Links a:hover {
+        color: white;
+    }
+
+    #payNow {
+        border: 1px solid #029e02;
+        padding: 2px 0px 4px;
+        background-color: white;
+        margin-bottom: 2px;
+        border-radius: 3px;
+        transition: 0.3s;
+    }
+
+    #payNow:hover {
+        background-color: #029e02;
+        color: white;
+        cursor: pointer;
+    }
+
+    #paypal-button-container {
+        display: none
+    }
+    #agreeTerms {
+        display: none
+    }
+
 </style>

@@ -93,16 +93,21 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/getFavoriteTeacherIds', [StudentRegistration::class, 'getFavoriteTeacherIds']);
         Route::get('/getAllStudentFavorites', [StudentRegistration::class, 'getAllStudentFavorites']);
 
-        // Route::get('/lesson/book/{teacherId}', [StudentRegistration::class, 'BookLesson']);
-        Route::post('/trial/lesson/confirmation', [StudentRegistration::class, 'TrialLessonConfirmation']);
-        Route::get('teacher/demo/lessons/{teacherId}',[StudentRegistration::class,'getStudentTeacherDemoLesson']);
-
+       
+        Route::get('/paidlesson/payment/info/{teacherId}',[PaidLessonController::class,'PaidLessonPaymentDetails']);
+        Route::post('/paidlesson/insert/payment/details/',[PaidLessonController::class, 'insertPaidPaymentDetails']);
         Route::get('/book/paid/lesson/{teacherId}',[PaidLessonController::class,'buyHours']);
         Route::post('/paidLessonDetails', [PaidLessonController::class, 'paidLessonDetails']);
         Route::get('/payforhours',function(){
             return view('student.payforhours');
         });
+        Route::get('/paidlesson/booking/payment/summary/{teacherId}',function(){
+            return view('student.demopaymentsummary');
+        });
 
+        // Route::get('/lesson/book/{teacherId}', [StudentRegistration::class, 'BookLesson']);
+        Route::post('/trial/lesson/confirmation', [StudentRegistration::class, 'TrialLessonConfirmation']);
+        Route::get('teacher/demo/lessons/{teacherId}',[StudentRegistration::class,'getStudentTeacherDemoLesson']);
         Route::get('/book/demo/payment/{teacherId}',[StudentRegistration::class,'DemoPayment']);
         Route::get('/cancel/book/demo/lesson/{teacherId}',[StudentRegistration::class,'CancelDemoBooking']);
         Route::get('/incomplete/demo/lessons',[StudentRegistration::class,'incompleteDemoBooking']);
@@ -120,6 +125,7 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/demo/booking/payment/summary/{teacherId}',function(){
             return view('student.demopaymentsummary');
         });
+        
         Route::get('/demo/payment/info/{teacherId}',[StudentRegistration::class,'DemoPaymentDetails']);
         Route::post('insert/payment/details',[StudentRegistration::class, 'insertDemoPaymentDetails']);
         Route::get('/book/demo/lesson/{teacherId}', function () {

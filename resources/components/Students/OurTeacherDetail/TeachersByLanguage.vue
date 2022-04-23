@@ -280,11 +280,20 @@
                             <!-- <a href="" >Details</a -->
                             <br />
                             <a
+                                v-if="teacher.is_booked_by_student ===0 || teacher.is_booked_by_student === ''"
                                 :href="
                                     '/student/book/demo/lesson/' + teacher.id
                                 "
                                 class="btn d-block btn-warning mb-3 RemoveOutline"
                                 >Book trial lesson</a
+                            >
+                            <a
+                                v-else
+                                :href="
+                                    '/student/book/paid/lesson/' + teacher.id
+                                "
+                                class="btn d-block btn-warning mb-3 RemoveOutline"
+                                >Buy Hours</a
                             >
                         </div>
                     </div>

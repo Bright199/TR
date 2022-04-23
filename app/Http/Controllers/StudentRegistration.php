@@ -106,7 +106,36 @@ class StudentRegistration extends Controller
         if ($paymentDetails) {
             TrialLessonBooking::where('teacher_id', $request->teacherId)
                 ->where('student_id', Auth::guard('student')->id())->update(['booked' => 1]);
-            StudentContact::where('teacher_id', $request->teacherId)->where('student_id', Auth::guard('student')->id())->update(['is_booked_by_student' => 1]);
+               $contact = StudentContact::where('teacher_id', $request->teacherId)->where('student_id', Auth::guard('student')->id())->first();
+               if($contact === null){
+                   $teacherDetails = Teacher::find($request->teacherId);
+                   $studentDetails = Student::find(Auth::guard('student')->id());
+                   if ($teacherDetails->teacher_image) {
+                    StudentContact::create([
+                        'teacher_name' => $teacherDetails->name,
+                        'teacher_email' => $teacherDetails->email,
+                        'student_name' => $studentDetails->name,
+                        'student_email' => $studentDetails->email,
+                        'is_booked_by_student' => 1,
+                        'teacher_image' => $teacherDetails->teacher_image,
+                        'student_id' => Auth::guard('student')->id(),
+                        'teacher_id' => $request->teacherId
+                    ]);
+                } else {
+                    StudentContact::create([
+                        'teacher_name' => $teacherDetails->name,
+                        'teacher_email' => $teacherDetails->email,
+                        'student_name' => $studentDetails->name,
+                        'student_email' => $studentDetails->email,
+                        'is_booked_by_student' => 1,
+                        'student_id' => Auth::guard('student')->id(),
+                        'teacher_id' => $request->teacherId
+                    ]);
+                }
+               }else{
+                   StudentContact::where('teacher_id', $request->teacherId)->where('student_id', Auth::guard('student')->id())->update(['is_booked_by_student' => 1]);
+               }
+                
         }
         // return response()->json($paymentDetails);
     }

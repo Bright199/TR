@@ -279,8 +279,7 @@
                             <br />
                             <a
                                 v-if="
-                                    teacher.is_booked_by_student === 0 ||
-                                    teacher.is_booked_by_student === ''
+                                    teacher.is_booked_by_student === 0 || teacher.is_booked_by_student === ''
                                 "
                                 :href="
                                     '/student/book/demo/lesson/' + teacher.id
@@ -289,9 +288,9 @@
                                 >Book trial lesson</a
                             >
                             <a
-                                v-else-if="teacher.is_booked_by_student === 1"
+                                v-else
                                 :href="
-                                    '/student/book/demo/lesson/' + teacher.id
+                                    '/student/book/paid/lesson/' + teacher.id
                                 "
                                 class="btn d-block mb-3 RemoveOutline"
                                 >Buy hours</a

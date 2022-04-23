@@ -38,6 +38,7 @@ props: ['userId'],
             loaded: false,
             teacherDetails: "",
             lessonDetails: [{ STARTER: 5 }, { PRO: 12 }, { ADVANCED: 20 }],
+            youSave: 10
         };
     },
     mounted() {
@@ -69,7 +70,8 @@ props: ['userId'],
                 teacherId: id,
                 totalPrice: totalPrice,
                 booked_hours: this.lessonDetails[2].ADVANCED,
-                package: 'ADVANCED PACKAGE'
+                package: 'ADVANCED PACKAGE',
+                you_save: this.youSave
             }
            axios.post("/student/paidLessonDetails",lesson)
             .then(()=>{

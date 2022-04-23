@@ -19,6 +19,7 @@ import TrialLessonBooking from '../components/Students/Booking/TrialLessonBookin
 import IncompleteDemoBook from '../components/Students/Booking/IncompleteDemoBook.vue'
 import AllBookedLessons from '../components/Students/Booking/AllBookedLessons.vue'
 import DemoPaymentSummary from '../components/Students/Booking/DemoPaymentSummary.vue'
+import PaidLessonPaymentSummary from '../components/Students/Booking/PaidLesson/PaidLessonPaymentSummary.vue'
 import SingleDemoLesson from '../components/Students/Booking/SingleDemoLesson.vue'
 import LessonPackages from '../components/Students/Booking/PaidLesson/LessonPackages.vue'      
 const newLocal = 'Home';
@@ -127,6 +128,11 @@ const routes = [
     {
         path: "/student/demo/booking/payment/summary/:id",
         components: { default: DemoPaymentSummary },
+        props: { default: true }
+    },
+    {
+        path: "/student/paidlesson/booking/payment/summary/:id",
+        components: { default: PaidLessonPaymentSummary },
         props: { default: true }
     },
     {

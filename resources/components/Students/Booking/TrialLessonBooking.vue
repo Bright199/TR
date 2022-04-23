@@ -44,8 +44,8 @@
                             class="container p-0 calendarContainer shadow-sm "
                         >
                             <p
-                                class="d-flex justify-content-center py-2"
-                                style="font-size: 20px; background: #183153; color: white"
+                                class="d-flex justify-content-center py-2 rounded-top"
+                                style="font-size: 20px; background: #029e20; color: white;"
                             >
                                 {{ currentMonth + " " + fullYear }}
                             </p>

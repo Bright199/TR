@@ -16,6 +16,7 @@ class PaidLesson extends Model
         'student_id',
         'teacher_hourly_pay',
         'student_booked_hours',
+        'package',
         'paid_amount',
         'time_slot',
         'date',
