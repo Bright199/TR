@@ -3,6 +3,7 @@
         <DashboardNavBar />
         <MessageComponent v-if="modalState === true" />
         <SingleMessageComponent v-if="singleModalState === true" />
+        <BookPaidLesson v-if="showBookPaidLessonComponent === true" />
         <div class="container mt-3">
             <div class="row">
                 <div class="col-md-3 me-3 mb-3 LeftBar">
@@ -338,13 +339,15 @@ import LaravelVuePagination from "laravel-vue-pagination";
 import { mapState } from 'vuex';
 import MessageComponent from '../Messages/MessageComponent.vue';
 import SingleMessageComponent from '../Messages/SingleMessageComponent.vue';
+import BookPaidLesson from '../Booking/BookPaidLesson.vue';
 export default {
     name: "Messages",
     components: {
         DashboardNavBar,
         Pagination: LaravelVuePagination,
         MessageComponent,
-        SingleMessageComponent
+        SingleMessageComponent,
+        BookPaidLesson
     },
     data() {
         return {
@@ -420,6 +423,7 @@ export default {
             modalState: (state) => state.openModal,
             singleModalState: (state) => state.openSingleModal,
             loggedUser: (state) => state.loggedUser,
+            showBookPaidLessonComponent: (state) => state.showBookPaidLessonComponent
         }),
     },
 };

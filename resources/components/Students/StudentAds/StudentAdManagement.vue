@@ -2,6 +2,7 @@
     <div>
         <div class="container-jumbotron TopBar1">
             <DashboardNavBar />
+            <BookPaidLesson v-if="showBookPaidLessonComponent ===true" />      
         </div>
         <div class="container">
             <div class="spinner" v-if="loading">
@@ -65,7 +66,7 @@
                             the link below
                         </h2>
                         <!-- <router-link to="/student/create/ad">Create ad</router-link> -->
-                        <a href="/student/create/ad">Create ad</a>
+                        <a href="/student/create/ad" class="createAd">Create ad</a>
                     </div>
                     <div class="col-md-3"></div>
                 </div>
@@ -248,9 +249,10 @@
 import axios from "axios";
 import { mapState, mapMutations } from "vuex";
 import DashboardNavBar from "../DashboardNavBar.vue";
+import BookPaidLesson from '../Booking/BookPaidLesson.vue';
 export default {
     name: "StudentAdManagement",
-    components: { DashboardNavBar },
+    components: { DashboardNavBar, BookPaidLesson },
     data() {
         return {
             studentAds: "",
@@ -339,6 +341,7 @@ export default {
     },
     computed: mapState({
         AuthUserDetails: (state) => state.loggedUser,
+        showBookPaidLessonComponent: (state) => state.showBookPaidLessonComponent
     }),
     mounted() {
         this.getStudentAds();
@@ -443,5 +446,15 @@ input[type="number"]::-webkit-outer-spin-button {
 .PaymentBtn:focus {
     outline: none;
     box-shadow: 0;
+}
+.createAd{
+    text-decoration: none;
+    padding: 2px 10px 5px;
+    border: 1px solid #029e02;
+    color: #183153;
+}
+.createAd:hover{
+    background: #029e02;
+    color:white
 }
 </style>

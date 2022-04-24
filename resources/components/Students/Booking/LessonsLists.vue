@@ -1,14 +1,14 @@
 <template>
     <div class="col-md-9 mb-2 me-2 shadow-sm bg-white p-2">
-        <div class="container-jumbotron border-bottom">
-            <p>Lessons details</p>
+        <div class="container-jumbotron border-bottom p-3">
+            <h5 class="text-center">Here are all your paid lessons.</h5>
         </div>
         <div class="container">
             <div class="spinner" v-if="loading == true">
                 <div class="dot1"></div>
                 <div class="dot2"></div>
             </div>
-            <table
+            <!-- <table
                 class="table table-responsive table-striped table-sm table-hover"
                 v-if="demoLessons.length"
             >
@@ -48,7 +48,8 @@
                         >Browse Teachers</router-link
                     >
                 </div>
-            </div>
+            </div> -->
+            {{paidLessons}}
         </div>
         <!-- {{demoLessons}} -->
     </div>
@@ -61,7 +62,7 @@ export default {
     name: "LessonsLists",
     data() {
         return {
-            demoLessons: "",
+            paidLessons: "",
             loading: false,
             loaded: false,
         };
@@ -77,9 +78,9 @@ export default {
         getAllBookedDemoLessons() {
             this.loading = true;
             axios
-                .get("/student/getAllBookedDemoLessons/")
+                .get("/student/getAllBookedPaidLessons/")
                 .then((response) => {
-                    this.demoLessons = response.data;
+                    this.paidLessons = response.data;
                     this.loaded = true;
                 })
                 .finally(() => {

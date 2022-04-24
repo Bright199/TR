@@ -3,6 +3,7 @@
         <DashboardNavBar />
         <MessageComponent v-if="modalState === true" />
         <SingleMessageComponent v-if="singleModalState === true" />
+        <BookPaidLesson v-if="showBookPaidLessonComponent === true" />
         <div class="container">
             <div class="row">
                 <div class="col-md-3 me-3 mt-4 shadow-sm LeftBar">
@@ -29,12 +30,14 @@ import TeacherDetails from "./OurTeacherDetail/TeachersDetails.vue";
 import SingleMessageComponent from "./Messages/SingleMessageComponent.vue";
 import MessageComponent from "./Messages/MessageComponent.vue";
 import { mapState, mapMutations } from "vuex";
+import BookPaidLesson from './Booking/BookPaidLesson.vue';
 export default {
     name: "Teachers",
     components: {
         DashboardNavBar,
         SingleMessageComponent,
         MessageComponent,
+        BookPaidLesson,
         TeacherDetails,
     },
     data() {
@@ -51,6 +54,7 @@ export default {
             modalState: (state) => state.openModal,
             singleModalState: (state) => state.openSingleModal,
             loggedUser: (state) => state.loggedUser,
+            showBookPaidLessonComponent: (state) => state.showBookPaidLessonComponent
         }),
     },
 };

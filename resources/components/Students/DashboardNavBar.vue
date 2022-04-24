@@ -22,7 +22,7 @@
                                     Buy hours
                                 </button>
                             </li>
-                            <li>You have: {{ 0 }} hours</li>
+                            <li>You have: <span>{{ studentTotalHours }}</span> hours</li>
                         </ul>
                     </div>
                     <div class="col-md-6 MainNavLinks2">
@@ -33,7 +33,15 @@
                             >
                                 <router-link to="#" @click="OpenMessageModal">
                                     <span class="UserName"
-                                        ><img :src="coloredIcon === 1?'/images/message-colored.png':'/images/message.png'" alt="messageIcon" width="35" >&nbsp;
+                                        ><img
+                                            :src="
+                                                coloredIcon === 1
+                                                    ? '/images/message-colored.png'
+                                                    : '/images/message.png'
+                                            "
+                                            alt="messageIcon"
+                                            width="35"
+                                        />&nbsp;
                                         <span
                                             class="unReadMessage"
                                             v-if="
@@ -47,10 +55,18 @@
                                 </router-link>
                             </li>
                             <li class="userdropdown" v-else>
-                                <router-link to="#" @click="OpenMessageModal" >
-                                    <span class="UserName"
-                                        >
-                                       <img :src="coloredIcon === 1?'/images/message-colored.png':'/images/message.png'" alt="messageIcon" width="35" > &nbsp;
+                                <router-link to="#" @click="OpenMessageModal">
+                                    <span class="UserName">
+                                        <img
+                                            :src="
+                                                coloredIcon === 1
+                                                    ? '/images/message-colored.png'
+                                                    : '/images/message.png'
+                                            "
+                                            alt="messageIcon"
+                                            width="35"
+                                        />
+                                        &nbsp;
                                     </span>
                                 </router-link>
 
@@ -63,10 +79,21 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="userdropdown" @click="teacherColoredIcon">
-                                <router-link to="/student/teachers" >
+                            <li
+                                class="userdropdown"
+                                @click="teacherColoredIcon"
+                            >
+                                <router-link to="/student/teachers">
                                     <span class="UserName"
-                                        ><img :src="coloredIcon ===2?'/images/teacher-colored.png':'/images/teacher.png'" alt="teacher" width="35" >&nbsp;
+                                        ><img
+                                            :src="
+                                                coloredIcon === 2
+                                                    ? '/images/teacher-colored.png'
+                                                    : '/images/teacher.png'
+                                            "
+                                            alt="teacher"
+                                            width="35"
+                                        />&nbsp;
                                     </span>
                                 </router-link>
                                 <ul class="userdropdown-content">
@@ -82,9 +109,20 @@
                                 class="messageuserdropdown"
                                 v-if="FavoriteCount > 0"
                             >
-                                <router-link to="/student/favorite" @click="bookmarkColoredIcon">
+                                <router-link
+                                    to="/student/favorite"
+                                    @click="bookmarkColoredIcon"
+                                >
                                     <span class="UserName"
-                                        ><img :src="coloredIcon === 3?'/images/bookmark-colored.png':'/images/bookmark.png'" alt="bookmark" width="35"  >&nbsp;
+                                        ><img
+                                            :src="
+                                                coloredIcon === 3
+                                                    ? '/images/bookmark-colored.png'
+                                                    : '/images/bookmark.png'
+                                            "
+                                            alt="bookmark"
+                                            width="35"
+                                        />&nbsp;
                                         <span
                                             class="unReadMessage"
                                             v-if="
@@ -96,10 +134,21 @@
                                     >
                                 </router-link>
                             </li>
-                            <li class="userdropdown" v-else >
-                                <router-link to="#"  @click="bookmarkColoredIcon">
+                            <li class="userdropdown" v-else>
+                                <router-link
+                                    to="#"
+                                    @click="bookmarkColoredIcon"
+                                >
                                     <span class="UserName"
-                                        ><img :src="coloredIcon === 3?'/images/bookmark-colored.png':'/images/bookmark.png'" alt="bookmark" width="35" >&nbsp;
+                                        ><img
+                                            :src="
+                                                coloredIcon === 3
+                                                    ? '/images/bookmark-colored.png'
+                                                    : '/images/bookmark.png'
+                                            "
+                                            alt="bookmark"
+                                            width="35"
+                                        />&nbsp;
                                     </span>
                                 </router-link>
 
@@ -112,7 +161,11 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="userdropdown" style="margin-top: 10px" v-if="MyUser !== '' ">
+                            <li
+                                class="userdropdown"
+                                style="margin-top: 10px"
+                                v-if="MyUser !== ''"
+                            >
                                 <img
                                     :src="
                                         '/storage/student/images/' +
@@ -205,6 +258,7 @@ export default {
             receivedMessages: "",
             loaded: false,
             StudentFavorites: "",
+            studentTotalHours: 0,
 
             //setting colored icons
             coloredIcon: 0
@@ -215,9 +269,16 @@ export default {
         this.getReceivedMessages();
         this.getUnreadMessages();
         this.getFavorites();
+        this.getHours();
     },
 
     methods: {
+        getHours(){
+            axios.get('/student/getHours')
+            .then((response)=>{
+                this.studentTotalHours = response.data.reduce((a,b) => a + b, 0)
+            })
+        },
         bookmarkColoredIcon(){
             this.coloredIcon = 3
         },
@@ -307,7 +368,6 @@ export default {
 };
 </script>
 <style scoped>
-
 /* avatar */
 .small {
     height: 35px;
@@ -395,8 +455,8 @@ export default {
     text-decoration: none;
     color: #183153;
 }
-.NavLinks i{
-font-size:15px
+.NavLinks i {
+    font-size: 15px;
 }
 /* This is message drop down */
 

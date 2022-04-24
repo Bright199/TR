@@ -20,7 +20,7 @@
                                 :class="demoActive ? 'demoActive' : ''"
                                 @click="demoActivate"
                             >
-                                Demo Lessons
+                                Trial Lessons
                             </li>
                         </ul>
                     </div>
@@ -69,6 +69,7 @@ export default {
     margin-bottom: 8px;
     border: 1px solid #029e02;
     border-radius: 3px;
+    padding: 0px 0px 3px;
 }
 .Links li:hover {
     background-color: #029e02;
@@ -84,5 +85,8 @@ export default {
 .demoActive {
     background-color: #029e02;
     color: white;
+}
+.demoActive {
+    background-color: #02ad02;
 }
 </style>

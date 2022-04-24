@@ -93,7 +93,8 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/getFavoriteTeacherIds', [StudentRegistration::class, 'getFavoriteTeacherIds']);
         Route::get('/getAllStudentFavorites', [StudentRegistration::class, 'getAllStudentFavorites']);
 
-       
+        Route::get('getHours',[PaidLessonController::class,'getHours']);
+        Route::get('/getAllBookedPaidLessons',[PaidLessonController::class, 'getAllBookedPaidLessons']);
         Route::get('/paidlesson/payment/info/{teacherId}',[PaidLessonController::class,'PaidLessonPaymentDetails']);
         Route::post('/paidlesson/insert/payment/details/',[PaidLessonController::class, 'insertPaidPaymentDetails']);
         Route::get('/book/paid/lesson/{teacherId}',[PaidLessonController::class,'buyHours']);

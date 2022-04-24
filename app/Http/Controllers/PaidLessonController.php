@@ -62,4 +62,18 @@ class PaidLessonController extends Controller
             ->where('student_id', Auth::guard('student')->id())->orderBy('id', 'desc')->first();
         return response()->json($paidlessondetails);
     }
+
+    public function getAllBookedPaidLessons()
+    {
+        $lessons = PaidLesson::where('student_id', Auth::guard('student')->id())->get();
+        return response()->json($lessons);
+    }
+
+    public function getHours()
+    {
+        $hours = PaidLesson::where('student_id', Auth::guard('student')->id())->pluck('student_booked_hours')->toArray();
+        return response()->json($hours);
+
+    }
+
 }

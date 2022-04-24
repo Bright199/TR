@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import Slider from '@vueform/Slider';
+import Slider from '@vueform/slider';
 import axios from 'axios';
 export default {
     name: "CustomNumberOfLesson",

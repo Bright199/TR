@@ -1,7 +1,7 @@
 <template>
     <div class="col-md-9 mb-2 me-2 shadow-sm bg-white p-2">
-        <div class="container-jumbotron border-bottom">
-            <p>Demo lessons details</p>
+        <div class="container-jumbotron border-bottom p-3">
+            <h5 class="text-center">Here are all your trial lessons.</h5>
         </div>
         <div class="container">
             <div class="spinner" v-if="loading == true">
@@ -12,9 +12,9 @@
                 class="table table-responsive table-striped table-sm table-hover"
                 v-if="demoLessons.length"
             >
-                <tr v-for="lesson in demoLessons" :key="lesson">
-                    <td>Date: {{ dateTime(lesson.date) }}</td>
-                    <td>Time: {{ lesson.timeslot }}</td>
+                <tr v-for="lesson in demoLessons" :key="lesson" class="p-5">
+                    <td><span style="color: #029e20">Date:</span> {{ dateTime(lesson.date) }}</td>
+                    <td><span style="color: #029e20">Time:</span> {{ lesson.timeslot }}</td>
                     <td>
                         <span v-if="lesson.lesson_completed === 1"
                             >Status:
@@ -27,7 +27,7 @@
                     </td>
                     <td>
                         <router-link :to="'/student/view/demo/lesson'+lesson.id"
-                            >View</router-link
+                            class="viewDetails">View Details</router-link
                         >
                     </td>
                 </tr>
@@ -174,5 +174,11 @@ export default {
 }
 .BrowseTeachers:hover {
     background-color: #02ad02;
+}
+.viewDetails{
+    text-decoration: none;
+    background-color: #029e02;
+    color: white;
+    border-radius: 3px;
 }
 </style>
