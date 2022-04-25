@@ -86,9 +86,7 @@ export default {
                 package: 'CUSTOM PACKAGE'
             }
             axios.post("/student/paidLessonDetails",lesson)
-            .then(()=>{
                 window.location = '/student/payforhours'
-            })
         }
     },
 };

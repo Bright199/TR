@@ -1,7 +1,8 @@
 <template>
     <div>
         <DashboardNavBar />
-        <div class="container-jumbotron " >
+        <BookPaidLesson v-if="showBookPaidLessonComponent === true"/>
+        <div class="container-jumbotron bg-light" >
             <div class="container mt-2 p-4">
                 <div class="row">
                     <div
@@ -33,12 +34,14 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import DashboardNavBar from "../DashboardNavBar.vue";
+import BookPaidLesson from './BookPaidLesson.vue';
 import DemoLists from "./DemoLists.vue";
 import LessonsLists from "./LessonsLists.vue";
 export default {
     name: "AllBookedLessons",
-    components: { DashboardNavBar, DemoLists, LessonsLists },
+    components: { DashboardNavBar, DemoLists, LessonsLists, BookPaidLesson },
     data() {
         return {
             allLessons: "",
@@ -60,6 +63,12 @@ export default {
         },
         getAllBookedLessons() {},
     },
+
+    computed: {
+        ...mapState({
+            showBookPaidLessonComponent: (state) => state.showBookPaidLessonComponent
+        })
+    }
 };
 </script>
 

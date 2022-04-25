@@ -75,9 +75,7 @@ props: ['userId'],
                 you_save: this.youSave
             }
            axios.post("/student/paidLessonDetails",lesson)
-            .then(()=>{
                 window.location = '/student/payforhours'
-            })
         }
     },
 }

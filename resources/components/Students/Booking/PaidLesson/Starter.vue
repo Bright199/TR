@@ -80,10 +80,7 @@ props: ['userId'],
             }
 
             axios.post("/student/paidLessonDetails",lesson)
-            .then(()=>{
                 window.location = '/student/payforhours'
-            })
-            
         },
        
     },

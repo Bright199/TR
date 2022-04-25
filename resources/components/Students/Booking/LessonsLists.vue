@@ -1,55 +1,82 @@
 <template>
-    <div class="col-md-9 mb-2 me-2 shadow-sm bg-white p-2">
-        <div class="container-jumbotron border-bottom p-3">
+    <div class="col-md-9 mb-2 me-2 p-0">
+        <div class="container-jumbotron border-bottom p-3 bg-white">
             <h5 class="text-center">Here are all your paid lessons.</h5>
         </div>
-        <div class="container">
+        <div class="container p-0 border-top-0">
             <div class="spinner" v-if="loading == true">
                 <div class="dot1"></div>
                 <div class="dot2"></div>
             </div>
-            <!-- <table
-                class="table table-responsive table-striped table-sm table-hover"
-                v-if="demoLessons.length"
-            >
-                <tr v-for="lesson in demoLessons" :key="lesson">
-                    <td>Date: {{ dateTime(lesson.date) }}</td>
-                    <td>Time: {{ lesson.timeslot }}</td>
-                    <td>
-                        <span v-if="lesson.lesson_completed === 1"
-                            >Status:
-                            <img src="/images/tick.png" alt="" width="20"
-                        /></span>
-                        <span v-else
-                            >Status:
-                            <span class="text-primary">unattended</span>
-                        </span>
-                    </td>
-                    <td>
-                        <router-link to="/student/view/demo/lesson"
-                            >View</router-link
-                        >
-                    </td>
-                </tr>
-            </table>
-            <div v-else class="container">
+            <div class="container-jumbotron p-3" v-if="loaded && paidLessons.length">
+                <div
+                    class="row shadow-sm mb-2 p-3 bg-white"
+                    v-for="(lesson, index) in paidLessons"
+                    :key="index"
+                >
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="/images/avatar.png" alt="" class="rounded-circle" width="60" height="60" v-if="lesson.teacher_image ===null">
+                                <img src="/images/avatar.png" alt="" class="rounded-circle" width="60" height="60" v-else>
+                            </div>
+                            <div class="col-md-9 ">
+                                <p style="margin-bottom: 2px;">{{ lesson.teacher_name }}</p>
+                                <p>{{ lesson.language }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Booked: <span style="color: #029e20">{{lesson.student_booked_hours}} hours</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>Leson fee: <span style="color: #029e20">${{lesson.teacher_hourly_pay}}/hr</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div v-if="lesson.remaining_lesson_hours > 0">
+                            <div class="container mb-2 d-flex justify-content-end">
+                                <router-link to="" style="text-decoration: none;">
+                                    <img src="/images/transfer.png" alt="tranfer_lessons" width="25">
+                                    &nbsp; Tranfer lessons
+                                </router-link>
+                            </div>
+                            <div class="container d-flex justify-content-end">
+                                <router-link to="" style="text-decoration: none; margin-top: 10px">
+                                    <img src="/images/schedule.png" alt="calendar" width="25">
+                                    &nbsp; Schedule lesson
+                                </router-link>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <div class="container d-flex justify-content-end">
+                                <router-link :to="'/student/book/paid/lesson/'+lesson.teacher_id" 
+                                class="buyMore">Buy Hours</router-link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-else>
                 <div class="contnainer py-5" v-if="loaded == true">
                     <span class="d-flex justify-content-center">
                         <img src="/images/profiles.png" alt="" width="210" />
                     </span>
                     <h4 class="d-flex justify-content-center">
-                        No paid lessons yet
+                        No booked paid lessons yet!
                     </h4>
                     <p class="d-flex justify-content-center">
-                        You can book your first lesson so easily by accessing
+                        You can buy your lesson hhours so easily by accessing
                         the teacher's section.
                     </p>
-                    <router-link to="/student/teachers" class="BrowseTeachers"
-                        >Browse Teachers</router-link
+                    <router-link to="#" class="BrowseTeachers"
+                        @click="buyHours">Buy Hours</router-link
                     >
                 </div>
-            </div> -->
-            {{paidLessons}}
+            </div>
         </div>
         <!-- {{demoLessons}} -->
     </div>
@@ -71,6 +98,11 @@ export default {
         this.getAllBookedDemoLessons();
     },
     methods: {
+        buyHours() {
+            this.$store.commit({
+                type: "buyHours",
+            });
+        },
         dateTime(value) {
             return moment(value).format("dddd, MMMM Do");
             // moment(value).startOf().fromNow()
@@ -92,6 +124,17 @@ export default {
 </script>
 
 <style scoped>
+.buyMore{
+    text-decoration: none; 
+    margin-top: 10px;
+    padding: 2px 15px 5px;
+    background-color: #029e02;
+    color: white;
+    border-radius: 3px;
+}
+.buyMore:hover{
+    background-color: #03ac03
+}
 /* spinner */
 .spinner {
     margin: 100px auto;
@@ -165,13 +208,14 @@ export default {
     color: white;
     display: block;
     text-align: center;
-    width: 50%;
+    width: 40%;
     margin: auto;
     margin-bottom: 10px;
     text-decoration: none;
     /* color: white; */
     font-size: 20px;
     border: 1px solid #029e02;
+    border-radius: 5px;
 }
 .BrowseTeachers:hover {
     background-color: #02ad02;
