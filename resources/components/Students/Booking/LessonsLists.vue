@@ -29,16 +29,18 @@
                     <div class="col-md-4">
                         <div class="row">
                             <div class="col-md-6">
-                                <p>Booked: <span style="color: #029e20">{{lesson.student_booked_hours}} hours</span></p>
+                                <p style="margin-bottom: 2px">Booked: </p>
+                                <p><span style="color: #029e20">{{lesson.student_booked_hours}} hours</span></p>
                             </div>
                             <div class="col-md-6">
-                                <p>Leson fee: <span style="color: #029e20">${{lesson.teacher_hourly_pay}}/hr</span></p>
+                                <p style="margin-bottom: 2px">Leson fee: </p>
+                                <p><span style="color: #029e20">${{lesson.teacher_hourly_pay}}/hr</span></p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div v-if="lesson.remaining_lesson_hours > 0">
-                            <div class="container mb-2 d-flex justify-content-end">
+                            <div class="container mb-1 d-flex justify-content-end">
                                 <router-link to="" style="text-decoration: none;">
                                     <img src="/images/transfer.png" alt="tranfer_lessons" width="25">
                                     &nbsp; Tranfer lessons

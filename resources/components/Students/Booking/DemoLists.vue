@@ -9,10 +9,11 @@
                 <div class="dot2"></div>
             </div>
             <table
-                class="table table-responsive table-striped table-sm table-hover"
+                class="table table-responsive table-striped table-hover mt-2"
                 v-if="demoLessons.length"
             >
-                <tr v-for="lesson in demoLessons" :key="lesson" class="p-5">
+               <tbody>
+                    <tr v-for="lesson in demoLessons" :key="lesson" class="p-5">
                     <td><span style="color: #029e20">Date:</span> {{ dateTime(lesson.date) }}</td>
                     <td><span style="color: #029e20">Time:</span> {{ lesson.timeslot }}</td>
                     <td>
@@ -31,6 +32,7 @@
                         >
                     </td>
                 </tr>
+               </tbody>
             </table>
             <div v-else class="container">
                 <div class="contnainer py-5" v-if="loaded == true">
@@ -180,5 +182,6 @@ export default {
     background-color: #029e02;
     color: white;
     border-radius: 3px;
+    padding: 2px 5px 5px;
 }
 </style>

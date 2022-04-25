@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bg-light">
         <DashboardNavBar />
         <div class="container p-3">
             <div class="spinner" v-if="loading == true">
@@ -7,18 +7,10 @@
                 <div class="dot2"></div>
             </div>
             <div class="container" v-if="loaded && lessonDetails.length">
-                <div class="container mt-3 p-3">
-                    <p
-                        class="d-flex justify-content-center"
-                        style="font-size: 20px"
-                    >
-                        Below are the details of your lesson
-                    </p>
-                </div>
                 <div class="row">
                     <div
                         class="col-md-4 p-3 mb-2 me-2 bg-white shadow-sm"
-                        style="height: 90px; overflow-y: auto"
+                        style="height: 100px; overflow-y: auto"
                     >
                         <div class="row Avatar">
                             <div
@@ -77,7 +69,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5 mb-2 bg-white shadow-sm p-3">
+                    <div class="col-md-6 mb-2 bg-white shadow-sm p-3">
                         <!-- status -->
                         <p v-if="lessonDetails[0].booked === 0">
                             Status:
@@ -150,7 +142,8 @@
                             >
                         </div>
                     </div>
-                    <div class="col-md-2 mb-2"></div>
+                    <div class="col-md-2 mb-2">
+                    </div>
                 </div>
             </div>
             <div v-else>

@@ -353,7 +353,7 @@ export default {
 }
 .BookBtn{
     background-color: #fed907;
-     padding: 5px;
+    padding: 2px 10px 6px;
     color: #183153;
     display: block;
     text-align: center;
@@ -407,7 +407,7 @@ export default {
 }
 .hireBtn {
     background-color: #029e02;
-    padding: 5px;
+    padding: 2px 10px 6px;
     color: #f8f8f8;
     display: block;
     text-align: center;
