@@ -45,21 +45,6 @@
 
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                    <!-- <textarea
-                                        class="form-control"
-                                        rows="2"
-                                        id="userMessage"
-                                        v-model="message"
-                                        name="message"
-                                        placeholder="Write your message here..."
-                                    ></textarea> -->
-                                    <!-- <div>
-                                        <i
-                                            class="fa-solid fa-paper-plane"
-                                            style="font-size: 20px"
-                                            @click="SendMessage(teacher.id)"
-                                        ></i>
-                                    </div> -->
 
                                     <div class="input-group">
                                         <input
@@ -305,11 +290,14 @@
                     <div class="dot2"></div>
                 </div>
                 <div class="contnainer py-5" v-if="loaded == true">
-                    <h4 class="d-flex justify-content-center">
-                        No teachers within &nbsp; <span style="color: #029e02">${{minPrice}} - ${{maxPrice}}</span> &nbsp; price range
-                    </h4>
-                    <p class="d-flex justify-content-center">
-                       Filter by country, language or check all teachers
+                    <h3 class="text-center">
+                       <span>No results found for:</span>
+                    </h3>
+                    <h5 class="text-center">Teachers between <span style="color: #029e02" >${{minPrice}} - ${{maxPrice}}</span> price range</h5>
+                    <h5 class="text-center" v-if="TeacherCountry !== 'Select country'">Teachers from <span style="color: #029e02">{{TeacherCountry}}</span> </h5>
+                    <h5 class="text-center" v-if="TeacherLanguage !== 'Select language'"><span style="color: #029e02">{{TeacherLanguage}}</span> speaking teachers.</h5>
+                    <p class="text-center">
+                        Check again soon for teachers in this section. There are always best teachers here on TREnglish.
                     </p>
                 </div>
             </div>
@@ -420,7 +408,9 @@ export default {
             this.loading2 = true;
             var data = {
               minPrice: this.minPrice,
-              maxPrice: this.maxPrice
+              maxPrice: this.maxPrice,
+              TeacherCountry: this.TeacherCountry,
+              TeacherLanguage: this.TeacherLanguage,
             }
             axios
                 .post("/student/getTeachersByPrice?page=" + page,data)
@@ -446,7 +436,9 @@ export default {
     computed: {
       ...mapState({
         minPrice: (state) => state.priceRange.minPrice,
-        maxPrice: (state) => state.priceRange.maxPrice
+        maxPrice: (state) => state.priceRange.maxPrice,
+        TeacherCountry: (state) => state.TeacherCountry,
+        TeacherLanguage: (state) => state.TeacherLanguage
       })
     },
 };

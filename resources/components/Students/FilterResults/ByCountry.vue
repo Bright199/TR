@@ -6,6 +6,7 @@
             @change="FilterByCountry"
             v-model="country"
         >
+            <option disabled value="Select country">Select country</option>
             <option
                 v-for="country in countriesInfo"
                 :value="country.name"
@@ -24,21 +25,29 @@ export default {
     data() {
         return {
             countriesInfo: [],
-            country: 'Afghanistan'
+            country: 'Select country'
         };
     },
     mounted() {
-        axios
+        this.getCountryApi();
+    },
+    methods: {
+        getCountryApi(){
+            this.$store.commit({
+                type: "setCountry",
+                country: this.country
+            });
+            axios
             .get("https://countriesnow.space/api/v0.1/countries/flag/images")
             .then((response) => {
                 this.countriesInfo = response.data.data;
+                console.log(response.data.data)
             });
-    },
-    methods: {
+        },
         FilterByCountry(){
            this.$store.commit({
                 type: "getTeachersByCountry",
-                country: this.country,
+                country: this.country
             });
         } 
     }

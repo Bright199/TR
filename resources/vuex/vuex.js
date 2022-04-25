@@ -46,12 +46,22 @@ const store = createStore({
         state.showTeachersComponent = 4
       }, 500)
     },
+    setPrice(state, payload) {
+      state.priceRange.minPrice = payload.minPrice
+      state.priceRange.maxPrice = payload.maxPrice
+    },
     getTeachersByLanguage(state, payload) {
       state.TeacherLanguage = payload.language
       state.showTeachersComponent = 0
       setTimeout(() => {
         state.showTeachersComponent = 2
       }, 500)
+    },
+    setLanguage(state, payload) {
+      state.TeacherLanguage = payload.language
+    },
+    setCountry(state, payload) {
+      state.TeacherCountry = payload.country
     },
     getTeachersByCountry(state, payload) {
       state.TeacherCountry = payload.country

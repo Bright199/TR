@@ -6,6 +6,7 @@
             v-model="language"
             @change="SelectLanguage"
         >
+            <option disabled value="Select language">Select language</option>
             <option>Arabic</option>
             <option>Bengali</option>
             <option>Chinese</option>
@@ -33,10 +34,19 @@ export default {
     name: "ByLanguage",
     data() {
         return {
-            language: "Arabic",
+            language: "Select language",
         };
     },
+    mounted() {
+        this.setLanguage()
+    },
     methods: {
+        setLanguage() {
+            this.$store.commit({
+                type: "setLanguage",
+                language: this.language,
+            });
+        },
         SelectLanguage() {
             this.$store.commit({
                 type: "getTeachersByLanguage",

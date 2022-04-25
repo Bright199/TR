@@ -52,10 +52,10 @@ class StudentRegistration extends Controller
         //     'booked_hours' => $request->booked_hours,
         // ];
         // $details = $request->session()->flush('detail','from a session value');
-        return view('student.paypaidlesson')->with('message','working better now');
+        return view('student.paypaidlesson')->with('message', 'working better now');
         //  ->with('lesson',$lessonDetails);      
         // return response()->json($teacherDetails);
-        
+
     }
 
     public function TrialLessonConfirmation(Request $request)
@@ -106,11 +106,11 @@ class StudentRegistration extends Controller
         if ($paymentDetails) {
             TrialLessonBooking::where('teacher_id', $request->teacherId)
                 ->where('student_id', Auth::guard('student')->id())->update(['booked' => 1]);
-               $contact = StudentContact::where('teacher_id', $request->teacherId)->where('student_id', Auth::guard('student')->id())->first();
-               if($contact === null){
-                   $teacherDetails = Teacher::find($request->teacherId);
-                   $studentDetails = Student::find(Auth::guard('student')->id());
-                   if ($teacherDetails->teacher_image) {
+            $contact = StudentContact::where('teacher_id', $request->teacherId)->where('student_id', Auth::guard('student')->id())->first();
+            if ($contact === null) {
+                $teacherDetails = Teacher::find($request->teacherId);
+                $studentDetails = Student::find(Auth::guard('student')->id());
+                if ($teacherDetails->teacher_image) {
                     StudentContact::create([
                         'teacher_name' => $teacherDetails->name,
                         'teacher_email' => $teacherDetails->email,
@@ -132,10 +132,9 @@ class StudentRegistration extends Controller
                         'teacher_id' => $request->teacherId
                     ]);
                 }
-               }else{
-                   StudentContact::where('teacher_id', $request->teacherId)->where('student_id', Auth::guard('student')->id())->update(['is_booked_by_student' => 1]);
-               }
-                
+            } else {
+                StudentContact::where('teacher_id', $request->teacherId)->where('student_id', Auth::guard('student')->id())->update(['is_booked_by_student' => 1]);
+            }
         }
         // return response()->json($paymentDetails);
     }
@@ -234,18 +233,57 @@ class StudentRegistration extends Controller
     }
     public function getTeachersByPrice(Request $request)
     {
-        $teachersDetails = Teacher::whereBetween('hourly_pay', [$request->minPrice, $request->maxPrice])->paginate(5);
-        return response()->json($teachersDetails);
+        if ($request->TeacherCountry === 'Select country' && $request->TeacherLanguage === 'Select language') {
+            $teachersDetails = Teacher::whereBetween('hourly_pay', [$request->minPrice, $request->maxPrice])->paginate(5);
+            return response()->json($teachersDetails);
+        } else if ($request->TeacherCountry === 'Select country') {
+            $teachersDetails = Teacher::whereBetween('hourly_pay', [$request->minPrice, $request->maxPrice])
+                ->where('first_language', $request->TeacherLanguage)
+                ->paginate(5);
+            return response()->json($teachersDetails);
+        } else if ($request->TeacherLanguage === 'Select language') {
+            $teachersDetails = Teacher::whereBetween('hourly_pay', [$request->minPrice, $request->maxPrice])
+                ->where('nationality', $request->TeacherCountry)
+                ->paginate(5);
+                return response()->json($teachersDetails);
+        } else {
+            $teachersDetails = Teacher::whereBetween('hourly_pay', [$request->minPrice, $request->maxPrice])
+                ->where('nationality', $request->TeacherCountry)
+                ->where('first_language', $request->TeacherLanguage)
+                ->paginate(5);
+                return response()->json($teachersDetails);
+        }
     }
     public function getTeachersByLanguage(Request $request)
     {
-        $teachersDetails = Teacher::where('first_language', $request->TeacherLanguage)->paginate(5);
-        return response()->json($teachersDetails);
+        if ($request->TeacherCountry === 'Select country') {
+            $teachersDetails = Teacher::where('first_language', $request->TeacherLanguage)
+                ->whereBetween('hourly_pay', [$request->minPrice, $request->maxPrice])
+                ->paginate(5);
+            return response()->json($teachersDetails);
+        } else {
+            $teachersDetails = Teacher::where('first_language', $request->TeacherLanguage)
+                ->where('nationality', $request->TeacherCountry)
+                ->whereBetween('hourly_pay', [$request->minPrice, $request->maxPrice])
+                ->paginate(5);
+            return response()->json($teachersDetails);
+        }
     }
     public function getTeachersByCountry(Request $request)
     {
-        $teachersDetails = Teacher::where('nationality', $request->TeacherCountry)->paginate(5);
-        return response()->json($teachersDetails);
+
+        if ($request->TeacherLanguage === 'Select language') {
+            $teachersDetails = Teacher::where('nationality', $request->TeacherCountry)
+                ->whereBetween('hourly_pay', [$request->minPrice, $request->maxPrice])
+                ->paginate(5);
+            return response()->json($teachersDetails);
+        } else {
+            $teachersDetails = Teacher::where('nationality', $request->TeacherCountry)
+                ->whereBetween('hourly_pay', [$request->minPrice, $request->maxPrice])
+                ->where('first_language', $request->TeacherLanguage)
+                ->paginate(5);
+            return response()->json($teachersDetails);
+        }
     }
     public function getTeachersByName(Request $request)
     {

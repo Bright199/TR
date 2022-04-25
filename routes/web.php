@@ -93,6 +93,9 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('/getFavoriteTeacherIds', [StudentRegistration::class, 'getFavoriteTeacherIds']);
         Route::get('/getAllStudentFavorites', [StudentRegistration::class, 'getAllStudentFavorites']);
 
+        Route::get('/schedule/paid/lesson/{teacherId}', function(){
+            return view('student.paidlesson.schedulepaidlesson');
+        });
         Route::get('getThisTeacherLessonDetails/{teacherId}',[PaidLessonController::class,'getThisTeacherLessonDetails']);
         Route::get('getHours',[PaidLessonController::class,'getHours']);
         Route::get('/getAllBookedPaidLessons',[PaidLessonController::class, 'getAllBookedPaidLessons']);

@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-9 mb-2 me-2 p-0">
+    <div class="col-md-9 mb-2 me-2 p-0 LessonContainer">
         <div class="container-jumbotron border-bottom p-3 bg-white">
             <h5 class="text-center">Here are all your paid lessons.</h5>
         </div>
@@ -45,7 +45,7 @@
                                 </router-link>
                             </div>
                             <div class="container d-flex justify-content-end">
-                                <router-link to="" style="text-decoration: none; margin-top: 10px">
+                                <router-link :to="'/student/schedule/paid/lesson/'+lesson.teacher_id" style="text-decoration: none; margin-top: 10px">
                                     <img src="/images/schedule.png" alt="calendar" width="25">
                                     &nbsp; Schedule lesson
                                 </router-link>
@@ -219,5 +219,10 @@ export default {
 }
 .BrowseTeachers:hover {
     background-color: #02ad02;
+}
+.LessonContainer{
+    min-height: 700px;
+    max-height: 800px;
+    overflow-y: auto;
 }
 </style>

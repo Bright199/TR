@@ -28,7 +28,17 @@ export default {
             },
         };
     },
+    mounted() {
+        this.setPrice()
+    },
     methods: {
+        setPrice() {
+            this.$store.commit({
+                type: "setPrice",
+                minPrice: this.price[0],
+                maxPrice: this.price[1],
+            });
+        },
         PriceRange() {
             this.$store.commit({
                 type: "TeachersByPrice",

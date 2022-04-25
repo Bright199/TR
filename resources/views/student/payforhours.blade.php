@@ -35,68 +35,76 @@
 
 <body>
     @if (Session::get('lessonDetails'))
-    <div class="container-jumbotron">
-        <div class="container  p-4">
-            <div class="row">
-                <div class="col-md-3 col-sm-3 col-lg-3"></div>
-                <div class="col-md-6 col-sm-6 col-lg-6 bg-white p-5">
-                    <div class="container p-0 border-bottom">
-                        <p>You are closer to learning your prefered language with <span style="color: #029e02">World
-                                Class</span> teachers.</p>
-                    </div>
-                    <div class="container p-0  mt-2">
-                        <h4>Lesson details</h4>
-                    </div>
-                    <div class="container p-0">
-                        <input type="hidden" name="" value="{{ Session::get('lessonDetails')['hourly_pay'] }}" id="hourly_pay">
-                        <input type="hidden" name="" value="{{ Session::get('lessonDetails')['booked_hours'] }}" id="booked_hours">
-                        <input type="hidden" name="" value="{{ Session::get('lessonDetails')['package'] }}" id="package">
-                        <input type="hidden" name="" value="{{ Session::get('lessonDetails')['totalPrice'] }}" id="totalPrice">
-                        <input type="hidden" name="" value="{{ Session::get('lessonDetails')['teacherId'] }}" id="teacherId">
-                        <p>Your teacher is: <span
-                                style="color: #029e02">{{ Session::get('lessonDetails')['teacherName'] }}</span></p>
-                        <p>Each lesson: <span
-                                style="color: #029e02">${{ Session::get('lessonDetails')['hourly_pay'] }}/hour</span>
-                        </p>
-                        <p>You save: <span
-                                style="color: #029e02">${{ Session::get('lessonDetails')['youSave'] }}</span>
-                        </p>
-                        <p><span>You are buying: </span> <span
-                                style="color: #029e02;">{{ Session::get('lessonDetails')['booked_hours'] }}
-                                hours</span></p>
-                        <p><span>Package type: </span> <span
-                                style="color: #029e02;">{{ Session::get('lessonDetails')['package'] }} </span></p>
-                    </div>
-                    <div class="container p-0 border-bottom">
-                        <h4>Total fee: ${{ Session::get('lessonDetails')['totalPrice'] }}</h4>
-                    </div>
-                    <div class="container p-3 border-bottom">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="terms-conditions" name="option1"
-                                value="something">
-                            <label class="form-check-label" for="terms-conditions" data-bs-toggle="modal"
-                                data-bs-target="#termsConditions"><span style="text-decoration: none;">I agree to</span>
-                                <span style="text-decoration: underline" class="text-primary">Terms &
-                                    conditions</span>
+        <div class="container-jumbotron">
+            <div class="container  p-4">
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-lg-3"></div>
+                    <div class="col-md-6 col-sm-6 col-lg-6 bg-white p-5">
+                        <div class="container p-0 border-bottom">
+                            <p>You are closer to learning your prefered language with <span style="color: #029e02">World
+                                    Class</span> teachers.</p>
+                        </div>
+                        <div class="container p-0  mt-2">
+                            <h4>Lesson details</h4>
+                        </div>
+                        <div class="container p-0">
+                            <input type="hidden" name="" value="{{ Session::get('lessonDetails')['hourly_pay'] }}"
+                                id="hourly_pay">
+                            <input type="hidden" name="" value="{{ Session::get('lessonDetails')['booked_hours'] }}"
+                                id="booked_hours">
+                            <input type="hidden" name="" value="{{ Session::get('lessonDetails')['package'] }}"
+                                id="package">
+                            <input type="hidden" name="" value="{{ Session::get('lessonDetails')['totalPrice'] }}"
+                                id="totalPrice">
+                            <input type="hidden" name="" value="{{ Session::get('lessonDetails')['teacherId'] }}"
+                                id="teacherId">
+                            <p>Your teacher is: <span
+                                    style="color: #029e02">{{ Session::get('lessonDetails')['teacherName'] }}</span>
+                            </p>
+                            <p>Each lesson: <span
+                                    style="color: #029e02">${{ Session::get('lessonDetails')['hourly_pay'] }}/hour</span>
+                            </p>
+                            <p>You save: <span
+                                    style="color: #029e02">${{ Session::get('lessonDetails')['youSave'] }}</span>
+                            </p>
+                            <p><span>You are buying: </span> <span
+                                    style="color: #029e02;">{{ Session::get('lessonDetails')['booked_hours'] }}
+                                    hours</span></p>
+                            <p><span>Package type: </span> <span
+                                    style="color: #029e02;">{{ Session::get('lessonDetails')['package'] }} </span>
+                            </p>
+                        </div>
+                        <div class="container p-0 border-bottom">
+                            <h4>Total fee: ${{ Session::get('lessonDetails')['totalPrice'] }}</h4>
+                        </div>
+                        <div class="container p-3 border-bottom">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="terms-conditions" name="option1"
+                                    value="something">
+                                <label class="form-check-label" for="terms-conditions" data-bs-toggle="modal"
+                                    data-bs-target="#termsConditions"><span style="text-decoration: none;">I agree
+                                        to</span>
+                                    <span style="text-decoration: underline" class="text-primary">Terms &
+                                        conditions</span>
                                 </label>
+                            </div>
+                            <p class="text-danger" id="agreeTerms">Checkbox must be checked.</p>
                         </div>
-                        <p class="text-danger" id="agreeTerms">Checkbox must be checked.</p>
-                    </div>
-                    <div class="container p-3">
-                        <div class="d-grid">
-                            <button id="payNow">Pay Now</button>
+                        <div class="container p-3">
+                            <div class="d-grid">
+                                <button id="payNow">Pay Now</button>
+                            </div>
+                            <div id="paypal-button-container"></div>
                         </div>
-                        <div id="paypal-button-container"></div>
-                    </div>
 
-                </div>
-                <div class="col-md-3 col-sm-3 col-lg-3 Links p-4">
-                    <p><a href="{{ url('student/dashboard') }}">Dashboard</a></p>
-                    <p><a href="{{ url('student/all/booked/lessons') }}">My lessons</a></p>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-lg-3 Links p-4">
+                        <p><a href="{{ url('student/dashboard') }}">Dashboard</a></p>
+                        <p><a href="{{ url('student/all/booked/lessons') }}">My lessons</a></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     @else
         <div class="container p-4">
             <div class="row">
@@ -156,7 +164,17 @@
 
 
     <script>
+        (function() {
+            if (window.localStorage) {
+                if (!localStorage.getItem('firstLoad')) {
+                    localStorage['firstLoad'] = true;
+                    window.location.reload();
+                } else
+                    localStorage.removeItem('firstLoad');
+            }
+        })()
         $(document).ready(function() {
+
             $('#payNow').click(function() {
                 if ($('#terms-conditions').is(':checked')) {
                     $('#payNow').css({
@@ -203,6 +221,7 @@
             })
         })
 
+
         function initPayPalButton() {
             paypal.Buttons({
                 style: {
@@ -236,40 +255,42 @@
                         element.innerHTML = '';
                         element.innerHTML = '<h3>Thank you for your payment!</h3>';
 
-                            $(document).ready(function() {
-                                const teacherId = $('#teacherId').val();
-                                const booked_hours = $('#booked_hours').val();
-                                const hourly_pay = $('#hourly_pay').val();
-                                const totalPrice = $('#totalPrice').val();
-                                const package = $('#package').val();
-                                const data = {
-                                    teacherId: teacherId,
-                                    booked_hours: booked_hours,
-                                    hourly_pay: hourly_pay,
-                                    totalPrice: totalPrice,
-                                    package: package,
-                                    orderData: orderData
+                        $(document).ready(function() {
+                            const teacherId = $('#teacherId').val();
+                            const booked_hours = $('#booked_hours').val();
+                            const hourly_pay = $('#hourly_pay').val();
+                            const totalPrice = $('#totalPrice').val();
+                            const package = $('#package').val();
+                            const data = {
+                                teacherId: teacherId,
+                                booked_hours: booked_hours,
+                                hourly_pay: hourly_pay,
+                                totalPrice: totalPrice,
+                                package: package,
+                                orderData: orderData
+                            }
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
                                 }
-                                $.ajaxSetup({
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                            'content')
-                                    }
-                                })
-                                $.ajax({
-                                    url: "/student/paidlesson/insert/payment/details",
-                                    type: "POST",
-                                    data: data,
-                                    // async : false, 
-                                    success: function(response, textStatus, jqXHR) {
-                                    window.location  = '/student/paidlesson/booking/payment/summary/'+teacherId
-                                        // console.log(response)
-                                    },
-                                    error: function(jqXHR, textStatus, errorThrown) {
-                                        console.log(errorThrown);
-                                    }
-                                });
                             })
+                            $.ajax({
+                                url: "/student/paidlesson/insert/payment/details",
+                                type: "POST",
+                                data: data,
+                                // async : false, 
+                                success: function(response, textStatus, jqXHR) {
+                                    window.location =
+                                        '/student/paidlesson/booking/payment/summary/' +
+                                        teacherId
+                                    // console.log(response)
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    console.log(errorThrown);
+                                }
+                            });
+                        })
 
                     });
                 },
@@ -302,7 +323,7 @@
         color: white;
         padding: 2px 15px 4px;
     }
-   
+
     .Links a:hover {
         color: white;
     }
@@ -325,6 +346,7 @@
     #paypal-button-container {
         display: none
     }
+
     #agreeTerms {
         display: none
     }

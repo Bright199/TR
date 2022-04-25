@@ -305,18 +305,14 @@
                     <div class="dot2"></div>
                 </div>
                 <div class="contnainer py-5" v-if="loaded == true">
-                    <h4 class="d-flex justify-content-center">
-                        No
-                        &nbsp;
-                        <span style="color: #029e02">
-                            {{ TeacherLanguage }}
-                        </span>
-                        &nbsp;
-                        speaking teachers available yet.
-                    </h4>
-                    <p class="d-flex justify-content-center">
-                        Check again soon for {{ TeacherLanguage }} speaking
-                        teachers in this section.
+                    <h3 class="text-center">
+                       <span>No results found for:</span>
+                    </h3>
+                    <h5 class="text-center"><span style="color: #029e02">{{TeacherLanguage}}</span> speaking teachers.</h5>
+                    <h5 class="text-center" v-if="TeacherCountry !== 'Select country'">Teachers from <span style="color: #029e02" >{{TeacherCountry}}</span></h5>
+                    <h5 class="text-center">Teachers between <span style="color: #029e02" >${{minPrice}} - ${{maxPrice}}</span> price range</h5>
+                    <p class="text-center">
+                        Check again soon for teachers in this section. There are always best teachers here on TREnglish.
                     </p>
                 </div>
             </div>
@@ -427,6 +423,9 @@ export default {
             this.loading2 = true;
             var data = {
                 TeacherLanguage: this.TeacherLanguage,
+                TeacherCountry: this.TeacherCountry,
+                minPrice: this.minPrice,
+                maxPrice: this.maxPrice,
             };
             console.log(data);
             axios
@@ -453,6 +452,9 @@ export default {
     computed: {
         ...mapState({
             TeacherLanguage: (state) => state.TeacherLanguage,
+            TeacherCountry: (state) => state.TeacherCountry,
+            minPrice: (state) => state.priceRange.minPrice,
+            maxPrice: (state) => state.priceRange.maxPrice,
         }),
     },
 };
