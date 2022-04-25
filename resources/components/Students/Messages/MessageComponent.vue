@@ -75,7 +75,7 @@
                                     <p class="Name">
                                         {{ contact.teacher_name }}
                                     </p>
-                                    <span class="timeSent">{{
+                                    <span class="timeSent" v-if="contact.message_date !==''">{{
                                         dateTime(contact.message_date)
                                     }}</span>
                                     <span
@@ -103,20 +103,7 @@
                     </div>
                 </ul>
             </div>
-            <!-- <div class="input-group">
-                <input
-                    type="text"
-                    class="form-control"
-                    id="userMessage"
-                    v-model="message"
-                    name="message"
-                    placeholder="Write your message here..."
-                />
-                <button type="submit" class="SendBtn" @click="SendMessage()">
-                    <i class="fa-solid fa-paper-plane"></i>
-                </button>
-            </div> -->
-            <!-- teacher.id -->
+           
         </div>
         <!-- end of messaging componet -->
     </div>

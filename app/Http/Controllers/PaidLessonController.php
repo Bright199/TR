@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Session;
 
 class PaidLessonController extends Controller
 {
+    public function getTeacherDetails($teacherId)
+    {
+        $teacherDetails = Teacher::find($teacherId);
+        return response()->json($teacherDetails);
+    }
     public function buyHours($teacherId)
     {
         $teacherDetails = Teacher::find($teacherId);
