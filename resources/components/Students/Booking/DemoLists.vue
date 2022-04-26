@@ -182,6 +182,6 @@ export default {
     background-color: #029e02;
     color: white;
     border-radius: 3px;
-    padding: 2px 5px 5px;
+    padding: 2px 10px 5px;
 }
 </style>

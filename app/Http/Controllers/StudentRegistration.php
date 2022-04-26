@@ -87,6 +87,7 @@ class StudentRegistration extends Controller
             $teacherDetail->teacher_image = $teacher ? $teacher->teacher_image : '';
             $teacherDetail->teacher_hourly_pay = $teacher ? $teacher->hourly_pay : '';
             $teacherDetail->teacher_teaching_language = $teacher ? $teacher->first_language : '';
+            $teacherDetail->teacher_nationality = $teacher ? $teacher->nationality : '';
             return $teacherDetail;
         });
         return response()->json($singleDemoLessonsDetails);

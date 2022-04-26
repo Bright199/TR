@@ -10,7 +10,7 @@
                 <div class="dot2"></div>
             </div>
             <div class="row" v-if="loaded">
-                <div class="col-md-3 col-sm-3 col-lg-3 bg-white p-4 TeacherProfile">
+                <div class="col-md-3 col-sm-3 col-lg-3 bg-white p-4 TeacherProfile mb-2">
                     <div class="container d-flex justify-content-center justify-items-center">
                         <img v-if="teacherDetails.teacher_image !== null" :src="'/images/'+teacherDetails.teacher_image" alt="teacher_image" class="rounded-circle" width="75" height="75">
                         <img v-else src="/images/avatar.png" alt="teacher_image" class="rounded-circle" width="75" height="75">
@@ -20,15 +20,15 @@
                         <p>Language <span style="color: #029e20">{{ teacherDetails.first_language}}</span></p>
                         <p>Hourly fee <span style="color: #029e20">${{ teacherDetails.hourly_pay}}/hour</span></p>
                         <p>Language <span style="color: #029e20">{{ teacherDetails.first_language}}</span></p>
-                        <p v-if="teacherDetails.online === 1">Online <span style="color: #029e20">Yes</span></p>
-                        <p v-else>Online <span style="color: #029e20">No</span></p>
+                        <p v-if="teacherDetails.online === 1">Online <span style="font-size: 12px; color: #029e20"><i class="fa-solid fa-circle" ></i></span></p>
+                        <p v-else>Online <span style="font-size: 12px"><i class="fa-solid fa-circle" ></i></span></p>
                     </div>
                     <div class="container d-flex justify-content-end">
                         <button class="MessageBtn" data-bs-toggle="modal" data-bs-target="#MessageModal">
                             <i class="fa-solid fa-paper-plane"></i></button>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6 col-lg-6 bg-white mx-3 p-4">
+                <div class="col-md-6 col-sm-6 col-lg-6 bg-white mx-3 p-4 mb-2">
                     Teacher's calendar
                 </div>
                 <div class="col-md-2 col-sm-2 col-lg-2 bg-white p-4">
@@ -158,8 +158,8 @@ export default {
     border: 1px solid #029e02;
     border-radius: 50%;
     background: white;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
 }
 .MessageBtn i{
     color: #029e02;

@@ -9,67 +9,30 @@
             <div class="container" v-if="loaded && lessonDetails.length">
                 <div class="row">
                     <div
-                        class="col-md-4 p-3 mb-2 me-2 bg-white shadow-sm"
-                        style="height: 100px; overflow-y: auto"
+                        class="col-md-3 p-3 mb-2 me-2 bg-white shadow-sm"
+                        style="height: 310px; overflow-y: auto"
                     >
                         <div class="row Avatar">
-                            <div
-                                class="col-md-3 me-1"
-                                v-if="lessonDetails[0].teacher_image"
-                            >
-                                <img
-                                    :src="
-                                        '/images/' +
-                                        lessonDetails[0].teacher_image
-                                    "
-                                    alt=""
-                                    width="50"
-                                    height="50"
-                                />
+                            <div class="container d-flex justify-content-center justify-items-center">
+                                <img v-if="lessonDetails[0].teacher_image"  class="rounded-circle" :src="'/images/' + lessonDetails[0].teacher_image" alt="profile_image" width="75" height="75" />
+                                <img v-else class="rounded-circle" src="/images/avatar.png" alt="profile_image" width="75" height="75"/>
                             </div>
-                            <div class="col-md-3 me-1" v-else>
-                                <img
-                                    src="/images/avatar.png"
-                                    alt=""
-                                    width="50"
-                                    height="50"
-                                />
+                            <p class="text-center" style="margin-bottom: 2px"> {{ lessonDetails[0].teacher_name }}</p>
+                            <p class="text-center" style="color: #029e02">{{lessonDetails[0].teacher_teaching_language}}</p>
+                            <div class="container px-3 border-top pt-2">
+                                <p v-if="lessonDetails[0].teacher_online === 1" style="margin-top: 2px; margin-bottom: 2px"><span>Online <i class="fa-solid fa-circle" style="color: #029e20; font-size: 12px"></i></span></p>
+                                <p v-else style="margin-top: 2px; margin-bottom: 2px">Online <i class="fa-solid fa-circle" style="font-size: 12px"></i></p>
+                                <p style="margin-top: 2px; margin-bottom: 2px">Hourly fee: <span style="color: #029e20">${{lessonDetails[0].teacher_hourly_pay}}</span></p>
+                                <p style="margin-top: 2px; margin-bottom: 2px">From: <span style="color: #029e20">{{lessonDetails[0].teacher_nationality}}</span></p>
                             </div>
-                            <div class="col-md-5">
-                                <p style="margin-bottom: 0px">
-                                    {{ lessonDetails[0].teacher_name }}
-                                </p>
-                                <p style="color: #029e02">
-                                    {{
-                                        lessonDetails[0]
-                                            .teacher_teaching_language
-                                    }}
-                                </p>
+                            <div class="container d-flex justify-content-end ">
+                                <button class="MessageBtn" data-bs-toggle="modal" data-bs-target="#MessageModal">
+                                 <i class="fa-solid fa-paper-plane"></i></button>
                             </div>
-                            <div class="col-md-3">
-                                <p
-                                    v-if="lessonDetails[0].teacher_online === 0"
-                                    style="font-size: 12px"
-                                >
-                                    Online
-                                    <span
-                                        ><i class="fa-solid fa-circle-dot"></i
-                                    ></span>
-                                </p>
-                                <p
-                                    v-if="lessonDetails[0].teacher_online === 1"
-                                    style="font-size: 12px"
-                                >
-                                    Online
-                                    <i
-                                        class="fa-solid fa-circle-dot"
-                                        style="font-size: 12px; color: #029e02"
-                                    ></i>
-                                </p>
-                            </div>
+                            
                         </div>
                     </div>
-                    <div class="col-md-6 mb-2 bg-white shadow-sm p-3">
+                    <div class="col-md-6 mb-2 bg-white shadow-sm p-4">
                         <!-- status -->
                         <p v-if="lessonDetails[0].booked === 0">
                             Status:
@@ -121,10 +84,11 @@
                         <div class="container p-0">
                             <!-- Lesson link -->
                             <a
+                                class="JoinLesson"
                                 href=""
                                 target="_blank"
                                 v-if="lessonDetails[0].booked === 1"
-                                >Join lesson</a
+                                >Join Lesson</a
                             >
                             <!-- end lesson link -->
 
@@ -143,6 +107,7 @@
                         </div>
                     </div>
                     <div class="col-md-2 mb-2">
+                        <router-link to="/student/all/booked/lessons" class="MyLesson">My Lessons</router-link>
                     </div>
                 </div>
             </div>
@@ -150,7 +115,7 @@
                 <div class="container" v-if="loaded">
                     <div class="row">
                         <div class="col-md-2"></div>
-                        <div class="col-md-8 bg-white p-3">
+                        <div class="col-md-7 bg-white p-3">
                             <h4 class="text-center">No results</h4>
                             <div
                                 class="container d-flex justify-content-center"
@@ -175,14 +140,64 @@
                                 >Book a teacher</router-link
                             >
                                 </div>
-                                <div class="col-md-3"></div>
+                                <div class="col-md-3">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-2"></div>
+                        <div class="col-md-2">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- The Modal -->
+            <div class="modal fade" id="MessageModal" v-if="lessonDetails.length">
+                <div
+                    class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                >
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <p class="modal-title" >
+                                <i class="fa-solid fa-message" style="color: #029e02"></i>
+                                {{ lessonDetails[0].teacher_name }}
+                            </p>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                id="close"
+                            ></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="userMessage"
+                                    v-model="message"
+                                    name="message"
+                                    placeholder="Write your message here..."
+                                />
+                                <button
+                                    type="submit"
+                                    class="SendBtn"
+                                    @click="
+                                        SendMessage(lessonDetails[0].teacher_id)
+                                    "
+                                >
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Modal footer -->
+                    </div>
+                </div>
+            </div>
+            <!-- end of modal -->
     </div>
 </template>
 
@@ -201,9 +216,28 @@ export default {
             lessonDetails: "",
             loading: false,
             loaded: false,
+            message: "",
         };
     },
     methods: {
+        SendMessage(teacherId) {
+            const message = this.message.trim();
+            if (message == "") {
+                alert("Message empty");
+                return;
+            } else if (teacherId == "") {
+                alert("select a teacher");
+                return;
+            } else {
+                axios
+                    .post("/student/message", { message, teacherId })
+                    .then((response) => {
+                        alert('Message sent successfully!')
+                        // this.$el.querySelector("#close").click();
+                    })
+                        this.message = "";
+            }
+        },
         timeZone() {
             return moment.tz.guess();
         },
@@ -216,6 +250,7 @@ export default {
                 .get("/student/getSingleDemoLessonDetails" + this.id)
                 .then((result) => {
                     this.lessonDetails = result.data;
+                    console.log(result);
                     this.loaded = true;
                 })
                 .finally(() => {
@@ -229,6 +264,56 @@ export default {
 };
 </script>
 <style scoped>
+.MyLesson{
+    border: 1px solid #029e02;
+    border-radius: 3px;
+    text-decoration: none;
+    color: #183153;
+    padding: 2px 10px 5px;
+    margin: 8px auto;
+    display: flex;
+    justify-content: center;
+}
+.SendBtn {
+    border: none;
+    background-color: #029e02;
+    color: white;
+    padding: 3px 10px 5px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.SendBtn:hover {
+    border: none;
+    color: white;
+    background-color: #04ad04;
+}
+.MessageBtn{
+    border: 1px solid #029e02;
+    border-radius: 50%;
+    background: white;
+    width: 40px;
+    height: 40px;
+}
+.MessageBtn i{
+    color: #029e02;
+}
+.MessageBtn:hover{
+    background-color: #029e02;
+}
+.MessageBtn:hover i{
+    color: white;
+}
+.JoinLesson{
+    text-decoration:none;
+    padding: 2px 15px 5px;
+    background-color: #029e02;
+    color: white;
+    border-radius: 3px;
+    float: right;
+}
+.JoinLesson:hover{
+    background-color: #03b103;
+}
 /* spinner */
 .spinner {
     margin: 100px auto;
