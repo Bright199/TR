@@ -6,17 +6,17 @@
         <BookPaidLesson v-if="showBookPaidLessonComponent === true" />
         <div class="container">
             <div class="row">
-                <div class="col-md-3 me-3 mt-4 shadow-sm LeftBar">
+                <div class="col-md-3 me-3 mt-4 shadow-sm LeftBar bg-white">
                     <router-link
                         to="/student/teachers"
-                        style="background-color: #029e02; color: white"
+                        style="background-color: #029e02; color: white; padding: 1px 10px 5px"
                         >Our teachers</router-link
                     >
                     <!-- <router-link to="/student/freelance/teachers"
                         >Freelance teachers</router-link
                     > -->
                 </div>
-                <div class="col-md-8 mb-4 mt-4 shadow-sm">
+                <div class="col-md-8 mb-4 mt-4 shadow-sm bg-white">
                     <TeacherDetails />
                 </div>
             </div>

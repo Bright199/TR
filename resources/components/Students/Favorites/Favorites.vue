@@ -6,12 +6,12 @@
         <BookPaidLesson v-if="showBookPaidLessonComponent === true" />
         <div class="container mt-3">
             <div class="row">
-                <div class="col-md-3 me-3 mb-3 LeftBar">
+                <div class="col-md-3 me-3 mb-3 LeftBar shadow-sm bg-white">
                     <div class="border-bottom p-3">
                         <h4>My Lists</h4>
                     </div>
                 </div>
-                <div class="col-md-8 pb-4 RightBar">
+                <div class="col-md-8 pb-4 RightBar bg-white shadow-sm">
                     <div class="border-bottom p-3">
                         <h4>
                             <span>Favorites &nbsp;</span>
@@ -433,12 +433,11 @@ export default {
     display: none;
 }
 .LeftBar {
-    height: 250px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    height: 100px;
+    overflow-y: auto;
     padding: 0;
 }
 .RightBar {
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     padding: 0;
     height: 700px;
     overflow-y: auto;

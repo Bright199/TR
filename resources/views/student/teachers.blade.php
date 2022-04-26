@@ -42,6 +42,7 @@
 
 <style>
     body{
-    color:#183153
+    color:#183153;
+    background: #f8f9fa
 }
 </style>

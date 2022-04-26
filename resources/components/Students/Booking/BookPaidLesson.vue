@@ -26,40 +26,24 @@
                                     :key="teacher"
                                 >
                                     <div class="col-md-6">
-                                        <ul>
-                                            <li>
-                                                <img
-                                                    v-if="
-                                                        teacher.teacher_image2 !==
-                                                        null
-                                                    "
-                                                    :src="
-                                                        '/images/' +
-                                                        teacher.teacher_image2
-                                                    "
-                                                    alt="avatar"
-                                                    class="TeacherAvatar"
-                                                />
-                                                <img
-                                                    v-else
-                                                    src="/images/avatar.png"
-                                                    alt="avatar"
-                                                    class="TeacherAvatar"
-                                                />
-                                                <p style="padding-top: 20px">
-                                                    {{ teacher.teacher_name }}
-                                                </p>
-                                            </li>
-                                        </ul>
+                                      <div class="row">
+                                           <div class="col-md-3 d-flex justify-content-center justify-items-center">
+                                           <img v-if="teacher.teacher_image !== null" :src="'/images/'+ teacher.teacher_image" alt="profile_image" class="rounded-circle" width="65" height="65">
+                                           <img v-else src="/images/avatar.png" alt="profile_image" class="rounded-circle" width="65" height="65">
+                                       </div>
+                                       <div class="col-md-9 d-flex justify-content-center justify-items-center">
+                                           <p class="pt-3">{{teacher.teacher_name}}</p>
+                                       </div>
+                                      </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="row">
-                                            <div class="col-md-4 p-3">
-                                                <p>${{teacher.hourly_pay}} USD</p>
+                                            <div class="col-md-4 p-3 d-flex justify-content-center justify-items-center">
+                                                <p style="color: #029e20">${{teacher.hourly_pay}}/hour</p>
                                             </div>
-                                            <div class="col-md-8 BookingBtns p-3">
-                                                <a :href="'/student/book/paid/lesson/'+teacher.teacher_id" v-if="teacher.is_booked_by_student === 1">Buy hours</a>
-                                                <a :href="'/student/book/demo/lesson/'+teacher.teacher_id" v-else>Book trial</a>
+                                            <div class="col-md-8 p-3 d-flex justify-content-center justify-items-center">
+                                                <a :href="'/student/book/paid/lesson/'+teacher.teacher_id" v-if="teacher.is_booked_by_student === 1" class="BookingBtns">Buy hours</a>
+                                                <a :href="'/student/book/demo/lesson/'+teacher.teacher_id" v-else class="BookingBtns">Book trial</a>
                                             </div>
                                         </div>
                                     </div>
@@ -134,11 +118,11 @@ export default {
 </script>
 
 <style scoped>
-.BookingBtns a{
+.BookingBtns{
     text-decoration: none;
     background: #029e02;
     color:  white;
-    padding:3px 15px 6px;
+    padding:6px 15px 2px;
     border-radius: 4px;
 }
 .ContactBtn {

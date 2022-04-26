@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container-jumbotron TopBar1">
+        <div class="container-jumbotron TopBar1 bg-white">
             <Header />
         </div>
 

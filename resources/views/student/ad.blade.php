@@ -33,25 +33,25 @@
 
 <body class="bg-light">
     <div class="container-jumbotron TopBar1">
-        <a href="{{ url('/student/dashboard') }}">Dashboard</a>
+        <a href="{{ url('/student/dashboard') }}"><i class="fa-solid fa-house"></i>Dashboard</a>
     </div>
     <div class="container mt-3">
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <h2>Ad creation dashboard</h2>
-                <p class="border-bottom">
-                    Find a teacher quicker by creating an ad at
+                <h6 class="mb-3">
+                    Finding teachers quickly is guaranteed with an ad just
                     <span style="color: #029e02">$2.99 Only</span>
-                </p>
-                <div class="row">
+                </h6>
+                <div class="row bg-white p-3">
                     <div class="col-md-2 d-flex justify-content-center align-content-center">
                         <img src="/images/attention.png" alt="attention" />
                     </div>
                     <div class="col-md-9 d-flex justify-content-start">
                         <p>
-                            In order to create a job ad for teachers to see, you are required
-                            to add your profile image and country in the
+                            In order to create a job ad for teachers to see, we recommend that you 
+                            add your <span style="color: #029e02">profile image</span> and <span style="color: #029e02">country</span> in the
                             profile section. You can do this by clicking on
                             your name in the navigation bar and going to the
                             profile section <a href="{{url('/student/edit/profile')}}" style="color:#029e02; ">Edit profile</a>
@@ -177,7 +177,7 @@
         box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
         -webkit-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
         -moz-box-shadow: -1px 10px 15px -8px rgba(28, 26, 26, 0.3);
-        background-color: #fed907;
+        background-color: white;
         padding: 25px;
     }
 
