@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
+
+// Student routes
 import RightBar from '../components/Students/RightBar.vue';
 import WebRtc from '../components/Students/WebRtc.vue';
 import EditStudentProfile from '../components/Students/EditStudentProfile.vue';
@@ -23,9 +25,23 @@ import PaidLessonPaymentSummary from '../components/Students/Booking/PaidLesson/
 import SchedulePaidLesson from '../components/Students/Booking/PaidLesson/ScheduleLesson/SchedulePaidLesson.vue'
 import SingleDemoLesson from '../components/Students/Booking/SingleDemoLesson.vue'
 import LessonPackages from '../components/Students/Booking/PaidLesson/LessonPackages.vue'
+import TeacherDashboard from '../components/Teachers/Home/TeacherDashboard.vue'
+// end of student routes
+
+// teacher Routes
+
+
+// end of teacher routes
 
 const newLocal = 'Home';
 const routes = [
+    // teacher dashboard
+        {
+            path:'/teacher/dashboard',
+            name: 'TeacherDashboard',
+            component: TeacherDashboard
+        },
+    // end of teacher dashboard
     {
         path: '/',
         name: 'RightNavMain',

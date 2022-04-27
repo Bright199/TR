@@ -16,6 +16,9 @@ class Teacher extends Authenticatable
 
 
     protected $fillable = [
+        'registration_completed',
+        'account_vissible',
+        'account_verified',
         'name',
         'email',
         'password',
@@ -32,6 +35,7 @@ class Teacher extends Authenticatable
         'third_language',
         'third_language_proficiency',
         'nationality',
+        'nationality_flag',
         'our_teacher',
         'online',
     ];

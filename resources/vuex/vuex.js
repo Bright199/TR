@@ -31,6 +31,7 @@ const store = createStore({
   //   }
   // },
   mutations: {
+    // Student Mutations
     buyHours(state){
       state.showBookPaidLessonComponent = true
     },
@@ -124,6 +125,15 @@ const store = createStore({
     reduceUnreadMessagesCount(state, payload) {
       state.unreadMessageCount -= payload
     }
+    // end of student mutations
+
+
+
+    // teacher mutations
+
+
+    // end of teacher mutations
+
   },
 
 })

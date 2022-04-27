@@ -18,6 +18,9 @@ class CreateTeachersTable extends Migration
             $table->string('name');
             $table->boolean('our_tearcher')->default(0);
             $table->boolean('online')->default(0);
+            $table->boolean('registration_completed')->default(0);
+            $table->boolean('account_vissible')->default(0);
+            $table->boolean('account_verified')->default(0);
             $table->string('teacher_image')->nullable();
             $table->text('description')->nullable();
             $table->string('hourly_pay')->nullable();
@@ -29,6 +32,7 @@ class CreateTeachersTable extends Migration
             $table->string('third_language')->nullable();
             $table->string('third_language_proficiency')->nullable();
             $table->string('nationality')->nullable();
+            $table->string('nationality_flag')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

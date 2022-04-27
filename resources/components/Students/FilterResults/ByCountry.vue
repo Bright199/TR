@@ -41,7 +41,6 @@ export default {
             .get("https://countriesnow.space/api/v0.1/countries/flag/images")
             .then((response) => {
                 this.countriesInfo = response.data.data;
-                console.log(response.data.data)
             });
         },
         FilterByCountry(){
