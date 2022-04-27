@@ -9,6 +9,37 @@ use Illuminate\Support\Facades\Hash;
 
 class TeachersRegistration extends Controller
 {
+    
+    public function getTeacherDetails()
+    {
+        $teacherDetails = Teacher::find(Auth::guard('teacher')->id());
+        return response()->json($teacherDetails);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public function store(Request $request)
     {
         $validated = $request->validate([

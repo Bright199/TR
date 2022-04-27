@@ -189,6 +189,11 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
         Route::get('/logout', function () {
             return view('/dashboard');
         });
+
+        // get teacher demoDetails
+        Route::get('getTeacherDetails', [TeachersRegistration::class,'getTeacherDetails']);
+
+        // end of teacher details
     });
 });
 
