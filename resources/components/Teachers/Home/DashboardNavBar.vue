@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h2>Navigation</h2>
+        <h3>Normal navigation</h3>
+        
     </div>
 </template>
 

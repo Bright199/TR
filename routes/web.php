@@ -186,9 +186,7 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
     Route::middleware(['auth:teacher'])->group(function () {
         Route::view('/dashboard', 'teacher.dashboard')->name('dashboard');
         Route::post('/logout', [TeachersRegistration::class, 'logout'])->name('logout');
-        Route::get('/logout', function () {
-            return view('/dashboard');
-        });
+        Route::get('/logout', [TeachersRegistration::class, 'logout'])->name('logout');
 
         // get teacher demoDetails
         Route::get('getTeacherDetails', [TeachersRegistration::class,'getTeacherDetails']);

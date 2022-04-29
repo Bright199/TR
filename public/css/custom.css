@@ -72,6 +72,8 @@
     padding: 10px;
     border-radius: 3px;
     text-decoration: none;
+    display: flex;
+    justify-content:center;
 }
 .FacebookButton:hover{
     background-color: #4e76c5;
@@ -87,6 +89,8 @@
     border: 1px solid;
     border-radius: 3px; 
     text-decoration: none;
+    display: flex;
+    justify-content:center;
 }
 .GoogleButton:hover{
     /* color: white;

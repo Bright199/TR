@@ -5,14 +5,22 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="container">
-                <h4 class="mb-4">{{ __('Teacher login') }}</h4>
+                <h4 class="mb-4 text-center">{{ __('TEACHER LOGIN') }}</h4>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <a href="{{route('student.facebook.login',['student'=>'teacherFacebook'])}}" class="FacebookButton">
+                                <i class="fa-brands fa-facebook-square" style="font-size: 22px; margin-right: 15px"></i>
+                                Login with facebook</a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{route('student.google.login',['student'=>'teacherGoogle'])}}" class="GoogleButton">
+                                <i class="fa-brands fa-google" style="font-size: 22px; margin-right: 15px"></i>
+                                Login with google</a>
+                        </div>
+                    </div>
+                </div>
 
-                <a href="{{route('student.facebook.login',['student'=>'teacherFacebook'])}}" class="FacebookButton">
-                    <img src="https://img.icons8.com/color/30/000000/facebook-new.png" />
-                    Login with facebook</a>
-                <a href="{{route('student.google.login',['student'=>'teacherGoogle'])}}" class="GoogleButton">
-                    <img src="https://img.icons8.com/color/30/000000/google-logo.png" />
-                    Login with google</a>
 
                 <div class="container mt-1">
                     @if (session('oath'))
@@ -47,9 +55,10 @@
                                 }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password"
+                                    <input id="password" type="password"
                                     class="form-control @error('password') is-invalid @enderror" name="password"
                                     required autocomplete="current-password">
+                                    <div ><span style="color: #029e02" id="showPassord">Show password</span></div>
 
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -91,5 +100,33 @@
             </div>
         </div>
     </div>
+<script>
+    $(document).ready(function(){
+        $('#showPassord').click(function(){
+            if ($('#showPassord').html() === 'Hide password') {
+                $('#showPassord').html('Show password');
+                $('#password').attr('type', 'password');
+            }else{
+                 $('#showPassord').html('Hide password');
+                $('#password').attr('type', 'text');
+            }
+        })
+    });
+</script>
 </div>
 @endsection
+<style scoped>
+    #passwordContainer{
+        position: relative;
+    }
+    #showPassord{
+    cursor: pointer;
+    }
+    .fa-google {
+  background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+</style>

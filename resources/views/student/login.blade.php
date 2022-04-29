@@ -3,25 +3,33 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="container">
-                <h4 class="mb-4">{{ __('Student login') }}</h4>
+        <div class="col-md-8 ">
+            <div class="container bg-white p-5">
+                <h4 class="mb-4 text-center">{{ __('STUDENT LOGIN') }}</h4>
                 <div class="container">
-                    <a href="{{route('student.facebook.login',['student'=>'studentFacebook'])}}" class="FacebookButton">
-                        <img src="https://img.icons8.com/color/30/000000/facebook-new.png" />
-                        Login with facebook</a>
-                    <a href="{{route('student.google.login',['student'=>'studentGoogle'])}}" class="GoogleButton">
-                        <img src="https://img.icons8.com/color/30/000000/google-logo.png" />
-                        Login with google</a>
+                
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <a href="{{route('student.facebook.login',['student'=>'studentFacebook'])}}" class="FacebookButton">
+                                <i class="fa-brands fa-facebook-square" style="font-size: 22px; margin-right: 15px"></i>
+                                Login with facebook</a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{route('student.google.login',['student'=>'studentGoogle'])}}" class="GoogleButton">
+                                <i class="fa-brands fa-google" style="font-size: 22px; margin-right: 15px"></i>
+                                Login with google</a>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
                 </div>
-               <div class="container mt-1">
+               <div class="container mt-1 ">
                 @if (session('oath'))
                 <div class="alert alert-danger">
                     {{ session('oath') }}
                 </div>
                 @endif
                </div>
-                <div class="card-body">
+                <div class="card-body ">
 
                     <form method="POST" action="{{ route('student.login') }}">
                         @csrf
@@ -50,7 +58,7 @@
                                 <input id="password" type="password"
                                     class="form-control @error('password') is-invalid @enderror" name="password"
                                     required autocomplete="current-password">
-
+                                    <div ><span style="color: #029e02" id="showPassord">Show password</span></div>
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -91,5 +99,33 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function(){
+            $('#showPassord').click(function(){
+                if ($('#showPassord').html() === 'Hide password') {
+                    $('#showPassord').html('Show password');
+                    $('#password').attr('type', 'password');
+                }else{
+                     $('#showPassord').html('Hide password');
+                    $('#password').attr('type', 'text');
+                }
+            })
+        });
+    </script>
 </div>
 @endsection
+<style scoped>
+    #passwordContainer{
+        position: relative;
+    }
+    #showPassord{
+    cursor: pointer;
+    }
+    .fa-google {
+  background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+</style>
