@@ -16,21 +16,25 @@ class TeachersRegistration extends Controller
         return response()->json($teacherDetails);
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    public function saveProfileImage(Request $request)
+    {
+        if ($request->hasFile('profileImage')) {
+            $authUser = Teacher::find(Auth::guard('teacher')->id());
+
+            $file = $request->file('profileImage');
+            $fileName = time() . $file->getClientOriginalName();
+            $path = 'teacher/images/';
+            $file->storeAs($path, $fileName, 'public');
+
+            $authUser->teacher_image = $fileName;
+            $worked = $authUser->update();
+            if ($worked) {
+                return response()->json('worked');
+            } else {
+                return response()->json('failed');
+            }
+        } 
+    }
     
     
     

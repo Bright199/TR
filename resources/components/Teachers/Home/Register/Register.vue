@@ -1,6 +1,6 @@
 <template>
     <div>
-      <div class="container-jumbotron p-2 shadow-sm bg-white">
+      <div class="container-jumbotron p-2 ">
         <RegisterNav/>
       </div>
       <div class="container p-4 mt-3">

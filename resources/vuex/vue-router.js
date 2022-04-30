@@ -25,10 +25,11 @@ import PaidLessonPaymentSummary from '../components/Students/Booking/PaidLesson/
 import SchedulePaidLesson from '../components/Students/Booking/PaidLesson/ScheduleLesson/SchedulePaidLesson.vue'
 import SingleDemoLesson from '../components/Students/Booking/SingleDemoLesson.vue'
 import LessonPackages from '../components/Students/Booking/PaidLesson/LessonPackages.vue'
-import TeacherDashboard from '../components/Teachers/Home/TeacherDashboard.vue'
 // end of student routes
 
 // teacher Routes
+import TeacherDashboard from '../components/Teachers/Home/TeacherDashboard.vue'
+import RegistrationForm from '../components/Teachers/Home/Register/RegistrationForm'
 
 
 // end of teacher routes
@@ -40,6 +41,11 @@ const routes = [
             path:'/teacher/dashboard',
             name: 'TeacherDashboard',
             component: TeacherDashboard
+        },
+        {
+            path:'/teacher/registration/form',
+            name: 'RegistrationForm',
+            component: RegistrationForm
         },
     // end of teacher dashboard
     {

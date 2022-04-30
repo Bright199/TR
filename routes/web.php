@@ -190,8 +190,16 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
 
         // get teacher demoDetails
         Route::get('getTeacherDetails', [TeachersRegistration::class,'getTeacherDetails']);
+        Route::get('/registration/form',function(){
+            return view('teacher.register.registrationform');
+        });
 
         // end of teacher details
+
+        // Registration Form
+        Route::post('/saveProfileImage', [TeachersRegistration::class, 'saveProfileImage']);
+        // Registration form
+
     });
 });
 
