@@ -198,6 +198,7 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
 
         // Registration Form
         Route::post('/saveProfileImage', [TeachersRegistration::class, 'saveProfileImage']);
+        Route::post('/deleteTeacherProfilePicture', [TeachersRegistration::class, 'deleteTeacherProfilePicture']);
         // Registration form
 
     });

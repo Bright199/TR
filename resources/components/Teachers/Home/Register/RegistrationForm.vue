@@ -6,10 +6,10 @@
       <div class="container-jumbotron  mt-2">
           <div class="row">
               <div class="col-md-2 col-sm-2 col-lg-2"></div>
-              <div class="col-md-8 col-sm-8 col-lg-8 p-0 bg-white rounded-2">
-                 <About/>
+              <div class="col-md-8 col-sm-8 col-lg-8 p-0 ">
+                 <About v-if="showTeacherRegistrationFormComponent ===0"/>
+                 <Description v-if="showTeacherRegistrationFormComponent ===1"/>
                 <!-- <Availability/>
-                <Description/>
                 <Qualification/>
                 <Video/> -->
               </div>
@@ -20,11 +20,12 @@
 </template>
 
 <script>
-import About from './FromComponents/About.vue'
-import Availability from './FromComponents/Availability.vue'
-import Description from './FromComponents/Description.vue'
-import Qualification from './FromComponents/Qualification.vue'
-import Video from './FromComponents/Video.vue'
+import { mapState } from 'vuex'
+import About from './FormComponents/About.vue'
+import Availability from './FormComponents/Availability.vue'
+import Description from './FormComponents/Description.vue'
+import Qualification from './FormComponents/Qualification.vue'
+import Video from './FormComponents/Video.vue'
 import RegisterNav from './RegisterNav.vue'
 export default {
   components: { RegisterNav, About, Availability, Description, Qualification, Video },
@@ -39,6 +40,11 @@ export default {
     },
     methods: {
 
+    },
+    computed: {
+      ...mapState({
+        showTeacherRegistrationFormComponent: (state) => state.showTeacherRegistrationFormComponent
+      })
     },
 }
 </script>

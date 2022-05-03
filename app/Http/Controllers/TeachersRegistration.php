@@ -36,7 +36,9 @@ class TeachersRegistration extends Controller
         } 
     }
     
-    
+    public function deleteTeacherProfilePicture(){
+        Teacher::where('id', Auth::guard('teacher')->id())->update(['teacher_image'=>null]);
+    }
     
     
     

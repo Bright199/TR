@@ -3,6 +3,7 @@ import { createStore } from "vuex";
 const store = createStore({
   state() {
     return {
+      // Student states
       loggedUser: '',
       profileImageUrl: '',
       FavoriteCount: 0,
@@ -19,8 +20,12 @@ const store = createStore({
       TeacherCountry: '',
       TeacherName: '',
       showTeachersComponent: 0,
-      showBookPaidLessonComponent: false
+      showBookPaidLessonComponent: false,
+      // end of student states
 
+      // teacher states
+      showTeacherRegistrationFormComponent: 0
+      // end of teacher state
     }
   },
   // actions: {
@@ -124,14 +129,16 @@ const store = createStore({
     },
     reduceUnreadMessagesCount(state, payload) {
       state.unreadMessageCount -= payload
-    }
+    },
     // end of student mutations
 
 
 
     // teacher mutations
 
-
+    setDescriptionComponent(state){
+      state.showTeacherRegistrationFormComponent = 1 
+    }
     // end of teacher mutations
 
   },
