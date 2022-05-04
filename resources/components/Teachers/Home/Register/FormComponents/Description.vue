@@ -63,7 +63,7 @@
 
                   <!-- Language to teach -->
                   <div class="row g-2 mb-3">
-                      <h6>Language to teach.<span class="text-danger" 
+                      <h6>Language you want to teach.<span class="text-danger" 
                     style="font-weight: 550; font-size: 20px">*</span></h6>
                       <div class="col-md">
                           <select
@@ -72,24 +72,7 @@
                               @change="SelectFirstLanguage"
                           >
                               <option disabled value="First language">Select language</option>
-                              <option>Arabic</option>
-                              <option>Bengali</option>
-                              <option>Chinese</option>
-                              <option>English</option>
-                              <option>French</option>
-                              <option>German</option>
-                              <option>Greek</option>
-                              <option>Hebrew</option>
-                              <option>Hindi</option>
-                              <option>Indonesian</option>
-                              <option>Italian</option>
-                              <option>Japanese</option>
-                              <option>Polish</option>
-                              <option>Portugese</option>
-                              <option>Romanian</option>
-                              <option>Russian</option>
-                              <option>Spanish</option>
-                              <option>Turkish</option>
+                              <option v-for="(lang, index) in languages" :key="index">{{lang}}</option>
                           </select>
                       </div>  
                       <div class="col-md">
@@ -98,12 +81,7 @@
                           @change="SelectFirstLanguageProficiency"
                         >
                           <option disabled value="First language proficiency">Select proficiency</option>
-                          <option value="Beginner">Beginner</option>
-                          <option value="Elementary">Elementary</option>
-                          <option value="Intermediate">Intermediate</option>
-                          <option value="Upper Intermediate">Upper Intermediate</option>
-                          <option value="Advanced">Advanced</option>
-                          <option value="Native Speaker">Native</option>
+                          <option v-for="(proficiency_level, index) in proficiency_levels" :key="index">{{proficiency_level}}</option>
                         </select>
                       </div>
                     </div>
@@ -123,7 +101,7 @@
                 <div class="col-md-8">
                   <!-- OTHER LANGUAGES -->
                       <div class="row g-2 mb-3">
-                        <h6>Other languages</h6>
+                        <h6>Other languages (<span style="color: #029e02">Optional</span>)</h6>
                         <p style="margin-top: 0; margin-bottom:0">You can include other languages you know to build more trust with your students.</p>
                         <div class="col-md">
                           <select
@@ -131,25 +109,8 @@
                               v-model="second_language"
                               @change="SelectSecondLanguage"
                           >
-                              <option disabled value="Second language">Select language</option>
-                              <option>Arabic</option>
-                              <option>Bengali</option>
-                              <option>Chinese</option>
-                              <option>English</option>
-                              <option>French</option>
-                              <option>German</option>
-                              <option>Greek</option>
-                              <option>Hebrew</option>
-                              <option>Hindi</option>
-                              <option>Indonesian</option>
-                              <option>Italian</option>
-                              <option>Japanese</option>
-                              <option>Polish</option>
-                              <option>Portugese</option>
-                              <option>Romanian</option>
-                              <option>Russian</option>
-                              <option>Spanish</option>
-                              <option>Turkish</option>
+                              <option disabled value="Second language">Second language</option>
+                              <option v-for="(lang, index) in languages" :key="index">{{lang}}</option>
                           </select>
                         </div>
                         <div class="col-md">
@@ -157,13 +118,31 @@
                          v-model="second_language_proficiency"
                           @change="SelectSecondLanguageProficiency"
                         >
-                          <option disabled value="Second language proficiency">Select proficiency</option>
-                          <option value="Beginner">Beginner</option>
-                          <option value="Elementary">Elementary</option>
-                          <option value="Intermediate">Intermediate</option>
-                          <option value="Upper Intermediate">Upper Intermediate</option>
-                          <option value="Advanced">Advanced</option>
-                          <option value="Native Speaker">Native</option>
+                          <option disabled value="Second language proficiency">Proficiency</option>
+                         <option v-for="(proficiency_level, index) in proficiency_levels" :key="index">{{proficiency_level}}</option>
+                        </select>
+                      </div>
+                      </div>
+                    <!-- END OF OTHER LANGUAGES -->
+                  <!-- OTHER LANGUAGES -->
+                      <div class="row g-2 mb-3">
+                        <div class="col-md">
+                          <select
+                              class="form-select"
+                              v-model="third_language"
+                              @change="SelectThirdLanguage"
+                          >
+                              <option disabled value="Third language">Third language</option>
+                              <option v-for="(lang, index) in languages" :key="index">{{lang}}</option>
+                          </select>
+                        </div>
+                        <div class="col-md">
+                        <select class="form-select" 
+                         v-model="third_language_proficiency"
+                          @change="SelectThirdLanguageProficiency"
+                        >
+                          <option disabled value="Third language proficiency">Proficiency</option>
+                          <option v-for="(proficiency_level, index) in proficiency_levels" :key="index">{{proficiency_level}}</option>
                         </select>
                       </div>
                       </div>
@@ -171,32 +150,157 @@
                 </div>
                 <div class="col-md-2"></div>
               </div>
-                      
+
+
               </div>
+                    <!-- NATIONALITY & HOURLY PAY -->
+                <div class="container-jumbotron p-4 border-top">
+                    <div class="row mb-3">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                         <h5>Your nationality.<span class="text-danger" 
+                    style="font-weight: 550; font-size: 20px">*</span></h5>
+                         <select name="" id="" class="form-select"
+                         @change="selectNationality"
+                         v-model="nationality"
+                         >
+                            <option disabled value="Select country">Select country</option>
+                           <option v-for="(nationality, index) in countries" :key="index"
+                           id="nationality"  
+                           :value="{nationality: nationality.name, flag:nationality.flag}">{{nationality.name}}</option> 
+                         </select>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+
+                    <div class="row g-2">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            <h5>What is your hourly fee? <span class="text-danger" 
+                    style="font-weight: 550; font-size: 20px">*</span>
+                    <span class="toolTip"  data-bs-toggle="tooltip" data-bs-placement="top" 
+                    title="How much do you charge for each hour of lesson?"><i class="fa-solid fa-circle-question"></i></span>
+                    </h5>
+                            <div class="input-group mb-3">
+                                <input type="number" class="form-control" placeholder="Enter your hourly fee">
+                                <span class="input-group-text" id="basic-addon2" style="background: #029e02; color: white">USD</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                </div>
+                <!-- NATIONALITY & HOURLY PAY -->
+
+                <div class="container-jumbotron p-4 border-top">
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <div class="d-grid gap-2">
+                                <button class="EditBtn" @click="backToProfilePic"><i class="fa-solid fa-arrow-left"></i> BACK</button>
+                                <button class="NextBtn" @click="continueRegistration">SAVE & CONTINUE <i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
         </div>
     </div>
 </template>
 
 <script>
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+
 import axios from "axios";
 export default {
-    name: "About",
+    name: "Description",
     data() {
         return {
             loading: false,
             loaded: false,
             teacherDetails: '',
+            countries: '',
+            nationality:'Select country',
+            languages:[
+                'Arabic',
+                'Bengali',
+                'Catalan',
+                'Croatian',
+                'Czech',
+                'Danish',
+                'Dutch',
+                'English',
+                'French',
+                'German',
+                'Greek',
+                'Hebrew',
+                'Hindi',
+                'Hungarian',
+                'Indonesian',
+                'Italian',
+                'Japanese',
+                'Latin',
+                'Norwegian',
+                'Persian',
+                'Polish',
+                'Portugese',
+                'Romanian',
+                'Russian',
+                'Serbian',
+                'Spanish',
+                'Swahili',
+                'Swedish',
+                'Thai',
+                'Turkish',
+                'Ukranian',
+                
+            ],
+            proficiency_levels:[
+                'Beginner',
+                'Elementary',
+                'Intermediate',
+                'Upper Intermediate',
+                'Advanced',
+                'Native'
+            ],
 
             first_language: 'First language',
             first_language_proficiency: 'First language proficiency',
             second_language: 'Second language',
             second_language_proficiency: 'Second language proficiency',
+            third_language: 'Third language',
+            third_language_proficiency: 'Third language proficiency',
         };
     },
     mounted() {
         this.getTeacherDetails()
+        this.getCountryApi()
     },
     methods: {
+        backToProfilePic(){
+            this.$store.commit({
+                type: "setAboutComponent"
+            })
+        },
+        continueRegistration(){
+            this.$store.commit({
+                type:"setQualificationComponent"
+            })
+        },
+        selectNationality(){
+            console.log(this.nationality)
+            // const flag = this.$el.querySelector("#nationality").dataset.flag
+            // console.log(flag)
+        },
+        getCountryApi(){
+            axios
+            .get("https://countriesnow.space/api/v0.1/countries/flag/images")
+            .then((response) => {
+                this.countries = response.data.data;
+            });
+        },
       editName(){
         this.$el.querySelector(".userName").disabled = false
         this.$el.querySelector(".userName").focus()
@@ -216,6 +320,17 @@ export default {
 </script>
 
 <style scoped>
+.toolTip{
+    font-size: 14px;
+}
+.toolTip:hover{
+    cursor: pointer;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
 .form-select:focus{ 
     outline: none;
     box-shadow: none;

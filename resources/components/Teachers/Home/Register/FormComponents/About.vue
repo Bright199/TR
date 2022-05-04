@@ -98,7 +98,7 @@
                         </ul>
                     </div>
 
-                    <div class="container p-3">
+                    <div class="container p-3 Guides">
                         <p>
                             <span
                                 ><i
@@ -162,7 +162,7 @@
                 <div
                 class="container-jumbotron border-top p-3 d-flex justify-content-end"
             >
-                <button class="NextBtn" @click="saveProfileImage">Save and continue</button>
+                <button class="NextBtn1" @click="saveProfileImage">SAVE & CONTINUE</button>
             </div>
             </div>
             <div v-else>
@@ -183,8 +183,8 @@
                         <div class="col-md-4"></div>
                         <div class="col-md-4 p-2">
                             <div class="d-grid gap-2">
-                                <button class="EditBtn" @click="editProfilePicture">CHANGE PROFILE PICTURE</button>
-                                <button class="NextBtn" @click="continueRegistration">CONTINUE REGISTRATION</button>
+                                <button class="EditBtn" @click="editProfilePicture"><i class="fa-solid fa-arrow-left"></i> EDIT PICTURE</button>
+                                <button class="NextBtn" @click="continueRegistration">SAVE & CONTINUE <i class="fa-solid fa-arrow-right"></i></button>
                             </div>
                         </div>
                         <div class="col-md-4"></div>
@@ -289,6 +289,10 @@ export default {
 </script>
 
 <style scoped>
+.Guides p{
+    margin-top: 1.8px;
+    margin-bottom: 1.8px;
+}
 /* button */
 .NextBtn {
     padding: 7px 15px 9px;
@@ -300,6 +304,19 @@ export default {
 }
 .NextBtn:hover {
     background: #029e02;
+    color: white;
+}
+.NextBtn1 {
+    padding: 7px 15px 9px;
+    font-size: 17px;
+    font-weight: 500;
+    background: #029e02;
+    border: none;
+    color: white;
+    transition: 0.3s;
+}
+.NextBtn1:hover {
+    background: #02b302;
     color: white;
 }
 .EditBtn {

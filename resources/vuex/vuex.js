@@ -138,6 +138,18 @@ const store = createStore({
 
     setDescriptionComponent(state){
       state.showTeacherRegistrationFormComponent = 1 
+    },
+    setAboutComponent(state){
+      state.showTeacherRegistrationFormComponent = 0 
+    },
+    setQualificationComponent(state){
+      state.showTeacherRegistrationFormComponent = 2 
+    },
+    setVideoComponent(state){
+      state.showTeacherRegistrationFormComponent = 3 
+    },
+    setAvailabilityComponent(state){
+      state.showTeacherRegistrationFormComponent = 4 
     }
     // end of teacher mutations
 

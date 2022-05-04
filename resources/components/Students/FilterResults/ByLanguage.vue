@@ -7,24 +7,7 @@
             @change="SelectLanguage"
         >
             <option disabled value="Select language">Select language</option>
-            <option>Arabic</option>
-            <option>Bengali</option>
-            <option>Chinese</option>
-            <option>English</option>
-            <option>French</option>
-            <option>Germany</option>
-            <option>Greek</option>
-            <option>Hebrew</option>
-            <option>Hindi</option>
-            <option>Indonesian</option>
-            <option>Italian</option>
-            <option>Japanese</option>
-            <option>Polish</option>
-            <option>Portugese</option>
-            <option>Romanian</option>
-            <option>Russian</option>
-            <option>Spanish</option>
-            <option>Turkish</option>
+           <option v-for="(lang, index) in languages" :key="index">{{lang}}</option>
         </select>
     </div>
 </template>
@@ -35,6 +18,40 @@ export default {
     data() {
         return {
             language: "Select language",
+            languages:[
+                'Arabic',
+                'Bengali',
+                'Catalan',
+                'Croatian',
+                'Czech',
+                'Danish',
+                'Dutch',
+                'English',
+                'French',
+                'German',
+                'Greek',
+                'Hebrew',
+                'Hindi',
+                'Hungarian',
+                'Indonesian',
+                'Italian',
+                'Japanese',
+                'Latin',
+                'Norwegian',
+                'Persian',
+                'Polish',
+                'Portugese',
+                'Romanian',
+                'Russian',
+                'Serbian',
+                'Spanish',
+                'Swahili',
+                'Swedish',
+                'Thai',
+                'Turkish',
+                'Ukranian',
+                
+            ],
         };
     },
     mounted() {

@@ -38,6 +38,14 @@ class Teacher extends Authenticatable
         'nationality_flag',
         'our_teacher',
         'online',
+        'has_verification_badge',
+        'has_lang_certificate',
+        'lang_certificate_doc',
+        'lang_certificate_year',
+        'has_teaching_certificate',
+        'teaching_certificate_doc',
+        'teaching_certificate_year'
+
     ];
 
     protected $hidden = [
