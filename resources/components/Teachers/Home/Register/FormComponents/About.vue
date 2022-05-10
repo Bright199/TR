@@ -7,7 +7,6 @@
         <div class="container-jumbotron bg-white rounded-2" v-if="loaded">
             <div
                 class="container-jumbotron d-flex justify-content-center border-bottom"
-                
             >
                 <ul class="breadCrumbs">
                     <li class="activeCrumb">About</li>
@@ -28,7 +27,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="row p-4" v-if="profilePicCheck ===false">
+            <div class="row p-4" v-if="profilePicCheck === false">
                 <div class="col-md-6">
                     <div class="container p-3">
                         <h3>Profile Photo</h3>
@@ -38,6 +37,9 @@
                         <p>
                             Profiles with good photo have a chance to get
                             student more quicker.
+                        </p>
+                        <p>
+                           <span class="bg-warning px-2">NOTE:</span> Using a profile photo that is not yours will affect your approval process to withdraw your earnings.
                         </p>
                     </div>
 
@@ -160,18 +162,23 @@
                     </div>
                 </div>
                 <div
-                class="container-jumbotron border-top p-3 d-flex justify-content-end"
-            >
-                <button class="NextBtn1" @click="saveProfileImage">SAVE & CONTINUE</button>
-            </div>
+                    class="container-jumbotron border-top p-3 d-flex justify-content-end"
+                >
+                    <button class="NextBtn1" @click="saveProfileImage">
+                        SAVE & CONTINUE <i class="fa-solid fa-angles-right"></i>
+                    </button>
+                </div>
             </div>
             <div v-else>
                 <div class="container p-3">
                     <div class="row">
                         <div class="col-md-4"></div>
                         <div class="col-md-4 p-2">
-                            <img :src="profilePreview" 
-                            alt="profile_image" style="width: 100%; height: 100%">
+                            <img
+                                :src="profilePreview"
+                                alt="profile_image"
+                                style="width: 100%; height: 100%"
+                            />
                             <!-- <img :src="'/storage/teacher/images/'+teacherDetails.teacher_image" 
                             alt="profile_image" style="width: 100%; height: 100%"> -->
                         </div>
@@ -181,19 +188,28 @@
                 <div class="container p-4">
                     <div class="row">
                         <div class="col-md-4"></div>
-                        <div class="col-md-4 p-2">
+                        <div class="col-md-4 ">
                             <div class="d-grid gap-2">
-                                <button class="EditBtn" @click="editProfilePicture"><i class="fa-solid fa-arrow-left"></i> EDIT PICTURE</button>
-                                <button class="NextBtn" @click="continueRegistration">SAVE & CONTINUE <i class="fa-solid fa-arrow-right"></i></button>
+                                <button
+                                    class="EditBtn"
+                                    @click="editProfilePicture"
+                                >
+                                    <i class="fa-solid fa-angles-left"></i> EDIT
+                                    PICTURE
+                                </button>
+                                <button
+                                    class="NextBtn"
+                                    @click="continueRegistration"
+                                >
+                                    SAVE & CONTINUE
+                                    <i class="fa-solid fa-angles-right"></i>
+                                </button>
                             </div>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
                 </div>
-                
             </div>
-
-            
         </div>
     </div>
 </template>
@@ -211,40 +227,47 @@ export default {
             loading: false,
             loaded: false,
             profilePicCheck: false,
-            teacherDetails: '',
+            teacherDetails: "",
         };
     },
     mounted() {
-        this.getTeacherDetails()
+        this.getTeacherDetails();
     },
     methods: {
-        continueRegistration(){
+        continueRegistration() {
             this.$store.commit({
-                type: "setDescriptionComponent"
-            })
+                type: "setDescriptionComponent",
+            });
         },
-        editProfilePicture(){
-            this.profilePreview = '/images/avatar3.png'
-            this.profilePicCheck = false
-            axios.post('/teacher/deleteTeacherProfilePicture')
+        editProfilePicture() {
+            this.profilePreview = "/images/avatar3.png";
+            this.profilePicCheck = false;
+            axios.post("/teacher/deleteTeacherProfilePicture");
             // .finally(() => {
             // })
         },
         getTeacherDetails() {
-            this.loading = true
-            axios.get('/teacher/getTeacherDetails')
-            .then((response)=>{
-                this.teacherDetails = response.data;
-                if(response.data.teacher_image === '' || response.data.teacher_image === null){
-                    this.profilePreview = '/images/avatar3.png'
-                    }else{
-                    this.profilePreview = '/storage/teacher/images/'+response.data.teacher_image
-                    this.profilePicCheck = true
-                }
-                this.loaded = true
-            }).finally(()=>{
-                this.loading = false;
-            })
+            this.loading = true;
+            axios
+                .get("/teacher/getTeacherDetails")
+                .then((response) => {
+                    this.teacherDetails = response.data;
+                    if (
+                        response.data.teacher_image === "" ||
+                        response.data.teacher_image === null
+                    ) {
+                        this.profilePreview = "/images/avatar3.png";
+                    } else {
+                        this.profilePreview =
+                            "/storage/teacher/images/" +
+                            response.data.teacher_image;
+                        this.profilePicCheck = true;
+                    }
+                    this.loaded = true;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
         uploadProfileImage(e) {
             const profileImageSize = e.target.files[0].size / 1024 / 1024;
@@ -265,21 +288,23 @@ export default {
         },
         saveProfileImage() {
             if (this.profileImage !== "") {
-              this.loading = true
-              this.loaded = false
+                this.loading = true;
+                this.loaded = false;
                 const data = new FormData();
                 data.append("profileImage", this.profileImage);
-                axios.post("/teacher/saveProfileImage", data, {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }).then((response)=>{
-                this.profilePicCheck = true
-                this.loaded = true
-                })
-                .finally(() => {
-                  this.loading = false
-                });
+                axios
+                    .post("/teacher/saveProfileImage", data, {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
+                    .then((response) => {
+                        this.profilePicCheck = true;
+                        this.loaded = true;
+                    })
+                    .finally(() => {
+                        this.loading = false;
+                    });
             } else {
                 alert("Profile photo is empty. Photo required!");
             }
@@ -289,7 +314,7 @@ export default {
 </script>
 
 <style scoped>
-.Guides p{
+.Guides p {
     margin-top: 1.8px;
     margin-bottom: 1.8px;
 }
@@ -301,10 +326,21 @@ export default {
     border: 1px solid #029e02;
     background: white;
     transition: 0.3s;
+    border-radius: 5px;
+    color: #029e20;
+}
+
+.NextBtn i {
+    color: #183153;
 }
 .NextBtn:hover {
     background: #029e02;
     color: white;
+    font-size: 18px;
+}
+.NextBtn:hover i {
+    color: #fed907;
+    font-size: 15px;
 }
 .NextBtn1 {
     padding: 7px 15px 9px;
@@ -314,10 +350,16 @@ export default {
     border: none;
     color: white;
     transition: 0.3s;
+    border-radius: 5px;
 }
 .NextBtn1:hover {
     background: #02b302;
     color: white;
+    font-size: 18px;
+}
+.NextBtn1:hover i {
+    color: #fed907;
+    font-size: 15px;
 }
 .EditBtn {
     padding: 7px 15px 9px;
@@ -327,9 +369,14 @@ export default {
     transition: 0.3s;
     border: none;
     color: white;
+    border-radius: 5px;
 }
 .EditBtn:hover {
     background: #02aa02;
+    font-size: 18px;
+}
+.EditBtn:hover i {
+    color: #fed907;
 }
 /*  */
 /* IMAGE UPLOAD */
@@ -349,9 +396,9 @@ export default {
     background: white;
 }
 .innerImageContainer img {
-  height:100%;
-  object-fit: contain;
-  width:100%;
+    height: 100%;
+    object-fit: contain;
+    width: 100%;
 }
 #profileImage {
     display: none;
@@ -382,7 +429,7 @@ export default {
 }
 .nextCrumb {
     font-weight: 550;
-    }
+}
 .fa-chevron-right {
     font-size: 12px;
 }
@@ -409,7 +456,6 @@ export default {
         align-content: center;
     }
 }
-
 
 /* spinner */
 .spinner {

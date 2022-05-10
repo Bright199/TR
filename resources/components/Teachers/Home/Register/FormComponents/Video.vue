@@ -7,16 +7,14 @@
         <div class="container-jumbotron bg-white rounded-2" v-if="loaded">
             <div
                 class="container-jumbotron d-flex justify-content-center border-bottom"
-                
             >
                 <ul class="breadCrumbs">
-                    <li class="prevCrumb">About 
-                      <!-- <i class="fa-solid fa-chevron-right"></i>
-                        &nbsp; -->
-                        </li>
                     <li class="prevCrumb">
-                        Description
+                        About
+                        <!-- <i class="fa-solid fa-chevron-right"></i>
+                        &nbsp; -->
                     </li>
+                    <li class="prevCrumb">Description</li>
                     <li class="prevCrumb">
                         <!-- <i class="fa-solid fa-chevron-right"></i>
                         &nbsp; -->
@@ -32,38 +30,121 @@
                     </li>
                 </ul>
             </div>
-          
-              <div class="container-jumbotron p-4 ">
-                <div class="row">
-                  <div class="col-md-2"></div>
-                  <div class="col-md-8">
-                    <h4>Video component</h4>
-                  </div>
-                  <div class="col-md-2"></div>
-                </div>
-              </div>
 
-                <div class="container-jumbotron p-4 border-top">
-                    <div class="row">
-                        <div class="col-md-4"></div>
-                        <div class="col-md-4">
-                            <div class="d-grid gap-2">
-                                <button class="EditBtn" @click="backToQualification"><i class="fa-solid fa-arrow-left"></i> BACK</button>
-                                <button class="NextBtn" @click="continueRegistration">SAVE & CONTINUE <i class="fa-solid fa-arrow-right"></i></button>
+            <div class="container-jumbotron p-4">
+                <div class="row mb-3">
+                    <div class="col-md-6 p-3">
+                        <h3>
+                            Upload introduction video
+                            <span
+                                class="text-danger"
+                                style="font-weight: 550; font-size: 20px"
+                                >*</span
+                            >
+                        </h3>
+                        <p>
+                            Introduce yourself to your prospective students.
+                            This will happen you stand out among other teachers.
+                        </p>
+                        <div class="container">
+                            <label for="intro-video" class="introVideo"
+                                ><i class="fa-solid fa-cloud-arrow-up"></i
+                                >UPLOAD VIDEO</label
+                            >
+                            <input
+                                type="file"
+                                name=""
+                                id="intro-video"
+                                accept="video/mp4,video/x-m4v,video/*"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-md-6 p-3">
+                        <h4>Video introduction guidelines.</h4>
+                        <p>
+                            Watch the demo intro video below to get some ideas.
+                        </p>
+                        <div class="videContainer">
+                            <div class="ratio ratio-16x9">
+                                <iframe
+                                    src="https://www.youtube.com/embed/iPujtw2eVyk"
+                                ></iframe>
                             </div>
                         </div>
-                        <div class="col-md-4"></div>
                     </div>
                 </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6 p-3">
+                        <h4>Content of your video.</h4>
+                        <p>
+                            Note that your video should not be more than
+                            <span style="color: #029e20; font-weight: 550"
+                                >2 minutes</span
+                            >
+                        </p>
+                        <h6>Introduce yourself (15-20 seconds)</h6>
+
+                        <ul>
+                            <li>Your first name.</li>
+                            <li>
+                                Where you are from and where you are currently.
+                            </li>
+                            <li>What languages do you speak.</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 p-3">
+                        <h6>Focus on teaching (30-50 seconds)</h6>
+                        <ul>
+                            <li>Talk about your skills and qualifications.</li>
+                            <li>What do you teach?</li>
+                        </ul>
+                        <h6>Ending (15-25 seconds)</h6>
+                        <ul>
+                            <li>
+                                Encourage your potential students to book a
+                                lesson with you!
+                            </li>
+                            <li>Thank them for watching your video.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-jumbotron p-4 border-top">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div class="d-grid gap-2">
+                            <button
+                                class="EditBtn"
+                                @click="backToQualification"
+                            >
+                                <i class="fa-solid fa-angles-left"></i> BACK
+                            </button>
+                            <button
+                                class="NextBtn"
+                                @click="continueRegistration"
+                            >
+                                SAVE & CONTINUE
+                                <i class="fa-solid fa-angles-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+);
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+});
 
 import axios from "axios";
 export default {
@@ -72,63 +153,86 @@ export default {
         return {
             loading: false,
             loaded: false,
-            teacherDetails: '',
-            
+            teacherDetails: "",
         };
     },
     mounted() {
-        this.getTeacherDetails()
+        this.getTeacherDetails();
     },
     methods: {
-        backToQualification(){
+        backToQualification() {
             this.$store.commit({
-                type: "setQualificationComponent"
-            })
+                type: "setQualificationComponent",
+            });
         },
-        continueRegistration(){
+        continueRegistration() {
             this.$store.commit({
-                type:"setAvailabilityComponent"
-            })
+                type: "setAvailabilityComponent",
+            });
         },
         getTeacherDetails() {
-            this.loading = true
-            axios.get('/teacher/getTeacherDetails')
-            .then((response)=>{
-                this.teacherDetails = response.data;
-                this.loaded = true
-            }).finally(()=>{
-                this.loading = false;
-            })
+            this.loading = true;
+            axios
+                .get("/teacher/getTeacherDetails")
+                .then((response) => {
+                    this.teacherDetails = response.data;
+                    this.loaded = true;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
     },
 };
 </script>
 
 <style scoped>
-.toolTip{
+.videContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#intro-video {
+    display: none;
+}
+.introVideo {
+    padding: 5px 15px 4px;
+    border: 1px solid #029e20;
+    border-radius: 5px;
+}
+.introVideo:hover {
+    cursor: pointer;
+    background: #029e20;
+    color: white;
+}
+
+.toolTip {
     font-size: 14px;
 }
-.toolTip:hover{
+.toolTip:hover {
     cursor: pointer;
 }
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
-.form-select:focus{ 
+.form-select:focus {
     outline: none;
     box-shadow: none;
     border: 1px solid #029e02;
 }
 
 /* button */
-
-.editName:hover{
-  background: #03b403;
+.fa-cloud-arrow-up{
+    color:#029e02;
+    margin-right: 5px;
 }
-.prevCrumb{
-  opacity: 0.3;
+.editName:hover {
+    background: #03b403;
+}
+.prevCrumb {
+    opacity: 0.3;
 }
 .NextBtn {
     padding: 7px 15px 9px;
@@ -137,10 +241,20 @@ input[type=number]::-webkit-outer-spin-button {
     border: 1px solid #029e02;
     background: white;
     transition: 0.3s;
+    color: #029e02;
+    border-radius: 5px;
+}
+.NextBtn i {
+    color: #183153;
 }
 .NextBtn:hover {
     background: #029e02;
     color: white;
+    font-size: 18px;
+}
+.NextBtn:hover i {
+    color: #fed907;
+    font-size: 15px;
 }
 .EditBtn {
     padding: 7px 15px 9px;
@@ -150,12 +264,22 @@ input[type=number]::-webkit-outer-spin-button {
     transition: 0.3s;
     border: none;
     color: white;
+    border-radius: 5px;
 }
 .EditBtn:hover {
     background: #02aa02;
+    color: white;
+    font-size: 18px;
+}
+
+.EditBtn i{
+    color: #fed907;
+}
+.EditBtn:hover i {
+    color: #fed907;
+    font-size: 15px;
 }
 /*  */
-
 
 .activeCrumb {
     color: #029e02;
@@ -190,7 +314,6 @@ input[type=number]::-webkit-outer-spin-button {
         align-content: center;
     }
 }
-
 
 /* spinner */
 .spinner {

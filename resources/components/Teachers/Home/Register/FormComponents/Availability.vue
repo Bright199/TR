@@ -36,11 +36,20 @@
           
               <div class="container-jumbotron p-4 ">
                 <div class="row">
-                  <div class="col-md-2"></div>
-                  <div class="col-md-8">
-                    <h4>Availability</h4>
+                  <div class="col-md-4">
+                      <div class="container ">
+                          <img v-if="teacherDetails.teacher_image !== null && teacherDetails.teacher_image !== ''" :src="'/storage/teacher/images/'+teacherDetails.teacher_image" alt="" class="rounded-circle" width="60" height="60">
+                          <img v-else src="/images/avatar.png" alt="" class="rounded-circle" width="60" height="60">
+                      </div>
+                      <div class="container ">
+                          <p >{{ teacherDetails.name}}</p>
+                          <p v-if="teacherDetails.hourly_pay">${{ teacherDetails.hourly_pay}}/hour.</p>
+                      </div>
                   </div>
-                  <div class="col-md-2"></div>
+                  <div class="col-md-8">
+                    <h4>Set your availability.</h4>
+                    <p>What times are you free in a week? </p>
+                  </div>
                 </div>
               </div>
 
@@ -49,8 +58,8 @@
                         <div class="col-md-4"></div>
                         <div class="col-md-4">
                             <div class="d-grid gap-2">
-                                <button class="EditBtn" @click="backToVideo"><i class="fa-solid fa-arrow-left"></i> BACK</button>
-                                <button class="NextBtn" @click="finishRegistration">SAVE & CONTINUE <i class="fa-solid fa-arrow-right"></i></button>
+                                <button class="EditBtn" @click="backToVideo"><i class="fa-solid fa-angles-left"></i> BACK</button>
+                                <button class="NextBtn" @click="finishRegistration">SUBMIT APPLICATION <i class="fa-solid fa-angles-right"></i></button>
                             </div>
                         </div>
                         <div class="col-md-4"></div>
@@ -87,9 +96,7 @@ export default {
             })
         },
         finishRegistration(){
-            this.$store.commit({
-                type:"setAvailabilityComponent"
-            })
+            alert('Make sure you have filled the information correctly')
         },
         getTeacherDetails() {
             this.loading = true
@@ -137,11 +144,19 @@ input[type=number]::-webkit-outer-spin-button {
     font-weight: 500;
     border: 1px solid #029e02;
     background: white;
+    border-radius: 5px;
     transition: 0.3s;
+    color: #029e02;
 }
 .NextBtn:hover {
     background: #029e02;
     color: white;
+    font-size: 18px;
+}
+
+.NextBtn:hover i{
+    font-size: 15px;
+    color: #fed907;
 }
 .EditBtn {
     padding: 7px 15px 9px;
@@ -150,10 +165,19 @@ input[type=number]::-webkit-outer-spin-button {
     background: #029e02;
     transition: 0.3s;
     border: none;
+    border-radius: 5px;
     color: white;
+}
+.EditBtn i{
+    color: #fed907;
+}
+
+.EditBtn:hover i{
+    font-size: 15px
 }
 .EditBtn:hover {
     background: #02aa02;
+    font-size: 18px;
 }
 /*  */
 

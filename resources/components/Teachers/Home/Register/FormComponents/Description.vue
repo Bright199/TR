@@ -196,8 +196,8 @@
                         <div class="col-md-4"></div>
                         <div class="col-md-4">
                             <div class="d-grid gap-2">
-                                <button class="EditBtn" @click="backToProfilePic"><i class="fa-solid fa-arrow-left"></i> BACK</button>
-                                <button class="NextBtn" @click="continueRegistration">SAVE & CONTINUE <i class="fa-solid fa-arrow-right"></i></button>
+                                <button class="EditBtn" @click="backToProfilePic"><i class="fa-solid fa-angles-left"></i> BACK</button>
+                                <button class="NextBtn" @click="continueRegistration">SAVE & CONTINUE <i class="fa-solid fa-angles-right"></i></button>
                             </div>
                         </div>
                         <div class="col-md-4"></div>
@@ -359,11 +359,22 @@ input[type=number]::-webkit-outer-spin-button {
     font-weight: 500;
     border: 1px solid #029e02;
     background: white;
+    border-radius: 5px;
     transition: 0.3s;
+    color:#029e02
 }
 .NextBtn:hover {
     background: #029e02;
     color: white;
+    font-size: 18px;
+}
+.NextBtn:hover i{
+    color: #fed907;
+    font-size: 15px
+}
+
+.NextBtn i{
+    color: #183153;
 }
 .EditBtn {
     padding: 7px 15px 9px;
@@ -373,9 +384,18 @@ input[type=number]::-webkit-outer-spin-button {
     transition: 0.3s;
     border: none;
     color: white;
+    border-radius: 5px;
 }
 .EditBtn:hover {
     background: #02aa02;
+    font-size: 18px;
+}
+.EditBtn i{
+    color: #fed907;
+}
+.EditBtn:hover i{
+   color: #fed907;
+   font-size: 15px;
 }
 /*  */
 
