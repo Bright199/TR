@@ -38,7 +38,9 @@
               <p>Make use of this section to talk about your Achievements, Teaching techniques, Skills, Experience etc</p>
             </div>
 
-            <div class="container-jumbotron p-4 border-top mt-3">
+            <form @submit.prevent="continueRegistration">
+            
+             <div class="container-jumbotron p-4 border-top mt-3">
               <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
@@ -48,7 +50,7 @@
                   <label for="name"><span style="color: #029e02; 
                   font-weight: 550">NOTE</span> This name will be used to verify your identification documents.</label>
                   <div class="input-group mb-3">
-                    <input type="text" class="form-control userName" :value="teacherDetails.name" disabled>
+                    <input type="text" class="form-control userName" :value="teacherDetails.name" required disabled>
                     <button type="button" @click="editName" class="editName"><i class="fa-solid fa-pen-to-square"></i></button>
                   </div>
                   <!--END USER NAME -->
@@ -57,7 +59,7 @@
                   <div class="mb-3">
                     <label for="personal_description" class="form-label"><h6>Describe yourself (100 - 300 characters). <span class="text-danger" 
                     style="font-weight: 550; font-size: 20px">*</span></h6></label>
-                    <textarea class="form-control" id="personal_description" rows="4" placeholder="Example-I am an English Confidence Coach. I have a wide range of experience teaching english... "></textarea>
+                    <textarea class="form-control" id="personal_description" rows="4" required placeholder="Example-I am an English Confidence Coach. I have a wide range of experience teaching english... "></textarea>
                   </div>
                   <!-- End of description -->
 
@@ -70,6 +72,7 @@
                               class="form-select"
                               v-model="first_language"
                               @change="SelectFirstLanguage"
+                              required
                           >
                               <option disabled value="First language">Select language</option>
                               <option v-for="(lang, index) in languages" :key="index">{{lang}}</option>
@@ -79,6 +82,7 @@
                         <select class="form-select" 
                          v-model="first_language_proficiency"
                           @change="SelectFirstLanguageProficiency"
+                          required
                         >
                           <option disabled value="First language proficiency">Select proficiency</option>
                           <option v-for="(proficiency_level, index) in proficiency_levels" :key="index">{{proficiency_level}}</option>
@@ -100,10 +104,16 @@
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                   <!-- OTHER LANGUAGES -->
-                      <div class="row g-2 mb-3">
+                        
                         <h6>Other languages (<span style="color: #029e02">Optional</span>)</h6>
                         <p style="margin-top: 0; margin-bottom:0">You can include other languages you know to build more trust with your students.</p>
-                        <div class="col-md">
+                        <br/>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="secondLanguage" @change="secondLanguage">
+                            <label class="form-check-label" for="secondLanguage">Do you speak <span style="text-color: #029e20;">second language</span> (check if yes)?</label>
+                        </div>
+                      <div class="row g-2 mb-3" v-if="secondLanguageChecked">
+                        <div class="col-md" >
                           <select
                               class="form-select"
                               v-model="second_language"
@@ -125,7 +135,11 @@
                       </div>
                     <!-- END OF OTHER LANGUAGES -->
                   <!-- OTHER LANGUAGES -->
-                      <div class="row g-2 mb-3">
+                  <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="thirdLanguageCheck" @change="thirdLanguage">
+                            <label class="form-check-label" for="thirdLanguageCheck">Do you have <span style="text-color: #029e20;">third language</span> (check if yes)?</label>
+                        </div>
+                      <div class="row g-2 mb-3 thirdLanguageContainer" v-if="thirdLanguageChecked">
                         <div class="col-md">
                           <select
                               class="form-select"
@@ -163,6 +177,7 @@
                          <select name="" id="" class="form-select"
                          @change="selectNationality"
                          v-model="nationality"
+                         required
                          >
                             <option disabled value="Select country">Select country</option>
                            <option v-for="(nationality, index) in countries" :key="index"
@@ -182,7 +197,7 @@
                     title="How much do you charge for each hour of lesson?"><i class="fa-solid fa-circle-question"></i></span>
                     </h5>
                             <div class="input-group mb-3">
-                                <input type="number" class="form-control" placeholder="Enter your hourly fee">
+                                <input type="number" class="form-control" required placeholder="Enter your hourly fee">
                                 <span class="input-group-text" id="basic-addon2" style="background: #029e02; color: white">USD</span>
                             </div>
                         </div>
@@ -197,12 +212,13 @@
                         <div class="col-md-4">
                             <div class="d-grid gap-2">
                                 <button class="EditBtn" @click="backToProfilePic"><i class="fa-solid fa-angles-left"></i> BACK</button>
-                                <button class="NextBtn" @click="continueRegistration">SAVE & CONTINUE <i class="fa-solid fa-angles-right"></i></button>
+                                <button type="submit" class="NextBtn" @click="continueRegistration">SAVE & CONTINUE <i class="fa-solid fa-angles-right"></i></button>
                             </div>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
                 </div>
+            </form>
         </div>
     </div>
 </template>
@@ -218,11 +234,11 @@ export default {
     name: "Description",
     data() {
         return {
+           
             loading: false,
             loaded: false,
             teacherDetails: '',
             countries: '',
-            nationality:'Select country',
             languages:[
                 'Arabic',
                 'Bengali',
@@ -265,7 +281,9 @@ export default {
                 'Advanced',
                 'Native'
             ],
-
+            nationality:'Select country',
+            thirdLanguageChecked: false,
+            secondLanguageChecked: false,
             first_language: 'First language',
             first_language_proficiency: 'First language proficiency',
             second_language: 'Second language',
@@ -279,20 +297,52 @@ export default {
         this.getCountryApi()
     },
     methods: {
+        secondLanguage(){
+            if(this.thirdLanguageChecked === false){
+                this.secondLanguageChecked = !this.secondLanguageChecked
+            }else {
+                this.thirdLanguageChecked = !this.thirdLanguageChecked
+                document.querySelector('#thirdLanguageCheck').checked = false;
+                this.secondLanguageChecked = !this.secondLanguageChecked
+            }
+
+        },
+        thirdLanguage(){
+            if(this.secondLanguageChecked === false){
+                alert('Must choose second langauge before third langauge')
+                document.querySelector('#thirdLanguageCheck').checked = false;
+            }else {
+                this.thirdLanguageChecked = !this.thirdLanguageChecked
+            }
+
+        },
         backToProfilePic(){
             this.$store.commit({
                 type: "setAboutComponent"
             })
         },
         continueRegistration(){
+            // if(this.secondLanguageChecked && this.thirdLanguageChecked){
+            //     alert('both are checked!')
+            // }
+            // else if(this.secondLanguageChecked){
+            //     alert(this.secondLanguageChecked)
+            // }
+            // else if(this.thirdLanguageChecked){
+            //     alert(this.secondLanguageChecked)
+            // }
+
+            // else{
+            //     alert('none checked')
+            // }
+
             this.$store.commit({
                 type:"setQualificationComponent"
             })
         },
         selectNationality(){
             console.log(this.nationality)
-            // const flag = this.$el.querySelector("#nationality").dataset.flag
-            // console.log(flag)
+            
         },
         getCountryApi(){
             axios

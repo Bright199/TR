@@ -43,9 +43,11 @@
                     <h6>Do you have language certificate?</h6>
                     <div class="form-check">
                       <label class="form-check-label" for="lang-certificate">Yes</label>
-                      <input class="form-check-input" type="checkbox" id="lang-certificate" name="option1" value="something" >
+                      <input class="form-check-input" type="checkbox" id="lang-certificate" 
+                      name="option1" value="something" @change="langCertificateCheck = !langCertificateCheck" >
                      </div>
-                     <div class="row">
+                     <div v-if="langCertificateCheck">
+                         <div class="row">
                         <div class="col-md">
                           <h6>Name of certificate.<span class="text-danger" 
                           style="font-weight: 550; font-size: 20px">*</span></h6>
@@ -57,7 +59,12 @@
                           <input type="date" name="" id="" class="form-control">
                         </div>
                       </div>
-                      <input type="file" name="" id="">
+                      <div class="form-check">
+                      <label class="form-check-label langCertificate" for="lang-file"><i class="fa-solid fa-cloud-arrow-up"></i>&nbsp;UPLOAD CERTIFICATE</label>
+                     <input type="file" name="" id="lang-file" style="display:none">
+                     </div>
+                     </div>
+                      
                   </div>
                   <div class="col-md-2"></div>
                 </div>
@@ -70,9 +77,11 @@
                     <h6>Do you have teaching certificate?</h6>
                     <div class="form-check">
                       <label class="form-check-label" for="teaching-certificate">Yes</label>
-                      <input class="form-check-input" type="checkbox" id="teaching-certificate" name="option1" value="something" >
+                      <input class="form-check-input" type="checkbox" id="teaching-certificate" 
+                      name="option1" value="something" @change="teachingCertificateChecked = !teachingCertificateChecked">
                      </div>
-                     <div class="row">
+                     <div v-if="teachingCertificateChecked">
+                         <div class="row">
                         <div class="col-md">
                           <h6>Name of certificate.<span class="text-danger" 
                           style="font-weight: 550; font-size: 20px">*</span></h6>
@@ -84,7 +93,11 @@
                           <input type="date" name="" id="" class="form-control">
                         </div>
                       </div>
-                      <input type="file" name="" id="">
+                      <div class="form-check">
+                      <label class="form-check-label" for="teaching-file"><i class="fa-solid fa-cloud-arrow-up"></i>&nbsp; UPLOAD CERTIFICATE</label>
+                        <input type="file" name="" id="teaching-file" style="display:none;">
+                     </div>
+                     </div>
                   </div>
                   <div class="col-md-2"></div>
                 </div>
@@ -121,6 +134,8 @@ export default {
             loading: false,
             loaded: false,
             teacherDetails: '',
+            langCertificateCheck: false,
+            teachingCertificateChecked: false
             
         };
     },
