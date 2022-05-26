@@ -21,6 +21,8 @@ class CreateTeachersTable extends Migration
             $table->boolean('registration_completed')->default(0);
             $table->boolean('account_vissible')->default(0);
             $table->boolean('account_verified')->default(0);
+            $table->boolean('intro_video_verified')->default(0);
+            $table->string('intro_video_url')->nullable();
             $table->string('teacher_image')->nullable()->comment('profile_image');
             $table->boolean('has_verification_badge')->default(0)->comment('badge_from_certifcate');
             $table->boolean('has_lang_certificate')->default(0);

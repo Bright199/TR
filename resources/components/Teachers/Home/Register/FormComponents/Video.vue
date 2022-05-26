@@ -55,8 +55,19 @@
                                 type="file"
                                 name=""
                                 id="intro-video"
+                                @change='uploadIntroVideo'
                                 accept="video/mp4,video/x-m4v,video/*"
                             />
+                            <div class="ratio ratio-16x9 mt-3">
+                                <video width="320" height="240" controls class="introVideoPreview">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <div class="container p-3">
+                                <ul v-if="showErrors">
+                                    <li class='text-danger' v-for="(error, key, index) in showErrors" :key="index">{{error[0]}}</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6 p-3">
@@ -154,21 +165,49 @@ export default {
             loading: false,
             loaded: false,
             teacherDetails: "",
+            videoFile:'',
+            showErrors: ''
         };
     },
     mounted() {
         this.getTeacherDetails();
     },
     methods: {
+        uploadIntroVideo(e){
+            const videoFile = e.target.files[0]
+            this.videoFile = videoFile
+            const videoUrl = URL.createObjectURL(videoFile);
+            document.querySelector('.introVideoPreview').src = videoUrl
+        },
         backToQualification() {
             this.$store.commit({
                 type: "setQualificationComponent",
             });
         },
         continueRegistration() {
-            this.$store.commit({
-                type: "setAvailabilityComponent",
-            });
+            if(this.videoFile ===''){
+                alert('You must upload an introduction video')
+                return
+            }
+            this.loading = true
+            this.loaded = false
+            const data = new FormData();
+            data.append('intro_video', this.videoFile)
+            axios.post('/teacher/uploadIntroVideo', data)
+            .then(()=>{
+                this.loaded = true
+                this.$store.commit({
+                    type: "setAvailabilityComponent",
+                });
+            })
+            .catch((error)=>{
+                if(error.response.status == 422){
+                    this.showErrors = error.response.data.errors
+                }
+            })
+            .finally(() => {
+                this.loading = false
+            })
         },
         getTeacherDetails() {
             this.loading = true;
@@ -203,6 +242,9 @@ export default {
 .introVideo:hover {
     cursor: pointer;
     background: #029e20;
+    color: white;
+}
+.introVideo:hover i{
     color: white;
 }
 

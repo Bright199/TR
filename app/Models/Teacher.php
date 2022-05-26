@@ -28,6 +28,8 @@ class Teacher extends Authenticatable
         'description',
         'hourly_pay',
         'currency',
+        'intro_video_url',
+        'intro_video_verified',
         'first_language',
         'first_language_proficiency',
         'second_language',

@@ -179,6 +179,9 @@ return [
         'lang_certificate_year' =>[
             'required' => 'Indicate the year you got your language certificate.'
         ],
+        // 'intro_video' =>[
+        //     'size' => 'Your introduction video should not be more than 160MBs. You can compress your video to lower the size.'
+        // ],
     ],
 
     /*
