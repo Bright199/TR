@@ -7,17 +7,15 @@
         <div class="container-jumbotron bg-white rounded-2" v-if="loaded">
             <div
                 class="container-jumbotron d-flex justify-content-center border-bottom"
-                
             >
                 <ul class="breadCrumbs">
-                    <li class="prevCrumb">About 
-                      <!-- <i class="fa-solid fa-chevron-right"></i>
-                        &nbsp; -->
-                        </li>
                     <li class="prevCrumb">
-                        Description
+                        About
+                        <!-- <i class="fa-solid fa-chevron-right"></i>
+                        &nbsp; -->
                     </li>
-                    <li  class="activeCrumb">
+                    <li class="prevCrumb">Description</li>
+                    <li class="activeCrumb">
                         <!-- <i class="fa-solid fa-chevron-right"></i>
                         &nbsp; -->
                         Qualification
@@ -31,100 +29,333 @@
                     </li>
                 </ul>
             </div>
-          
-              <div class="container-jumbotron p-4 ">
+
+            <div class="container-jumbotron p-4">
                 <div class="row mb-3">
-                  <div class="col-md-2"></div>
-                  <div class="col-md-8">
-                    <h5>Earn a <span style="color: #029e02; font-weight: 550"> verified badge</span> by submitting your certificates.</h5>
-                    <p>This is completely optional! You can continue teaching on TREnglish without submitting certificates.</p>
-                      <p><span style="color: #029e20; font-weight: 600">NOTE!</span> These document files are not going to be displayed nor stored in our database. They are just for verification purpose only.</p>
-
-                    <h6>Do you have language certificate?</h6>
-                    <div class="form-check">
-                      <label class="form-check-label" for="lang-certificate">Yes</label>
-                      <input class="form-check-input" type="checkbox" id="lang-certificate" 
-                      name="option1" value="something" @change="langCertificateCheck = !langCertificateCheck" >
-                     </div>
-                     <div v-if="langCertificateCheck">
-                         <div class="row">
-                        <div class="col-md">
-                          <h6>Name of certificate.<span class="text-danger" 
-                          style="font-weight: 550; font-size: 20px">*</span></h6>
-                          <input type="text" class="form-control" placeholder="Enter name of certificate" name="email">
-                        </div>
-                        <div class="col-md">
-                          <h6>When did you get the certificate?<span class="text-danger" 
-                          style="font-weight: 550; font-size: 20px">*</span></h6>
-                          <input type="date" name="" id="" class="form-control">
-                        </div>
-                      </div>
-                      <div class="form-check">
-                      <label class="form-check-label langCertificate" for="lang-file"><i class="fa-solid fa-cloud-arrow-up"></i>&nbsp;UPLOAD CERTIFICATE</label>
-                     <input type="file" name="" id="lang-file" style="display:none">
-                     </div>
-                     </div>
-                      
-                  </div>
-                  <div class="col-md-2"></div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8 border-bottom">
+                        <h5>
+                            Earn a
+                            <span style="color: #029e02; font-weight: 550">
+                                verified badge</span
+                            >
+                            by submitting your certificates.
+                        </h5>
+                        <p>
+                            This is completely optional! You can continue
+                            teaching on TREnglish without submitting
+                            certificates.
+                        </p>
+                        <p>
+                            <span style="color: #029e20; font-weight: 600"
+                                >NOTE!</span
+                            >
+                            These document files are not going to be displayed
+                            nor stored in our database. They are just for
+                            verification purpose only.
+                        </p>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-              </div>
 
-              <div class="container-jumbotron p-4 border-top">
                 <div class="row mb-3">
-                  <div class="col-md-2"></div>
-                  <div class="col-md-8">
-                    <h6>Do you have teaching certificate?</h6>
-                    <div class="form-check">
-                      <label class="form-check-label" for="teaching-certificate">Yes</label>
-                      <input class="form-check-input" type="checkbox" id="teaching-certificate" 
-                      name="option1" value="something" @change="teachingCertificateChecked = !teachingCertificateChecked">
-                     </div>
-                     <div v-if="teachingCertificateChecked">
-                         <div class="row">
-                        <div class="col-md">
-                          <h6>Name of certificate.<span class="text-danger" 
-                          style="font-weight: 550; font-size: 20px">*</span></h6>
-                          <input type="text" class="form-control" placeholder="Enter name of certificate" name="email">
+                    <div class="col-md-2"></div>
+                    <div
+                        class="col-md-8"
+                        v-if="teacherDetails.has_lang_certificate === 1"
+                    >
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <h5 class="text-center">
+                                    Your language certificate.
+                                </h5>
+                                <div class="teachingCertificatePreview">
+                                    <img
+                                        :src="
+                                            '/storage/teacher/images/' +
+                                            teacherDetails.lang_certificate_doc
+                                        "
+                                        alt="lang_certificate"
+                                    />
+                                </div>
+                                <div
+                                    class="container p-4 d-flex justify-content-center"
+                                >
+                                    <button
+                                        @click="updateLangCertificate"
+                                        class="updateLangCertificate"
+                                    >
+                                        <i
+                                            class="fa-solid fa-pen-to-square"
+                                        ></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-2"></div>
                         </div>
-                        <div class="col-md">
-                          <h6>When did you get the certificate?<span class="text-danger" 
-                          style="font-weight: 550; font-size: 20px">*</span></h6>
-                          <input type="date" name="" id="" class="form-control">
+                    </div>
+                    <div class="col-md-8" v-else>
+                        <div class="container">
+                            <ul v-if="showErrors">
+                                <li
+                                    v-for="(error, key, index) in showErrors"
+                                    :key="index"
+                                    class="text-danger"
+                                >
+                                    {{ error[0] }}
+                                </li>
+                            </ul>
                         </div>
-                      </div>
-                      <div class="form-check">
-                      <label class="form-check-label" for="teaching-file"><i class="fa-solid fa-cloud-arrow-up"></i>&nbsp; UPLOAD CERTIFICATE</label>
-                        <input type="file" name="" id="teaching-file" style="display:none;">
-                     </div>
-                     </div>
-                  </div>
-                  <div class="col-md-2"></div>
-                </div>
-              </div>
 
+                        <h6>Do you have language certificate?</h6>
+                        <div class="form-check">
+                            <label
+                                class="form-check-label"
+                                for="lang-certificate"
+                                >Yes</label
+                            >
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="lang-certificate"
+                                name="option1"
+                                value="something"
+                                @change="
+                                    langCertificateCheck = !langCertificateCheck
+                                "
+                            />
+                        </div>
+                        <div v-if="langCertificateCheck">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <p>
+                                            Upload your language certificate.
+                                            <span
+                                                class="text-danger"
+                                                style="
+                                                    font-weight: 550;
+                                                    font-size: 20px;
+                                                "
+                                                >*</span
+                                            >
+                                        </p>
 
-                <div class="container-jumbotron p-4 border-top">
-                    <div class="row">
-                        <div class="col-md-4"></div>
-                        <div class="col-md-4">
-                            <div class="d-grid gap-2">
-                                <button class="EditBtn" @click="backToDescription"><i class="fa-solid fa-angles-left"></i> BACK</button>
-                                <button class="NextBtn" @click="continueRegistration">SAVE & CONTINUE <i class="fa-solid fa-angles-right"></i></button>
+                                        <label
+                                            class="form-check-label langCertificate"
+                                            for="lang-file"
+                                            ><i
+                                                class="fa-solid fa-cloud-arrow-up"
+                                            ></i
+                                            >&nbsp;CHOOSE CERTIFICATE</label
+                                        >
+                                        <input
+                                            type="file"
+                                            name="language_certificate_doc"
+                                            id="lang-file"
+                                            @change="uploadLangCertificate"
+                                            accept="image/*"
+                                            style="display: none"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>
+                                        When did you get the certificate?<span
+                                            class="text-danger"
+                                            style="
+                                                font-weight: 550;
+                                                font-size: 20px;
+                                            "
+                                            >*</span
+                                        >
+                                    </p>
+                                    <input
+                                        type="date"
+                                        name=""
+                                        v-model="lang_certificate_year"
+                                        id=""
+                                        class="form-control"
+                                    />
+                                </div>
+
+                                <div
+                                    v-if="langPreview"
+                                    class="border rounded-1 m-4"
+                                    style="height: 150px; width: 150px"
+                                >
+                                    <img
+                                        :src="langPreview"
+                                        alt=""
+                                        style="width: 100%; height: 100%"
+                                    />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4"></div>
                     </div>
+                    <div class="col-md-2"></div>
                 </div>
+            </div>
+
+            <div class="container-jumbotron p-4 border-top">
+                <div class="row mb-3">
+                    <div class="col-md-2"></div>
+                    <div
+                        class="col-md-8"
+                        v-if="teacherDetails.has_teaching_certificate === 1"
+                    >
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <h5 class="text-center">
+                                    Your teaching certificate.
+                                </h5>
+                                <div class="langCertificatePreview">
+                                    <img
+                                        :src="
+                                            '/storage/teacher/images/' +
+                                            teacherDetails.teaching_certificate_doc
+                                        "
+                                        alt="teaching_certificate"
+                                    />
+                                </div>
+                                <div
+                                    class="container p-4 d-flex justify-content-center"
+                                >
+                                    <button
+                                        @click="updateTeachingCertificate"
+                                        class="updateLangCertificate"
+                                    >
+                                        <i
+                                            class="fa-solid fa-pen-to-square"
+                                        ></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-8" v-else>
+                        <h6>Do you have teaching certificate?</h6>
+                        <div class="form-check">
+                            <label
+                                class="form-check-label"
+                                for="teaching-certificate"
+                                >Yes</label
+                            >
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="teaching-certificate"
+                                name="option1"
+                                value="something"
+                                @change="
+                                    teachingCertificateChecked =
+                                        !teachingCertificateChecked
+                                "
+                            />
+                        </div>
+                        <div v-if="teachingCertificateChecked">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>
+                                        Upload your teaching certificate.<span
+                                            class="text-danger"
+                                            style="
+                                                font-weight: 550;
+                                                font-size: 20px;
+                                            "
+                                            >*</span
+                                        >
+                                    </p>
+                                    <div class="form-check">
+                                        <label
+                                            class="form-check-label langCertificate"
+                                            for="teaching-file"
+                                            ><i
+                                                class="fa-solid fa-cloud-arrow-up"
+                                            ></i
+                                            >&nbsp; CHOOSE CERTIFICATE</label
+                                        >
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            name=""
+                                            @change="uploadTeachingCertificate"
+                                            id="teaching-file"
+                                            style="display: none"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>
+                                        When did you get the certificate?<span
+                                            class="text-danger"
+                                            style="
+                                                font-weight: 550;
+                                                font-size: 20px;
+                                            "
+                                            >*</span
+                                        >
+                                    </p>
+                                    <input
+                                        type="date"
+                                        name="teaching_certificate_year"
+                                        v-model="teaching_certificate_year"
+                                        id="teaching_certificate_year"
+                                        class="form-control"
+                                    />
+                                </div>
+                                <div
+                                    v-if="teachingPreview"
+                                    class="border rounded-1 m-4"
+                                    style="height: 150px; width: 150px"
+                                >
+                                    <img
+                                        :src="teachingPreview"
+                                        alt=""
+                                        style="width: 100%; height: 100%"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+
+            <div class="container-jumbotron p-4 border-top">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div class="d-grid gap-2">
+                            <button class="EditBtn" @click="backToDescription">
+                                <i class="fa-solid fa-angles-left"></i> BACK
+                            </button>
+                            <button
+                                class="NextBtn"
+                                @click="continueRegistration"
+                            >
+                                SAVE & CONTINUE
+                                <i class="fa-solid fa-angles-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+);
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+});
 
 import axios from "axios";
 export default {
@@ -133,53 +364,219 @@ export default {
         return {
             loading: false,
             loaded: false,
-            teacherDetails: '',
+            showErrors: "",
+            teacherDetails: "",
+            lang_certificate_year: "",
+            teaching_certificate_year: "",
             langCertificateCheck: false,
-            teachingCertificateChecked: false
-            
+            teachingCertificateChecked: false,
+
+            langPreview: "",
+            teachingPreview: "",
+            langFileImage: "",
+            teachingFileImage: "",
+            lPrv: "",
+            tPrv: "",
         };
     },
     mounted() {
-        this.getTeacherDetails()
+        this.getTeacherDetails();
     },
     methods: {
-        backToDescription(){
-            this.$store.commit({
-                type: "setDescriptionComponent"
-            })
+        updateLangCertificate() {
+            // this.loading = true;
+            // this.loaded = false;
+            axios
+                .post("/teacher/updateLangCertificate")
+                .then(() => {
+                     this.getTeacherDetails();
+                })
+                // .finally(() => {
+                //     this.loading = false;
+                //     this.loaded = true;
+                // });
         },
-        continueRegistration(){
+        updateTeachingCertificate() {
+            // this.loading = true;
+            // this.loaded = false;
+            axios
+                .post("/teacher/updateTeachingCertificate")
+                .then(() => {
+                    this.getTeacherDetails();
+                })
+                // .finally(() => {
+                //     this.loading = false;
+                //     this.loaded = true;
+                // });
+        },
+        uploadLangCertificate(e) {
+            this.langFileImage = e.target.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(this.langFileImage);
+            reader.onload = (e) => {
+                this.langPreview = e.target.result;
+            };
+        },
+        uploadTeachingCertificate(e) {
+            this.teachingFileImage = e.target.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(this.teachingFileImage);
+            reader.onload = (e) => {
+                this.teachingPreview = e.target.result;
+            };
+        },
+        backToDescription() {
             this.$store.commit({
-                type:"setVideoComponent"
-            })
+                type: "setDescriptionComponent",
+            });
+        },
+        continueRegistration() {
+            if (this.langCertificateCheck && this.teachingCertificateChecked) {
+                const data = new FormData();
+                data.append("lang_certificate_doc", this.langFileImage);
+                data.append(
+                    "lang_certificate_year",
+                    this.lang_certificate_year
+                );
+                data.append("teaching_certificate_doc", this.teachingFileImage);
+                data.append(
+                    "teaching_certificate_year",
+                    this.teaching_certificate_year
+                );
+                data.append("has_docs", "teach_lang");
+
+                axios
+                    .post("/teacher/saveTeacherQualification", data)
+                    .then(() => {
+                        this.$store.commit({
+                            type: "setVideoComponent",
+                        });
+                    })
+                    .catch((error) => {
+                        if (error.response.status == 422) {
+                            this.showErrors = error.response.data.errors;
+                        }
+                    });
+            } else if (this.langCertificateCheck) {
+                const data = new FormData();
+                data.append("lang_certificate_doc", this.langFileImage);
+                data.append(
+                    "lang_certificate_year",
+                    this.lang_certificate_year
+                );
+                data.append("has_docs", "lang");
+                axios
+                    .post("/teacher/saveTeacherQualification", data)
+                    .then(() => {
+                        this.$store.commit({
+                            type: "setVideoComponent",
+                        });
+                    })
+                    .catch((error) => {
+                        if (error.response.status == 422) {
+                            this.showErrors = error.response.data.errors;
+                        }
+                    });
+            } else if (this.teachingCertificateChecked) {
+                const data = new FormData();
+                data.append("teaching_certificate_doc", this.teachingFileImage);
+                data.append(
+                    "teaching_certificate_year",
+                    this.teaching_certificate_year
+                );
+                data.append("has_docs", "teach");
+                axios
+                    .post("/teacher/saveTeacherQualification", data)
+                    .then(() => {
+                        this.$store.commit({
+                            type: "setVideoComponent",
+                        });
+                    })
+                    .catch((error) => {
+                        if (error.response.status == 422) {
+                            this.showErrors = error.response.data.errors;
+                        }
+                    });
+            } else {
+                this.$store.commit({
+                    type: "setVideoComponent",
+                });
+            }
         },
         getTeacherDetails() {
-            this.loading = true
-            axios.get('/teacher/getTeacherDetails')
-            .then((response)=>{
-                this.teacherDetails = response.data;
-                this.loaded = true
-            }).finally(()=>{
-                this.loading = false;
-            })
+            this.loading = true;
+            axios
+                .get("/teacher/getTeacherDetails")
+                .then((response) => {
+                    this.teacherDetails = response.data;
+                    this.lPrv = response.data.lang_certificate_doc;
+                    this.tPrv = response.data.teaching_certificate_doc;
+                    this.loaded = true;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
     },
 };
 </script>
 
 <style scoped>
-.toolTip{
-    font-size: 14px;
+.teachingCertificatePreview {
+    width: 200px;
+    height: 200px;
+    margin: auto;
 }
-.toolTip:hover{
+.langCertificatePreview {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+}
+
+.teachingCertificatePreview img {
+    width: 100%;
+    height: 100%;
+    border: 2px solid #f8f9fa;
+    padding: 5px;
+}
+.langCertificatePreview img {
+    width: 100%;
+    height: 100%;
+    border: 2px solid #f8f9fa;
+    padding: 5px;
+}
+.updateLangCertificate {
+    background-color: #029e02;
+    border: none;
+    padding: 5px 15px;
+    color: white;
+    border-radius: 3px;
+}
+.langCertificate {
+    border: 1px solid #029e02;
+    padding: 5px 15px;
+    background-color: #029e20;
+    color: white;
+    border-radius: 3px;
+}
+.langCertificate i {
+    color: white;
+}
+.langCertificate:hover {
     cursor: pointer;
 }
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+.toolTip {
+    font-size: 14px;
 }
-.form-select:focus{ 
+.toolTip:hover {
+    cursor: pointer;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.form-select:focus {
     outline: none;
     box-shadow: none;
     border: 1px solid #029e02;
@@ -187,11 +584,11 @@ input[type=number]::-webkit-outer-spin-button {
 
 /* button */
 
-.editName:hover{
-  background: #03b403;
+.editName:hover {
+    background: #03b403;
 }
-.prevCrumb{
-  opacity: 0.3;
+.prevCrumb {
+    opacity: 0.3;
 }
 .NextBtn {
     padding: 7px 15px 9px;
@@ -209,12 +606,12 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 18px;
 }
 
-.NextBtn:hover i{
+.NextBtn:hover i {
     color: #fed907;
     font-size: 15px;
 }
-.NextBtn i{
-    color: #183153
+.NextBtn i {
+    color: #183153;
 }
 .EditBtn {
     padding: 7px 15px 9px;
@@ -224,21 +621,20 @@ input[type=number]::-webkit-outer-spin-button {
     transition: 0.3s;
     border: none;
     color: white;
-    border-radius: 5px
+    border-radius: 5px;
 }
-.EditBtn i{
+.EditBtn i {
     color: #fed907;
 }
 .EditBtn:hover {
     background: #02aa02;
     font-size: 18px;
 }
-.EditBtn:hover i{
+.EditBtn:hover i {
     color: #fed907;
     font-size: 15px;
 }
 /*  */
-
 
 .activeCrumb {
     color: #029e02;
@@ -273,7 +669,6 @@ input[type=number]::-webkit-outer-spin-button {
         align-content: center;
     }
 }
-
 
 /* spinner */
 .spinner {

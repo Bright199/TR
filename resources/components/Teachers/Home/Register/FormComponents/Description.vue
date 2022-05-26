@@ -34,15 +34,29 @@
                     Make use of this section to talk about your Achievements,
                     Teaching techniques, Skills, Experience etc
                 </p>
-                <p class="text-danger">Errors:</p>
-                <div v-if="showErrors">
-                    <p v-for="(error, key, index) in showErrors" :key="index">
-                        {{ error[0] }}
-                    </p>
-                </div>
             </div>
             <form @submit.prevent>
                 <div class="container-jumbotron p-4 border-top mt-3">
+                    <div v-if="showErrors">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <p >Correct the following errors.</p>
+                                <ul>
+                                    <li
+                                        v-for="(
+                                            error, key, index
+                                        ) in showErrors"
+                                        :key="index"
+                                        class="text-danger"
+                                    >
+                                        {{ error[0] }}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-2"></div>
                         <div class="col-md-8">
@@ -60,7 +74,6 @@
                                 <input
                                     type="text"
                                     class="form-control userName"
-                                    :value="teacher_name"
                                     disabled
                                     name="teacher_name"
                                     v-model="teacher_name"
@@ -96,7 +109,7 @@
                                 <textarea
                                     class="form-control"
                                     id="personal_description"
-                                    rows="4"
+                                    rows="12"
                                     name="personal_details"
                                     v-model="personal_description"
                                     placeholder="Example-I am an English Confidence Coach. I have a wide range of experience teaching english... "
@@ -647,6 +660,17 @@ export default {
                 .then((response) => {
                     this.teacherDetails = response.data;
                     this.teacher_name = response.data.name;
+                    this.personal_description = response.data.description;
+                    this.first_language = response.data.first_language;
+                    this.first_language_proficiency =
+                        response.data.first_language_proficiency;
+                    this.second_language = response.data.second_language;
+                    this.second_language_proficiency =
+                        response.data.second_language_proficiency;
+                    this.third_language = response.data.third_language;
+                    this.third_language_proficiency =
+                        response.data.third_language_proficiency;
+                    this.hourly_pay = response.data.hourly_pay;
                     this.loaded = true;
                 })
                 .finally(() => {

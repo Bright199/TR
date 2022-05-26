@@ -39,7 +39,9 @@
                             student more quicker.
                         </p>
                         <p>
-                           <span class="bg-warning px-2">NOTE:</span> Using a profile photo that is not yours will affect your approval process to withdraw your earnings.
+                            <span class="bg-warning px-2">NOTE:</span> Using a
+                            profile photo that is not yours will affect your
+                            approval process to withdraw your earnings.
                         </p>
                     </div>
 
@@ -177,10 +179,8 @@
                             <img
                                 :src="profilePreview"
                                 alt="profile_image"
-                                style="width: 100%; height: 100%"
+                                class="profileImage"
                             />
-                            <!-- <img :src="'/storage/teacher/images/'+teacherDetails.teacher_image" 
-                            alt="profile_image" style="width: 100%; height: 100%"> -->
                         </div>
                         <div class="col-md-4"></div>
                     </div>
@@ -188,7 +188,7 @@
                 <div class="container p-4">
                     <div class="row">
                         <div class="col-md-4"></div>
-                        <div class="col-md-4 ">
+                        <div class="col-md-4">
                             <div class="d-grid gap-2">
                                 <button
                                     class="EditBtn"
@@ -314,6 +314,15 @@ export default {
 </script>
 
 <style scoped>
+.profileImage {
+    width: 150px;
+    height: 150px;
+    display: block;
+    margin: auto;
+    border-radius: 50%;
+    padding: 7px;
+    border: 2px solid #f8f9fa;
+}
 .Guides p {
     margin-top: 1.8px;
     margin-bottom: 1.8px;

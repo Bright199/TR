@@ -125,9 +125,90 @@ class TeachersRegistration extends Controller
         }
     }
 
+    public function saveTeacherQualification(Request $request){
+        switch ($request->has_docs) {
+            case ('teach_lang'):
+                $request->validate([
+                    'teaching_certificate_doc'=>['required','file','max: 15000'],
+                    'teaching_certificate_year'=>['required','date'],
+                    'lang_certificate_year'=>['required','date'],
+                    'lang_certificate_doc'=>['required','file','max: 15000']
+                ]);
+                $file = $request->file('teaching_certificate_doc');
+                $teachingCertificate = time() . $file->getClientOriginalName();
+                $path = 'teacher/images/';
+                $file->storeAs($path, $teachingCertificate, 'public');
+                $file = $request->file('lang_certificate_doc');
+                $langCertificate = time() . $file->getClientOriginalName();
+                $path = 'teacher/images/';
+                $file->storeAs($path, $langCertificate, 'public');
 
+                Teacher::where('id', Auth::guard('teacher')->id())
+                ->update([
+                    'lang_certificate_year'=> $request->lang_certificate_year,
+                    'lang_certificate_doc'=> $langCertificate,
+                    'teaching_certificate_year'=> $request->teaching_certificate_year,
+                    'teaching_certificate_doc'=> $teachingCertificate,
+                    'has_teaching_certificate' => 1,
+                    'has_lang_certificate' => 1
+                ]);
+                break;
+            case ('lang'):
+                $request->validate([
+                    'lang_certificate_year'=>['required','date'],
+                    'lang_certificate_doc'=>['required','file','max: 15000']
+                ]);
 
+             
+                $file = $request->file('lang_certificate_doc');
+                $langCertificate = time() . $file->getClientOriginalName();
+                $path = 'teacher/images/';
+                $file->storeAs($path, $langCertificate, 'public');
 
+                Teacher::where('id', Auth::guard('teacher')->id())
+                ->update([
+                    'lang_certificate_year'=> $request->lang_certificate_year,
+                    'lang_certificate_doc'=> $langCertificate,
+                    'has_lang_certificate' => 1
+                ]);
+                break;
+            case ('teach'):
+                $request->validate([
+                    'teaching_certificate_doc'=>['required','file','max: 15000'],
+                    'teaching_certificate_year'=>['required','date'],
+                ]);
+                $file = $request->file('teaching_certificate_doc');
+                $teachingCertificate = time() . $file->getClientOriginalName();
+                $path = 'teacher/images/';
+                $file->storeAs($path, $teachingCertificate, 'public');
+
+                Teacher::where('id', Auth::guard('teacher')->id())
+                ->update([
+                    'teaching_certificate_year'=> $request->teaching_certificate_year,
+                    'teaching_certificate_doc'=> $teachingCertificate,
+                    'has_teaching_certificate' =>1
+                ]);
+                break;
+            
+        }
+    }
+
+    public function updateTeachingCertificate(Request $request){
+        Teacher::where('id', Auth::guard('teacher')->id())
+        ->update([
+            'lang_certificate_doc' => null,
+            'lang_certificate_year' =>null,
+            'has_lang_certificate' =>0
+        ]);
+    }
+    public function updateLangCertificate(Request $request){
+        Teacher::where('id',Auth::guard('teacher')->id())
+        ->update([
+            'teaching_certificate_doc' => null,
+            'teaching_certificate_year' =>null,
+            'has_teaching_certificate' =>0
+        ]);
+    }
 
     public function store(Request $request)
     {

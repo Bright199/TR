@@ -200,6 +200,9 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
         Route::post('/saveProfileImage', [TeachersRegistration::class, 'saveProfileImage']);
         Route::post('/deleteTeacherProfilePicture', [TeachersRegistration::class, 'deleteTeacherProfilePicture']);
         Route::post('/saveTeacherDescription', [TeachersRegistration::class, 'saveTeacherDescription']);
+        Route::post('/saveTeacherQualification', [TeachersRegistration::class, 'saveTeacherQualification']);
+        Route::post('/updateTeachingCertificate', [TeachersRegistration::class, 'updateTeachingCertificate']);
+        Route::post('/updateLangCertificate', [TeachersRegistration::class, 'updateLangCertificate']);
         // Registration form
 
     });

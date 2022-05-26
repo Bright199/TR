@@ -144,6 +144,41 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'nationality'=>[
+            'required' => 'Please fill in your :attribute.'
+        ],
+        'first_language' =>[
+            'required' => 'Your :attribute cannot be blank.'
+        ],
+        'second_language' =>[
+            'required' => 'Your :attribute cannot be blank.'
+        ],
+        'first_language_proficiency' =>[
+            'required' => 'Your :attribute level cannot be blank'
+        ],
+        'second_language_proficiency' =>[
+            'required' => 'Your :attribute level cannot be blank.'
+        ],
+        'hourly_pay' =>[
+            'required' => 'You must indicate your :attribute.',
+            'gt' => 'Your :attribute cannot be less than $3.',
+            'lt' => 'Your :attribute cannot be more than $250.'
+        ],
+        'personal_description' =>[
+            'required' => 'Your :attribute cannot be blank.'
+        ],
+        'teaching_certificate_doc' =>[
+            'required' => 'You must upload your teaching certificate.'
+        ],
+        'teaching_certificate_year' =>[
+            'required' => 'Indicate the year you got your teaching certificate.'
+        ],
+        'lang_certificate_doc' =>[
+            'required' => 'You must upload your language certificate.'
+        ],
+        'lang_certificate_year' =>[
+            'required' => 'Indicate the year you got your language certificate.'
+        ],
     ],
 
     /*
