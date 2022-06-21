@@ -1,13 +1,15 @@
 <template>
     <div>
+        <div v-if="loading">
+            <p class="text-center">Uploading your introduction video</p>
+            <p class="text-center">This may take some few seconds or minutes!</p>
+        </div>
         <div class="spinner" v-if="loading">
             <div class="dot1"></div>
             <div class="dot2"></div>
         </div>
         <div class="container-jumbotron bg-white rounded-2" v-if="loaded">
-            <div
-                class="container-jumbotron d-flex justify-content-center border-bottom"
-            >
+            <div class="container-jumbotron d-flex justify-content-center border-bottom">
                 <ul class="breadCrumbs">
                     <li class="prevCrumb">
                         About
@@ -36,36 +38,35 @@
                     <div class="col-md-6 p-3">
                         <h3>
                             Upload introduction video
-                            <span
-                                class="text-danger"
-                                style="font-weight: 550; font-size: 20px"
-                                >*</span
-                            >
+                            <span class="text-danger" style="font-weight: 550; font-size: 20px">*</span>
                         </h3>
                         <p>
                             Introduce yourself to your prospective students.
                             This will happen you stand out among other teachers.
                         </p>
                         <div class="container">
-                            <label for="intro-video" class="introVideo"
-                                ><i class="fa-solid fa-cloud-arrow-up"></i
-                                >UPLOAD VIDEO</label
-                            >
-                            <input
-                                type="file"
-                                name=""
-                                id="intro-video"
-                                @change='uploadIntroVideo'
-                                accept="video/mp4,video/x-m4v,video/*"
-                            />
-                            <div class="ratio ratio-16x9 mt-3">
+
+                            <div class="ratio ratio-16x9 mt-3" v-if="displayVideoUrl !== ''">
+                                <video width="320" height="240" controls
+                                    :src="'/storage/teacher/videos/' + displayVideoUrl">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <div class="ratio ratio-16x9 mt-3" v-else>
                                 <video width="320" height="240" controls class="introVideoPreview">
                                     Your browser does not support the video tag.
                                 </video>
                             </div>
+                            <label for="intro-video" class="introVideo mt-3"><i
+                                    class="fa-solid fa-cloud-arrow-up"></i>UPLOAD
+                                VIDEO</label>
+                            <input type="file" name="" id="intro-video" @change='uploadIntroVideo'
+                                accept="video/mp4,video/x-m4v,video/*" />
+
                             <div class="container p-3">
-                                <ul v-if="showErrors">
-                                    <li class='text-danger' v-for="(error, key, index) in showErrors" :key="index">{{error[0]}}</li>
+                                <ul v-if="showErrors" style="list-style:none;">
+                                    <li class='text-danger' v-for="(error, key, index) in showErrors" :key="index">
+                                        {{ error[0] }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -77,9 +78,7 @@
                         </p>
                         <div class="videContainer">
                             <div class="ratio ratio-16x9">
-                                <iframe
-                                    src="https://www.youtube.com/embed/iPujtw2eVyk"
-                                ></iframe>
+                                <iframe src="https://www.youtube.com/embed/iPujtw2eVyk"></iframe>
                             </div>
                         </div>
                     </div>
@@ -90,9 +89,7 @@
                         <h4>Content of your video.</h4>
                         <p>
                             Note that your video should not be more than
-                            <span style="color: #029e20; font-weight: 550"
-                                >2 minutes</span
-                            >
+                            <span style="color: #029e20; font-weight: 550">2 minutes</span>
                         </p>
                         <h6>Introduce yourself (15-20 seconds)</h6>
 
@@ -127,16 +124,10 @@
                     <div class="col-md-4"></div>
                     <div class="col-md-4">
                         <div class="d-grid gap-2">
-                            <button
-                                class="EditBtn"
-                                @click="backToQualification"
-                            >
+                            <button class="EditBtn" @click="backToQualification">
                                 <i class="fa-solid fa-angles-left"></i> BACK
                             </button>
-                            <button
-                                class="NextBtn"
-                                @click="continueRegistration"
-                            >
+                            <button class="NextBtn" @click="setHandler">
                                 SAVE & CONTINUE
                                 <i class="fa-solid fa-angles-right"></i>
                             </button>
@@ -165,7 +156,8 @@ export default {
             loading: false,
             loaded: false,
             teacherDetails: "",
-            videoFile:'',
+            videoFile: '',
+            displayVideoUrl: '',
             showErrors: ''
         };
     },
@@ -173,11 +165,24 @@ export default {
         this.getTeacherDetails();
     },
     methods: {
-        uploadIntroVideo(e){
-            const videoFile = e.target.files[0]
-            this.videoFile = videoFile
-            const videoUrl = URL.createObjectURL(videoFile);
-            document.querySelector('.introVideoPreview').src = videoUrl
+        setHandler() {
+            if (this.displayVideoUrl === '') {
+                this.continueRegistration()
+            } else {
+                this.displayVideoUrl = ''
+                this.$store.commit({
+                    type: "setAvailabilityComponent",
+                });
+            }
+        },
+        uploadIntroVideo(e) {
+            this.displayVideoUrl = ''
+            setTimeout(() => {
+                const videoFile = e.target.files[0]
+                this.videoFile = videoFile
+                const videoUrl = URL.createObjectURL(videoFile);
+                document.querySelector('.introVideoPreview').src = videoUrl
+            }, 500);
         },
         backToQualification() {
             this.$store.commit({
@@ -185,7 +190,7 @@ export default {
             });
         },
         continueRegistration() {
-            if(this.videoFile ===''){
+            if (this.videoFile === '') {
                 alert('You must upload an introduction video')
                 return
             }
@@ -194,26 +199,30 @@ export default {
             const data = new FormData();
             data.append('intro_video', this.videoFile)
             axios.post('/teacher/uploadIntroVideo', data)
-            .then(()=>{
-                this.loaded = true
-                this.$store.commit({
-                    type: "setAvailabilityComponent",
-                });
-            })
-            .catch((error)=>{
-                if(error.response.status == 422){
-                    this.showErrors = error.response.data.errors
-                }
-            })
-            .finally(() => {
-                this.loading = false
-            })
+                .then(() => {
+                    this.loaded = true
+                    this.videoFile = ''
+                    this.$store.commit({
+                        type: "setAvailabilityComponent",
+                    });
+                })
+                .catch((error) => {
+                    this.loaded = true
+                    if (error.response.status == 422) {
+                        this.showErrors = error.response.data.errors
+                    }
+                    this.videoFile = ''
+                })
+                .finally(() => {
+                    this.loading = false
+                })
         },
         getTeacherDetails() {
             this.loading = true;
             axios
                 .get("/teacher/getTeacherDetails")
                 .then((response) => {
+                    this.displayVideoUrl = response.data.intro_video_url
                     this.teacherDetails = response.data;
                     this.loaded = true;
                 })
@@ -231,34 +240,41 @@ export default {
     justify-content: center;
     align-items: center;
 }
+
 #intro-video {
     display: none;
 }
+
 .introVideo {
     padding: 5px 15px 4px;
     border: 1px solid #029e20;
     border-radius: 5px;
-}
-.introVideo:hover {
-    cursor: pointer;
     background: #029e20;
     color: white;
 }
-.introVideo:hover i{
+
+.introVideo:hover {
+    cursor: pointer;
+}
+
+.introVideo i {
     color: white;
 }
 
 .toolTip {
     font-size: 14px;
 }
+
 .toolTip:hover {
     cursor: pointer;
 }
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
 .form-select:focus {
     outline: none;
     box-shadow: none;
@@ -266,16 +282,19 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* button */
-.fa-cloud-arrow-up{
-    color:#029e02;
+.fa-cloud-arrow-up {
+    color: #029e02;
     margin-right: 5px;
 }
+
 .editName:hover {
     background: #03b403;
 }
+
 .prevCrumb {
     opacity: 0.3;
 }
+
 .NextBtn {
     padding: 7px 15px 9px;
     font-size: 17px;
@@ -286,18 +305,22 @@ input[type="number"]::-webkit-outer-spin-button {
     color: #029e02;
     border-radius: 5px;
 }
+
 .NextBtn i {
     color: #183153;
 }
+
 .NextBtn:hover {
     background: #029e02;
     color: white;
     font-size: 18px;
 }
+
 .NextBtn:hover i {
     color: #fed907;
     font-size: 15px;
 }
+
 .EditBtn {
     padding: 7px 15px 9px;
     font-size: 17px;
@@ -308,31 +331,37 @@ input[type="number"]::-webkit-outer-spin-button {
     color: white;
     border-radius: 5px;
 }
+
 .EditBtn:hover {
     background: #02aa02;
     color: white;
     font-size: 18px;
 }
 
-.EditBtn i{
+.EditBtn i {
     color: #fed907;
 }
+
 .EditBtn:hover i {
     color: #fed907;
     font-size: 15px;
 }
+
 /*  */
 
 .activeCrumb {
     color: #029e02;
     font-weight: 550;
 }
+
 .nextCrumb {
     font-weight: 550;
 }
+
 .fa-chevron-right {
     font-size: 12px;
 }
+
 .activeCrumb:hover {
     cursor: pointer;
 }
@@ -343,6 +372,7 @@ input[type="number"]::-webkit-outer-spin-button {
     padding: 0;
     align-content: center;
 }
+
 .breadCrumbs li {
     list-style: none;
     padding: 13px 12px 2px;
@@ -395,6 +425,7 @@ input[type="number"]::-webkit-outer-spin-button {
         -webkit-transform: rotate(360deg);
     }
 }
+
 @keyframes sk-rotate {
     100% {
         transform: rotate(360deg);
@@ -403,25 +434,30 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 @-webkit-keyframes sk-bounce {
+
     0%,
     100% {
         -webkit-transform: scale(0);
     }
+
     50% {
         -webkit-transform: scale(1);
     }
 }
 
 @keyframes sk-bounce {
+
     0%,
     100% {
         transform: scale(0);
         -webkit-transform: scale(0);
     }
+
     50% {
         transform: scale(1);
         -webkit-transform: scale(1);
     }
 }
+
 /*  */
 </style>

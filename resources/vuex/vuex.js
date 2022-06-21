@@ -24,24 +24,18 @@ const store = createStore({
       // end of student states
 
       // teacher states
-      showTeacherRegistrationFormComponent: 0
+      showTeacherRegistrationFormComponent: 0,
+      selectedDayIndex: 0
       // end of teacher state
     }
   },
-  // actions: {
-  //   TeachersByPrice (context,payload) {
-  //     setTimeout(() => {
-  //      context.commit('TeachersByPrice',payload)
-  //     }, 500)
-  //   }
-  // },
+
   mutations: {
     // Student Mutations
-    buyHours(state){
+    buyHours(state) {
       state.showBookPaidLessonComponent = true
     },
-    closeBookPaidLessonComponent(state)
-    {
+    closeBookPaidLessonComponent(state) {
       state.showBookPaidLessonComponent = false
     },
     TeachersByPrice(state, payload) {
@@ -136,21 +130,27 @@ const store = createStore({
 
     // teacher mutations
 
-    setDescriptionComponent(state){
-      state.showTeacherRegistrationFormComponent = 1 
+    setDescriptionComponent(state) {
+      state.showTeacherRegistrationFormComponent = 1
     },
-    setAboutComponent(state){
-      state.showTeacherRegistrationFormComponent = 0 
+    setAboutComponent(state) {
+      state.showTeacherRegistrationFormComponent = 0
     },
-    setQualificationComponent(state){
-      state.showTeacherRegistrationFormComponent = 2 
+    setQualificationComponent(state) {
+      state.showTeacherRegistrationFormComponent = 2
     },
-    setVideoComponent(state){
-      state.showTeacherRegistrationFormComponent = 3 
+    setVideoComponent(state) {
+      state.showTeacherRegistrationFormComponent = 3
     },
-    setAvailabilityComponent(state){
-      state.showTeacherRegistrationFormComponent = 4 
-    }
+    setAvailabilityComponent(state) {
+      state.showTeacherRegistrationFormComponent = 4
+    },
+
+    setDayIndex(state, payload){
+      state.selectedDayIndex = payload.dayIndex
+  },
+
+
     // end of teacher mutations
 
   },

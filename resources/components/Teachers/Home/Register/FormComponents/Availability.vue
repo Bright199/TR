@@ -5,15 +5,12 @@
             <div class="dot2"></div>
         </div>
         <div class="container-jumbotron bg-white rounded-2" v-if="loaded">
-            <div
-                class="container-jumbotron d-flex justify-content-center border-bottom"
-                
-            >
+            <div class="container-jumbotron d-flex justify-content-center border-bottom">
                 <ul class="breadCrumbs">
-                    <li class="prevCrumb">About 
-                      <!-- <i class="fa-solid fa-chevron-right"></i>
+                    <li class="prevCrumb">About
+                        <!-- <i class="fa-solid fa-chevron-right"></i>
                         &nbsp; -->
-                        </li>
+                    </li>
                     <li class="prevCrumb">
                         Description
                     </li>
@@ -33,38 +30,64 @@
                     </li>
                 </ul>
             </div>
-          
-              <div class="container-jumbotron p-4 ">
-                <div class="row">
-                  <div class="col-md-4">
-                      <div class="container ">
-                          <img v-if="teacherDetails.teacher_image !== null && teacherDetails.teacher_image !== ''" :src="'/storage/teacher/images/'+teacherDetails.teacher_image" alt="" class="rounded-circle" width="60" height="60">
-                          <img v-else src="/images/avatar.png" alt="" class="rounded-circle" width="60" height="60">
-                      </div>
-                      <div class="container ">
-                          <p >{{ teacherDetails.name}}</p>
-                          <p v-if="teacherDetails.hourly_pay">${{ teacherDetails.hourly_pay}}/hour.</p>
-                      </div>
-                  </div>
-                  <div class="col-md-8">
-                    <h4>Set your availability.</h4>
-                    <p>What times are you free in a week? </p>
-                  </div>
-                </div>
-              </div>
 
-                <div class="container-jumbotron p-4 border-top">
+            <div class="bg-white w-100 h-100">
+                <div class="container p-5">
                     <div class="row">
-                        <div class="col-md-4"></div>
                         <div class="col-md-4">
-                            <div class="d-grid gap-2">
-                                <button class="EditBtn" @click="backToVideo"><i class="fa-solid fa-angles-left"></i> BACK</button>
-                                <button class="NextBtn" @click="finishRegistration">SUBMIT APPLICATION <i class="fa-solid fa-angles-right"></i></button>
+                            <h5>Your timezone is: <span style="color: #029e20">{{ userTimeZone }}</span></h5>
+                            <p>If this is not your timezone please change in the timezone list below. This will be used
+                                by the
+                                system to
+                                schedule the lessons with your students who living in a different timezone.</p>
+                            <select class="form-select" @change="selectedTimeZOne" v-model="userTimeZone">
+                                <option selected>{{ userTimeZone }}</option>
+                                <option v-for="(timezone, index) in getTimeZone()" :key="index" :value="timezone">{{
+                                        timezone + " " + timezoneDisplay(new Date(),
+                                            timezone).format("Z")
+                                }}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-8">
+                            <h3 class="text-center p-3">Choose your availability time.</h3>
+                            <div class="row border p-4">
+                                <div class="col-md-4 days-container">
+                                    <ul>
+                                        <li v-for="(day, index) in days" :key="index" @click="selectWeekDay(index)"
+                                            class="weekDay" :class="index === selectedDayIndex ? 'activeDay' : ''">{{
+                                                    day
+                                            }}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- Days slots -->
+                                <Monday v-if="selectedDayIndex === 0" />
+                                <Tuesday v-if="selectedDayIndex === 1" />
+                                <Wednesday v-if="selectedDayIndex === 2" />
+                                <Thursday v-if="selectedDayIndex === 3" />
+                                <Friday v-if="selectedDayIndex === 4" />
+                                <Saturday v-if="selectedDayIndex === 5" />
+                                <Sunday v-if="selectedDayIndex === 6" />
                             </div>
                         </div>
-                        <div class="col-md-4"></div>
                     </div>
                 </div>
+            </div>
+
+            <div class="container-jumbotron p-4 border-top">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div class="d-grid gap-2">
+                            <button class="EditBtn" @click="backToVideo"><i class="fa-solid fa-angles-left"></i>
+                                BACK</button>
+                            <button class="NextBtn" @click="finishRegistration">SUBMIT APPLICATION <i
+                                    class="fa-solid fa-angles-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -72,59 +95,139 @@
 <script>
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
+    return new bootstrap.Tooltip(tooltipTriggerEl)
 })
 
 import axios from "axios";
+import moment from 'moment-timezone'
+import Monday from './DaysComponent/Monday.vue'
+import { mapState } from 'vuex'
+import Tuesday from './DaysComponent/Tuesday.vue'
+import Wednesday from './DaysComponent/Wednesday.vue'
+import Thursday from './DaysComponent/Thursday.vue'
+import Friday from './DaysComponent/Friday.vue'
+import Saturday from './DaysComponent/Saturday.vue'
+import Sunday from './DaysComponent/Sunday.vue'
 export default {
     name: "Availability",
+    components: {
+        Monday,
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday,
+        Saturday,
+        Sunday
+    },
     data() {
         return {
             loading: false,
             loaded: false,
             teacherDetails: '',
-            
+            timezoneDetails: '',
+            userTimeZone: '',
+            days: [
+                'MONDAY',
+                'TUESDAY',
+                'WEDNESDAY',
+                'THURSDAY',
+                'FRIDAY',
+                'SATURDAY',
+                'SUNDAY'
+            ]
+
         };
     },
     mounted() {
         this.getTeacherDetails()
+        this.getTimeZone()
+        this.defaultTimeZone()
     },
     methods: {
-        backToVideo(){
+        selectWeekDay(i) {
+            this.$store.commit({
+                type: 'setDayIndex',
+                dayIndex: i
+            })
+        },
+        getTimeZone() {
+            return moment.tz.names();
+        },
+        timezoneDisplay(d, tZone) {
+            return moment.tz(d, tZone);
+            //   return  moment.tz(d,tZone).format("DD-MM-YYYY h:mm:ss a");
+            //   return  moment.tz(d,tZone).format("DD-MM-YYYY h:mm:ss a");
+        },
+        defaultTimeZone() {
+            this.userTimeZone = moment.tz.guess()
+        },
+        backToVideo() {
             this.$store.commit({
                 type: "setVideoComponent"
             })
         },
-        finishRegistration(){
+        finishRegistration() {
             alert('Make sure you have filled the information correctly')
         },
         getTeacherDetails() {
             this.loading = true
             axios.get('/teacher/getTeacherDetails')
-            .then((response)=>{
-                this.teacherDetails = response.data;
-                this.loaded = true
-            }).finally(()=>{
-                this.loading = false;
-            })
+                .then((response) => {
+                    this.teacherDetails = response.data;
+                    this.loaded = true
+                }).finally(() => {
+                    this.loading = false;
+                })
         },
+    },
+    computed: {
+        ...mapState({
+            selectedDayIndex: state => state.selectedDayIndex
+        })
     },
 };
 </script>
 
 <style scoped>
-.toolTip{
+
+.activeDay {
+    background-color: #029e02;
+    padding: 10px;
+    text-align: center;
+    color: white !important;
+}
+
+.weekDay {
+    border: 1px solid #029e02;
+    border-radius: 5px;
+    color: #029e02;
+    padding: 10px;
+    margin-bottom: 15px;
+    list-style: none;
+    text-align: center;
+}
+
+.weekDay:hover {
+    background-color: #029e20;
+    cursor: pointer;
+    color: white;
+}
+
+.toolTip {
     font-size: 14px;
 }
-.toolTip:hover{
+
+.toolTip:hover {
     cursor: pointer;
 }
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
-.form-select:focus{ 
+
+.form-select:focus {
     outline: none;
     box-shadow: none;
     border: 1px solid #029e02;
@@ -132,12 +235,14 @@ input[type=number]::-webkit-outer-spin-button {
 
 /* button */
 
-.editName:hover{
-  background: #03b403;
+.editName:hover {
+    background: #03b403;
 }
-.prevCrumb{
-  opacity: 0.3;
+
+.prevCrumb {
+    opacity: 0.3;
 }
+
 .NextBtn {
     padding: 7px 15px 9px;
     font-size: 17px;
@@ -148,16 +253,18 @@ input[type=number]::-webkit-outer-spin-button {
     transition: 0.3s;
     color: #029e02;
 }
+
 .NextBtn:hover {
     background: #029e02;
     color: white;
     font-size: 18px;
 }
 
-.NextBtn:hover i{
+.NextBtn:hover i {
     font-size: 15px;
     color: #fed907;
 }
+
 .EditBtn {
     padding: 7px 15px 9px;
     font-size: 17px;
@@ -168,17 +275,20 @@ input[type=number]::-webkit-outer-spin-button {
     border-radius: 5px;
     color: white;
 }
-.EditBtn i{
+
+.EditBtn i {
     color: #fed907;
 }
 
-.EditBtn:hover i{
+.EditBtn:hover i {
     font-size: 15px
 }
+
 .EditBtn:hover {
     background: #02aa02;
     font-size: 18px;
 }
+
 /*  */
 
 
@@ -186,12 +296,15 @@ input[type=number]::-webkit-outer-spin-button {
     color: #029e02;
     font-weight: 550;
 }
+
 .nextCrumb {
     font-weight: 550;
 }
+
 .fa-chevron-right {
     font-size: 12px;
 }
+
 .activeCrumb:hover {
     cursor: pointer;
 }
@@ -202,6 +315,7 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 0;
     align-content: center;
 }
+
 .breadCrumbs li {
     list-style: none;
     padding: 13px 12px 2px;
@@ -255,6 +369,7 @@ input[type=number]::-webkit-outer-spin-button {
         -webkit-transform: rotate(360deg);
     }
 }
+
 @keyframes sk-rotate {
     100% {
         transform: rotate(360deg);
@@ -263,25 +378,30 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 @-webkit-keyframes sk-bounce {
+
     0%,
     100% {
         -webkit-transform: scale(0);
     }
+
     50% {
         -webkit-transform: scale(1);
     }
 }
 
 @keyframes sk-bounce {
+
     0%,
     100% {
         transform: scale(0);
         -webkit-transform: scale(0);
     }
+
     50% {
         transform: scale(1);
         -webkit-transform: scale(1);
     }
 }
+
 /*  */
 </style>

@@ -47,10 +47,13 @@ class TeachersRegistration extends Controller
     public function uploadIntroVideo(Request $request)
     {
         $request->validate([
-            'intro_video' => ['required', 'file', 'mimes: m4v,avi,flv,mp4,mov', 'max: 120000']
+            'intro_video' => 'required|file|mimes: m4v,avi,flv,mp4,mov|max: 120000'
         ]);
+        
         $teacherDetails = Teacher::find(Auth::guard('teacher')->id());
-            unlink(public_path('storage/teacher/videos/'.$teacherDetails->intro_video_url));
+        if ($teacherDetails->intro_video_url) {
+            unlink(public_path('storage/teacher/videos/' . $teacherDetails->intro_video_url));
+        }
         $file = $request->file('intro_video');
         $fileName = $file->hashName();
         $path = 'teacher/videos/';
