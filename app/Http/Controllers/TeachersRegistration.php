@@ -65,7 +65,9 @@ class TeachersRegistration extends Controller
                 ]);
         }
     }
-
+    public function saveTeacherAvailability(Request $request){
+        return response()->json($request);
+    }
     public function saveTeacherDescription(Request $request)
     {
 

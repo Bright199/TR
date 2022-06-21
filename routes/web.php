@@ -5,6 +5,7 @@ use App\Http\Controllers\SocialiteLogin;
 use App\Http\Controllers\StudentRegistration;
 use App\Http\Controllers\TeacherSocialiteLogin;
 use App\Http\Controllers\TeachersRegistration;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -204,6 +205,7 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
         Route::post('/updateTeachingCertificate', [TeachersRegistration::class, 'updateTeachingCertificate']);
         Route::post('/updateLangCertificate', [TeachersRegistration::class, 'updateLangCertificate']);
         Route::post('/uploadIntroVideo', [TeachersRegistration::class, 'uploadIntroVideo']);
+        Route::post('/saveTeacherAvailability', [TeachersRegistration::class, 'saveTeacherAvailability']);
         // Registration form
 
     });
@@ -237,7 +239,6 @@ Route::get('/zoom',[StudentRegistration::class, 'zoom']);
 Route::get('/netflix', function () {
     return view('hakan');
 });
-
 
 
 Auth::routes();

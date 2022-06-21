@@ -10,6 +10,7 @@ class TimeSlot extends Model
     use HasFactory;
     protected $fillable = [
         'teacher_id',
+        'week_day',
         'date',
         'slot1',
         'slot2',
@@ -35,29 +36,5 @@ class TimeSlot extends Model
         'slot22',
         'slot23',
         'slot24',
-        'slot25',
-        'slot26',
-        'slot27',
-        'slot28',
-        'slot29',
-        'slot30',
-        'slot31',
-        'slot32',
-        'slot33',
-        'slot34',
-        'slot35',
-        'slot36',
-        'slot37',
-        'slot38',
-        'slot39',
-        'slot40',
-        'slot41',
-        'slot42',
-        'slot43',
-        'slot44',
-        'slot45',
-        'slot46',
-        'slot47',
-        'slot48'
     ];
 }

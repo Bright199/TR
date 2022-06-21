@@ -17,6 +17,7 @@ class CreateTimeSlotsTable extends Migration
             $table->id();
             $table->integer('teacher_id')->nullable();
             $table->dateTime('date')->nullable();
+            $table->string('week_day')->nullable();
             $table->time('slot1')->nullable();
             $table->time('slot2')->nullable();
             $table->time('slot3')->nullable();
@@ -41,31 +42,6 @@ class CreateTimeSlotsTable extends Migration
             $table->time('slot22')->nullable();
             $table->time('slot23')->nullable();
             $table->time('slot24')->nullable();
-            $table->time('slot25')->nullable();
-            $table->time('slot26')->nullable();
-            $table->time('slot27')->nullable();
-            $table->time('slot28')->nullable();
-            $table->time('slot29')->nullable();
-            $table->time('slot30')->nullable();
-            $table->time('slot31')->nullable();
-            $table->time('slot32')->nullable();
-            $table->time('slot33')->nullable();
-            $table->time('slot34')->nullable();
-            $table->time('slot35')->nullable();
-            $table->time('slot36')->nullable();
-            $table->time('slot37')->nullable();
-            $table->time('slot38')->nullable();
-            $table->time('slot39')->nullable();
-            $table->time('slot40')->nullable();
-            $table->time('slot41')->nullable();
-            $table->time('slot42')->nullable();
-            $table->time('slot43')->nullable();
-            $table->time('slot44')->nullable();
-            $table->time('slot45')->nullable();
-            $table->time('slot46')->nullable();
-            $table->time('slot47')->nullable();
-            $table->time('slot48')->nullable();
-            
             $table->timestamps();
         });
     }

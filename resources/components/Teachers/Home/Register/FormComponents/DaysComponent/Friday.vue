@@ -44,7 +44,7 @@ export default {
         saveTimeSlot() {
             if (this.selectedSlotList.length) {
                 this.selectedSlotList.push({ day: 'Friday' })
-                axios.post('/teacher/save/availability')
+                axios.post('/teacher/saveTeacherAvailability',this.selectTimeSlot)
                 .then(res =>{
                     alert('saved')
                 })
