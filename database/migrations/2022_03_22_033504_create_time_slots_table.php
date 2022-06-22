@@ -18,6 +18,7 @@ class CreateTimeSlotsTable extends Migration
             $table->integer('teacher_id')->nullable();
             $table->dateTime('date')->nullable();
             $table->string('week_day')->nullable();
+            $table->string('teacher_timezone')->nullable();
             $table->time('slot1')->nullable();
             $table->time('slot2')->nullable();
             $table->time('slot3')->nullable();

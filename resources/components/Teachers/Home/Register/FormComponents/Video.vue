@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container-jumbotron">
         <div v-if="loading">
             <p class="text-center">Uploading your introduction video</p>
             <p class="text-center">This may take some few seconds or minutes!</p>
@@ -58,7 +58,7 @@
                                 </video>
                             </div>
                             <label for="intro-video" class="introVideo mt-3"><i
-                                    class="fa-solid fa-cloud-arrow-up"></i>UPLOAD
+                                    class="fa-solid fa-cloud-arrow-up"></i>CHOOSE
                                 VIDEO</label>
                             <input type="file" name="" id="intro-video" @change='uploadIntroVideo'
                                 accept="video/mp4,video/x-m4v,video/*" />
@@ -166,10 +166,9 @@ export default {
     },
     methods: {
         setHandler() {
-            if (this.displayVideoUrl === '') {
+            if (this.displayVideoUrl === '' || this.displayVideoUrl ===null) {
                 this.continueRegistration()
             } else {
-                this.displayVideoUrl = ''
                 this.$store.commit({
                     type: "setAvailabilityComponent",
                 });

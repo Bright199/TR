@@ -31,11 +31,13 @@
 <script>
 import moment from 'moment-timezone'
 import axios from 'axios'
+import { mapState } from 'vuex'
 export default {
     name: 'Monday',
     data() {
         return {
             selectedSlotList: [],
+            allSelectedTimeSlots: {},
             startTime: '00:00',
             endTime: '23:00',
         }
@@ -43,15 +45,20 @@ export default {
     methods: {
         saveTimeSlot() {
             if (this.selectedSlotList.length) {
-                this.selectedSlotList.push({ day: 'Monday' })
-                axios.post('/teacher/saveTeacherAvailability',this.selectTimeSlot)
-                .then(res =>{
-                    console.log(res);
-                })
-                .catch(error =>{
-                    console.log(error);
-                })
-                console.log(this.selectedSlotList);
+                this.allSelectedTimeSlots['week_day'] = 'Monday'
+                this.allSelectedTimeSlots['user_timezone'] = this.userSelectedTimezone
+                axios.post('/teacher/saveTeacherAvailability', this.allSelectedTimeSlots)
+                    .then(res => {
+                        console.log(res);
+                        this.$store.commit({
+                            type: 'setDayIndex',
+                            dayIndex: 7
+                        })
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+
             }
         },
         timeSlots() {
@@ -82,20 +89,24 @@ export default {
             if (
                 !slotExists
             ) {
+                this.allSelectedTimeSlots['slot_' + (i + 1)] = slt
                 let slotNumber = 'slot_' + (i + 1)
                 const selectedTimeSlotDetails = {
                     [slotNumber]: slt,
                     selected_timeslot: slt
                 }
-
                 this.selectedSlotList.push(selectedTimeSlotDetails)
-                 this.selectedSlotList.sort(({ selected_timeslot: a }, {selected_timeslot: b }) => a > b ? 1 : a < b ? -1 : 0)
+                this.selectedSlotList.sort(({ selected_timeslot: a }, { selected_timeslot: b }) => a > b ? 1 : a < b ? -1 : 0)
             }
         },
     },
     computed: {
-        filterSelectedSlotList(){
-            return this.selectedSlotList.filter( slot => !!slot.selected_timeslot)
+    
+        ...mapState({
+            userSelectedTimezone: state => state.userSelectedTimezone
+        }),
+        filterSelectedSlotList() {
+            return this.selectedSlotList.filter(slot => !!slot.selected_timeslot)
         }
     },
 }

@@ -35,12 +35,14 @@
                 <div class="container p-5">
                     <div class="row">
                         <div class="col-md-4">
-                            <h5>Your timezone is: <span style="color: #029e20">{{ userTimeZone }}</span></h5>
+                            <h5><span class="text-danger">**</span> Your timezone is: <span style="color: #F56F26">{{
+                                    userTimeZone
+                            }}</span></h5>
                             <p>If this is not your timezone please change in the timezone list below. This will be used
                                 by the
                                 system to
-                                schedule the lessons with your students who living in a different timezone.</p>
-                            <select class="form-select" @change="selectedTimeZOne" v-model="userTimeZone">
+                                schedule the lessons with your students who are living in a different timezone.</p>
+                            <select class="form-select" @change="selectedTimeZone" v-model="userTimeZone">
                                 <option selected>{{ userTimeZone }}</option>
                                 <option v-for="(timezone, index) in getTimeZone()" :key="index" :value="timezone">{{
                                         timezone + " " + timezoneDisplay(new Date(),
@@ -68,6 +70,7 @@
                                 <Friday v-if="selectedDayIndex === 4" />
                                 <Saturday v-if="selectedDayIndex === 5" />
                                 <Sunday v-if="selectedDayIndex === 6" />
+                                <RecordSavedMessage v-if="selectedDayIndex === 7" />
                             </div>
                         </div>
                     </div>
@@ -108,6 +111,7 @@ import Thursday from './DaysComponent/Thursday.vue'
 import Friday from './DaysComponent/Friday.vue'
 import Saturday from './DaysComponent/Saturday.vue'
 import Sunday from './DaysComponent/Sunday.vue'
+import RecordSavedMessage from "./DaysComponent/RecordSavedMessage.vue";
 export default {
     name: "Availability",
     components: {
@@ -117,7 +121,8 @@ export default {
         Thursday,
         Friday,
         Saturday,
-        Sunday
+        Sunday,
+        RecordSavedMessage
     },
     data() {
         return {
@@ -144,6 +149,12 @@ export default {
         this.defaultTimeZone()
     },
     methods: {
+        selectedTimeZone() {
+            this.$store.commit({
+                type: 'setUserTimezone',
+                timezone: this.userTimeZone
+            })
+        },
         selectWeekDay(i) {
             this.$store.commit({
                 type: 'setDayIndex',
@@ -160,6 +171,10 @@ export default {
         },
         defaultTimeZone() {
             this.userTimeZone = moment.tz.guess()
+            this.$store.commit({
+                type: 'setUserTimezone',
+                timezone: this.userTimeZone
+            })
         },
         backToVideo() {
             this.$store.commit({
@@ -189,7 +204,6 @@ export default {
 </script>
 
 <style scoped>
-
 .activeDay {
     background-color: #029e02;
     padding: 10px;

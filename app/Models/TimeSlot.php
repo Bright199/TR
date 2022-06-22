@@ -11,6 +11,7 @@ class TimeSlot extends Model
     protected $fillable = [
         'teacher_id',
         'week_day',
+        'teacher_timezone',
         'date',
         'slot1',
         'slot2',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
+use App\Models\TimeSlot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -49,7 +50,7 @@ class TeachersRegistration extends Controller
         $request->validate([
             'intro_video' => 'required|file|mimes: m4v,avi,flv,mp4,mov|max: 120000'
         ]);
-        
+
         $teacherDetails = Teacher::find(Auth::guard('teacher')->id());
         if ($teacherDetails->intro_video_url) {
             unlink(public_path('storage/teacher/videos/' . $teacherDetails->intro_video_url));
@@ -65,8 +66,76 @@ class TeachersRegistration extends Controller
                 ]);
         }
     }
-    public function saveTeacherAvailability(Request $request){
-        return response()->json($request);
+    public function saveTeacherAvailability(Request $request)
+    {
+        $timeSlotsDetails = TimeSlot::where('teacher_id', Auth::guard('teacher')->id())
+            ->where('week_day', $request->week_day)->first();
+        if ($timeSlotsDetails) {
+            TimeSlot::where('teacher_id', Auth::guard('teacher')->id())
+                ->where('week_day', $request->week_day)->update([
+                    'teacher_timezone' => $request->user_timezone,
+                    'slot1' => $request->slot_1,
+                    'slot2' => $request->slot_2,
+                    'slot3' => $request->slot_3,
+                    'slot4' => $request->slot_4,
+                    'slot5' => $request->slot_5,
+                    'slot6' => $request->slot_6,
+                    'slot7' => $request->slot_7,
+                    'slot8' => $request->slot_8,
+                    'slot9' => $request->slot_9,
+                    'slot10' => $request->slot_10,
+                    'slot11' => $request->slot_11,
+                    'slot12' => $request->slot_12,
+                    'slot13' => $request->slot_13,
+                    'slot14' => $request->slot_14,
+                    'slot15' => $request->slot_15,
+                    'slot16' => $request->slot_16,
+                    'slot17' => $request->slot_17,
+                    'slot18' => $request->slot_18,
+                    'slot19' => $request->slot_19,
+                    'slot20' => $request->slot_20,
+                    'slot21' => $request->slot_21,
+                    'slot22' => $request->slot_22,
+                    'slot23' => $request->slot_23,
+                    'slot24' => $request->slot_24
+                ]);
+        } else {
+            $timeSlots = new TimeSlot;
+            $timeSlots->teacher_id = Auth::guard('teacher')->id();
+            $timeSlots->week_day = $request->week_day;
+            $timeSlots->teacher_timezone = $request->user_timezone;
+            $timeSlots->slot1 = $request->slot_1;
+            $timeSlots->slot2 = $request->slot_2;
+            $timeSlots->slot3 = $request->slot_3;
+            $timeSlots->slot4 = $request->slot_4;
+            $timeSlots->slot5 = $request->slot_5;
+            $timeSlots->slot6 = $request->slot_6;
+            $timeSlots->slot7 = $request->slot_7;
+            $timeSlots->slot8 = $request->slot_8;
+            $timeSlots->slot9 = $request->slot_9;
+            $timeSlots->slot10 = $request->slot_10;
+            $timeSlots->slot11 = $request->slot_11;
+            $timeSlots->slot12 = $request->slot_12;
+            $timeSlots->slot13 = $request->slot_13;
+            $timeSlots->slot14 = $request->slot_14;
+            $timeSlots->slot15 = $request->slot_15;
+            $timeSlots->slot16 = $request->slot_16;
+            $timeSlots->slot17 = $request->slot_17;
+            $timeSlots->slot18 = $request->slot_18;
+            $timeSlots->slot19 = $request->slot_19;
+            $timeSlots->slot20 = $request->slot_20;
+            $timeSlots->slot21 = $request->slot_21;
+            $timeSlots->slot22 = $request->slot_22;
+            $timeSlots->slot23 = $request->slot_23;
+            $timeSlots->slot24 = $request->slot_24;
+            $timeSlots->save();
+
+            if ($timeSlots) {
+                return response()->json('Records saved');
+            } else {
+                return response()->json('Records not inserted');
+            }
+        }
     }
     public function saveTeacherDescription(Request $request)
     {

@@ -8,12 +8,8 @@
                 <div class="col-md-2 col-sm-2 col-lg-2"></div>
                 <div class="col-md-8 col-sm-8 col-lg-8 p-0">
                     <About v-if="showTeacherRegistrationFormComponent === 0" />
-                    <Description
-                        v-if="showTeacherRegistrationFormComponent === 1"
-                    />
-                    <Qualification
-                        v-if="showTeacherRegistrationFormComponent === 2"
-                    />
+                    <Description v-if="showTeacherRegistrationFormComponent === 1" />
+                    <Qualification v-if="showTeacherRegistrationFormComponent === 2" />
                     <Video v-if="showTeacherRegistrationFormComponent === 3" />
                     <Availability v-if="showTeacherRegistrationFormComponent === 4" />
                 </div>
@@ -44,7 +40,7 @@ export default {
     data() {
         return {};
     },
-    mounted() {},
+    mounted() { },
     methods: {},
     computed: {
         ...mapState({
@@ -55,4 +51,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>
