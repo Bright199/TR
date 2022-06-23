@@ -82,10 +82,10 @@
                     <div class="col-md-4"></div>
                     <div class="col-md-4">
                         <div class="d-grid gap-2">
-                            <button class="EditBtn" @click="backToVideo"><i class="fa-solid fa-angles-left"></i>
-                                BACK</button>
-                            <button class="NextBtn" @click="finishRegistration">SUBMIT APPLICATION <i
-                                    class="fa-solid fa-angles-right"></i></button>
+                            <button class="EditBtn" @click="backToVideo"><i class="fa-solid fa-angle-left"></i>
+                                Back</button>
+                            <button class="NextBtn" @click="finishRegistration">Submit Application <i
+                                    class="fa-solid fa-angle-right"></i></button>
                         </div>
                     </div>
                     <div class="col-md-4"></div>
@@ -182,7 +182,15 @@ export default {
             })
         },
         finishRegistration() {
-            alert('Make sure you have filled the information correctly')
+            this.loading = true
+            axios.post('/teacher/submitRegistrationForm')
+            .then(()=>{
+                this.$router.push('/teacher/dashboard')
+            })
+
+            .finally(()=>{
+                this.loading = false
+            })
         },
         getTeacherDetails() {
             this.loading = true
@@ -259,8 +267,6 @@ input[type=number]::-webkit-outer-spin-button {
 
 .NextBtn {
     padding: 7px 15px 9px;
-    font-size: 17px;
-    font-weight: 500;
     border: 1px solid #029e02;
     background: white;
     border-radius: 5px;
@@ -276,13 +282,11 @@ input[type=number]::-webkit-outer-spin-button {
 
 .NextBtn:hover i {
     font-size: 15px;
-    color: #fed907;
+    color: white;
 }
 
 .EditBtn {
     padding: 7px 15px 9px;
-    font-size: 17px;
-    font-weight: 500;
     background: #029e02;
     transition: 0.3s;
     border: none;
@@ -290,11 +294,9 @@ input[type=number]::-webkit-outer-spin-button {
     color: white;
 }
 
-.EditBtn i {
-    color: #fed907;
-}
 
 .EditBtn:hover i {
+    color: white;
     font-size: 15px
 }
 

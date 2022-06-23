@@ -206,6 +206,7 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
         Route::post('/updateLangCertificate', [TeachersRegistration::class, 'updateLangCertificate']);
         Route::post('/uploadIntroVideo', [TeachersRegistration::class, 'uploadIntroVideo']);
         Route::post('/saveTeacherAvailability', [TeachersRegistration::class, 'saveTeacherAvailability']);
+        Route::post('/submitRegistrationForm', [TeachersRegistration::class, 'submitRegistrationForm']);
         // Registration form
 
     });

@@ -26,7 +26,7 @@ const store = createStore({
       // teacher states
       showTeacherRegistrationFormComponent: 0,
       selectedDayIndex: 0,
-      userSelectedTimezone:''
+      userSelectedTimezone: '',
       // end of teacher state
     }
   },
@@ -147,15 +147,15 @@ const store = createStore({
       state.showTeacherRegistrationFormComponent = 4
     },
 
-    setDayIndex(state, payload){
+    setDayIndex(state, payload) {
       state.selectedDayIndex = payload.dayIndex
-  },
+    },
 
-  setUserTimezone(state,payload)
-  {
-    state.userSelectedTimezone = payload.timezone
-  }
+    setUserTimezone(state, payload) {
+      state.userSelectedTimezone = payload.timezone
+    },
 
+ 
     // end of teacher mutations
 
   },

@@ -5,9 +5,7 @@
             <div class="dot2"></div>
         </div>
         <div class="container-jumbotron bg-white rounded-2" v-if="loaded">
-            <div
-                class="container-jumbotron d-flex justify-content-center border-bottom"
-            >
+            <div class="container-jumbotron d-flex justify-content-center border-bottom">
                 <ul class="breadCrumbs">
                     <li class="activeCrumb">About</li>
                     <li class="nextCrumb">
@@ -46,30 +44,21 @@
                     </div>
 
                     <div class="container">
-                        <label for="profileImage" id="profileImageLabel"
-                            ><i class="fa-solid fa-cloud-arrow-up"></i> &nbsp;
-                            UPLOAD PHOTO</label
-                        >
+                        <label for="profileImage" id="profileImageLabel"><i class="fa-solid fa-cloud-arrow-up"></i>
+                            &nbsp;
+                            UPLOAD PHOTO</label>
                         <p class="mt-1">Maximum 5MB.</p>
                         <p v-if="fileError === true" style="color: #ff3333">
                             Your profile photo is more than 5MB.
                         </p>
-                        <input
-                            type="file"
-                            name="profileImage"
-                            id="profileImage"
-                            @change="uploadProfileImage"
-                            accept="image/*"
-                        />
+                        <input type="file" name="profileImage" id="profileImage" @change="uploadProfileImage"
+                            accept="image/*" />
                     </div>
 
                     <div class="container mt-3">
                         <div class="imageContainer">
                             <div class="innerImageContainer">
-                                <img
-                                    :src="profilePreview"
-                                    alt="profile_image"
-                                />
+                                <img :src="profilePreview" alt="profile_image" />
                             </div>
                         </div>
                     </div>
@@ -79,95 +68,51 @@
                     <div class="container p-2">
                         <ul class="guideLineImages">
                             <li>
-                                <img
-                                    src="/images/avatar7.png"
-                                    alt=""
-                                    width="90"
-                                />
+                                <img src="/images/avatar7.png" alt="" width="90" />
                             </li>
                             <li>
-                                <img
-                                    src="/images/avatar6.png"
-                                    alt=""
-                                    width="90"
-                                />
+                                <img src="/images/avatar6.png" alt="" width="90" />
                             </li>
                             <li>
-                                <img
-                                    src="/images/avatar1.png"
-                                    alt=""
-                                    width="90"
-                                />
+                                <img src="/images/avatar1.png" alt="" width="90" />
                             </li>
                         </ul>
                     </div>
 
                     <div class="container p-3 Guides">
                         <p>
-                            <span
-                                ><i
-                                    class="fa-solid fa-arrow-pointer"
-                                    style="color: #029e02"
-                                ></i
-                            ></span>
+                            <span><i class="fa-solid fa-arrow-pointer" style="color: #029e02"></i></span>
                             Smile and face the camera. Your smile sells it at
                             all.
                         </p>
                         <p>
-                            <span
-                                ><i
-                                    class="fa-solid fa-arrow-pointer"
-                                    style="color: #029e02"
-                                ></i
-                            ></span>
+                            <span><i class="fa-solid fa-arrow-pointer" style="color: #029e02"></i></span>
                             Frame yourself. Your face should fill most of the
                             image. Not too far, not too close.
                         </p>
                         <p>
-                            <span
-                                ><i
-                                    class="fa-solid fa-arrow-pointer"
-                                    style="color: #029e02"
-                                ></i
-                            ></span>
+                            <span><i class="fa-solid fa-arrow-pointer" style="color: #029e02"></i></span>
                             Use a simple background. Use a simple or flat
                             colored background
                         </p>
                         <p>
-                            <span
-                                ><i
-                                    class="fa-solid fa-arrow-pointer"
-                                    style="color: #029e02"
-                                ></i
-                            ></span>
+                            <span><i class="fa-solid fa-arrow-pointer" style="color: #029e02"></i></span>
                             No logo, contact information or any writing should
                             appear on your image.
                         </p>
                         <p>
-                            <span
-                                ><i
-                                    class="fa-solid fa-arrow-pointer"
-                                    style="color: #029e02"
-                                ></i
-                            ></span>
+                            <span><i class="fa-solid fa-arrow-pointer" style="color: #029e02"></i></span>
                             Use soft, natural light and avoid harsh flashes.
                         </p>
                         <p>
-                            <span
-                                ><i
-                                    class="fa-solid fa-arrow-pointer"
-                                    style="color: #029e02"
-                                ></i
-                            ></span>
+                            <span><i class="fa-solid fa-arrow-pointer" style="color: #029e02"></i></span>
                             Be the only person in the picture.
                         </p>
                     </div>
                 </div>
-                <div
-                    class="container-jumbotron border-top p-3 d-flex justify-content-end"
-                >
+                <div class="container-jumbotron border-top p-3 d-flex justify-content-end">
                     <button class="NextBtn1" @click="saveProfileImage">
-                        SAVE & CONTINUE <i class="fa-solid fa-angles-right"></i>
+                        SAVE & CONTINUE <i class="fa-solid fa-angle-right"></i>
                     </button>
                 </div>
             </div>
@@ -176,11 +121,7 @@
                     <div class="row">
                         <div class="col-md-4"></div>
                         <div class="col-md-4 p-2">
-                            <img
-                                :src="profilePreview"
-                                alt="profile_image"
-                                class="profileImage"
-                            />
+                            <img :src="profilePreview" alt="profile_image" class="profileImage" />
                         </div>
                         <div class="col-md-4"></div>
                     </div>
@@ -190,19 +131,13 @@
                         <div class="col-md-4"></div>
                         <div class="col-md-4">
                             <div class="d-grid gap-2">
-                                <button
-                                    class="EditBtn"
-                                    @click="editProfilePicture"
-                                >
-                                    <i class="fa-solid fa-angles-left"></i> EDIT
-                                    PICTURE
+                                <button class="EditBtn" @click="editProfilePicture">
+                                    <i class="fa-solid fa-angle-left"></i> Edit
+                                    Picture
                                 </button>
-                                <button
-                                    class="NextBtn"
-                                    @click="continueRegistration"
-                                >
-                                    SAVE & CONTINUE
-                                    <i class="fa-solid fa-angles-right"></i>
+                                <button class="NextBtn" @click="continueRegistration">
+                                    Save & Continue
+                                    <i class="fa-solid fa-angle-right"></i>
                                 </button>
                             </div>
                         </div>
@@ -252,6 +187,9 @@ export default {
                 .get("/teacher/getTeacherDetails")
                 .then((response) => {
                     this.teacherDetails = response.data;
+                    if (this.teacherDetails.registration_completed === 1) {
+                        this.$router.push('/teacher/dashboard')
+                        }
                     if (
                         response.data.teacher_image === "" ||
                         response.data.teacher_image === null
@@ -323,15 +261,15 @@ export default {
     padding: 7px;
     border: 2px solid #f8f9fa;
 }
+
 .Guides p {
     margin-top: 1.8px;
     margin-bottom: 1.8px;
 }
+
 /* button */
 .NextBtn {
     padding: 7px 15px 9px;
-    font-size: 17px;
-    font-weight: 500;
     border: 1px solid #029e02;
     background: white;
     transition: 0.3s;
@@ -342,51 +280,46 @@ export default {
 .NextBtn i {
     color: #183153;
 }
+
+.NextBtn:hover i {
+    color: white;
+}
+
 .NextBtn:hover {
     background: #029e02;
     color: white;
     font-size: 18px;
 }
-.NextBtn:hover i {
-    color: #fed907;
-    font-size: 15px;
-}
+
 .NextBtn1 {
     padding: 7px 15px 9px;
-    font-size: 17px;
-    font-weight: 500;
     background: #029e02;
     border: none;
     color: white;
     transition: 0.3s;
     border-radius: 5px;
 }
+
 .NextBtn1:hover {
     background: #02b302;
     color: white;
     font-size: 18px;
 }
-.NextBtn1:hover i {
-    color: #fed907;
-    font-size: 15px;
-}
+
 .EditBtn {
     padding: 7px 15px 9px;
-    font-size: 17px;
-    font-weight: 500;
     background: #029e02;
     transition: 0.3s;
     border: none;
     color: white;
     border-radius: 5px;
 }
+
 .EditBtn:hover {
     background: #02aa02;
     font-size: 18px;
 }
-.EditBtn:hover i {
-    color: #fed907;
-}
+
 /*  */
 /* IMAGE UPLOAD */
 .guideLineImages {
@@ -396,19 +329,23 @@ export default {
     gap: 15px;
     align-items: flex-start;
 }
+
 .guideLineImages li {
     list-style: none;
 }
+
 .innerImageContainer {
     width: 180px;
     height: 180px;
     background: white;
 }
+
 .innerImageContainer img {
     height: 100%;
     object-fit: contain;
     width: 100%;
 }
+
 #profileImage {
     display: none;
 }
@@ -419,29 +356,36 @@ export default {
     border-radius: 3px;
     transition: 0.3s;
 }
+
 #profileImageLabel i {
     color: #029e02;
 }
+
 #profileImageLabel:hover i {
     color: white;
 }
+
 #profileImageLabel:hover {
     background-color: #029e02;
     color: white;
     cursor: pointer;
 }
+
 /* END OF IMAGE */
 
 .activeCrumb {
     color: #029e02;
     font-weight: 550;
 }
+
 .nextCrumb {
     font-weight: 550;
 }
+
 .fa-chevron-right {
     font-size: 12px;
 }
+
 .activeCrumb:hover {
     cursor: pointer;
 }
@@ -452,6 +396,7 @@ export default {
     padding: 0;
     align-content: center;
 }
+
 .breadCrumbs li {
     list-style: none;
     padding: 13px 12px 2px;
@@ -504,6 +449,7 @@ export default {
         -webkit-transform: rotate(360deg);
     }
 }
+
 @keyframes sk-rotate {
     100% {
         transform: rotate(360deg);
@@ -512,25 +458,30 @@ export default {
 }
 
 @-webkit-keyframes sk-bounce {
+
     0%,
     100% {
         -webkit-transform: scale(0);
     }
+
     50% {
         -webkit-transform: scale(1);
     }
 }
 
 @keyframes sk-bounce {
+
     0%,
     100% {
         transform: scale(0);
         -webkit-transform: scale(0);
     }
+
     50% {
         transform: scale(1);
         -webkit-transform: scale(1);
     }
 }
+
 /*  */
 </style>

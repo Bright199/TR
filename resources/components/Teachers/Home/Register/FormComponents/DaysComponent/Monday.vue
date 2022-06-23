@@ -49,7 +49,7 @@ export default {
                 this.allSelectedTimeSlots['user_timezone'] = this.userSelectedTimezone
                 axios.post('/teacher/saveTeacherAvailability', this.allSelectedTimeSlots)
                     .then(res => {
-                        console.log(res);
+                        localStorage.setItem('DayMessage', 'Monday slots')
                         this.$store.commit({
                             type: 'setDayIndex',
                             dayIndex: 7

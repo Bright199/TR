@@ -1,13 +1,21 @@
 <template>
     <div class="col-md-8 d-flex flex-column justify-content-center">
-        <h1>Saved successfully</h1>
-        <p style="color: #029e20; font-size: 85px;" class="text-center"><i class="fa-solid fa-thumbs-up"></i></p>
+        <h3>{{getLocalStorageDayMessage()}} saved successfully</h3>
+        <p style="color: #029e20; font-size: 55px;" class="text-center"><i class="fa-solid fa-thumbs-up"></i></p>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'RecordSavedMessage'
+    name: 'RecordSavedMessage',
+    methods: {
+        getLocalStorageDayMessage(){
+           return localStorage.getItem('DayMessage')
+        }
+    },
+    mounted() {
+        this.getLocalStorageDayMessage()
+    },
 }
 </script>
 

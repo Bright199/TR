@@ -331,14 +331,14 @@
                     <div class="col-md-4">
                         <div class="d-grid gap-2">
                             <button class="EditBtn" @click="backToDescription">
-                                <i class="fa-solid fa-angles-left"></i> BACK
+                                <i class="fa-solid fa-angle-left"></i> Back
                             </button>
                             <button
                                 class="NextBtn"
                                 @click="continueRegistration"
                             >
-                                SAVE & CONTINUE
-                                <i class="fa-solid fa-angles-right"></i>
+                                Save & Continue
+                                <i class="fa-solid fa-angle-right"></i>
                             </button>
                         </div>
                     </div>
@@ -592,8 +592,6 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .NextBtn {
     padding: 7px 15px 9px;
-    font-size: 17px;
-    font-weight: 500;
     border: 1px solid #029e02;
     background: white;
     transition: 0.3s;
@@ -603,36 +601,25 @@ input[type="number"]::-webkit-outer-spin-button {
 .NextBtn:hover {
     background: #029e02;
     color: white;
-    font-size: 18px;
 }
 
 .NextBtn:hover i {
-    color: #fed907;
-    font-size: 15px;
-}
-.NextBtn i {
-    color: #183153;
+    color: white;
 }
 .EditBtn {
     padding: 7px 15px 9px;
-    font-size: 17px;
-    font-weight: 500;
     background: #029e02;
     transition: 0.3s;
     border: none;
     color: white;
     border-radius: 5px;
 }
-.EditBtn i {
-    color: #fed907;
-}
+
 .EditBtn:hover {
     background: #02aa02;
-    font-size: 18px;
 }
 .EditBtn:hover i {
-    color: #fed907;
-    font-size: 15px;
+    color: white;
 }
 /*  */
 

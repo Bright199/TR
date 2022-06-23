@@ -18,6 +18,12 @@ class TeachersRegistration extends Controller
         return response()->json($teacherDetails);
     }
 
+    public function submitRegistrationForm(){
+        Teacher::where('id', Auth::guard('teacher')->id())->update([
+           'registration_completed' => 1
+        ]);
+    }
+
     public function saveProfileImage(Request $request)
     {
         if ($request->hasFile('profileImage')) {
