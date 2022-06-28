@@ -35,7 +35,7 @@
                 <div class="container p-5">
                     <div class="row">
                         <div class="col-md-4">
-                            <h5><span class="text-danger">**</span> Your timezone is: <span style="color: #F56F26">{{
+                            <h5><span class="text-danger">**</span> Your timezone is: <span class="text-danger">{{
                                     userTimeZone
                             }}</span></h5>
                             <p>If this is not your timezone please change in the timezone list below. This will be used
@@ -52,26 +52,24 @@
                         </div>
                         <div class="col-md-8">
                             <h3 class="text-center p-3">Choose your availability time.</h3>
-                            <div class="row border p-4">
-                                <div class="col-md-4 days-container">
-                                    <ul>
-                                        <li v-for="(day, index) in days" :key="index" @click="selectWeekDay(index)"
-                                            class="weekDay" :class="index === selectedDayIndex ? 'activeDay' : ''">{{
-                                                    day
-                                            }}
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- Days slots -->
-                                <Monday v-if="selectedDayIndex === 0" />
-                                <Tuesday v-if="selectedDayIndex === 1" />
-                                <Wednesday v-if="selectedDayIndex === 2" />
-                                <Thursday v-if="selectedDayIndex === 3" />
-                                <Friday v-if="selectedDayIndex === 4" />
-                                <Saturday v-if="selectedDayIndex === 5" />
-                                <Sunday v-if="selectedDayIndex === 6" />
-                                <RecordSavedMessage v-if="selectedDayIndex === 7" />
+                            <div class="days-container">
+                                <ul>
+                                    <li v-for="(day, index) in days" :key="index" @click="selectWeekDay(index)"
+                                        class="weekDay" :class="index === selectedDayIndex ? 'activeDay' : ''">{{
+                                                day
+                                        }}
+                                    </li>
+                                </ul>
                             </div>
+                            <!-- Days slots -->
+                            <Monday v-if="selectedDayIndex === 0" />
+                            <Tuesday v-if="selectedDayIndex === 1" />
+                            <Wednesday v-if="selectedDayIndex === 2" />
+                            <Thursday v-if="selectedDayIndex === 3" />
+                            <Friday v-if="selectedDayIndex === 4" />
+                            <Saturday v-if="selectedDayIndex === 5" />
+                            <Sunday v-if="selectedDayIndex === 6" />
+                            <RecordSavedMessage v-if="selectedDayIndex === 7" />
                         </div>
                     </div>
                 </div>
@@ -184,13 +182,13 @@ export default {
         finishRegistration() {
             this.loading = true
             axios.post('/teacher/submitRegistrationForm')
-            .then(()=>{
-                this.$router.push('/teacher/dashboard')
-            })
+                .then(() => {
+                    this.$router.push('/teacher/dashboard')
+                })
 
-            .finally(()=>{
-                this.loading = false
-            })
+                .finally(() => {
+                    this.loading = false
+                })
         },
         getTeacherDetails() {
             this.loading = true
@@ -212,24 +210,39 @@ export default {
 </script>
 
 <style scoped>
-.activeDay {
+.days-container {
+    border: 1px solid lightslategray;
+    padding: 10px;
+    overflow-x: auto;
+    margin-bottom: 10px;
+}
+
+.days-container ul{
+    display: flex;
+    gap: 5px;
+    padding: 0;
+    margin: 0;
+}
+
+
+.days-container ul .activeDay {
     background-color: #029e02;
     padding: 10px;
     text-align: center;
     color: white !important;
 }
 
-.weekDay {
+.days-container ul li {
     border: 1px solid #029e02;
     border-radius: 5px;
     color: #029e02;
     padding: 10px;
-    margin-bottom: 15px;
     list-style: none;
     text-align: center;
+    width: 120px !important;
 }
 
-.weekDay:hover {
+.days-container ul li:hover {
     background-color: #029e20;
     cursor: pointer;
     color: white;

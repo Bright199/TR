@@ -18,9 +18,10 @@ class TeachersRegistration extends Controller
         return response()->json($teacherDetails);
     }
 
-    public function submitRegistrationForm(){
+    public function submitRegistrationForm()
+    {
         Teacher::where('id', Auth::guard('teacher')->id())->update([
-           'registration_completed' => 1
+            'registration_completed' => 1
         ]);
     }
 
@@ -71,6 +72,17 @@ class TeachersRegistration extends Controller
                     'intro_video_url' => $fileName
                 ]);
         }
+    }
+    public function changeTimezone(Request $request){
+        TimeSlot::where('teacher_id',Auth::guard('teacher')->id())->update([
+            'teacher_timezone' => $request->teacher_timezone
+        ]);
+    }
+    public function getDatabaseUserTimezone()
+    {
+        $timezones = TimeSlot::where('teacher_id', Auth::guard('teacher')->id())->pluck('teacher_timezone');
+            $timezones->toArray();
+        return response()->json($timezones);
     }
     public function saveTeacherAvailability(Request $request)
     {

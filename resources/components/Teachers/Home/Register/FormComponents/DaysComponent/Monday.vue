@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-8">
+    <div class="container">
         <div class="row">
             <div class="container bg-light p-3">
                 <h2 class="text-center">MONDAY</h2>
@@ -23,6 +23,13 @@
                     </li>
                 </ul>
                 <button class="save-slot-btn" @click="saveTimeSlot">Save</button>
+                <div class="container-jumbotron p-4 change-timezone" v-if="changeTz">
+                    <p>You are about to change your timezone to {{ userSelectedTimezone }} !</p>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary" @click="changeTimezone">Change Timezone</button>
+                        <button class="btn btn-outline-secondary" @click="cancelChangeTimezone">Cancel</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -40,15 +47,48 @@ export default {
             allSelectedTimeSlots: {},
             startTime: '00:00',
             endTime: '23:00',
+            changeTz: false
         }
     },
     methods: {
-        saveTimeSlot() {
+        cancelChangeTimezone() {
+            this.changeTz = false
+        },
+        changeTimezone() {
+            if (this.selectedSlotList.length === 0 || this.selectedSlotList === null) {
+                alert('There is no time slot selected');
+                return;
+            }
+            axios.post('/teacher/changeTimezone', { teacher_timezone: this.userSelectedTimezone })
+                .then(() => {
+                    this.insertTimezone()
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        },
+        getDatabaseUserTimezone() {
+            axios.get('/teacher/getDatabaseUserTimezone')
+                .then(res => {
+                    if (res.data !== '' || res.data !== null) {
+                        if (res.data.includes(this.userSelectedTimezone)) {
+                            this.insertTimezone()
+                        } else {
+                            this.changeTz = true
+                        }
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        },
+        insertTimezone() {
             if (this.selectedSlotList.length) {
                 this.allSelectedTimeSlots['week_day'] = 'Monday'
                 this.allSelectedTimeSlots['user_timezone'] = this.userSelectedTimezone
                 axios.post('/teacher/saveTeacherAvailability', this.allSelectedTimeSlots)
                     .then(res => {
+                        localStorage.removeItem('DayMessage')
                         localStorage.setItem('DayMessage', 'Monday slots')
                         this.$store.commit({
                             type: 'setDayIndex',
@@ -58,8 +98,11 @@ export default {
                     .catch(error => {
                         console.log(error);
                     })
-
             }
+        },
+        saveTimeSlot() {
+            this.getDatabaseUserTimezone()
+
         },
         timeSlots() {
             var strtT = moment(this.startTime, 'HH:mm')
@@ -101,7 +144,7 @@ export default {
         },
     },
     computed: {
-    
+
         ...mapState({
             userSelectedTimezone: state => state.userSelectedTimezone
         }),

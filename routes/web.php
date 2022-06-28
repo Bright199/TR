@@ -207,6 +207,8 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
         Route::post('/uploadIntroVideo', [TeachersRegistration::class, 'uploadIntroVideo']);
         Route::post('/saveTeacherAvailability', [TeachersRegistration::class, 'saveTeacherAvailability']);
         Route::post('/submitRegistrationForm', [TeachersRegistration::class, 'submitRegistrationForm']);
+        Route::get('/getDatabaseUserTimezone', [TeachersRegistration::class, 'getDatabaseUserTimezone']);
+        Route::post('/changeTimezone', [TeachersRegistration::class, 'changeTimezone']);
         // Registration form
 
     });
@@ -225,7 +227,7 @@ Route::get('google/auth/redirect', function () {
 Route::get('google/auth/callback', [SocialiteLogin::class, 'google']);
 Route::get('/zoom',[StudentRegistration::class, 'zoom']);
 
-// // socialite for teachers
+// socialite for teachers
 // Route::get('facebook/auth/redirect', function () {
 //     return Socialite::driver('facebook')->redirect();
 // })->name('teacher.facebook.login');
@@ -236,10 +238,6 @@ Route::get('/zoom',[StudentRegistration::class, 'zoom']);
 //     return Socialite::driver('google')->redirect();
 // })->name('teacher.google.login');
 // Route::get('google/auth/callback', [TeacherSocialiteLogin::class, 'teacherGoogle']);
-
-Route::get('/netflix', function () {
-    return view('hakan');
-});
 
 
 Auth::routes();

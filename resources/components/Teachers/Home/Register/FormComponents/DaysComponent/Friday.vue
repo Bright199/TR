@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-8">
+    <div class="container">
         <div class="row">
             <div class="container bg-light p-3">
                 <h2 class="text-center">FRIDAY</h2>
@@ -23,6 +23,13 @@
                     </li>
                 </ul>
                 <button class="save-slot-btn" @click="saveTimeSlot">Save</button>
+                <div class="container-jumbotron p-4 change-timezone" v-if="changeTz">
+                    <p>You are about to change your timezone to {{ userSelectedTimezone }} !</p>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary" @click="changeTimezone">Change Timezone</button>
+                        <button class="btn btn-outline-secondary" @click="cancelChangeTimezone">Cancel</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -31,28 +38,71 @@
 <script>
 import moment from 'moment-timezone'
 import axios from 'axios'
+import { mapState } from 'vuex'
 export default {
     name: 'Friday',
     data() {
         return {
             selectedSlotList: [],
+            allSelectedTimeSlots: {},
             startTime: '00:00',
             endTime: '23:00',
+            changeTz: false
         }
     },
     methods: {
-        saveTimeSlot() {
-            if (this.selectedSlotList.length) {
-                this.selectedSlotList.push({ day: 'Friday' })
-                axios.post('/teacher/saveTeacherAvailability',this.selectTimeSlot)
-                .then(res =>{
-                    alert('saved')
+        cancelChangeTimezone() {
+            this.changeTz = false
+        },
+        changeTimezone() {
+             if (this.selectedSlotList.length === 0 || this.selectedSlotList === null) {
+                alert('There is no time slot selected');
+                return;
+            }
+            axios.post('/teacher/changeTimezone', { teacher_timezone: this.userSelectedTimezone })
+                .then(() => {
+                    this.insertTimezone()
                 })
-                .catch(error =>{
+                .catch((error) => {
                     console.log(error);
                 })
-                console.log(this.selectedSlotList);
+        },
+        getDatabaseUserTimezone() {
+            axios.get('/teacher/getDatabaseUserTimezone')
+                .then(res => {
+                    if (res.data !== '' || res.data !== null) {
+                        if (res.data.includes(this.userSelectedTimezone)) {
+                            this.insertTimezone()
+                        } else {
+                            this.changeTz = true
+                        }
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        },
+        insertTimezone() {
+            if (this.selectedSlotList.length) {
+                this.allSelectedTimeSlots['week_day'] = 'Friday'
+                this.allSelectedTimeSlots['user_timezone'] = this.userSelectedTimezone
+                axios.post('/teacher/saveTeacherAvailability', this.allSelectedTimeSlots)
+                    .then(res => {
+                        localStorage.removeItem('DayMessage')
+                        localStorage.setItem('DayMessage', 'Friday slots')
+                        this.$store.commit({
+                            type: 'setDayIndex',
+                            dayIndex: 7
+                        })
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
             }
+        },
+        saveTimeSlot() {
+            this.getDatabaseUserTimezone()
+
         },
         timeSlots() {
             var strtT = moment(this.startTime, 'HH:mm')
@@ -82,20 +132,24 @@ export default {
             if (
                 !slotExists
             ) {
+                this.allSelectedTimeSlots['slot_' + (i + 1)] = slt
                 let slotNumber = 'slot_' + (i + 1)
                 const selectedTimeSlotDetails = {
                     [slotNumber]: slt,
                     selected_timeslot: slt
                 }
-
                 this.selectedSlotList.push(selectedTimeSlotDetails)
-                 this.selectedSlotList.sort(({ selected_timeslot: a }, {selected_timeslot: b }) => a > b ? 1 : a < b ? -1 : 0)
+                this.selectedSlotList.sort(({ selected_timeslot: a }, { selected_timeslot: b }) => a > b ? 1 : a < b ? -1 : 0)
             }
         },
     },
     computed: {
-        filterSelectedSlotList(){
-            return this.selectedSlotList.filter( slot => !!slot.selected_timeslot)
+
+        ...mapState({
+            userSelectedTimezone: state => state.userSelectedTimezone
+        }),
+        filterSelectedSlotList() {
+            return this.selectedSlotList.filter(slot => !!slot.selected_timeslot)
         }
     },
 }
