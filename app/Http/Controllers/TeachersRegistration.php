@@ -11,7 +11,20 @@ use Illuminate\Support\Facades\Storage;
 
 class TeachersRegistration extends Controller
 {
-
+    // profile links
+    public function hideProfile(){
+        Teacher::where('id', Auth::guard('teacher')->id())
+        ->update([
+            'account_vissible'=> 1
+        ]);
+    }
+    public function showProfile(){
+        Teacher::where('id', Auth::guard('teacher')->id())
+        ->update([
+            'account_vissible'=> 0
+        ]);
+    }
+    
     public function getTeacherDetails()
     {
         $teacherDetails = Teacher::find(Auth::guard('teacher')->id());
@@ -354,6 +367,7 @@ class TeachersRegistration extends Controller
 
         if (Auth::guard('teacher')->attempt($credentials)) {
             $request->session()->regenerate();
+            Teacher::where('id', Auth::guard('teacher')->id())->update(['account_vissible' => 1]);
             return redirect()->intended(route('teacher.dashboard'));
         }
 
@@ -365,6 +379,7 @@ class TeachersRegistration extends Controller
     public function logout()
     {
         Auth::guard('teacher')->logout();
+        Teacher::where('id',Auth::guard('teacher')->id())->update(['account_vissible' => 0]);
         return redirect()->route('teacher.login');
     }
 }

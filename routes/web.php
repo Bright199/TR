@@ -211,6 +211,11 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
         Route::post('/changeTimezone', [TeachersRegistration::class, 'changeTimezone']);
         // Registration form
 
+        //dashboard links
+        Route::post('/hideProfile', [TeachersRegistration::class, 'hideProfile']);
+        Route::post('/showProfile', [TeachersRegistration::class, 'showProfile']);
+        //dashboard links
+
     });
 });
 

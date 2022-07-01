@@ -24,6 +24,7 @@ class SocialiteLogin extends Controller
 
                     if ($user !== null) {
                         Auth::guard('student')->login($user);
+                        Student::where('id', Auth::guard('student')->id())->update(['online' => 0]);
                         return redirect('/student/dashboard/');
                     } else {
                         $emailCheck = Student::where('email', $googleUser->getEmail())->first();
@@ -35,6 +36,7 @@ class SocialiteLogin extends Controller
                                 'password' => Hash::make($googleUser->getName() . '@' . $googleUser->getId())
                             ]);
                             Auth::guard('student')->login($user);
+                            Student::where('id', Auth::guard('student')->id())->update(['online' => 0]);
                             return redirect('/student/dashboard/');
                         } else {
                             return redirect('/student/login')->with('oath', 'Email is already taken. Login instead');
@@ -50,6 +52,7 @@ class SocialiteLogin extends Controller
 
                     if ($user !== null) {
                         Auth::guard('teacher')->login($user);
+                        Teacher::where('id', Auth::guard('teacher')->id())->update(['account_vissible' => 1]);
                         return redirect('/teacher/dashboard/');
                     } else {
                         $emailCheck = Teacher::where('email', $googleUser->getEmail())->first();
@@ -61,6 +64,7 @@ class SocialiteLogin extends Controller
                                 'password' => Hash::make($googleUser->getName() . '@' . $googleUser->getId())
                             ]);
                             Auth::guard('teacher')->login($user);
+                            Teacher::where('id', Auth::guard('teacher')->id())->update(['account_vissible' => 1]);
                             return redirect('/teacher/dashboard/');
                         } else {
                             return redirect('/teacher/login')->with('oath', 'Email is already use. Login instead');
@@ -91,6 +95,7 @@ class SocialiteLogin extends Controller
 
                     if ($user !== null) {
                         Auth::guard('student')->login($user);
+                        Student::where('id', Auth::guard('student')->id())->update(['online' => 0]);
                         return redirect('/student/dashboard/');
                     } else {
                         $user = Student::create([
@@ -100,6 +105,7 @@ class SocialiteLogin extends Controller
                             'password' => Hash::make($googleUser->getName() . '@' . $googleUser->getId())
                         ]);
                         Auth::guard('student')->login($user);
+                        Student::where('id', Auth::guard('student')->id())->update(['online' => 0]);
                         return redirect('/student/dashboard/');
                     }
                 } catch (\Throwable $th) {
@@ -112,6 +118,7 @@ class SocialiteLogin extends Controller
 
                     if ($user !== null) {
                         Auth::guard('teacher')->login($user);
+                        Teacher::where('id', Auth::guard('teacher')->id())->update(['account_vissible' => 1]);
                         return redirect('/teacher/dashboard/');
                     } else {
                         $user = Teacher::create([
@@ -121,6 +128,7 @@ class SocialiteLogin extends Controller
                             'password' => Hash::make($googleUser->getName() . '@' . $googleUser->getId())
                         ]);
                         Auth::guard('teacher')->login($user);
+                        Teacher::where('id', Auth::guard('teacher')->id())->update(['account_vissible' => 1]);
                         return redirect('/teacher/dashboard/');
                     }
                 } catch (\Throwable $th) {

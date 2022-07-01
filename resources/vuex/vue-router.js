@@ -30,6 +30,11 @@ import LessonPackages from '../components/Students/Booking/PaidLesson/LessonPack
 // teacher Routes
 import TeacherDashboard from '../components/Teachers/Home/TeacherDashboard.vue'
 import RegistrationForm from '../components/Teachers/Home/Register/RegistrationForm'
+import TeacherCalendar from '../components/Teachers/Home/VerifiedTeacher/Pages/TeacherCalendar.vue';
+import TeacherProfile from '../components/Teachers/Home/VerifiedTeacher/Pages/TeacherProfile.vue';
+import TeacherEarning from '../components/Teachers/Home/VerifiedTeacher/Pages/TeacherEarning.vue';
+import LessonPlan from '../components/Teachers/Home/VerifiedTeacher/Pages/LessonPlan.vue';
+import FindStudents from '../components/Teachers/Home/VerifiedTeacher/Pages/FindStudents.vue';
 
 
 // end of teacher routes
@@ -46,6 +51,31 @@ const routes = [
             path:'/teacher/registration/form',
             name: 'RegistrationForm',
             component: RegistrationForm
+        },
+        {
+            path:'/teacher/calendar',
+            name: 'TeacherCalendar',
+            component: TeacherCalendar
+        },
+        {
+            path:'/teacher/find-students',
+            name: 'FindStudents',
+            component: FindStudents
+        },
+        {
+            path:'/teacher/lesson-plan',
+            name: 'LessonPlan',
+            component: LessonPlan
+        },
+        {
+            path:'/teacher/profile-edit',
+            name: 'TeacherProfile',
+            component: TeacherProfile
+        },
+        {
+            path:'/teacher/teacher-earnings',
+            name: 'TeacherEarning',
+            component: TeacherEarning
         },
     // end of teacher dashboard
     {
@@ -173,7 +203,8 @@ const routes = [
         path: "/student/all/booked/lessons",
         name: "AllBookedLessons",
         components: { default: AllBookedLessons },
-    }
+    },
+    // teacher routes
 ]
 
 const router = createRouter({

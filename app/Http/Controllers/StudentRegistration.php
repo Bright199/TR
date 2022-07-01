@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\StudentDemoPaymentDetail;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class StudentRegistration extends Controller
 {
@@ -40,6 +41,7 @@ class StudentRegistration extends Controller
         if (!$authUser) {
             return view('student.login');
         } else {
+            Student::where('id', Auth::guard('student')->id())->update(['online'=>1]);
             return redirect()->route('student.dashboard');
         }
     }
@@ -373,7 +375,7 @@ class StudentRegistration extends Controller
 
         // get a collection of items where sender_id is the user who sent us a message
         // and messages_count is the number of unread messages we have from him
-        $unreadIds = Message::select(\DB::raw('`from` as teacher_id, count(`from`) as unread_count'))
+        $unreadIds = Message::select(DB::raw('`from` as teacher_id, count(`from`) as unread_count'))
             ->where('to', Auth::guard('student')->id())
             ->where('is_read', false)
             ->groupBy('from') //[['teacher_id' => 2, 'unread_count'=>2]]
@@ -626,6 +628,7 @@ class StudentRegistration extends Controller
 
         if (Auth::guard('student')->attempt($credentials)) {
             $request->session()->regenerate();
+            Student::where('id', Auth::guard('student')->id())->update(['online'=>1]);
             // Auth::guard('student')->logout();
             return redirect()->intended('/student/dashboard');
         }
@@ -638,6 +641,7 @@ class StudentRegistration extends Controller
     public function logout()
     {
         Auth::guard('student')->logout();
+        Student::where('id', Auth::guard('student')->id())->update(['online'=>0]);
         return redirect()->route('student.login');
     }
     /**
