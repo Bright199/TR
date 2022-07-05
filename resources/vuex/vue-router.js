@@ -35,6 +35,7 @@ import TeacherProfile from '../components/Teachers/Home/VerifiedTeacher/Pages/Te
 import TeacherEarning from '../components/Teachers/Home/VerifiedTeacher/Pages/TeacherEarning.vue';
 import LessonPlan from '../components/Teachers/Home/VerifiedTeacher/Pages/LessonPlan.vue';
 import FindStudents from '../components/Teachers/Home/VerifiedTeacher/Pages/FindStudents.vue';
+import FindTutors from '../components/Teachers/Home/VerifiedTeacher/Pages/FindTutors.vue';
 
 
 // end of teacher routes
@@ -61,6 +62,11 @@ const routes = [
             path:'/teacher/find-students',
             name: 'FindStudents',
             component: FindStudents
+        },
+        {
+            path:'/teacher/find-tutors',
+            name: 'FindTutors',
+            component: FindTutors
         },
         {
             path:'/teacher/lesson-plan',

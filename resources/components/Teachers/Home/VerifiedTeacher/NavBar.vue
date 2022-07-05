@@ -10,17 +10,22 @@
                 <span><i class="fa-solid fa-xmark" @click="closeLinks"></i></span>
                 <li>
                     <router-link to="/teacher/calendar">
-                        Calendar
+                        My Calendar
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/teacher/calendar">
+                    <router-link to="/teacher/find-students">
                         Find Students
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/teacher/calendar">
-                        Lessons
+                    <router-link to="/teacher/find-tutors">
+                        Find Tutors
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/teacher/lesson-plan">
+                        Lesson Plan
                     </router-link>
                 </li>
                 <li class="notifications-links">
@@ -46,13 +51,16 @@
                     
                     <ul class="largeScreenLeftNav px-3">
                         <li>
-                            <router-link to="/teacher/calendar">Calendar</router-link>
+                            <router-link to="/teacher/calendar">My Calendar</router-link>
                         </li>
                         <li>
                             <router-link to="/teacher/find-students">Find Students</router-link>
                         </li>
                         <li>
-                            <router-link to="/teacher/lesson-plan">Lessons</router-link>
+                            <router-link to="/teacher/find-tutors">Find Tutors</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/teacher/lesson-plan">Lesson Plan</router-link>
                         </li>
 
                     </ul>

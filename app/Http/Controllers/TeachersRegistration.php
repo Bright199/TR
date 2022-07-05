@@ -367,7 +367,7 @@ class TeachersRegistration extends Controller
 
         if (Auth::guard('teacher')->attempt($credentials)) {
             $request->session()->regenerate();
-            Teacher::where('id', Auth::guard('teacher')->id())->update(['account_vissible' => 1]);
+            Teacher::where('id', Auth::guard('teacher')->id())->update(['online' => 1]);
             return redirect()->intended(route('teacher.dashboard'));
         }
 
@@ -379,7 +379,7 @@ class TeachersRegistration extends Controller
     public function logout()
     {
         Auth::guard('teacher')->logout();
-        Teacher::where('id',Auth::guard('teacher')->id())->update(['account_vissible' => 0]);
+        Teacher::where('id',Auth::guard('teacher')->id())->update(['online' => 0]);
         return redirect()->route('teacher.login');
     }
 }

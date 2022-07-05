@@ -52,7 +52,7 @@ class SocialiteLogin extends Controller
 
                     if ($user !== null) {
                         Auth::guard('teacher')->login($user);
-                        Teacher::where('id', Auth::guard('teacher')->id())->update(['account_vissible' => 1]);
+                        Teacher::where('id', Auth::guard('teacher')->id())->update(['online' => 1]);
                         return redirect('/teacher/dashboard/');
                     } else {
                         $emailCheck = Teacher::where('email', $googleUser->getEmail())->first();
@@ -64,7 +64,7 @@ class SocialiteLogin extends Controller
                                 'password' => Hash::make($googleUser->getName() . '@' . $googleUser->getId())
                             ]);
                             Auth::guard('teacher')->login($user);
-                            Teacher::where('id', Auth::guard('teacher')->id())->update(['account_vissible' => 1]);
+                            Teacher::where('id', Auth::guard('teacher')->id())->update(['online' => 1]);
                             return redirect('/teacher/dashboard/');
                         } else {
                             return redirect('/teacher/login')->with('oath', 'Email is already use. Login instead');
@@ -118,7 +118,7 @@ class SocialiteLogin extends Controller
 
                     if ($user !== null) {
                         Auth::guard('teacher')->login($user);
-                        Teacher::where('id', Auth::guard('teacher')->id())->update(['account_vissible' => 1]);
+                        Teacher::where('id', Auth::guard('teacher')->id())->update(['online' => 1]);
                         return redirect('/teacher/dashboard/');
                     } else {
                         $user = Teacher::create([
@@ -128,7 +128,7 @@ class SocialiteLogin extends Controller
                             'password' => Hash::make($googleUser->getName() . '@' . $googleUser->getId())
                         ]);
                         Auth::guard('teacher')->login($user);
-                        Teacher::where('id', Auth::guard('teacher')->id())->update(['account_vissible' => 1]);
+                        Teacher::where('id', Auth::guard('teacher')->id())->update(['online' => 1]);
                         return redirect('/teacher/dashboard/');
                     }
                 } catch (\Throwable $th) {
