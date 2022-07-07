@@ -19,8 +19,12 @@ class CreateTrialLessonBookingsTable extends Migration
             $table->boolean('booked')->default(0);
             $table->boolean('lesson_completed')->default(0);
             $table->integer('student_id');
-            $table->dateTime('date');
-            $table->time('timeslot');
+            $table->dateTime('teacher_date');
+            $table->dateTime('student_date');
+            $table->string('teacher_timezone');
+            $table->string('student_timezone');
+            $table->time('teacher_timeslot');
+            $table->time('student_timeslot');
             $table->timestamps();
         });
     }
