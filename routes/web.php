@@ -214,6 +214,24 @@ Route::prefix('teacher')->name('teacher.')->group(function () {
         //dashboard links
         Route::post('/hideProfile', [TeachersRegistration::class, 'hideProfile']);
         Route::post('/showProfile', [TeachersRegistration::class, 'showProfile']);
+        Route::get('/teacher-earnings', function(){
+            return view('teacher.dashboard.teacher-earnings');
+        });
+        Route::get('/calendar', function(){
+            return view('teacher.dashboard.teacher-calendar');
+        });
+        Route::get('/find-tutors', function(){
+            return view('teacher.dashboard.teacher-find-tutors');
+        });
+        Route::get('/find-students', function(){
+            return view('teacher.dashboard.teacher-find-students');
+        });
+        Route::get('profile-edit', function(){
+            return view('teacher.dashboard.teacher-profile-edit');
+        });
+        Route::get('/lesson-plan', function(){
+            return view('teacher.dashboard.teacher-lesson-plan');
+        });
         //dashboard links
 
     });

@@ -9,8 +9,8 @@
             <ul class="smallScreenLeftNav">
                 <span><i class="fa-solid fa-xmark" @click="closeLinks"></i></span>
                 <li>
-                    <router-link to="/teacher/calendar">
-                        My Calendar
+                    <router-link to="/teacher/calendar" >
+                        My Calendar 
                     </router-link>
                 </li>
                 <li>
@@ -50,16 +50,16 @@
                     </router-link>
                     
                     <ul class="largeScreenLeftNav px-3">
-                        <li>
-                            <router-link to="/teacher/calendar">My Calendar</router-link>
+                        <li :class="calendarComponent?'calendarComponent':''">
+                            <router-link to="/teacher/calendar" >My Calendar</router-link>
                         </li>
-                        <li>
+                        <li :class="findStudentsComponent?'findStudentsComponent':''">
                             <router-link to="/teacher/find-students">Find Students</router-link>
                         </li>
-                        <li>
+                        <li :class="findTutorsComponent?'findTutorsComponent':''">
                             <router-link to="/teacher/find-tutors">Find Tutors</router-link>
                         </li>
-                        <li>
+                        <li :class="lessonPlanComponent?'lessonPlanComponent':''">
                             <router-link to="/teacher/lesson-plan">Lesson Plan</router-link>
                         </li>
 
@@ -99,6 +99,7 @@
 <script>
 export default {
     name: "RegisterNav",
+    props:['calendarComponent','findStudentsComponent','findTutorsComponent','lessonPlanComponent'],
     data() {
         return {};
     },
@@ -117,6 +118,32 @@ export default {
 </script>
 
 <style scoped>
+.findStudentsComponent a{
+    border:1px solid #029e02 !important;
+    padding: 7px 10px 8px;
+    border-radius: 5px;
+    color: #029e02 !important;
+}
+.lessonPlanComponent a{
+    border:1px solid #029e02 !important;
+    padding: 7px 10px 8px;
+    border-radius: 5px;
+    color: #029e02 !important;
+}
+.findTutorsComponent a{
+    border:1px solid #029e02 !important;
+    padding: 7px 10px 8px;
+    border-radius: 5px;
+    color: #029e02 !important;
+}
+.calendarComponent a{
+    border:1px solid #029e02 !important;
+    padding: 7px 10px 8px;
+    border-radius: 5px;
+    color: #029e02 !important;
+}
+
+
 /* small screen css */
 .fa-xmark {
     position: absolute;

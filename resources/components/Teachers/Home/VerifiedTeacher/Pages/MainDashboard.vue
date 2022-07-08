@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="row p-4">
-            <div class="col-md-2 p-4 bg-white rounded h-100 shadow-sm">
+            <div class="col-md-2 p-4 mb-3 bg-white rounded h-100 shadow-sm">
                 <img :src="'/storage/teacher/images/' + teacherDetails.teacher_image" alt="teacher_image"
-                    class="rounded-circle d-block mx-auto" style="height: 85px; width: 85px" />
+                    class="rounded-circle imgRounded d-block mx-auto" style="height: 95px; width: 85px" />
                 <p class="text-center">
                     {{ teacherDetails.name }}
                 </p>
@@ -69,4 +69,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 </style>

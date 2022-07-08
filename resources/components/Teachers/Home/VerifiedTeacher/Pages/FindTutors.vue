@@ -1,13 +1,23 @@
 <template>
-    <div>
-        <h1>Find Tutors</h1>
+    <div class="p-2">
+        <NavBar :findTutorsComponent="findTutorsComponent"/>
     </div>
 </template>
 
 <script>
+import NavBar from '../NavBar.vue';
     export default {
-        name: 'FindTutors'
-    }
+    name: "FindTutors",
+    components: { NavBar },
+    data() {
+        return {
+            findTutorsComponent: false
+        }
+    },
+    mounted () {
+        this.findTutorsComponent = true;
+    },
+}
 </script>
 
 <style lang="scss" scoped>

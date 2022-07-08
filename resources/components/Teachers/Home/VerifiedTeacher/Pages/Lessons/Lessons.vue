@@ -13,16 +13,20 @@
                         <td>Lesson Plan</td>
                         <td>Actions</td>
                     </tr>
-                    <tr v-for="lesson in 5" :key="lesson">
-                        <td>
-                            <img src="/images/avatar.png" alt="student_avatar" style="height: 65px; width: 65px;"
+                    <tr v-for="lesson in 5" :key="lesson" >
+                        <td class="d-flex gap-4">
+                            <img src="/images/avatar.png" alt="student_avatar" style="height: 45px; width: 45px;"
                                 class="rounded-circle">
-                            <p>Bright</p>
+                            <p class="d-flex align-items-center ">Bright Phiri Bwinto</p>
                         </td>
-                        <td>Waiting for confirmation</td>
+                        <td>
+                            <p class="d-flex align-items-center">
+                                Waiting for confirmation
+                            </p>
+                        </td>
                         <td>$4/hour</td>
                         <td>Lesson Plan</td>
-                        <td @click="alertSomething"><i class="fa-solid fa-ellipsis"></i></td>
+                        <td @click="alertSomething" ><i class="fa-solid fa-ellipsis "></i></td>
                     </tr>
                 </tbody>
             </table>
@@ -42,7 +46,7 @@ export default {
     methods: {
         alertSomething(e) {
             console.log(e)
-},
+        },
         getTeacherStudents() {
             axios.get('/teacher/getTeacherStudents')
                 .then((res) => {
@@ -57,4 +61,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.active-lessons{
+    overflow: auto;
+}
+
+.active-lessons::-webkit-scrollbar {
+  width: 2px;
+}
+  .active-lessons::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+  .active-lessons::-webkit-scrollbar-thumb {
+  background: #888; 
+    border-radius:25px;
+}
+.active-lessons::-webkit-scrollbar-thumb:hover {
+  
+  background: #555; 
+} 
 </style>
